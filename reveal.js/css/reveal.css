@@ -1611,32 +1611,32 @@ body {
   line-height: 2;
 }
 
-.reveal section p + p {
-  display: block;
+.reveal section blockquote {
   width: 100%;
-  text-align: center;
+  margin: 0;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  opacity: .5;
 }
 
-.reveal section ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.reveal section p strong {
+  color: #e7ad52;
 }
 
 .reveal section code {
-  color: #111;
-  background-color: #e7ad52;
-  border-radius: 3px;
-  padding: 0 4px;
+  color: #e7ad52;
+}
+  
+.reveal section code:not(.x) {
   position: absolute;
-  margin-top: -.3em;
-  font-size: 0.75em;
-  font-weight: bold;
+  margin-top: -.35em;
   line-height: 1em;
+  letter-spacing: 3px;
 }
 
 .reveal section h1, h2 {
-  color: #e7ad52;
+  color: #e7ad52 !important;
 }
 
 .reveal section h2 sup {

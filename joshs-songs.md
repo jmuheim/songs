@@ -8,7 +8,7 @@ date: April 12, 2020
 
 ## Intro
 
-Am (4 bars)
+Am _(4 bars)_
  
 ## Chorus
 
@@ -21,149 +21,141 @@ Jo`Am`lene, Jo`C`lene, Jo`G`lene, Jo`Am`lene
  
 ## Verse 1
 
-```
-       Am        C
-Your beauty is beyond compare
+Your `Am` beauty is be`C`yond compare  
+With `G` flaming locks of `Am` auburn hair  
+With `G` ivory skin  
+and `Em` eyes of emerald `Am` green  
+Your `Am` smile is like a `C` breath of spring  
+Your `G` voice is soft like `Am` summer rain  
+And `G` I cannot com`Em`pete with you, `Am` Jolene
 
-       G                Am
-With flaming locks of auburn hair
+## Verse 2
 
-       G             Em              Am
-With ivory skin and eyes of emerald green
+He `Am` talks about you `C` in his sleep  
+There's `G` nothing I can `Am` do to keep  
+From `G` crying when he `Em` calls your name, Jo`Am`lene  
+And `Am` I can easily `C` understand  
+How `G` you could easily `Am` take my man  
+But you `G` don't know what he `Em` means to me, Jo`Am`lene
 
-       Am             C
-Your smile is like a breath of spring
+## Chorus
 
-       G                  Am
-Your voice is soft like summer rain
+> (Like 1st time)
 
-       G         Em             Am
-And I cannot compete with you, Jolene
-```
+## Verse 3
+
+`Am` You could have your `C` choice of men  
+But `G` I could never `Am` love again  
+`G` He's the only `Em` one for me, Jo`Am`lene  
+I `Am` had to have this `C` talk with you  
+My `G` happiness de`Am`pends on you  
+What`G`ever you de`Em`cide to do, Jo`Am`lene
+ 
+## Chorus
+
+> (Like 1st time, except last line)
+
+...Please don't take him **even though** you can
+
+## Notes
+
+- Song: <https://www.youtube.com/watch?v=Ixrje2rXLMA>
+- Source tab: <https://tabs.ultimate-guitar.com/tab/dolly-parton/jolene-chords-183019>
+- Guitar tutorial: <https://www.youtube.com/watch?v=O2j6cZlT2LI>
+- Interpretation by The Petersens: <https://www.youtube.com/watch?v=viQx4KDivPY>
+
+# The river is flowing
+
+## Verse 1
+
+> (Chords sequence is the same through whole song)
+
+The `Am` river is `C` flowing, `G` flowing in `Am` growing,  
+the river is flowing back to the sea.  
+Mother Earth is caring me, her child I will always be,  
+Mother Earth is caring me, back to the sea
  
 ## Verse 2
 
-```
-    Am             C
-He talks about you in his sleep
-
-     G                Am
-There's nothing I can do to keep
-
-       G             Em               Am
-From crying when he calls your name, Jolene
-
-    Am            C
-And I can easily understand
-
-    G                 Am
-How you could easily take my man
-
-         G                  Em           Am
-But you don't know what he means to me, Jolene
-```
- 
-## Chorus
-
-```
-  Am      C       G       Am
-Jolene, Jolene, Jolene, Jolene
-
-      G                                 Am
-I'm begging of you, please don't take my man
-
-  Am      C       G       Am
-Jolene, Jolene, Jolene, Jolene
-
-  G                    Em             Am
-Please don't take him just because you can
-```
+The Moon she is waiting, waxing and waning  
+the Moon she is waiting, for us to be free.  
+Sister Moon watch over me, a child I will always be.  
+Sister Moon watch over me, until we are free  
  
 ## Verse 3
 
-```
-Am                    C
-You could have your choice of men
-
-    G              Am
-But I could never love again
-
-   G           Em           Am
-He's the only one for me, Jolene
-
-   Am               C
-I had to have this talk with you
-
-    G           Am
-My happiness depends on you
-
-    G           Em           Am
-Whatever you decide to do, Jolene
-```
+The Sun he is shining, brightly he´s shining,  
+the Sun he is shining, lightning the way.  
+Father Sun shine over me, your child I will always be,  
+father Sun shine over me, until we can see!  
  
-## Chorus
+## Verse 4
 
-  Am      C       G       Am  
-Jolene, Jolene, Jolene, Jolene  
-  
-      G                                 Am  
-I'm begging of you, please don't take my man  
-  
-  Am      C       G       Am
-Jolene, Jolene, Jolene, Jolene
+The Fire is burning, destroying and healing,  
+the Fire is burning, for us to get pure.  
+Violet Flame burn over me, a child I will always be,  
+violet Flame burn over me, until we are pure
 
-  G                    Em            Am
-Please don't take him _even though_ you can
+## Notes
+
+- Song: <https://www.youtube.com/watch?v=sB2AaVVjF-0>
+- Source tab: <https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196>
 
 # Pink Floyd: Wish you were here
 
 ## Intro
 
-`Em` / `G`
-`Em` / `G`
-`Em` / `Am7`
-`Em` / `Am7`
-`G` / `G`
+`G`{.x} / `Em`{.x}  
+`G`{.x} / `Em`{.x}  
+`G`{.x} / `Em`{.x}  
+`A`{.x} / `Em`{.x}  
+`A`{.x} / `G`{.x}
 
-(Repeat with solo)
+> (Repeat with solo)
 
 ## Verse 1
 
-`C` So, so you think you can `D` tell
-heaven from `Am` hell?
-Blue skies from `G` pain?
-Can you tell a green `D` field
-from a cold steel `C` rail?
-A smile from a `Am` veil?
+`C` So, so you think you can `D` tell  
+heaven from `Am` hell?  
+Blue skies from `G` pain?  
+Can you tell a green `D` field  
+from a cold steel `C` rail?  
+A smile from a `Am` veil?  
 Do you think you can `G` tell?
 
 ## Verse 2
 
-Did they get you to `C` trade
-your heroes for `D` ghosts?
-Hot ashes for `Am` trees?
-Hot air for a `G` cool breeze?
-Cold comfort for `D` change
-And did you ex`C`change
-a walk-on part in the `Am` war
-for a lead role in a `G` cage
+Did they get you to `C` trade  
+your heroes for `D` ghosts?  
+Hot ashes for `Am` trees?  
+Hot air for a `G` cool breeze?  
+Cold comfort for `D` change  
+And did you ex`C`change  
+a walk-on part in the `Am` war  
+for a lead role in a `G` cage...
 
 ## Interlude
 
-(Like intro)
+> (Like intro, but do not repeat)
 
 ## Chorus
 
-`C` How I wish
-how I wish you were `D` here
-We're just `Am` two lost souls
-swimming in a fishbowl `G`
-year after year `D`
-Running over the same old ground `C`
-what have we found
-the same old `Am` fears?
+`C` How I wish  
+how I wish you were `D` here  
+We're just `Am` two lost souls  
+swimming in a fishbowl `G`  
+year after year `D`  
+Running over the same old ground `C`  
+what have we found  
+the same old `Am` fears?  
 Wish you were `G` here
 
 ## Outro
 
-(Like intro)
+> (Like intro)
+
+## Notes
+
+- Song: <https://www.youtube.com/watch?v=IXdNnw99-Ic>
+- Source tab: <https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196>
+- Guitar tutorial: <https://www.youtube.com/watch?v=4m1T4v9bIds>
