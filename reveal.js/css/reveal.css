@@ -1604,3 +1604,46 @@ body {
 
 .zoomed .reveal .roll span:after {
   visibility: hidden; }
+
+.reveal section p {
+  display: inline-block;
+  text-align: left;
+  line-height: 2;
+}
+
+.reveal section p + p {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.reveal section ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reveal section code {
+  color: #111;
+  background-color: #e7ad52;
+  border-radius: 3px;
+  padding: 0 4px;
+  position: absolute;
+  margin-top: -.3em;
+  font-size: 0.75em;
+  font-weight: bold;
+  line-height: 1em;
+}
+
+.reveal section h1, h2 {
+  color: #e7ad52;
+}
+
+.reveal section h2 sup {
+  font-size: 0.5em;
+  opacity: .5;
+}
+
+.reveal section a {
+  text-decoration: underline;
+}
