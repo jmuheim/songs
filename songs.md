@@ -1,136 +1,72 @@
 ---
 author: Joshua
-title: My Guitar Songs
-date: 2020
+title:  My Guitar Songs
+date:   2020
 ---
-
-# Somehwere over the rainbow / What a wonderful world (Israël Kamakawiwo'ole)
-
-## Intro
-
-`C` / `G` / `Am` / `F` _(repeat)_
-
-`C` Ooo-ooo `Em` ooo-ooo `F` ooo-ooo `C` ooo-ooo  
-`F` Ooo-ooo `E7` ooo-ooo `Am` ooo-ooo `F` ooo-ooo
-
-## Verse 1
-
-`C` Somewhere `Em` over the rainbow `F` way up `C` high  
-`F` And the `C` dreams that you dream of `G`  
-once in a lulla`Am`by `F`  
-Oh `C` somewhere `Em` over the rainbow `F` blue birds `C` fly  
-`F` And the `C` dreams that you dream of  
-`G` dreams really do come `Am` true `F`
-
-## Verse 2
-
-`C` Someday i'll wish upon a star  
-`G` Wake up where the clouds are far be`Am`hind `F` me  
-Where `C` trouble melts like lemon drops  
-`G` High above the chimney tops  
-that's `Am` where you'll `F` find me
-
-## Interlude 1
-
-Oh `C` somewhere `Em` over the rainbow  
-`F` blue birds `C` fly  
-`F` And the `C` dreams that you dare to oh  
-`G` why oh why can't `Am` I? `F`
-
-## Verse 3
-
-Well I see `C` trees of `Em` green `F` and Red roses `C` too  
-`F` I'll watch then `C` bloom for `E7` me and `Am` you  
-And I `F` think to myself `G` what a wonderful `Am` world `F`  
-Well I see `C` skies of `Em` blue and I see `F` clouds of `C` white  
-And the `F` brightness of `C` day `E7` I like the `Am` dark  
-And I `F` think to myself `G` what a wonderful `C` world `F` `C`
-
-## Bridge
-
-The `G` colours of the rainbow so `C` pretty in the sky  
-Are `G` also on the faces of `C` people passing bye  
-See `F` friends shaking `C` hands, saying `F` how do you `C` do?  
-`F` They're really `C` saying `Dm7` I `D` I love you
-
-## Interlude 2
-
-I hear `C` babies `Em` cry and I `F` watch them `C` grow  
-`F` They'll learn much `C` more `E7` than we'll `Am` know  
-And I `F` think to myself `G` what a wonderful `Am` world `F` world
-
-## Verse 2 (again)
-
-`C` Someday i'll wish upon a star  
-`G` Wake up where the clouds are far be`Am`hind `F` me  
-Where `C` trouble melts like lemon drops  
-`G` High above the chimney tops  
-that's `Am` where you'll `F` find me
-
-## Interlude 1 (again)
-
-`C` Oh somewhere `Em` over the rainbow  
-**`F` way up `C` high**  
-`F` And the `C` dreams that you dare to  
-`G` why oh why can't `Am` I? `F`
-
-## Outro
-
-`C` Ooo-ooo `Em` ooo-ooo `F` ooo-ooo `C` ooo-ooo  
-`F` ooo-ooo `E7` ooo-ooo `Am` ooo-a-eh-a `F` a-a-a-a-a
 
 # Jolene (Dolly Parton)
 
 ## Intro
 
-`Am`{.x} _(4 bars)_
+`Am`{.a} _(4 bars)_
  
 ## Chorus
 
-Jo`Am`lene, Jo`C`lene, Jo`G`lene, Jo`Am`lene  
-I'm `G` begging of you,  
-please don't take my `Am` man  
-Jo`Am`lene, Jo`C`lene, Jo`G`lene, Jo`Am`lene  
-`G` Please don't take him  
-`Em` just because you `Am` can
+Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
+I'm `G`{.g} begging of you  
+please don't take my `Am`{.a} man  
+Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
+`G`{.g} Please don't take him  
+`Em`{.e} just because you `Am`{.a} can
  
 ## Verse 1
 
-Your `Am` beauty is be`C`yond compare  
-With `G` flaming locks of `Am` auburn hair  
-With `G` ivory skin  
-and `Em` eyes of emerald `Am` green  
-Your `Am` smile is like a `C` breath of spring  
-Your `G` voice is soft like `Am` summer rain  
-And `G` I cannot com`Em`pete with you, `Am` Jolene
+Your `Am`{.a} beauty is be`C`{.c}yond compare  
+With `G`{.g} flaming locks of `Am`{.a} auburn hair  
+With `G`{.g} ivory skin  
+and `Em`{.e} eyes of emerald `Am`{.a} green  
+Your `Am`{.a} smile is like a `C`{.c} breath of spring  
+Your `G`{.g} voice is soft like `Am`{.a} summer rain  
+And `G`{.g} I cannot com`Em`{.e}pete with you, `Am`{.a} Jolene
 
 ## Verse 2
 
-He `Am` talks about you `C` in his sleep  
-There's `G` nothing I can `Am` do to keep  
-From `G` crying when he `Em` calls your name, Jo`Am`lene  
-And `Am` I can easily `C` understand  
-How `G` you could easily `Am` take my man  
-But you `G` don't know what he `Em` means to me, Jo`Am`lene
+He `Am`{.a} talks about you `C`{.c} in his sleep  
+There's `G`{.g} nothing I can `Am`{.a} do to keep  
+From `G`{.g} crying when he `Em`{.e} calls your name, Jo`Am`{.a}lene  
+And `Am`{.a} I can easily `C`{.c} understand  
+How `G`{.g} you could easily `Am`{.a} take my man  
+But you `G`{.g} don't know what he `Em`{.e} means to me, Jo`Am`{.a}lene
 
 ## Chorus
 
-> (Like 1st time)
+_(Like 1st time)_
+
+Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
+I'm `G`{.g} begging of you  
+please don't take my `Am`{.a} man  
+Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
+`G`{.g} Please don't take him  
 
 ## Verse 3
 
-`Am` You could have your `C` choice of men  
-But `G` I could never `Am` love again  
-`G` He's the only `Em` one for me, Jo`Am`lene  
-I `Am` had to have this `C` talk with you  
-My `G` happiness de`Am`pends on you  
-What`G`ever you de`Em`cide to do, Jo`Am`lene
+`Am`{.a} You could have your `C`{.c} choice of men  
+But `G`{.g} I could never `Am`{.a} love again  
+`G`{.g} He's the only `Em`{.e} one for me, Jo`Am`{.a}lene  
+I `Am`{.a} had to have this `C`{.c} talk with you  
+My `G`{.g} happiness de`Am`{.a}pends on you  
+What`G`{.g}ever you de`Em`{.e}cide to do, Jo`Am`{.a}lene
  
 ## Chorus
 
-> (Like 1st time, except last line)
+_(Like before, except...)_
 
-...Please don't take him **even though** you can
+Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
+I'm `G`{.g} begging of you  
+please don't take my `Am`{.a} man  
+Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
+`G`{.g} Please don't take him  
+`Em`{.e} ~~just because~~ **even though** you `Am`{.a} can
 
 ## Notes
 
@@ -139,37 +75,158 @@ What`G`ever you de`Em`cide to do, Jo`Am`lene
 - Guitar tutorial: <https://www.youtube.com/watch?v=O2j6cZlT2LI>
 - Interpretation by The Petersens: <https://www.youtube.com/watch?v=viQx4KDivPY>
 
-# The river is flowing
+# Somewhere over the rainbow (Israël Kamakawiwo'ole)
+
+## Intro
+
+`C`{.c} / `G`{.g} / `Am`{.a} / `F`{.f} _(repeat)_
+
+`C`{.c} Ooo-ooo `Em`{.e} ooo-ooo  
+`F`{.f} ooo-ooo `C`{.c} ooo-ooo  
+`F`{.f} Ooo-ooo `E7`{.e} ooo-ooo  
+`Am`{.a} ooo-ooo `F`{.f} ooo-ooo
 
 ## Verse 1
 
-> (Chords sequence is the same through whole song)
+`C`{.c} Somewhere `Em`{.e} over the rainbow  
+`F`{.f} way up `C`{.c} high  
+`F`{.f} And the `C`{.c} dreams that you dream of  
+`G`{.g} once in a lulla`Am`{.a}by `F`{.f}  
+Oh `C`{.c} somewhere `Em`{.e} over the rainbow  
+`F`{.f} blue birds `C`{.c} fly  
+`F`{.f} And the `C`{.c} dreams that you dream of  
+`G`{.g} dreams really do come `Am`{.a} true `F`{.f}
 
-The `Am` river is `C` flowing, `G` flowing in `Am` growing,  
-the river is flowing back to the sea.  
-Mother Earth is caring me, her child I will always be,  
-Mother Earth is caring me, back to the sea
+## Verse 2
+
+Some`C`{.c}day i'll wish upon a star  
+`G`{.g} To wake up where the clouds are far  
+be`Am`{.a}hind `F`{.f} me  
+Where `C`{.c} trouble melts like lemon drops  
+`G`{.g} High above the chimney tops  
+that's `Am`{.a} where  
+you'll `F`{.f} find me
+
+## Interlude 1
+
+Oh `C`{.c} somewhere `Em`{.e} over the rainbow  
+`F`{.f} blue birds `C`{.c} fly  
+`F`{.f} And the `C`{.c} dreams that you dare to oh  
+`G`{.g} why oh why can't `Am`{.a} I? `F`{.f}
+
+## Verse 3
+
+Well I see `C`{.c} trees of `Em`{.e} green and  
+`F`{.f} Red roses `C`{.c} too  
+`F`{.f} I'll watch them `C`{.c} bloom for  
+`E7`{.e} me and `Am`{.a} you  
+And I `F`{.f} think to myself  
+`G`{.g} what a wonderful `Am`{.a} world `F`{.f}  
+
+---
+
+Well I see `C`{.c} skies of `Em`{.e} blue and I see  
+`F`{.f} clouds of `C`{.c} white  
+And the `F`{.f} brightness of `C`{.c} day  
+`E7`{.e} I like the `Am`{.a} dark  
+And I `F`{.f} think to myself  
+`G`{.g} what a wonderful `C`{.c} world `F`{.f} `C`{.c}
+
+## Bridge
+
+The `G`{.g} colours of the rainbow  
+so `C`{.c} pretty in the sky  
+Are `G`{.g} also on the faces  
+of `C`{.c} people passing bye  
+See `F`{.f} friends shaking `C`{.c} hands  
+saying `F`{.f} how do you `C`{.c} do?  
+`F`{.f} They're really `C`{.c} saying  
+`Dm7`{.d} I - I love `D`{.d} you
+
+## Interlude 2
+
+I hear `C`{.c} babies `Em`{.e} cry and I  
+`F`{.f} watch them `C`{.c} grow  
+`F`{.f} They'll learn much `C`{.c} more  
+`E7`{.e} than we'll `Am`{.a} know  
+And I `F`{.f} think to myself  
+`G`{.g} what a wonderful `Am`{.a} world `F`{.f} world
+
+## Verse 2
+
+_(Like before)_
+
+Some`C`{.c}day i'll wish upon a star  
+`G`{.g} To wake up where the clouds are far  
+be`Am`{.a}hind `F`{.f} me  
+Where `C`{.c} trouble melts like lemon drops  
+`G`{.g} High above the chimney tops  
+that's `Am`{.a} where  
+you'll `F`{.f} find me
+
+## Interlude 1
+
+_(Like before, except...)_
+
+`C`{.c} Oh somewhere `Em`{.e} over the rainbow  
+`F`{.f} ~~blue birds~~ **way up** `C`{.c} ~~fly~~ **high**  
+`F`{.f} And the `C`{.c} dreams that you dare to  
+`G`{.g} why oh why can't `Am`{.a} I? `F`{.f}
+
+## Outro
+
+`C`{.c} Ooo-ooo `Em`{.e} ooo-ooo  
+`F`{.f} ooo-ooo `C`{.c} ooo-ooo  
+`F`{.f} ooo-ooo `E7`{.e} ooo-ooo  
+`Am`{.a} ooo-a-eh-a `F`{.f} a-a-a-a-a
+
+# The river is flowing (Indian Summer)
+
+## Verse 1
+
+_(Chords sequence remains the same)_
+
+The `Am`{.a} river is `C`{.c} flowing  
+`G`{.g} flowing in `Am`{.a} growing  
+the river is flowing  
+back to the sea  
+Mother Earth is caring me  
+her child I will always be  
+Mother Earth is caring me  
+back to the sea
  
 ## Verse 2
 
-The Moon she is waiting, waxing and waning  
-the Moon she is waiting, for us to be free.  
-Sister Moon watch over me, a child I will always be.  
-Sister Moon watch over me, until we are free  
+The `Am`{.a} Moon she `C`{.c} is waiting  
+`G`{.g} waxing and `Am`{.a} waning  
+the Moon she is waiting  
+for us to be free  
+Sister Moon watch over me  
+a child I will always be  
+Sister Moon watch over me  
+until we are free
  
 ## Verse 3
 
-The Sun he is shining, brightly he´s shining,  
-the Sun he is shining, lightning the way.  
-Father Sun shine over me, your child I will always be,  
-father Sun shine over me, until we can see!  
+The `Am`{.a} Sun he `C`{.c} is shining  
+`G`{.g} brightly he´s `Am`{.a} shining  
+the Sun he is shining  
+lightning the way  
+Father Sun shine over me  
+your child I will always be  
+father Sun shine over me  
+until we can see  
  
 ## Verse 4
 
-The Fire is burning, destroying and healing,  
-the Fire is burning, for us to get pure.  
-Violet Flame burn over me, a child I will always be,  
-violet Flame burn over me, until we are pure
+The `Am`{.a} Fire `C`{.c} is burning  
+`G`{.g} destroying and `Am`{.a} healing  
+the Fire is burning  
+for us to get pure  
+Violet Flame burn over me  
+a child I will always be  
+violet Flame burn over me  
+until we are pure
 
 ## Notes
 
@@ -180,57 +237,57 @@ violet Flame burn over me, until we are pure
 
 ## Intro
 
-`G`{.x} / `Em`{.x}  
-`G`{.x} / `Em`{.x}  
-`G`{.x} / `Em`{.x}  
-`A`{.x} / `Em`{.x}  
-`A`{.x} / `G`{.x}
+`G`{.g} / `Em`{.e}  
+`G`{.g} / `Em`{.e}  
+`G`{.g} / `Em`{.e}  
+`A`{.a} / `Em`{.e}  
+`A`{.a} / `G`{.g}
 
-> (Repeat with solo)
+_(Repeat with solo)_
 
 ## Verse 1
 
-`C` So, so you think you can `D` tell  
-heaven from `Am` hell?  
-Blue skies from `G` pain?  
-Can you tell a green `D` field  
-from a cold steel `C` rail?  
-A smile from a `Am` veil?  
-Do you think you can `G` tell?
+`C`{.c} So, so you think you can `D`{.d} tell  
+heaven from `Am`{.a} hell?  
+Blue skies from `G`{.g} pain?  
+Can you tell a green `D`{.d} field  
+from a cold steel `C`{.c} rail?  
+A smile from a `Am`{.a} veil?  
+Do you think you can `G`{.g} tell?
 
 ## Verse 2
 
-Did they get you to `C` trade  
-your heroes for `D` ghosts?  
-Hot ashes for `Am` trees?  
-Hot air for a `G` cool breeze?  
-Cold comfort for `D` change  
-And did you ex`C`change  
-a walk-on part in the `Am` war  
-for a lead role in a `G` cage...
+Did they get you to `C`{.c} trade  
+your heroes for `D`{.d} ghosts?  
+Hot ashes for `Am`{.a} trees?  
+Hot air for a `G`{.g} cool breeze?  
+Cold comfort for `D`{.d} change  
+And did you ex`C`{.c}change  
+a walk-on part in the `Am`{.a} war  
+for a lead role in a `G`{.g} cage
 
 ## Interlude
 
-> (Like intro, but do not repeat)
+_(Like intro, but no repeat)_
 
 ## Chorus
 
-`C` How I wish  
-how I wish you were `D` here  
-We're just `Am` two lost souls  
-swimming in a fishbowl `G`  
-year after year `D`  
-Running over the same old ground `C`  
-what have we found  
-the same old `Am` fears?  
-Wish you were `G` here
+`C`{.c} How I wish  
+how I wish you were `D`{.d} here  
+We're just `Am`{.a} two lost souls  
+swimming in a fishbowl  
+`G`{.g} year after year  
+`D`{.d} Running over the same old ground  
+`C`{.c} what have we found  
+the same old `Am`{.a} fears?  
+Wish you were `G`{.g} here
 
 ## Outro
 
-> (Like intro)
+_(Like intro)_
 
 ## Notes
 
 - Song: <https://www.youtube.com/watch?v=IXdNnw99-Ic>
-- Source tab: <https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196>
+- Source tab: <https://tabs.ultimate-guitar.com/tab/pink-floyd/wish-you-were-here-chords-1088963>
 - Guitar tutorial: <https://www.youtube.com/watch?v=4m1T4v9bIds>
