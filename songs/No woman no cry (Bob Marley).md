@@ -97,8 +97,8 @@ _(Instrumental)_
 
 _(Repeat and fade out slowly)_
 
-## Notes
+## Resources
 
-- Song: <https://www.youtube.com/watch?v=aEtfgfv5iN4>
-- Source tab: <https://tabs.ultimate-guitar.com/tab/bob-marley/no-woman-no-cry-chords-45479>
-- Guitar tutorial: <https://www.youtube.com/watch?v=7lasK3XSICc>
+- [Song](https://www.youtube.com/watch?v=aEtfgfv5iN4)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-marley/no-woman-no-cry-chords-45479)
+- [Guitar tutorial](https://www.youtube.com/watch?v=7lasK3XSICc)

@@ -66,8 +66,8 @@ Wish you were [G] here
 
 _(Fade out slowly)_
 
-## Notes
+## Resources
 
-- Song: <https://www.youtube.com/watch?v=IXdNnw99-Ic>
-- Source tab: <https://tabs.ultimate-guitar.com/tab/pink-floyd/wish-you-were-here-chords-1088963>
-- Guitar tutorial: <https://www.youtube.com/watch?v=4m1T4v9bIds>
+- [Song](https://www.youtube.com/watch?v=IXdNnw99-Ic>
+- [Source tab](https://tabs.ultimate-guitar.com/tab/pink-floyd/wish-you-were-here-chords-1088963>
+- [Guitar tutorial](https://www.youtube.com/watch?v=4m1T4v9bIds>

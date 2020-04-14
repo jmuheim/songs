@@ -59,7 +59,7 @@ Are written on the subway [C] walls
 And tenement [Am] halls  
 And [C] whisper'd in the [G] sounds of [Am] silence
 
-## Notes
+## Resources
 
-- Song: <https://www.youtube.com/watch?v=4fWyzwo1xg0>
-- Source tab: <https://tabs.ultimate-guitar.com/tab/simon-garfunkel/the-sound-of-silence-chords-159157>
+- [Song](https://www.youtube.com/watch?v=4fWyzwo1xg0>
+- [Source tab](https://tabs.ultimate-guitar.com/tab/simon-garfunkel/the-sound-of-silence-chords-159157>
