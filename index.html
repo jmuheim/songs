@@ -25,11 +25,12 @@ label[for="toggle-chords-visibility"] {
   bottom: 2.5em;
   left: 2.5em;
   z-index: 100;
+  opacity: 0.75;
 }
 
 label[for="toggle-chords-visibility"]::before {
   font-size: 2.5em;
-  content: '🎼'
+  content: '🎹'
 }
 
 label[for="toggle-chords-visibility"]:hover {
@@ -50,10 +51,6 @@ label[for="toggle-chords-visibility"]:hover {
 }
 
 #toggle-chords-visibility:checked ~ .reveal code {
-  display: none;
-}
-
-#toggle-chords-visibility:checked ~ .reveal code + br {
   display: none;
 }
 
