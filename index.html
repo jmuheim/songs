@@ -54,6 +54,10 @@ label[for="toggle-chords-visibility"]:hover {
   display: none;
 }
 
+#toggle-chords-visibility:checked ~ .reveal code + code + br {
+  display: none;
+}
+
 .reveal section code.a { background-color: #ff5959; } /* Red */
 .reveal section code.b { background-color: #929292; } /* Gray */
 .reveal section code.c { background-color: #3cc0ff; } /* Blue */
