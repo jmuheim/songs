@@ -19,7 +19,8 @@ _(Repeat)_
 Said said  
 [C] said I re[G/B]member  
 [Am] when we used to sit [F]  
-[C] In the govern[G/B]ment yard in [Am] trenchtown [F]
+[C] In the govern[G/B]ment yard  
+in [Am] trenchtown [F]
 
 [C] Oba-oba[G/B]serving the [Am] hypocrites  
 As they would [C] mingle  
@@ -43,7 +44,8 @@ _(Like before, except...)_
 [C] No [F] woman no cry [C] [G]
 
 ~~No woman no cry~~  
-**[C] Here [G/B] little darlin' [Am] don't shed no [F] tears**  
+**[C] Here [G/B] little darlin'**  
+**[Am] don't shed no [F] tears**  
 [C] No [F] woman no cry [C] [G]
 
 ## Verse 1
@@ -51,7 +53,8 @@ _(Like before, except...)_
 Said said  
 [C] said I re[G/B]member  
 [Am] when we used to sit [F]  
-[C] In the govern[G/B]ment yard in [Am] trenchtown [F]
+[C] In the govern[G/B]ment yard  
+in [Am] trenchtown [F]
 
 [C] And then [G/B] Georgie  
 would [Am] make a fire light [F]  
@@ -66,15 +69,16 @@ corn [Am] meal porridge [F]
 with you [Am] yeah [F]
 
 [C] My feet [G/B] is my [Am] only carriage [F]  
-[C] and so I've got [G/B] to push on through [Am]  
+[C] and so I've got [G/B] to  
+push on through [Am]  
 But while I'm [F] gone
 
 ## Bridge
 
-[C] Ev'ry thing's gonna [G/B] be alright
-[Am] Ev'ry thing's gonna [F] be alright
+[C] Everything's gonna [G/B] be alright  
+[Am] Everything's gonna [F] be alright
 
-_(Repeat 4 times)_
+_(4 times)_
 
 ## Chorus
 
