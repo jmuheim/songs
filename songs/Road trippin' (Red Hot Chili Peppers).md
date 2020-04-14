@@ -31,7 +31,7 @@ Just a [B] mirror for the sun [Em]
 ##  Chorus
 
 [C] Just a [B] mirror for the [Em] sun  
-[C] Just a [B] mirror for the
+[C] Just a [B] mirror for the  
 [Am] Sun [G/B] [C] [D]
 
 [Am] These smiling [G/B] eyes  
@@ -40,7 +40,7 @@ are just a [C] mirror for [D]
 ## Verse 2
 
 [Em] So much has come before  
-those [C] battles lost and [B] won
+those [C] battles lost and [B] won  
 [Em] This life is shining  
 more for[C]ever in the sun [B]
 
@@ -52,7 +52,7 @@ than it's [B] worth in the sun [Em]
 ##  Chorus
 
 [C] Just a [B] mirror for the [Em] sun  
-[C] Just a [B] mirror for the
+[C] Just a [B] mirror for the  
 [Am] Sun [G/B] [C] [D]
 
 [Am] These smiling [G/B] eyes  
@@ -92,7 +92,7 @@ Just a [B] mirror for the sun [Em]
 ##  Chorus
 
 [C] Just a [B] mirror for the [Em] sun  
-[C] Just a [B] mirror for the
+[C] Just a [B] mirror for the  
 [Am] Sun [G/B] [C] [D]
 
 [Am] These smiling [G/B] eyes  
