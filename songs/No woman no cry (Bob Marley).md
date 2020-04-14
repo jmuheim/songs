@@ -22,7 +22,7 @@ Said said
 [C] In the govern[G/B]ment yard in [Am] trenchtown [F]
 
 [C] Oba-oba[G/B]serving the [Am] hypocrites  
-As they would [C] mingle
+As they would [C] mingle  
 with the good [G/B] people we meet [Am] [F]
 
 ---
@@ -84,7 +84,8 @@ _(Like before, except again...)_
 [C] No [F] woman no cry [C] [G]
 
 ~~No woman no cry~~  
-**[C] Here [G/B] little darlin' [Am] don't shed no [F] tears**  
+**[C] Here [G/B] little darlin'**  
+**[Am] don't shed no [F] tears**  
 [C] No [F] woman no cry [C] [G]
 
 ## Outro
