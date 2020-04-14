@@ -1605,12 +1605,6 @@ body {
 .zoomed .reveal .roll span:after {
   visibility: hidden; }
 
-.reveal section p {
-  display: inline-block;
-  text-align: left;
-  line-height: 2;
-}
-
 .reveal section blockquote {
   width: 100%;
   margin: 0;
@@ -1644,6 +1638,6 @@ body {
   opacity: .5;
 }
 
-.reveal section a {
-  text-decoration: underline;
+.reveal section em {
+  opacity: .5;
 }
