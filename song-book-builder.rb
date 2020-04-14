@@ -13,8 +13,8 @@ markdown << <<~EOS
 Dir["songs/*.md"].sort.each do |filename|
   content = File.open(filename).read
 
-  content.gsub!(/(\[)(([A-Z]).*?)(\]^\()/) do
-    "`#{$2}`{.#{$3.downcase}}"
+  content.gsub!(/(\[)(([A-Z]).*?)(\])([^\(])/) do
+    "`#{$2}`{.#{$3.downcase}}#{$5}"
   end
 
   markdown << content
