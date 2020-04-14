@@ -21,7 +21,9 @@ Dir["songs/*.md"].sort.each do |filename|
   markdown << content
 end
 
-File.new("songs.md", "w").puts(markdown.join("\n"))
+file = File.new("songs.md", "w")
+file.puts(markdown.join("\n"))
+file.close
 
 `pandoc -t revealjs -s -o index.html songs.md --no-highlight --toc --toc-depth=1 -V theme=night -V progress=false -V revealjs-url=https://revealjs.com`
 
@@ -30,4 +32,6 @@ result.gsub!("<body>", '<body><input type="checkbox" id="toggle-chords-visibilit
 
 result.gsub!('<style type="text/css">', '<style type="text/css">' + File.open("custom.css").read)
 
-File.open("index.html", "w").write(result)
+file = File.open("index.html", "w")
+file.write(result)
+file.close

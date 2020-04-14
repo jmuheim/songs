@@ -2,7 +2,9 @@
 
 ## Intro
 
-[C] / [G] / [Am] / [F] _(repeat)_
+_(Instrumental)_
+
+[C] [G] [Am] [F] _(repeat)_
 
 [C] Ooo-ooo [Em] ooo-ooo  
 [F] ooo-ooo [C] ooo-ooo  

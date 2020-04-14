@@ -2,11 +2,13 @@
 
 ## Intro
 
-[G] / [Em]  
-[G] / [Em]  
-[G] / [Em]  
-[A] / [Em]  
-[A] / [G]
+_(Instrumental)_
+
+[G] [Em]  
+[G] [Em]  
+[G] [Em]  
+[A] [Em]  
+[A] [G]
 
 _(Repeat with solo)_
 
@@ -14,7 +16,8 @@ _(Repeat with solo)_
 
 [C] So, so you think you can [D] tell  
 heaven from [Am] hell?  
-Blue skies from [G] pain?  
+Blue skies from [G] pain?
+
 Can you tell a green [D] field  
 from a cold steel [C] rail?  
 A smile from a [Am] veil?  
@@ -25,7 +28,8 @@ Do you think you can [G] tell?
 Did they get you to [C] trade  
 your heroes for [D] ghosts?  
 Hot ashes for [Am] trees?  
-Hot air for a [G] cool breeze?  
+Hot air for a [G] cool breeze?
+
 Cold comfort for [D] change?  
 And did you ex[C]change  
 a walk-on part in the [Am] war  
@@ -35,11 +39,11 @@ for a lead role in a [G] cage?
 
 _(Like intro, but no repeat)_
 
-[G] / [Em]  
-[G] / [Em]  
-[G] / [Em]  
-[A] / [Em]  
-[A] / [G]
+[G] [Em]  
+[G] [Em]  
+[G] [Em]  
+[A] [Em]  
+[A] [G]
 
 ## Chorus
 
@@ -47,7 +51,8 @@ _(Like intro, but no repeat)_
 how I wish you were [D] here  
 We're just [Am] two lost souls  
 swimming in a fishbowl  
-[G] year after year  
+[G] year after year
+
 [D] Running over the same old ground  
 [C] what have we found?  
 The same old [Am] fears  
@@ -57,11 +62,11 @@ Wish you were [G] here
 
 _(Like intro)_
 
-[G] / [Em]  
-[G] / [Em]  
-[G] / [Em]  
-[A] / [Em]  
-[A] / [G]
+[G] [Em]  
+[G] [Em]  
+[G] [Em]  
+[A] [Em]  
+[A] [G]
 
 ## Notes
 

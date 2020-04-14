@@ -40,7 +40,7 @@ Jo[Am]lene
 
 ## Chorus
 
-_(Like 1st time)_
+_(Like before)_
 
 Jo[Am]lene, Jo[C]lene, Jo[G]lene, Jo[Am]lene  
 I'm [G] begging of you  

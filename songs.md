@@ -46,7 +46,7 @@ Jo`Am`{.a}lene
 
 ## Chorus
 
-_(Like 1st time)_
+_(Like before)_
 
 Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
 I'm `G`{.g} begging of you  
@@ -91,7 +91,9 @@ Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene
 
 ## Intro
 
-`C`{.c} / `G`{.g} / `Am`{.a} / `F`{.f} _(repeat)_
+_(Instrumental)_
+
+`C`{.c} `G`{.g} `Am`{.a} `F`{.f} _(repeat)_
 
 `C`{.c} Ooo-ooo `Em`{.e} ooo-ooo  
 `F`{.f} ooo-ooo `C`{.c} ooo-ooo  
@@ -260,11 +262,13 @@ until we are pure
 
 ## Intro
 
-`G`{.g} / `Em`{.e}  
-`G`{.g} / `Em`{.e}  
-`G`{.g} / `Em`{.e}  
-`A`{.a} / `Em`{.e}  
-`A`{.a} / `G`{.g}
+_(Instrumental)_
+
+`G`{.g} `Em`{.e}  
+`G`{.g} `Em`{.e}  
+`G`{.g} `Em`{.e}  
+`A`{.a} `Em`{.e}  
+`A`{.a} `G`{.g}
 
 _(Repeat with solo)_
 
@@ -272,7 +276,8 @@ _(Repeat with solo)_
 
 `C`{.c} So, so you think you can `D`{.d} tell  
 heaven from `Am`{.a} hell?  
-Blue skies from `G`{.g} pain?  
+Blue skies from `G`{.g} pain?
+
 Can you tell a green `D`{.d} field  
 from a cold steel `C`{.c} rail?  
 A smile from a `Am`{.a} veil?  
@@ -283,7 +288,8 @@ Do you think you can `G`{.g} tell?
 Did they get you to `C`{.c} trade  
 your heroes for `D`{.d} ghosts?  
 Hot ashes for `Am`{.a} trees?  
-Hot air for a `G`{.g} cool breeze?  
+Hot air for a `G`{.g} cool breeze?
+
 Cold comfort for `D`{.d} change?  
 And did you ex`C`{.c}change  
 a walk-on part in the `Am`{.a} war  
@@ -293,11 +299,11 @@ for a lead role in a `G`{.g} cage?
 
 _(Like intro, but no repeat)_
 
-`G`{.g} / `Em`{.e}  
-`G`{.g} / `Em`{.e}  
-`G`{.g} / `Em`{.e}  
-`A`{.a} / `Em`{.e}  
-`A`{.a} / `G`{.g}
+`G`{.g} `Em`{.e}  
+`G`{.g} `Em`{.e}  
+`G`{.g} `Em`{.e}  
+`A`{.a} `Em`{.e}  
+`A`{.a} `G`{.g}
 
 ## Chorus
 
@@ -305,7 +311,8 @@ _(Like intro, but no repeat)_
 how I wish you were `D`{.d} here  
 We're just `Am`{.a} two lost souls  
 swimming in a fishbowl  
-`G`{.g} year after year  
+`G`{.g} year after year
+
 `D`{.d} Running over the same old ground  
 `C`{.c} what have we found?  
 The same old `Am`{.a} fears  
@@ -315,11 +322,11 @@ Wish you were `G`{.g} here
 
 _(Like intro)_
 
-`G`{.g} / `Em`{.e}  
-`G`{.g} / `Em`{.e}  
-`G`{.g} / `Em`{.e}  
-`A`{.a} / `Em`{.e}  
-`A`{.a} / `G`{.g}
+`G`{.g} `Em`{.e}  
+`G`{.g} `Em`{.e}  
+`G`{.g} `Em`{.e}  
+`A`{.a} `Em`{.e}  
+`A`{.a} `G`{.g}
 
 ## Notes
 
