@@ -70,7 +70,7 @@ _(Instrumental)_
 
 
 [Em] In Big Sur we take some  
-[C] time to linger on [B]
+[C] time to linger on [B]  
 [Em] We three hunky dory's got  
 [C] our snake[B]finger on
 

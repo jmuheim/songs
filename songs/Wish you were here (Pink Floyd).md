@@ -37,8 +37,6 @@ for a lead role in a [G] cage?
 
 ## Interlude
 
-_(Like intro, but no repeat)_
-
 [G] [Em]  
 [G] [Em]  
 [G] [Em]  
@@ -59,8 +57,6 @@ The same old [Am] fears
 Wish you were [G] here
 
 ## Outro
-
-_(Like intro)_
 
 [G] [Em]  
 [G] [Em]  
