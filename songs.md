@@ -27,16 +27,19 @@ With `G`{.g} ivory skin
 and `Em`{.e} eyes of emerald `Am`{.a} green  
 Your `Am`{.a} smile is like a `C`{.c} breath of spring  
 Your `G`{.g} voice is soft like `Am`{.a} summer rain  
-And `G`{.g} I cannot com`Em`{.e}pete with you, `Am`{.a} Jolene
+And `G`{.g} I cannot com`Em`{.e}pete with you  
+`Am`{.a} Jolene
 
 ## Verse 2
 
 He `Am`{.a} talks about you `C`{.c} in his sleep  
 There's `G`{.g} nothing I can `Am`{.a} do to keep  
-From `G`{.g} crying when he `Em`{.e} calls your name, Jo`Am`{.a}lene  
+From `G`{.g} crying when he `Em`{.e} calls your name  
+Jo`Am`{.a}lene  
 And `Am`{.a} I can easily `C`{.c} understand  
 How `G`{.g} you could easily `Am`{.a} take my man  
-But you `G`{.g} don't know what he `Em`{.e} means to me, Jo`Am`{.a}lene
+But you `G`{.g} don't know what he `Em`{.e} means to me  
+Jo`Am`{.a}lene
 
 ## Chorus
 
@@ -52,10 +55,12 @@ Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene
 
 `Am`{.a} You could have your `C`{.c} choice of men  
 But `G`{.g} I could never `Am`{.a} love again  
-`G`{.g} He's the only `Em`{.e} one for me, Jo`Am`{.a}lene  
+`G`{.g} He's the only `Em`{.e} one for me  
+Jo`Am`{.a}lene  
 I `Am`{.a} had to have this `C`{.c} talk with you  
 My `G`{.g} happiness de`Am`{.a}pends on you  
-What`G`{.g}ever you de`Em`{.e}cide to do, Jo`Am`{.a}lene
+What`G`{.g}ever you de`Em`{.e}cide to do  
+Jo`Am`{.a}lene
  
 ## Chorus
 
@@ -91,7 +96,8 @@ Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene
 `C`{.c} Somewhere `Em`{.e} over the rainbow  
 `F`{.f} way up `C`{.c} high  
 `F`{.f} And the `C`{.c} dreams that you dream of  
-`G`{.g} once in a lulla`Am`{.a}by `F`{.f}  
+`G`{.g} once in a lulla`Am`{.a}by `F`{.f}
+
 Oh `C`{.c} somewhere `Em`{.e} over the rainbow  
 `F`{.f} blue birds `C`{.c} fly  
 `F`{.f} And the `C`{.c} dreams that you dream of  
@@ -101,7 +107,8 @@ Oh `C`{.c} somewhere `Em`{.e} over the rainbow
 
 Some`C`{.c}day i'll wish upon a star  
 `G`{.g} To wake up where the clouds are far  
-be`Am`{.a}hind `F`{.f} me  
+be`Am`{.a}hind `F`{.f} me
+
 Where `C`{.c} trouble melts like lemon drops  
 `G`{.g} High above the chimney tops  
 that's `Am`{.a} where  
@@ -119,7 +126,8 @@ Oh `C`{.c} somewhere `Em`{.e} over the rainbow
 Well I see `C`{.c} trees of `Em`{.e} green and  
 `F`{.f} Red roses `C`{.c} too  
 `F`{.f} I'll watch them `C`{.c} bloom for  
-`E7`{.e} me and `Am`{.a} you  
+`E7`{.e} me and `Am`{.a} you
+
 And I `F`{.f} think to myself  
 `G`{.g} what a wonderful `Am`{.a} world `F`{.f}  
 
@@ -128,7 +136,8 @@ And I `F`{.f} think to myself
 Well I see `C`{.c} skies of `Em`{.e} blue and I see  
 `F`{.f} clouds of `C`{.c} white  
 And the `F`{.f} brightness of `C`{.c} day  
-`E7`{.e} I like the `Am`{.a} dark  
+`E7`{.e} I like the `Am`{.a} dark
+
 And I `F`{.f} think to myself  
 `G`{.g} what a wonderful `C`{.c} world `F`{.f} `C`{.c}
 
@@ -137,7 +146,8 @@ And I `F`{.f} think to myself
 The `G`{.g} colours of the rainbow  
 so `C`{.c} pretty in the sky  
 Are `G`{.g} also on the faces  
-of `C`{.c} people passing bye  
+of `C`{.c} people passing bye
+
 See `F`{.f} friends shaking `C`{.c} hands  
 saying `F`{.f} how do you `C`{.c} do?  
 `F`{.f} They're really `C`{.c} saying  
@@ -148,7 +158,8 @@ saying `F`{.f} how do you `C`{.c} do?
 I hear `C`{.c} babies `Em`{.e} cry and I  
 `F`{.f} watch them `C`{.c} grow  
 `F`{.f} They'll learn much `C`{.c} more  
-`E7`{.e} than we'll `Am`{.a} know  
+`E7`{.e} than we'll `Am`{.a} know
+
 And I `F`{.f} think to myself  
 `G`{.g} what a wonderful `Am`{.a} world `F`{.f} world
 
@@ -158,7 +169,8 @@ _(Like before)_
 
 Some`C`{.c}day i'll wish upon a star  
 `G`{.g} To wake up where the clouds are far  
-be`Am`{.a}hind `F`{.f} me  
+be`Am`{.a}hind `F`{.f} me
+
 Where `C`{.c} trouble melts like lemon drops  
 `G`{.g} High above the chimney tops  
 that's `Am`{.a} where  
@@ -261,14 +273,20 @@ Did they get you to `C`{.c} trade
 your heroes for `D`{.d} ghosts?  
 Hot ashes for `Am`{.a} trees?  
 Hot air for a `G`{.g} cool breeze?  
-Cold comfort for `D`{.d} change  
+Cold comfort for `D`{.d} change?  
 And did you ex`C`{.c}change  
 a walk-on part in the `Am`{.a} war  
-for a lead role in a `G`{.g} cage
+for a lead role in a `G`{.g} cage?
 
 ## Interlude
 
 _(Like intro, but no repeat)_
+
+`G`{.g} / `Em`{.e}  
+`G`{.g} / `Em`{.e}  
+`G`{.g} / `Em`{.e}  
+`A`{.a} / `Em`{.e}  
+`A`{.a} / `G`{.g}
 
 ## Chorus
 
@@ -278,13 +296,19 @@ We're just `Am`{.a} two lost souls
 swimming in a fishbowl  
 `G`{.g} year after year  
 `D`{.d} Running over the same old ground  
-`C`{.c} what have we found  
-the same old `Am`{.a} fears?  
+`C`{.c} what have we found?  
+The same old `Am`{.a} fears  
 Wish you were `G`{.g} here
 
 ## Outro
 
 _(Like intro)_
+
+`G`{.g} / `Em`{.e}  
+`G`{.g} / `Em`{.e}  
+`G`{.g} / `Em`{.e}  
+`A`{.a} / `Em`{.e}  
+`A`{.a} / `G`{.g}
 
 ## Notes
 

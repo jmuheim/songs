@@ -21,16 +21,19 @@ With [G] ivory skin
 and [Em] eyes of emerald [Am] green  
 Your [Am] smile is like a [C] breath of spring  
 Your [G] voice is soft like [Am] summer rain  
-And [G] I cannot com[Em]pete with you, [Am] Jolene
+And [G] I cannot com[Em]pete with you  
+[Am] Jolene
 
 ## Verse 2
 
 He [Am] talks about you [C] in his sleep  
 There's [G] nothing I can [Am] do to keep  
-From [G] crying when he [Em] calls your name, Jo[Am]lene  
+From [G] crying when he [Em] calls your name  
+Jo[Am]lene  
 And [Am] I can easily [C] understand  
 How [G] you could easily [Am] take my man  
-But you [G] don't know what he [Em] means to me, Jo[Am]lene
+But you [G] don't know what he [Em] means to me  
+Jo[Am]lene
 
 ## Chorus
 
@@ -46,10 +49,12 @@ Jo[Am]lene, Jo[C]lene, Jo[G]lene, Jo[Am]lene
 
 [Am] You could have your [C] choice of men  
 But [G] I could never [Am] love again  
-[G] He's the only [Em] one for me, Jo[Am]lene  
+[G] He's the only [Em] one for me  
+Jo[Am]lene  
 I [Am] had to have this [C] talk with you  
 My [G] happiness de[Am]pends on you  
-What[G]ever you de[Em]cide to do, Jo[Am]lene
+What[G]ever you de[Em]cide to do  
+Jo[Am]lene
  
 ## Chorus
 

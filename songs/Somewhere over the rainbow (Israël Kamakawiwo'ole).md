@@ -14,7 +14,8 @@
 [C] Somewhere [Em] over the rainbow  
 [F] way up [C] high  
 [F] And the [C] dreams that you dream of  
-[G] once in a lulla[Am]by [F]  
+[G] once in a lulla[Am]by [F]
+
 Oh [C] somewhere [Em] over the rainbow  
 [F] blue birds [C] fly  
 [F] And the [C] dreams that you dream of  
@@ -24,7 +25,8 @@ Oh [C] somewhere [Em] over the rainbow
 
 Some[C]day i'll wish upon a star  
 [G] To wake up where the clouds are far  
-be[Am]hind [F] me  
+be[Am]hind [F] me
+
 Where [C] trouble melts like lemon drops  
 [G] High above the chimney tops  
 that's [Am] where  
@@ -42,7 +44,8 @@ Oh [C] somewhere [Em] over the rainbow
 Well I see [C] trees of [Em] green and  
 [F] Red roses [C] too  
 [F] I'll watch them [C] bloom for  
-[E7] me and [Am] you  
+[E7] me and [Am] you
+
 And I [F] think to myself  
 [G] what a wonderful [Am] world [F]  
 
@@ -51,7 +54,8 @@ And I [F] think to myself
 Well I see [C] skies of [Em] blue and I see  
 [F] clouds of [C] white  
 And the [F] brightness of [C] day  
-[E7] I like the [Am] dark  
+[E7] I like the [Am] dark
+
 And I [F] think to myself  
 [G] what a wonderful [C] world [F] [C]
 
@@ -60,7 +64,8 @@ And I [F] think to myself
 The [G] colours of the rainbow  
 so [C] pretty in the sky  
 Are [G] also on the faces  
-of [C] people passing bye  
+of [C] people passing bye
+
 See [F] friends shaking [C] hands  
 saying [F] how do you [C] do?  
 [F] They're really [C] saying  
@@ -71,7 +76,8 @@ saying [F] how do you [C] do?
 I hear [C] babies [Em] cry and I  
 [F] watch them [C] grow  
 [F] They'll learn much [C] more  
-[E7] than we'll [Am] know  
+[E7] than we'll [Am] know
+
 And I [F] think to myself  
 [G] what a wonderful [Am] world [F] world
 
@@ -81,7 +87,8 @@ _(Like before)_
 
 Some[C]day i'll wish upon a star  
 [G] To wake up where the clouds are far  
-be[Am]hind [F] me  
+be[Am]hind [F] me
+
 Where [C] trouble melts like lemon drops  
 [G] High above the chimney tops  
 that's [Am] where  
