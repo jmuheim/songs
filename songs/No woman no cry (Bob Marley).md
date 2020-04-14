@@ -38,8 +38,6 @@ you [Am] cant forget your past [F]
 
 ## Chorus
 
-_(Like before, except...)_
-
 [C] No [G/B] woman no cry [Am] [F]  
 [C] No [F] woman no cry [C] [G]
 
@@ -81,8 +79,6 @@ But while I'm [F] gone
 _(4 times)_
 
 ## Chorus
-
-_(Like before, except again...)_
 
 [C] No [G/B] woman no cry [Am] [F]  
 [C] No [F] woman no cry [C] [G]

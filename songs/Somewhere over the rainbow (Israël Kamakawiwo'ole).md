@@ -85,8 +85,6 @@ And I [F] think to myself
 
 ## Verse 2
 
-_(Like before)_
-
 Some[C]day i'll wish upon a star  
 [G] To wake up where the clouds are far  
 be[Am]hind [F] me
@@ -97,8 +95,6 @@ that's [Am] where
 you'll [F] find me
 
 ## Interlude 1
-
-_(Like before, except...)_
 
 [C] Oh somewhere [Em] over the rainbow  
 ~~blue birds fly~~  
