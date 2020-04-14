@@ -55,7 +55,7 @@ label[for="toggle-chords-visibility"]:hover {
 }
 
 /* To prevent empty spaces in instrumental parts like the intro of Pink Floyd's "Wish you were here" (is hacky though and could accidently remove breaks within lyrics) */
-#toggle-chords-visibility:checked ~ .reveal code + code + br {
+#toggle-chords-visibility:checked ~ .reveal p:empty br {
   display: none;
 }
 
