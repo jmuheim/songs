@@ -43,7 +43,7 @@ Watching the [G] tide roll [E]away, ooh
 ~~I'm just~~ **Ooo I'm** [G] sittin' on the dock of the [A] bay  
 Wastin' [G] time [E]
 
-_(Repeat and whistle, slowly fade)_
+_(Repeat and whistle, fade out)_
 
 ## Resources
 
