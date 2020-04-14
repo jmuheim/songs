@@ -14,7 +14,8 @@ date:   2020
 
 Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
 I'm `G`{.g} begging of you  
-please don't take my `Am`{.a} man  
+please don't take my `Am`{.a} man
+
 Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
 `G`{.g} Please don't take him  
 `Em`{.e} just because you `Am`{.a} can
@@ -24,7 +25,8 @@ Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene
 Your `Am`{.a} beauty is be`C`{.c}yond compare  
 With `G`{.g} flaming locks of `Am`{.a} auburn hair  
 With `G`{.g} ivory skin  
-and `Em`{.e} eyes of emerald `Am`{.a} green  
+and `Em`{.e} eyes of emerald `Am`{.a} green
+
 Your `Am`{.a} smile is like a `C`{.c} breath of spring  
 Your `G`{.g} voice is soft like `Am`{.a} summer rain  
 And `G`{.g} I cannot com`Em`{.e}pete with you  
@@ -35,7 +37,8 @@ And `G`{.g} I cannot com`Em`{.e}pete with you
 He `Am`{.a} talks about you `C`{.c} in his sleep  
 There's `G`{.g} nothing I can `Am`{.a} do to keep  
 From `G`{.g} crying when he `Em`{.e} calls your name  
-Jo`Am`{.a}lene  
+Jo`Am`{.a}lene
+
 And `Am`{.a} I can easily `C`{.c} understand  
 How `G`{.g} you could easily `Am`{.a} take my man  
 But you `G`{.g} don't know what he `Em`{.e} means to me  
@@ -47,16 +50,19 @@ _(Like 1st time)_
 
 Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
 I'm `G`{.g} begging of you  
-please don't take my `Am`{.a} man  
+please don't take my `Am`{.a} man
+
 Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
 `G`{.g} Please don't take him  
+`Em`{.e} just because you `Am`{.a} can
 
 ## Verse 3
 
 `Am`{.a} You could have your `C`{.c} choice of men  
 But `G`{.g} I could never `Am`{.a} love again  
 `G`{.g} He's the only `Em`{.e} one for me  
-Jo`Am`{.a}lene  
+Jo`Am`{.a}lene
+
 I `Am`{.a} had to have this `C`{.c} talk with you  
 My `G`{.g} happiness de`Am`{.a}pends on you  
 What`G`{.g}ever you de`Em`{.e}cide to do  
@@ -68,7 +74,8 @@ _(Like before, except...)_
 
 Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
 I'm `G`{.g} begging of you  
-please don't take my `Am`{.a} man  
+please don't take my `Am`{.a} man
+
 Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene  
 `G`{.g} Please don't take him  
 `Em`{.e} ~~just because~~ **even though** you `Am`{.a} can
@@ -201,7 +208,8 @@ _(Chords sequence remains the same)_
 The `Am`{.a} river is `C`{.c} flowing  
 `G`{.g} flowing in `Am`{.a} growing  
 the river is flowing  
-back to the sea  
+back to the sea
+
 Mother Earth is caring me  
 her child I will always be  
 Mother Earth is caring me  
@@ -212,7 +220,8 @@ back to the sea
 The `Am`{.a} Moon she `C`{.c} is waiting  
 `G`{.g} waxing and `Am`{.a} waning  
 the Moon she is waiting  
-for us to be free  
+for us to be free
+
 Sister Moon watch over me  
 a child I will always be  
 Sister Moon watch over me  
@@ -221,9 +230,10 @@ until we are free
 ## Verse 3
 
 The `Am`{.a} Sun he `C`{.c} is shining  
-`G`{.g} brightly he´s `Am`{.a} shining  
+`G`{.g} brightly he's `Am`{.a} shining  
 the Sun he is shining  
-lightning the way  
+lightning the way
+
 Father Sun shine over me  
 your child I will always be  
 father Sun shine over me  
@@ -234,7 +244,8 @@ until we can see
 The `Am`{.a} Fire `C`{.c} is burning  
 `G`{.g} destroying and `Am`{.a} healing  
 the Fire is burning  
-for us to get pure  
+for us to get pure
+
 Violet Flame burn over me  
 a child I will always be  
 violet Flame burn over me  
