@@ -40,15 +40,19 @@ label[for="toggle-chords-visibility"]:hover {
 }
 
 .reveal section code.a { background-color: #ff5959; } /* Red */
-.reveal section code.b { background-color: #fb63f6; } /* Pink */
+.reveal section code.b { background-color: #a9a9a9; } /* Gray */
 .reveal section code.c { background-color: #3cc0ff; } /* Blue */
 .reveal section code.d { background-color: #45ff6d; } /* Green */
 .reveal section code.e { background-color: #ffe149; } /* Yellow */
-.reveal section code.f { background-color: #d161ff; } /* Violet */
+.reveal section code.f { background-color: #fb63f6; } /* Violet */
 .reveal section code.g { background-color: #c78430; } /* Brown */
 
 .reveal section h1, h2, em {
   color: #e7ad52 !important;
+}
+
+.reveal section em {
+  opacity: .5;
 }
 
 .reveal section strong {

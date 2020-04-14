@@ -20,7 +20,7 @@ any[C]where in the U.S.A. [B]
 
 ---
 
-[Em] Let's go get lost
+[Em] Let's go get lost  
 let's go get [C] lost [B]
 
 [Em] Blue you sit so pretty  
@@ -81,7 +81,7 @@ _(Instrumental)_
 
 ---
 
-[Em] Let's go get lost
+[Em] Let's go get lost  
 let's go get [C] lost [B]
 
 [Em] Blue you sit so pretty  
