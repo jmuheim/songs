@@ -68,6 +68,8 @@ _(Like intro)_
 [A] [Em]  
 [A] [G]
 
+_(Fade out slowly)_
+
 ## Notes
 
 - Song: <https://www.youtube.com/watch?v=IXdNnw99-Ic>

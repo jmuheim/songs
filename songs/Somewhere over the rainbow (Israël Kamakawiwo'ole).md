@@ -101,7 +101,8 @@ you'll [F] find me
 _(Like before, except...)_
 
 [C] Oh somewhere [Em] over the rainbow  
-[F] ~~blue birds~~ **way up** [C] ~~fly~~ **high**  
+~~blue birds fly~~  
+**[F] way up [C] high**  
 [F] And the [C] dreams that you dare to  
 [G] why oh why can't [Am] I? [F]
 

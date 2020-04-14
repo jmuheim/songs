@@ -72,7 +72,8 @@ please don't take my [Am] man
 
 Jo[Am]lene, Jo[C]lene, Jo[G]lene, Jo[Am]lene  
 [G] Please don't take him  
-[Em] ~~just because~~ **even though** you [Am] can
+~~just because you can~~  
+**[Em] even though you [Am] can**
 
 ## Notes
 
