@@ -72,7 +72,7 @@ Don't [E] worry, be [B] happy
 
 [B] [C#m] [E] [B] (x2)
 
-_(Repeat and fade out)_
+_(Repeat and fade)_
 
 ## Resources
 

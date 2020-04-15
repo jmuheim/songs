@@ -95,7 +95,7 @@ _(Instrumental)_
 [C] [G/B] [Am] [F]  
 [C] [F] [C] [G]
 
-_(Repeat and fade out)_
+_(Repeat and fade)_
 
 ## Resources
 
