@@ -61,5 +61,5 @@ And [C] whisper'd in the [G] sounds of [Am] silence
 
 ## Resources
 
-- [Song](https://www.youtube.com/watch?v=4fWyzwo1xg0>
-- [Source tab](https://tabs.ultimate-guitar.com/tab/simon-garfunkel/the-sound-of-silence-chords-159157>
+- [Song](https://www.youtube.com/watch?v=4fWyzwo1xg0)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/simon-garfunkel/the-sound-of-silence-chords-159157)
