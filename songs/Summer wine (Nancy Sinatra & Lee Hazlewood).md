@@ -104,7 +104,7 @@ _(Female)_
 
 ## Outro
  
-[Am] [G] [Am] [G]
+[Am] [G] [Am] [G]  
 [Dm] [Am] [Dm] [Am]
 
 ## Resources
