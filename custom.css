@@ -42,10 +42,15 @@ label[for="toggle-chords-visibility"]:hover {
 .reveal section code.a { background-color: #ff5959; } /* Red */
 .reveal section code.b { background-color: #a9a9a9; } /* Gray */
 .reveal section code.c { background-color: #3cc0ff; } /* Blue */
-.reveal section code.d { background-color: #45ff6d; } /* Green */
+.reveal section code.d { background-color: #45ff6d; } /* Orange */
 .reveal section code.e { background-color: #ffe149; } /* Yellow */
 .reveal section code.f { background-color: #fb63f6; } /* Violet */
 .reveal section code.g { background-color: #c78430; } /* Brown */
+
+.reveal section code.x {
+  border: 1px solid #eee;
+  color: #eee;
+}
 
 .reveal section h1, h2, em {
   color: #e7ad52 !important;
@@ -62,4 +67,19 @@ label[for="toggle-chords-visibility"]:hover {
 
 .reveal section del {
   color: #ff0000;
+}
+
+.reveal section pre {
+  display: inline-block;
+  width: auto;
+  text-align: center;
+}
+
+.reveal section pre code {
+  background-color: #ffe4ba;
+  border-radius: .5em;
+  padding: .75em 1em;
+  display: inline-block;
+  max-height: initial;
+  text-align: left;
 }

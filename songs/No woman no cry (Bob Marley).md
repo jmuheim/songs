@@ -76,7 +76,7 @@ But while I'm [F] gone
 [C] Everything's gonna [G/B] be alright  
 [Am] Everything's gonna [F] be alright
 
-_(4 times)_
+_(x4)_
 
 ## Chorus
 
