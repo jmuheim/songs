@@ -33,9 +33,7 @@ Baby I'm [Esus4] griev[E]ing
 But [Am] if you wanna [D/F#] leave take good [G] care  
 Hope you have a [C] lot of nice things to wear [F]  
 But then a [Dm] lot of nice things turn  
-[E] bad out[E7]there
-
-[G] [G7] [G6] [G5]
+[E] bad out[E7]there [G] [G7] [G6] [G5]
 
 ## Chorus
 
@@ -60,9 +58,7 @@ Don't be a [Esus4] bad [E] girl
 But [Am] if you wanna [D/F#] leave take good [G] care  
 Hope you make a [C] lot of nice friends out there [F]  
 But just re[Dm]member there's a lot of bad  
-[E] and be[E7]ware
-
-[G] [G7] [G6] [G5]
+[E] and be[E7]ware [G] [G7] [G6] [G5]
 
 ## Chorus
 
@@ -84,9 +80,7 @@ La la la... Baby I love you
 But [Am] if you wanna [D/F#] leave take good [G] care  
 Hope you make a [C] lot of nice friends out there [F]  
 But just re[Dm]member there's a lot of bad  
-[E] and be[E7]ware
-
-[G] [G7] [G6] [G5]
+[E] and be[E7]ware [G] [G7] [G6] [G5]
 
 ## Chorus
 
