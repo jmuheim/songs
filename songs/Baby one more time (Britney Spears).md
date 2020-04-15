@@ -86,14 +86,13 @@ Now give me a sign [F]
 
 [Am] When I'm not with you I lose [E] my mind  
 [G] Give me a sign [C]  
-[Dm] Hit me baby [E] ~~one more time~~ I must confess...
+[Dm] Hit me baby [E] ~~one more time~~ **I must confess...**
 
-_(Repeat and add 2nd voice)_
+_(Repeat and add 2nd voice)_ **...that my loneliness  
+is killing me now, don't you know I still believe  
+that you would be here and give me a sign**
 
-...that my loneliness is killing me now
-Don't you know I still believe
-that you would be here and give me a sign
-_(Together)_ Hit me baby one more time!
+_(Together)_ Hit me baby one more time! [Am]
 
 ## Resources
 
