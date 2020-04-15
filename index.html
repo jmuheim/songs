@@ -94,6 +94,33 @@ label[for="toggle-chords-visibility"]:hover {
   max-height: initial;
   text-align: left;
 }
+
+html {
+  --scrollbarBG: transparent;
+  --thumbBG: #cc8d2b;
+}
+
+section#TOC {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+section#TOC::-webkit-scrollbar {
+  width: .3em;
+}
+section#TOC {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+section#TOC::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+
+section#TOC::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG) ;
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}
 code{white-space: pre;}</style>
   <link rel="stylesheet" href="./revealjs/css/theme/night.css" id="theme">
   <!-- Printing and PDF exports -->
