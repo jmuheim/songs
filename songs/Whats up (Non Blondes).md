@@ -1,4 +1,4 @@
-# ⭐ Whats up (Non Blondes)
+# ❤️ Whats up (4 Non Blondes)
 
 ## Intro
 

@@ -7,7 +7,7 @@ This is a collection of my favourite guitar songs.
 
 - Use arrow keys or swipe gestures to navigate
 - To toggle chords display, click 🎹
-- For fullscreen on iOS, click "Share" and "Add to home screen", then open from there
+- For fullscreen on mobile, click "Share" and "Add to home screen", then open from there
 
 Let's sing together and have some fun! 💫
 

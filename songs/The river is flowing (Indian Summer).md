@@ -1,4 +1,4 @@
-# ⭐ The river is flowing (Indian Summer)
+# ❤️ The river is flowing (Indian Summer)
 
 ## Verse 1
 

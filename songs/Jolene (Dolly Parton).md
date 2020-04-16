@@ -1,4 +1,4 @@
-# ⭐ Jolene (Dolly Parton)
+# ❤️ Jolene (Dolly Parton)
 
 ## Intro
 

@@ -1,4 +1,4 @@
-# ⭐ Wish you were here (Pink Floyd)
+# ❤️ Wish you were here (Pink Floyd)
 
 ## Intro
 

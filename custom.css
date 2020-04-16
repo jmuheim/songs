@@ -111,3 +111,32 @@ section#TOC::-webkit-scrollbar-thumb {
   border-radius: 6px;
   border: 3px solid var(--scrollbarBG);
 }
+
+a#go-to-toc {
+  position: absolute;
+  top: 2.5em;
+  left: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#go-to-toc::before {
+  font-size: 2.5em;
+  content: '📖'
+}
+
+a#toggle-theme {
+  display: none;
+  position: absolute;
+  top: 2.5em;
+  right: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#toggle-theme::before {
+  font-size: 2.5em;
+  content: '🌞';
+}

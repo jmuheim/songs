@@ -122,6 +122,35 @@ section#TOC::-webkit-scrollbar-thumb {
   border-radius: 6px;
   border: 3px solid var(--scrollbarBG);
 }
+
+a#go-to-toc {
+  position: absolute;
+  top: 2.5em;
+  left: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#go-to-toc::before {
+  font-size: 2.5em;
+  content: '📖'
+}
+
+a#toggle-theme {
+  display: none;
+  position: absolute;
+  top: 2.5em;
+  right: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#toggle-theme::before {
+  font-size: 2.5em;
+  content: '🌞';
+}
 code{white-space: pre;}</style>
   <link rel="stylesheet" href="./revealjs/css/theme/night.css" id="theme">
   <!-- Printing and PDF exports -->
@@ -136,7 +165,7 @@ code{white-space: pre;}</style>
   <script src="./revealjs/lib/js/html5shiv.js"></script>
   <![endif]-->
 </head>
-<body><input type="checkbox" id="toggle-chords-visibility" /><label for="toggle-chords-visibility"></label>
+<body><input type="checkbox" id="toggle-chords-visibility" /><label for="toggle-chords-visibility"></label><a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/css/theme/serif.css'); return false;"></a><a href="#/1" id="go-to-toc"></a>
   <div class="reveal">
     <div class="slides">
 
@@ -152,7 +181,7 @@ code{white-space: pre;}</style>
 <li><a href="#/dont-worry-be-happy-bobby-mcferrin">Don't worry be happy (Bobby McFerrin)</a></li>
 <li><a href="#/father-and-son-cat-stevens">Father and son (Cat Stevens)</a></li>
 <li><a href="#/hurt-johnny-cash">Hurt (Johnny Cash)</a></li>
-<li><a href="#/jolene-dolly-parton">Jolene (Dolly Parton)</a></li>
+<li><a href="#/jolene-dolly-parton">❤️ Jolene (Dolly Parton)</a></li>
 <li><a href="#/keep-on-the-sunny-side-carter-family">Keep on the sunny side (Carter Family)</a></li>
 <li><a href="#/king-of-the-road-roger-miller">King of the road (Roger Miller)</a></li>
 <li><a href="#/no-woman-no-cry-bob-marley">No woman no cry (Bob Marley)</a></li>
@@ -160,15 +189,16 @@ code{white-space: pre;}</style>
 <li><a href="#/rivers-of-babylon-boney-m.">Rivers of Babylon (Boney M.)</a></li>
 <li><a href="#/road-to-mandalay-robbie-williams">Road to Mandalay (Robbie Williams)</a></li>
 <li><a href="#/road-trippin-red-hot-chili-peppers">Road trippin' (Red Hot Chili Peppers)</a></li>
-<li><a href="#/s.o.b.-nathaniel-rateliff">S.O.B. (Nathaniel Rateliff)</a></li>
+<li><a href="#/s.o.b.-nathaniel-rateliff">❤️ S.O.B. (Nathaniel Rateliff)</a></li>
 <li><a href="#/sittin-on-the-dock-of-the-bay-otis-redding">Sittin' on the dock of the bay (Otis Redding)</a></li>
 <li><a href="#/something-stupid-robbie-williams">Something stupid (Robbie Williams)</a></li>
 <li><a href="#/somewhere-over-the-rainbow-israël-kamakawiwoole">Somewhere over the rainbow (Israël Kamakawiwo'ole)</a></li>
-<li><a href="#/sounds-of-silence-simon-and-garfunkel">Sounds of silence (Simon and Garfunkel)</a></li>
+<li><a href="#/sounds-of-silence-simon-and-garfunkel">❤️ Sounds of silence (Simon and Garfunkel)</a></li>
 <li><a href="#/summer-wine-nancy-sinatra-lee-hazlewood">Summer wine (Nancy Sinatra &amp; Lee Hazlewood)</a></li>
-<li><a href="#/the-river-is-flowing-indian-summer">The river is flowing (Indian Summer)</a></li>
+<li><a href="#/the-river-is-flowing-indian-summer">❤️ The river is flowing (Indian Summer)</a></li>
+<li><a href="#/whats-up-4-non-blondes">❤️ Whats up (4 Non Blondes)</a></li>
 <li><a href="#/wild-world-cat-stevens">Wild world (Cat Stevens)</a></li>
-<li><a href="#/wish-you-were-here-pink-floyd">Wish you were here (Pink Floyd)</a></li>
+<li><a href="#/wish-you-were-here-pink-floyd">❤️ Wish you were here (Pink Floyd)</a></li>
 </ul>
 </section>
 
@@ -179,7 +209,7 @@ code{white-space: pre;}</style>
 <ul>
 <li>Use arrow keys or swipe gestures to navigate</li>
 <li>To toggle chords display, click 🎹</li>
-<li>For fullscreen on iOS, click &quot;Share&quot; and &quot;Add to home screen&quot;, then open from there</li>
+<li>For fullscreen on mobile, click &quot;Share&quot; and &quot;Add to home screen&quot;, then open from there</li>
 </ul>
 <p>Let's sing together and have some fun! 💫</p>
 <p>🙏 Cheers, Joshua 🌛</p>
@@ -505,7 +535,7 @@ to see <code class="c">C</code> if I <code class="d">D</code> still feel <code c
 I <code class="c">C</code> focus <code class="d">D</code> on the pain <code class="a">Am</code><br />
 the <code class="c">C</code> only thing <code class="d">D</code> that's real <code class="a">Am</code></p>
 <p>The <code class="c">C</code> needle <code class="d">D</code> tears a hole <code class="a">Am</code><br />
-the <code class="c">C</code> old fa[<code class="d">D</code>]miliar sting <code class="a">Am</code><br />
+the <code class="c">C</code> old fa<code class="d">D</code>miliar sting <code class="a">Am</code><br />
 Try to <code class="c">C</code> kill it <code class="d">D</code> all away <code class="a">Am</code><br />
 but I re<code class="c">C</code>member <code class="d">D</code> everything <code class="g">G</code></p>
 </section><section id="chorus-1-1" class="slide level2">
@@ -560,7 +590,7 @@ a <code class="c">C/E</code> million miles a<code class="g">G</code>way<br />
 <li><a href="https://www.youtube.com/watch?v=hEKexrWq5RU">Guitar tutorial</a></li>
 </ul>
 </section></section>
-<section><section id="jolene-dolly-parton" class="titleslide slide level1"><h1>Jolene (Dolly Parton)</h1></section><section id="intro-4" class="slide level2">
+<section><section id="jolene-dolly-parton" class="titleslide slide level1"><h1>❤️ Jolene (Dolly Parton)</h1></section><section id="intro-4" class="slide level2">
 <h2>Intro</h2>
 <p><code class="a">Am</code> <em>(x4)</em></p>
 </section><section id="chorus-7" class="slide level2">
@@ -913,7 +943,8 @@ We got to <code class="f">Fmaj7</code> carry each other, car<code class="c">C</c
 <section><section id="rivers-of-babylon-boney-m." class="titleslide slide level1"><h1>Rivers of Babylon (Boney M.)</h1></section><section id="intro-8" class="slide level2">
 <h2>Intro</h2>
 <p><em>(Vocals only)</em></p>
-<p>Mmmh <code class="g">G</code> mmmh <code class="g">G</code> mmmh <code class="d">D7</code> mmmh <code class="g">G</code> Uuuh <code class="g">G</code> uuuh <code class="g">G</code> uuuh <code class="d">D7</code> uuuh <code class="g">G</code></p>
+<p>Mmmh <code class="g">G</code> mmmh <code class="g">G</code> mmmh <code class="d">D7</code> mmmh <code class="g">G</code><br />
+Uuuh <code class="g">G</code> uuuh <code class="g">G</code> uuuh <code class="d">D7</code> uuuh <code class="g">G</code></p>
 </section><section id="chorus-18" class="slide level2">
 <h2>Chorus</h2>
 <p>By the rivers of <code class="g">G</code> Babylon<br />
@@ -1115,7 +1146,7 @@ are just a <code class="c">C</code> mirror for <code class="d">D</code> <em>(x3)
 <li><a href="https://www.youtube.com/watch?v=NXLH5YT1ZLM">Guitar tutorial</a></li>
 </ul>
 </section></section>
-<section><section id="s.o.b.-nathaniel-rateliff" class="titleslide slide level1"><h1>S.O.B. (Nathaniel Rateliff)</h1></section><section id="verse-1-13" class="slide level2">
+<section><section id="s.o.b.-nathaniel-rateliff" class="titleslide slide level1"><h1>❤️ S.O.B. (Nathaniel Rateliff)</h1></section><section id="verse-1-13" class="slide level2">
 <h2>Verse 1</h2>
 <p><em>(No guitar, only stomping on beat<br />
 and clapping off beat)</em></p>
@@ -1423,7 +1454,7 @@ you'll <code class="f">F</code> find me</p>
 <li><a href="https://ukutabs.com/i/israel-kamakawiwoole/somewhere-over-the-rainbow-what-a-wonderful-world/">Source tab</a></li>
 </ul>
 </section></section>
-<section><section id="sounds-of-silence-simon-and-garfunkel" class="titleslide slide level1"><h1>Sounds of silence (Simon and Garfunkel)</h1></section><section id="verse-1-17" class="slide level2">
+<section><section id="sounds-of-silence-simon-and-garfunkel" class="titleslide slide level1"><h1>❤️ Sounds of silence (Simon and Garfunkel)</h1></section><section id="verse-1-17" class="slide level2">
 <h2>Verse 1</h2>
 <p><code class="a">Am</code> Hello darkness, my old <code class="g">G</code> friend<br />
 I've come to talk with you a<code class="a">Am</code>gain<br />
@@ -1564,7 +1595,7 @@ a <code class="a">Am</code> dollar and a dime<br />
 <li><a href="https://tabs.ultimate-guitar.com/tab/ville-valo/summer-wine-chords-590088">Source tab</a></li>
 </ul>
 </section></section>
-<section><section id="the-river-is-flowing-indian-summer" class="titleslide slide level1"><h1>The river is flowing (Indian Summer)</h1></section><section id="verse-1-19" class="slide level2">
+<section><section id="the-river-is-flowing-indian-summer" class="titleslide slide level1"><h1>❤️ The river is flowing (Indian Summer)</h1></section><section id="verse-1-19" class="slide level2">
 <h2>Verse 1</h2>
 <p><em>(Chords sequence remains the same)</em></p>
 <p>The <code class="a">Am</code> river is <code class="c">C</code> flowing<br />
@@ -1608,8 +1639,75 @@ until we are pure</p>
 </section><section id="resources-19" class="slide level2">
 <h2>Resources</h2>
 <ul>
-<li>[Song](https://www.youtube.com/watch?v=sB2AaVVjF-0&gt;</li>
-<li>[Source tab](https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196&gt;</li>
+<li><a href="https://www.youtube.com/watch?v=sB2AaVVjF-0">Song</a></li>
+<li><a href="https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196">Source tab</a></li>
+</ul>
+</section></section>
+<section><section id="whats-up-4-non-blondes" class="titleslide slide level1"><h1>❤️ Whats up (4 Non Blondes)</h1></section><section id="intro-12" class="slide level2">
+<h2>Intro</h2>
+<p><code class="a">A</code> <code class="b">Bm</code> <code class="d">D</code> <code class="a">A</code> <em>(x2)</em></p>
+</section><section id="verse-1-20" class="slide level2">
+<h2>Verse 1</h2>
+<p><code class="a">A</code> Twenty-five years and my life is still<br />
+<code class="b">Bm</code> Trying to get up that great big hill<br />
+Of <code class="d">D</code> hope for a destina<code class="a">A</code>tion</p>
+<p>I <code class="a">A</code> realized quickly when I knew I should<br />
+That the world <code class="b">Bm</code> was made of this brotherhood<br />
+Of man, <code class="d">D</code> for whatever that means <code class="a">A</code></p>
+</section><section id="pre-dhorus" class="slide level2">
+<h2>Pre-Dhorus</h2>
+<p>And so I <code class="a">A</code> cry sometimes when I'm lying in bed<br />
+Just to <code class="b">Bm</code> get it all out, what's in my head<br />
+and I <code class="d">D</code> - I am feeling a little pecu<code class="a">A</code>liar</p>
+<p>And so I <code class="a">A</code> wake in the morning and I step outside<br />
+and I <code class="b">Bm</code> take a deep breath and I get real high and<br />
+I <code class="d">D</code> scream at the top of my lungs:</p>
+<p>&quot;What's going <code class="a">A</code> on?&quot;</p>
+</section><section id="dhorus" class="slide level2">
+<h2>Dhorus</h2>
+<p>And I said <code class="a">A</code> &quot;Heyeyeyeyey <code class="b">Bm</code> Heyeyey&quot;<br />
+I said &quot;Hey, <code class="d">D</code> what's going on?&quot; <code class="a">A</code><br />
+And I said <code class="a">A</code> &quot;Heyeyeyeyey <code class="b">Bm</code> Heyeyey&quot;<br />
+I said &quot;Hey, <code class="d">D</code> what's going on?&quot; <code class="a">A</code></p>
+</section><section id="interlude-7" class="slide level2">
+<h2>Interlude</h2>
+<p><code class="a">A</code> Ooh <code class="b">Bm</code> Ooh <code class="d">D</code> Ooh <code class="a">A</code> <em>(x2)</em></p>
+</section><section id="verse" class="slide level2">
+<h2>Verse</h2>
+<p>And I try, <code class="a">A</code> oh my Aod do I try <code class="b">Bm</code><br />
+I try all the time, <code class="d">D</code> in this institu<code class="a">A</code>tion<br />
+And I pray, <code class="a">A</code> oh my god do I pray <code class="b">Bm</code> I pray every single day <code class="d">D</code><br />
+For a revo<code class="a">A</code>lution</p>
+</section><section id="pre-dhorus-1" class="slide level2">
+<h2>Pre-Dhorus</h2>
+<p>And so I <code class="a">A</code> cry sometimes when I'm lying in bed<br />
+Just to <code class="b">Bm</code> get it all out, what's in my head<br />
+and I <code class="d">D</code> - I am feeling a little pecu<code class="a">A</code>liar</p>
+<p>And so I <code class="a">A</code> wake in the morning and I step outside<br />
+and I <code class="b">Bm</code> take a deep breath and I get real high and<br />
+I <code class="d">D</code> scream at the top of my lungs:</p>
+<p>&quot;What's going <code class="a">A</code> on?&quot;</p>
+</section><section id="chorus-34" class="slide level2">
+<h2>Chorus</h2>
+<p>And I said <code class="a">A</code> &quot;Heyeyeyeyey <code class="b">Bm</code> Heyeyey&quot;<br />
+I said &quot;Hey, <code class="d">D</code> what's going on?&quot; <code class="a">A</code><br />
+And I said <code class="a">A</code> &quot;Heyeyeyeyey <code class="b">Bm</code> Heyeyey&quot;<br />
+I said &quot;Hey, <code class="d">D</code> what's going on?&quot; <code class="a">A</code></p>
+<p><em>(Repeat)</em></p>
+</section><section id="interlude-8" class="slide level2">
+<h2>Interlude</h2>
+<p><code class="a">A</code> Ooh <code class="b">Bm</code> Ooh <code class="d">D</code> Ooh <code class="a">A</code></p>
+</section><section id="outro-6" class="slide level2">
+<h2>Outro</h2>
+<p><code class="a">A</code> Twenty-five years and my life is still<br />
+<code class="b">Bm</code> Trying to get up that great big hill<br />
+Of <code class="d">D</code> hope for a destina<code class="a">A</code>tion</p>
+</section><section id="resources-20" class="slide level2">
+<h2>Resources</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=6NXnxTNIWkc">Song</a></li>
+<li><a href="https://tabs.ultimate-guitar.com/tab/4-non-blondes/whats-up-chords-268676">Source tab</a></li>
+<li><a href="">Guitar tutorial</a></li>
 </ul>
 </section></section>
 <section><section id="wild-world-cat-stevens" class="titleslide slide level1"><h1>Wild world (Cat Stevens)</h1></section><section id="instructions-3" class="slide level2">
@@ -1627,11 +1725,11 @@ G |---2p0-------|--------------|
 D |------3p2p0--|--------------|
 A |-----------3-|---0-3-3-3-0-3|
 E |------------3|3-3---------3-|</code></pre>
-</section><section id="intro-12" class="slide level2">
+</section><section id="intro-13" class="slide level2">
 <h2>Intro</h2>
 <p><code class="a">Am</code> <code class="d">D/F#</code> <code class="g">G</code> <code class="c">C</code> <code class="f">F</code> <code class="d">Dm</code> <code class="e">E</code> <code class="e">Esus4</code> <code class="e">E</code><br />
 La la la...</p>
-</section><section id="verse-1-20" class="slide level2">
+</section><section id="verse-1-21" class="slide level2">
 <h2>Verse 1</h2>
 <p><code class="a">Am</code> Now that I've <code class="d">D/F#</code> lost everything to <code class="g">G</code> you<br />
 You say you <code class="c">C</code> wanna start something <code class="f">F</code> new<br />
@@ -1641,7 +1739,7 @@ Baby I'm <code class="e">Esus4</code> griev<code class="e">E</code>ing</p>
 Hope you have a <code class="c">C</code> lot of nice things to wear <code class="f">F</code><br />
 But then a <code class="d">Dm</code> lot of nice things turn<br />
 <code class="e">E</code> bad out<code class="e">E7</code>there <code class="g">G</code> <code class="g">G7</code> <code class="g">G6</code> <code class="g">G5</code></p>
-</section><section id="chorus-34" class="slide level2">
+</section><section id="chorus-35" class="slide level2">
 <h2>Chorus</h2>
 <p><code class="c">C</code> Oh <code class="g">G</code> baby, baby it's a <code class="f">F</code> wild world<br />
 <code class="c">C</code> <em>(Riff 1)</em><br />
@@ -1661,7 +1759,7 @@ Don't be a <code class="e">Esus4</code> bad <code class="e">E</code> girl</p>
 Hope you make a <code class="c">C</code> lot of nice friends out there <code class="f">F</code><br />
 But just re<code class="d">Dm</code>member there's a lot of bad<br />
 <code class="e">E</code> and be<code class="e">E7</code>ware <code class="g">G</code> <code class="g">G7</code> <code class="g">G6</code> <code class="g">G5</code></p>
-</section><section id="chorus-35" class="slide level2">
+</section><section id="chorus-36" class="slide level2">
 <h2>Chorus</h2>
 <p><code class="c">C</code> Oh <code class="g">G</code> baby, baby it's a <code class="f">F</code> wild world<br />
 <code class="c">C</code> <em>(Riff 1)</em><br />
@@ -1677,7 +1775,7 @@ But just re<code class="d">Dm</code>member there's a lot of bad<br />
 Hope you make a <code class="c">C</code> lot of nice friends out there <code class="f">F</code><br />
 But just re<code class="d">Dm</code>member there's a lot of bad<br />
 <code class="e">E</code> and be<code class="e">E7</code>ware <code class="g">G</code> <code class="g">G7</code> <code class="g">G6</code> <code class="g">G5</code></p>
-</section><section id="chorus-36" class="slide level2">
+</section><section id="chorus-37" class="slide level2">
 <h2>Chorus</h2>
 <p><code class="c">C</code> Oh <code class="g">G</code> baby, baby it's a <code class="f">F</code> wild world<br />
 <code class="c">C</code> <em>(Riff 1)</em><br />
@@ -1687,7 +1785,7 @@ But just re<code class="d">Dm</code>member there's a lot of bad<br />
 <code class="c">C</code> <em>(Riff 1)</em><br />
 <code class="g">G</code> I'll always remember you <code class="f">F</code> like a <code class="c">C</code> child girl <code class="d">Dm</code> <code class="e">E</code> <em>(1st time only)</em></p>
 <p><em>(Repeat)</em></p>
-</section><section id="resources-20" class="slide level2">
+</section><section id="resources-21" class="slide level2">
 <h2>Resources</h2>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=yffOnXYgy3o">Song</a></li>
@@ -1695,7 +1793,7 @@ But just re<code class="d">Dm</code>member there's a lot of bad<br />
 <li><a href="https://www.youtube.com/watch?v=SeDzGf7L3Fs">Guitar tutorial</a></li>
 </ul>
 </section></section>
-<section><section id="wish-you-were-here-pink-floyd" class="titleslide slide level1"><h1>Wish you were here (Pink Floyd)</h1></section><section id="intro-13" class="slide level2">
+<section><section id="wish-you-were-here-pink-floyd" class="titleslide slide level1"><h1>❤️ Wish you were here (Pink Floyd)</h1></section><section id="intro-14" class="slide level2">
 <h2>Intro</h2>
 <p><em>(Instrumental)</em></p>
 <p><code class="g">G</code> <code class="e">Em</code><br />
@@ -1704,7 +1802,7 @@ But just re<code class="d">Dm</code>member there's a lot of bad<br />
 <code class="a">A</code> <code class="e">Em</code><br />
 <code class="a">A</code> <code class="g">G</code></p>
 <p><em>(Repeat with solo)</em></p>
-</section><section id="verse-1-21" class="slide level2">
+</section><section id="verse-1-22" class="slide level2">
 <h2>Verse 1</h2>
 <p><code class="c">C</code> So, so you think you can <code class="d">D</code> tell<br />
 heaven from <code class="a">Am</code> hell?<br />
@@ -1723,14 +1821,14 @@ Hot air for a <code class="g">G</code> cool breeze?</p>
 And did you ex<code class="c">C</code>change<br />
 a walk-on part in the <code class="a">Am</code> war<br />
 for a lead role in a <code class="g">G</code> cage?</p>
-</section><section id="interlude-7" class="slide level2">
+</section><section id="interlude-9" class="slide level2">
 <h2>Interlude</h2>
 <p><code class="g">G</code> <code class="e">Em</code><br />
 <code class="g">G</code> <code class="e">Em</code><br />
 <code class="g">G</code> <code class="e">Em</code><br />
 <code class="a">A</code> <code class="e">Em</code><br />
 <code class="a">A</code> <code class="g">G</code></p>
-</section><section id="chorus-37" class="slide level2">
+</section><section id="chorus-38" class="slide level2">
 <h2>Chorus</h2>
 <p><code class="c">C</code> How I wish<br />
 how I wish you were <code class="d">D</code> here<br />
@@ -1741,7 +1839,7 @@ swimming in a fishbowl<br />
 <code class="c">C</code> what have we found?<br />
 The same old <code class="a">Am</code> fears<br />
 Wish you were <code class="g">G</code> here</p>
-</section><section id="outro-6" class="slide level2">
+</section><section id="outro-7" class="slide level2">
 <h2>Outro</h2>
 <p><code class="g">G</code> <code class="e">Em</code><br />
 <code class="g">G</code> <code class="e">Em</code><br />
@@ -1749,12 +1847,12 @@ Wish you were <code class="g">G</code> here</p>
 <code class="a">A</code> <code class="e">Em</code><br />
 <code class="a">A</code> <code class="g">G</code></p>
 <p><em>(Fade out slowly)</em></p>
-</section><section id="resources-21" class="slide level2">
+</section><section id="resources-22" class="slide level2">
 <h2>Resources</h2>
 <ul>
-<li>[Song](https://www.youtube.com/watch?v=IXdNnw99-Ic&gt;</li>
-<li>[Source tab](https://tabs.ultimate-guitar.com/tab/pink-floyd/wish-you-were-here-chords-1088963&gt;</li>
-<li>[Guitar tutorial](https://www.youtube.com/watch?v=4m1T4v9bIds&gt;</li>
+<li><a href="https://www.youtube.com/watch?v=IXdNnw99-Ic">Song</a></li>
+<li><a href="https://tabs.ultimate-guitar.com/tab/pink-floyd/wish-you-were-here-chords-1088963">Source tab</a></li>
+<li><a href="https://www.youtube.com/watch?v=N2dQRYyaglk">Guitar tutorial</a></li>
 </ul>
 </section></section>
     </div>
