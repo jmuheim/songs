@@ -31,7 +31,8 @@ Morning has [C]brok[Dm]en
 
 ## Instrumental
 
-[F] [G] [E] [Am] [G7] [C] [G7sus4]
+[F] [G] [E] [Am]  
+[G7] [C] [G7sus4]
 
 ## Verse 2
 
@@ -47,8 +48,9 @@ Sweet the rain's [C] new [Dm] fall
 
 ## Instrumental
 
-[F] [G] [E] [Am] [F#]  
-[Bm] [G] [D] [A7/D] [D]
+[F] [G] [E] [Am]  
+[F#] [Bm] [G] [D]  
+[A7/D] [D]
 
 ## Verse 3
 
@@ -81,8 +83,9 @@ Morning has [C]brok[Dm]en
 
 ## Outro
 
-[F] [G] [E] [Am] [F#]  
-[Bm] [G] [D] [A7/D] [D]
+[F] [G] [E] [Am]  
+[F#] [Bm] [G] [D]  
+[A7/D] [D]
 
 ## Resources
 
