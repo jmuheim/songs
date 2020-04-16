@@ -92,6 +92,7 @@ html {
 section#TOC {
   overflow-y: scroll;
   height: 100%;
+  padding: 0;
 }
 
 section#TOC::-webkit-scrollbar {

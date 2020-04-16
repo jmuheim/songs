@@ -9,7 +9,7 @@ Sounds best with some barre chords:
    |-----------|
 C  |x 3 5 5 5 3| To slide easily into Eb
 Eb |x 6 8 8 8 6|
-G6 |3 5 5 4 3 0| Thumb for E string
+G6 |3 5 5 4 3 0| Thumb on E string
 G  |3 5 5 4 3 3| To change easily to G7
 G7 |3 5 3 4 3 3| To change easily to C
 
@@ -76,7 +76,7 @@ like: "I [G6] love you"
 
 ## Bridge
 
-_(Instrumental only, maybe add whistling)_
+_(Instrumental, maybe add whistling)_
 
 [G] [G7] [C] 
 [A7] [D] [D+]

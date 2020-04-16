@@ -9,7 +9,7 @@ Chorus chord variations:
        |-----------|
 Am7    |x 0 3 0 1 3|
 C/E(2) |0 3 2 0 1 3|
-Fadd9  |1 0 3 2 1 3| Thumb for E string
+Fadd9  |1 0 3 2 1 3| Thumb on E string
 
 Just keep pinky on 3rd fret of e string
 ```

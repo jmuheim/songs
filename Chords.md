@@ -28,3 +28,5 @@ G |3 x 0 0 0 1| Easier, A string muted
 Feeling bored of major chords (A, D, E...)?
   => Try playing a seventh chord instead (A7, D7, E7...)!
 ```
+
+## Fullscreen (iOS)
