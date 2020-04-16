@@ -1,5 +1,18 @@
 # Introduction
 
+## Welcome
+
+This is a collection of my favourite guitar songs.  
+🎤😍🎸🔥 Find it on [josh.ch/songs](http://josh.ch/songs).
+
+- Use arrow keys or swipe gestures to navigate
+- To toggle chords display, click 🎹
+- For fullscreen on iOS, click "Share" and "Add to home screen", then open from there
+
+Let's sing together and have some fun! 💫
+
+🙏 Cheers, Joshua 🌛
+
 ## Basic chords
 
 ```
@@ -28,5 +41,3 @@ G |3 x 0 0 0 1| Easier, A string muted
 Feeling bored of major chords (A, D, E...)?
   => Try playing a seventh chord instead (A7, D7, E7...)!
 ```
-
-## Fullscreen (iOS)

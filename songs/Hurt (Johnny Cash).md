@@ -28,7 +28,7 @@ I [C] focus [D] on the pain [Am]
 the [C] only thing [D] that's real [Am]
 
 The [C] needle [D] tears a hole [Am]  
-the [C] old fa[[D]]miliar sting [Am]  
+the [C] old fa[D]miliar sting [Am]  
 Try to [C] kill it [D] all away [Am]  
 but I re[C]member [D] everything [G]
  

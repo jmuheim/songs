@@ -1,4 +1,4 @@
-# Sounds of silence (Simon and Garfunkel)
+# ⭐ Sounds of silence (Simon and Garfunkel)
 
 ## Verse 1
 

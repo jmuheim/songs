@@ -1,4 +1,4 @@
-#S.O.B. (Nathaniel Rateliff)
+# ⭐ S.O.B. (Nathaniel Rateliff)
 
 ## Verse 1
 

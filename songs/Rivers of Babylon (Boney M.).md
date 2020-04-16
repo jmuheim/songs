@@ -4,7 +4,7 @@
 
 _(Vocals only)_
 
-Mmmh [G] mmmh [G] mmmh [D7] mmmh [G]
+Mmmh [G] mmmh [G] mmmh [D7] mmmh [G]  
 Uuuh [G] uuuh [G] uuuh [D7] uuuh [G]
  
 ## Chorus

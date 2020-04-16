@@ -1,4 +1,4 @@
-# The river is flowing (Indian Summer)
+# ⭐ The river is flowing (Indian Summer)
 
 ## Verse 1
 
@@ -52,5 +52,5 @@ until we are pure
 
 ## Resources
 
-- [Song](https://www.youtube.com/watch?v=sB2AaVVjF-0>
-- [Source tab](https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196>
+- [Song](https://www.youtube.com/watch?v=sB2AaVVjF-0)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196)
