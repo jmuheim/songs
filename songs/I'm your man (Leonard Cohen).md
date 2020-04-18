@@ -49,16 +49,16 @@ that I made [Bm] and I could not keep
 ---
 
 Ah, but a [F#] man never got a women back  
-not by [Bm] begging on his knees
+not by [Bm] begging on his knees  
 Or I'd [G] crawl to you, baby  
 and I'd [F#] fall at your feet
 
-and I'd [G] howl at your beauty  
-like a [F#] dog in heat
+And I'd [G] howl at your beauty  
+like a [F#] dog in heat  
 And I'd [G] claw at your heart  
 and I'd [E] tear at your sheet
 
-I'd say: please [A]
+I'd say: please [A]  
 please, I'm your man [Bm]
 
 ## Verse 3

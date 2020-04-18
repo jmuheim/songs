@@ -28,7 +28,7 @@ Poss[Em7]essing and car[Gm]essing me
 
 [D] Jai guru deva om [A7sus4]
 
-[A] Nothing's gonna change my world [A7]
+[A] Nothing's gonna change my world [A7]  
 [G] Nothing's gonna change my world [D] _(x2)_
 
 ## Verse 2
@@ -48,7 +48,7 @@ across the [A7] universe
 
 [D] Jai guru deva om [A7sus4]
 
-[A] Nothing's gonna change my world [A7]
+[A] Nothing's gonna change my world [A7]  
 [G] Nothing's gonna change my world [D] _(x2)_
 
 ## Verse 3
@@ -66,7 +66,7 @@ a[A]cross the universe [A7]
 
 [D] Jai guru deva om [A7sus4]
 
-[A] Nothing's gonna change my world [A7]
+[A] Nothing's gonna change my world [A7]  
 [G] Nothing's gonna change my world [D] _(x2)_
 
 ## Outro

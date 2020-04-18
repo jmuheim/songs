@@ -49,7 +49,7 @@ Well I see [C] trees of [Em] green and
 [E7] me and [Am] you
 
 And I [F] think to myself  
-[G] what a wonderful [Am] world [F]  
+[G] what a wonderful [Am] world [F]
 
 ---
 
