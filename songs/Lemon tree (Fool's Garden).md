@@ -36,7 +36,7 @@ I'm [Em] sitting here in a [Bm] boring room
 It's [Em] just another rainy sunday [Bm] afternoon  
 I'm [Em] wasting my time I got [Bm] nothing to do  
 I'm [Em] hanging around I'm [Bm] waiting for you  
-But [Bbm] nothing ever happens [Am] - and I [Bm] wonder [Em]
+[Bbm] But [Am] nothing ever happens [Bm] - and I won[Em]der
 
 ## Verse 2
 
@@ -46,7 +46,7 @@ I'm [Em] driving around [Bm] in my car
 I'm [Em] driving too fast I'm [Bm] driving too far  
 I'd [Em] like to change my [Bm] point of view  
 I [Em] feel so lonely I'm [Bm] waiting for you  
-But [Bbm] nothing ever happens [Am] - and I won[Bm]der [Em]
+[Bbm] But [Am] nothing ever happens [Bm] - and I won[Em]der
 
 ## Chorus
 
@@ -77,7 +77,7 @@ I'm [Em] sitting here I [Bm] miss the power
 I'd [Em] like to go out [Bm] taking a shower  
 But [Em] there's a heavy cloud in[Bm]side my head  
 I [Em] feel so tired put my[Bm]self into bed  
-Where [Bbm] nothing ever happens [Am] - and I won[Bm]der [Em]
+[Bbm] Where [Am] nothing ever happens [Bm] - and I won[Em]der
 
 ## Bridge 2
 
@@ -90,7 +90,7 @@ _(Barre chords)_
 
 I'm [Em] steppin' around in a [Bm] desert of joy  
 [Em] Baby anyhow I'll get an[Bm]other toy  
-And [Bbm] everything will happen - [Am] and you'll won[Bm]der [Em]
+And [Am] everything will happen - [Bm] and you'll won[Em]der
 
 ## Chorus
 
