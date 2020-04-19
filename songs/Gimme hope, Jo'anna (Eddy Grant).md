@@ -2,7 +2,7 @@
 
 ## Intro
 
-[A] [D] [A] [D]
+[A] [D] [A] [D]  
 [A] [D] [A] [E]
 [A]
 
@@ -17,9 +17,7 @@ She don't [A] care about the [E] rest at all [A]
 
 She's got a [A] system they call apart[D]heid  
 It keeps a [A] brother in a subjec[E]tion  
-                                   
-But maybe [A] pressure can make Jo'[D]anna see [Dm]
-                                
+But maybe [A] pressure can make Jo'[D]anna see [Dm]  
 How every[A]body could a [E] live as [A] one, oh [E]
 
 ## Chorus
