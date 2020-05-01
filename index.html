@@ -151,6 +151,432 @@ a#toggle-theme::before {
   font-size: 2.5em;
   content: '🌞';
 }
+.reveal section code {
+  color: #000;
+  padding: 0 .2em;
+  border-radius: 0.25em;
+  line-height: 1;
+}
+
+label[for="toggle-chords-visibility"] {
+  position: absolute;
+  bottom: 2.5em;
+  left: 1em;
+  z-index: 100;
+  opacity: 0.75;
+}
+
+label[for="toggle-chords-visibility"]::before {
+  font-size: 2.5em;
+  content: '🎹'
+}
+
+label[for="toggle-chords-visibility"]:hover {
+  cursor: pointer;
+}
+
+#toggle-chords-visibility:checked + label[for="toggle-chords-visibility"]::after {
+  font-size: 2.5em;
+  content: '❌';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+#toggle-chords-visibility {
+  opacity: 0;
+  position: absolute;
+}
+
+#toggle-chords-visibility:checked ~ .reveal code {
+  display: none;
+}
+
+.reveal section code.a { background-color: #ff5959; } /* Red */
+.reveal section code.b { background-color: #a9a9a9; } /* Gray */
+.reveal section code.c { background-color: #3cc0ff; } /* Blue */
+.reveal section code.d { background-color: #45ff6d; } /* Orange */
+.reveal section code.e { background-color: #ffe149; } /* Yellow */
+.reveal section code.f { background-color: #fb63f6; } /* Violet */
+.reveal section code.g { background-color: #c78430; } /* Brown */
+
+.reveal section code.x {
+  border: 1px solid #eee;
+  color: #eee;
+}
+
+.reveal section h1, h2, em {
+  color: #e7ad52 !important;
+}
+
+.reveal section em {
+  opacity: .5;
+}
+
+.reveal section strong {
+  color: #5ad066;
+  font-weight: normal;
+}
+
+.reveal section del {
+  color: #bb0000;
+}
+
+.reveal section pre {
+  display: inline-block;
+  width: auto;
+  text-align: center;
+}
+
+.reveal section pre code {
+  background-color: #ffe4ba;
+  border-radius: .5em;
+  padding: .75em 1em;
+  display: inline-block;
+  max-height: initial;
+  text-align: left;
+}
+
+html {
+  --scrollbarBG: transparent;
+  --thumbBG: #be7e1b;
+}
+
+section#TOC {
+  overflow-y: scroll;
+  height: 100%;
+  padding: 0;
+}
+
+section#TOC::-webkit-scrollbar {
+  width: .3em;
+}
+section#TOC {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+section#TOC::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+
+section#TOC::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG) ;
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}
+
+a#go-to-toc {
+  position: absolute;
+  top: 2.5em;
+  left: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#go-to-toc::before {
+  font-size: 2.5em;
+  content: '📖'
+}
+
+a#toggle-theme {
+  display: none;
+  position: absolute;
+  top: 2.5em;
+  right: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#toggle-theme::before {
+  font-size: 2.5em;
+  content: '🌞';
+}
+.reveal section code {
+  color: #000;
+  padding: 0 .2em;
+  border-radius: 0.25em;
+  line-height: 1;
+}
+
+label[for="toggle-chords-visibility"] {
+  position: absolute;
+  bottom: 2.5em;
+  left: 1em;
+  z-index: 100;
+  opacity: 0.75;
+}
+
+label[for="toggle-chords-visibility"]::before {
+  font-size: 2.5em;
+  content: '🎹'
+}
+
+label[for="toggle-chords-visibility"]:hover {
+  cursor: pointer;
+}
+
+#toggle-chords-visibility:checked + label[for="toggle-chords-visibility"]::after {
+  font-size: 2.5em;
+  content: '❌';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+#toggle-chords-visibility {
+  opacity: 0;
+  position: absolute;
+}
+
+#toggle-chords-visibility:checked ~ .reveal code {
+  display: none;
+}
+
+.reveal section code.a { background-color: #ff5959; } /* Red */
+.reveal section code.b { background-color: #a9a9a9; } /* Gray */
+.reveal section code.c { background-color: #3cc0ff; } /* Blue */
+.reveal section code.d { background-color: #45ff6d; } /* Orange */
+.reveal section code.e { background-color: #ffe149; } /* Yellow */
+.reveal section code.f { background-color: #fb63f6; } /* Violet */
+.reveal section code.g { background-color: #c78430; } /* Brown */
+
+.reveal section code.x {
+  border: 1px solid #eee;
+  color: #eee;
+}
+
+.reveal section h1, h2, em {
+  color: #e7ad52 !important;
+}
+
+.reveal section em {
+  opacity: .5;
+}
+
+.reveal section strong {
+  color: #5ad066;
+  font-weight: normal;
+}
+
+.reveal section del {
+  color: #bb0000;
+}
+
+.reveal section pre {
+  display: inline-block;
+  width: auto;
+  text-align: center;
+}
+
+.reveal section pre code {
+  background-color: #ffe4ba;
+  border-radius: .5em;
+  padding: .75em 1em;
+  display: inline-block;
+  max-height: initial;
+  text-align: left;
+}
+
+html {
+  --scrollbarBG: transparent;
+  --thumbBG: #be7e1b;
+}
+
+section#TOC {
+  overflow-y: scroll;
+  height: 100%;
+  padding: 0;
+}
+
+section#TOC::-webkit-scrollbar {
+  width: .3em;
+}
+section#TOC {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+section#TOC::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+
+section#TOC::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG) ;
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}
+
+a#go-to-toc {
+  position: absolute;
+  top: 2.5em;
+  left: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#go-to-toc::before {
+  font-size: 2.5em;
+  content: '📖'
+}
+
+a#toggle-theme {
+  display: none;
+  position: absolute;
+  top: 2.5em;
+  right: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#toggle-theme::before {
+  font-size: 2.5em;
+  content: '🌞';
+}
+.reveal section code {
+  color: #000;
+  padding: 0 .2em;
+  border-radius: 0.25em;
+  line-height: 1;
+}
+
+label[for="toggle-chords-visibility"] {
+  position: absolute;
+  bottom: 2.5em;
+  left: 1em;
+  z-index: 100;
+  opacity: 0.75;
+}
+
+label[for="toggle-chords-visibility"]::before {
+  font-size: 2.5em;
+  content: '🎹'
+}
+
+label[for="toggle-chords-visibility"]:hover {
+  cursor: pointer;
+}
+
+#toggle-chords-visibility:checked + label[for="toggle-chords-visibility"]::after {
+  font-size: 2.5em;
+  content: '❌';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+#toggle-chords-visibility {
+  opacity: 0;
+  position: absolute;
+}
+
+#toggle-chords-visibility:checked ~ .reveal code {
+  display: none;
+}
+
+.reveal section code.a { background-color: #ff5959; } /* Red */
+.reveal section code.b { background-color: #a9a9a9; } /* Gray */
+.reveal section code.c { background-color: #3cc0ff; } /* Blue */
+.reveal section code.d { background-color: #45ff6d; } /* Orange */
+.reveal section code.e { background-color: #ffe149; } /* Yellow */
+.reveal section code.f { background-color: #fb63f6; } /* Violet */
+.reveal section code.g { background-color: #c78430; } /* Brown */
+
+.reveal section code.x {
+  border: 1px solid #eee;
+  color: #eee;
+}
+
+.reveal section h1, h2, em {
+  color: #e7ad52 !important;
+}
+
+.reveal section em {
+  opacity: .5;
+}
+
+.reveal section strong {
+  color: #5ad066;
+  font-weight: normal;
+}
+
+.reveal section del {
+  color: #bb0000;
+}
+
+.reveal section pre {
+  display: inline-block;
+  width: auto;
+  text-align: center;
+}
+
+.reveal section pre code {
+  background-color: #ffe4ba;
+  border-radius: .5em;
+  padding: .75em 1em;
+  display: inline-block;
+  max-height: initial;
+  text-align: left;
+}
+
+html {
+  --scrollbarBG: transparent;
+  --thumbBG: #be7e1b;
+}
+
+section#TOC {
+  overflow-y: scroll;
+  height: 100%;
+  padding: 0;
+}
+
+section#TOC::-webkit-scrollbar {
+  width: .3em;
+}
+section#TOC {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+section#TOC::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+
+section#TOC::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG) ;
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}
+
+a#go-to-toc {
+  position: absolute;
+  top: 2.5em;
+  left: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#go-to-toc::before {
+  font-size: 2.5em;
+  content: '📖'
+}
+
+a#toggle-theme {
+  display: none;
+  position: absolute;
+  top: 2.5em;
+  right: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#toggle-theme::before {
+  font-size: 2.5em;
+  content: '🌞';
+}
 code{white-space: pre;}</style>
   <link rel="stylesheet" href="./revealjs/css/theme/night.css" id="theme">
   <!-- Printing and PDF exports -->
@@ -165,7 +591,7 @@ code{white-space: pre;}</style>
   <script src="./revealjs/lib/js/html5shiv.js"></script>
   <![endif]-->
 </head>
-<body><input type="checkbox" id="toggle-chords-visibility" /><label for="toggle-chords-visibility"></label><a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/css/theme/serif.css'); return false;"></a><a href="#/1" id="go-to-toc"></a>
+<body><input type="checkbox" id="toggle-chords-visibility" /><label for="toggle-chords-visibility"></label><a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/css/theme/serif.css'); return false;"></a><a href="#/1" id="go-to-toc"></a><input type="checkbox" id="toggle-chords-visibility" /><label for="toggle-chords-visibility"></label><a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/css/theme/serif.css'); return false;"></a><a href="#/1" id="go-to-toc"></a><input type="checkbox" id="toggle-chords-visibility" /><label for="toggle-chords-visibility"></label><a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/css/theme/serif.css'); return false;"></a><a href="#/1" id="go-to-toc"></a><input type="checkbox" id="toggle-chords-visibility" /><label for="toggle-chords-visibility"></label><a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/css/theme/serif.css'); return false;"></a><a href="#/1" id="go-to-toc"></a>
   <div class="reveal">
     <div class="slides">
 
@@ -1234,7 +1660,7 @@ Cadd9 |x 3 2 0 3 1|</code></pre>
 It's <code class="e">Em</code> just another rainy sunday <code class="b">Bm</code> afternoon<br />
 I'm <code class="e">Em</code> wasting my time I got <code class="b">Bm</code> nothing to do<br />
 I'm <code class="e">Em</code> hanging around I'm <code class="b">Bm</code> waiting for you<br />
-But <code class="b">Bbm</code> nothing ever happens <code class="a">Am</code> - and I <code class="b">Bm</code> wonder <code class="e">Em</code></p>
+<code class="b">Bbm</code> But <code class="a">Am</code> nothing ever happens <code class="b">Bm</code> - and I won<code class="e">Em</code>der</p>
 </section><section id="verse-2-12" class="slide level2">
 <h2>Verse 2</h2>
 <p><em>(Barre chords)</em></p>
@@ -1242,7 +1668,7 @@ But <code class="b">Bbm</code> nothing ever happens <code class="a">Am</code> - 
 I'm <code class="e">Em</code> driving too fast I'm <code class="b">Bm</code> driving too far<br />
 I'd <code class="e">Em</code> like to change my <code class="b">Bm</code> point of view<br />
 I <code class="e">Em</code> feel so lonely I'm <code class="b">Bm</code> waiting for you<br />
-But <code class="b">Bbm</code> nothing ever happens <code class="a">Am</code> - and I won<code class="b">Bm</code>der <code class="e">Em</code></p>
+<code class="b">Bbm</code> But <code class="a">Am</code> nothing ever happens <code class="b">Bm</code> - and I won<code class="e">Em</code>der</p>
 </section><section id="chorus-29" class="slide level2">
 <h2>Chorus</h2>
 <p><em>(Open chords)</em></p>
@@ -1266,7 +1692,7 @@ Da da da...</p>
 I'd <code class="e">Em</code> like to go out <code class="b">Bm</code> taking a shower<br />
 But <code class="e">Em</code> there's a heavy cloud in<code class="b">Bm</code>side my head<br />
 I <code class="e">Em</code> feel so tired put my<code class="b">Bm</code>self into bed<br />
-Where <code class="b">Bbm</code> nothing ever happens <code class="a">Am</code> - and I won<code class="b">Bm</code>der <code class="e">Em</code></p>
+<code class="b">Bbm</code> Where <code class="a">Am</code> nothing ever happens <code class="b">Bm</code> - and I won<code class="e">Em</code>der</p>
 </section><section id="bridge-2" class="slide level2">
 <h2>Bridge 2</h2>
 <p><em>(Barre chords)</em></p>
@@ -1276,7 +1702,7 @@ Where <code class="b">Bbm</code> nothing ever happens <code class="a">Am</code> 
 <h2>Verse 4</h2>
 <p>I'm <code class="e">Em</code> steppin' around in a <code class="b">Bm</code> desert of joy<br />
 <code class="e">Em</code> Baby anyhow I'll get an<code class="b">Bm</code>other toy<br />
-And <code class="b">Bbm</code> everything will happen - <code class="a">Am</code> and you'll won<code class="b">Bm</code>der <code class="e">Em</code></p>
+And <code class="a">Am</code> everything will happen - <code class="b">Bm</code> and you'll won<code class="e">Em</code>der</p>
 </section><section id="chorus-30" class="slide level2">
 <h2>Chorus</h2>
 <p><em>(Open chords)</em></p>

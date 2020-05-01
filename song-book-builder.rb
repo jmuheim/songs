@@ -24,7 +24,7 @@ file = File.new("all-songs.md", "w")
 file.puts(markdown.join("\n"))
 file.close
 
-`pandoc -t revealjs -s -o index.html all-songs.md --no-highlight --toc --toc-depth=1 -V theme=night -V progress=false -V revealjs-url=./revealjs`
+`pandoc -s -o index.docx all-songs.md --no-highlight --toc --toc-depth=1 -V theme=night -V progress=false -V revealjs-url=./revealjs`
 
 result = File.open("index.html").read
 result.gsub!("<body>", '<body><input type="checkbox" id="toggle-chords-visibility" /><label for="toggle-chords-visibility"></label><a href="#" id="toggle-theme" onclick="document.getElementById(\'theme\').setAttribute(\'href\',\'revealjs/css/theme/serif.css\'); return false;"></a><a href="#/1" id="go-to-toc"></a>')

@@ -47,6 +47,6 @@ _(Repeat and whistle, fade)_
 
 ## Resources
 
-- [Song](https://www.youtube.com/watch?v=rTVjnBo96Ug)
+- [Song](https://www.youtube.com/watch?v=wyPKRcBTsFQ)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/otis-redding/sittin-on-the-dock-of-the-bay-chords-1088518)
 - [Guitar tutorial](https://www.youtube.com/watch?v=WNvoNPbmREY)
