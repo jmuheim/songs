@@ -1,6 +1,8 @@
 # Road to Mandalay (Robbie Williams)
 
-## Info
+## Instructions
+
+Capo on 3rd fret
 
 ```
        |E A D G B e|
@@ -14,8 +16,6 @@ G7     |3 2 0 0 3 1|
 
 X Stop playing
 ```
-
-_(Capo on 3rd fret)_
 
 ## Verse 1
 
