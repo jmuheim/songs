@@ -48,7 +48,7 @@ es ist noch [F] nicht zu spät
 
 du hast dich doch [F] früher so für Tiere interessiert [G]
 wäre das nichts für [Am] dich:
-eine [F] eigene Praxis
+eine eigene Praxis
 
 [F] Junge... [G]
 
