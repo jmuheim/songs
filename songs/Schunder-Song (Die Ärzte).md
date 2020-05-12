@@ -1,88 +1,74 @@
 # Schunder-Song (Die Ärzte)
 
-```
-The chords sequence C, B, Am (at the beginning of each verse)
-is very fast. Instead of open C and Am, it might be easier to
-play C and B as power chords (on the A string).
-
-As an easy alternative using open chords, instead of B, simply
-use a G/B chord while only playing the lower 2 or 3 strings
-(like power chords) to imitate a distorted guitar.
-
-    |E A D G B e|
-    |-----------|
-G/B |x 2 0 0 x x|
-```
-
 ## Verse 1
 
-[C] [B] [Am]
+[G] [Em]
 
 Du hast mich so oft angespuckt  
-geschlagen und getreten  [C] [B] [Am]  
+geschlagen und getreten  [G] [Em]  
 Das war nicht sehr nett von dir  
-ich hatte nie darum gebe[G]ten [C] [B] [Am]
+ich hatte nie darum gebe[D]ten [G] [Em]
 
-Deine Feunde haben [F] applaudiert  
-[C] sie fanden es ganz [G] toll  
-[Am] Wenn du mich ver[F]möbelt hast  
-doch [C] jetzt ist das Fass [G] voll
+Deine Feunde haben [C] applaudiert  
+[G] sie fanden es ganz [D] toll  
+[Em] Wenn du mich ver[C]möbelt hast  
+doch [G] jetzt ist das Fass [D] voll
 
 ## Pre-Chorus
 
-[C] Gewalt erzeugt [G] Gegengewalt  
-hat man [F] dir das nicht erklärt? [G]  
-Oder [C] hast du da auch [G] wie so oft  
-einfach [F] nicht genau zugehört? [G]
+[G] Gewalt erzeugt [D] Gegengewalt  
+hat man [C] dir das nicht erklärt? [D]  
+Oder [G] hast du da auch [D] wie so oft  
+einfach [C] nicht genau zugehört? [D]
 
-[F] Jetzt stehst du vor mir  
-und [G] wir sind ganz allein  
-[F] Keiner kann dir helfen, [G] keiner steht dir bei  
-[F] Ich schlag nur noch auf dich ein [G]
+[C] Jetzt stehst du vor mir  
+und [D] wir sind ganz allein  
+[C] Keiner kann dir helfen, [D] keiner steht dir bei  
+[C] Ich schlag nur noch auf dich ein [D]
 
 ## Chorus
 
-Immer mitten in die [C] Fresse rein [G] [Dm] [F] _(x2)_
+Immer mitten in die [G] Fresse rein [D] [Am] [C] _(x2)_
 
 ## Verse 2
 
-[C] [B] [Am]
+[G] [Em]
 Ich bin nicht stark und ich bin kein Held  
-doch was zuviel ist ist zuviel [C] [B] [Am]  
+doch was zuviel ist ist zuviel [G] [Em]  
 Für deine Agressionen  
-war ich immer das Ven[G]til [C] [B] [Am]
+war ich immer das Ven[D]til [G] [Em]
 
-Deine Kumpels waren [F] immer dabei  
-doch jetzt [C] wendet sich das Blatt [G]  
-[Am] Auch wenn ich morgen besser [F] umzieh'  
-irgend[C]wo in eine andere [G] Stadt
+Deine Kumpels waren [C] immer dabei  
+doch jetzt [G] wendet sich das Blatt [D]  
+[Em] Auch wenn ich morgen besser [C] umzieh'  
+irgend[G]wo in eine andere [D] Stadt
 
 ## Pre-Chorus
 
-[C] Gewalt erzeugt [G] Gegengewalt  
-hat man [F] dir das nicht ~~erklärt~~ **erzählt**? [G]  
-Oder [C] hast du da auch [G] wie so oft  
+[G] Gewalt erzeugt [D] Gegengewalt  
+hat man [C] dir das nicht ~~erklärt~~ **erzählt**? [D]  
+Oder [G] hast du da auch [D] wie so oft  
 ~~einfach nicht genau zugehört~~  
-**im [F] Unterricht gefehlt?** [G]
+**im [C] Unterricht gefehlt?** [D]
 
-[F] Jetzt ~~stehst~~ **liegst** du vor mir  
-und [G] wir sind ganz allein  
-[F] Und ich schlage [G] weiter auf dich ein  
-[F] Das tut gut, das musste [G] einfach mal sein
+[C] Jetzt ~~stehst~~ **liegst** du vor mir  
+und [D] wir sind ganz allein  
+[C] Und ich schlage [D] weiter auf dich ein  
+[C] Das tut gut, das musste [D] einfach mal sein
 
 ## Chorus
 
-Immer mitten in die [C] Fresse rein [G] [Dm] [F] _(x2)_
+Immer mitten in die [G] Fresse rein [D] [Am] [C] _(x2)_
 
-Mitten in die [C] Fresse [G] [Dm] [F] _(x2)_
+Mitten in die [G] Fresse [D] [Am] [C] _(x2)_
 
-Mitten - [C] Fresse [G] [Dm] [F]
+Mitten - [G] Fresse [D] [Am] [C]
 
-Mitten in die [C] Fresse [G] [Dm] [F] _(x2)_
+Mitten in die [G] Fresse [D] [Am] [C] _(x2)_
 
-Mitten in die [C] Fresse
+Mitten in die [G] Fresse
 
 ## Resources
 
 - [Song](https://www.youtube.com/watch?v=IviYsUdUj6w)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/18431)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/18431) (transposed +7)
