@@ -9,12 +9,12 @@ Am7  |x 0 2 0 1 0|
 D/F# |2 0 0 2 3 2| Thumb on E string
 
    Riff:
-e |-------------3--5|
+e |3--3-3-3-3---3--5|
 B |0--0-0-0-1-------|
 G |0--0-0-0-0--5--5-|
-D |0--0-0-0-2-------|
-A |-----------------|
-E |-----------------|
+D |0--0-0-0-0-------|
+A |x--x-x-x-x-------| Mute with finger on E string
+E |3--3-3-3-3-------|
 ```
 
 ## Intro
@@ -34,7 +34,7 @@ Look at me [G], I am old [Em]
 but I'm [Am] happy [D]
 
 ---
-                                                   
+
 I was [G] once like you are now [D]  
 and I know [C] that it's not ea[Am7]sy  
 To be [G] calm when you've found [Em]  
