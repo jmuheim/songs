@@ -22,7 +22,7 @@ Said said
 [C] In the govern[G/B]ment yard  
 in [Am] trenchtown [F]
 
-[C] Oba-oba[G/B]serving the [Am] hypocrites  
+[C] Oba-oba[G/B]serving the [Am] hypo[F]crites  
 As they would [C] mingle  
 with the good [G/B] people we meet [Am] [F]
 
