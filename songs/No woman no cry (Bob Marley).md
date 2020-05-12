@@ -4,96 +4,96 @@
  
 _(Instrumental)_
  
-[C] [G/B] [Am] [F]  
-[C] [F] [C] [G]
+[G] [D] [Em] [C]  
+[G] [C] [G] [D]
  
 ## Chorus
 
-[C] No [G/B] woman no cry [Am] [F]  
-[C] No [F] woman no cry [C] [G]
+[G] No [D] woman no cry [Em] [C]  
+[G] No [C] woman no cry [G] [D]
 
 _(Repeat)_
 
 ## Verse 1
 
 Said said  
-[C] said I re[G/B]member  
-[Am] when we used to sit [F]  
-[C] In the govern[G/B]ment yard  
-in [Am] trenchtown [F]
+[G] said I re[D]member  
+[Em] when we used to sit [C]  
+[G] In the govern[D]ment yard  
+in [Em] trenchtown [C]
 
-[C] Oba-oba[G/B]serving the [Am] hypocrites  
-As they would [C] mingle  
-with the good [G/B] people we meet [Am] [F]
+[G] Oba-oba[D]serving the [Em] hypo[C]crites  
+As they would [G] mingle  
+with the good [D] people we meet [Em] [C]
 
 ---
 
-[C] good friends [G/B] we had oh  
-[Am] good friend we lost [F]  
-[C] along [G/B] the way [Am] [F]
+[G] good friends [D] we had oh  
+[Em] good friend we lost [C]  
+[G] along [D] the way [Em] [C]
 
-[C] In this bright [G/B] future  
-you [Am] cant forget your past [F]  
-[C] So dry your tears [G/B] I say [Am] [F]
+[G] In this bright [D] future  
+you [Em] cant forget your past [C]  
+[G] So dry your tears [D] I say [Em] [C]
 
 ## Chorus
 
-[C] No [G/B] woman no cry [Am] [F]  
-[C] No [F] woman no cry [C] [G]
+[G] No [D] woman no cry [Em] [C]  
+[G] No [C] woman no cry [G] [D]
 
 ~~No woman no cry~~  
-**[C] Here [G/B] little darlin'**  
-**[Am] don't shed no [F] tears**  
-[C] No [F] woman no cry [C] [G]
+**[G] Here [D] little darlin'**  
+**[Em] don't shed no [C] tears**  
+[G] No [C] woman no cry [G] [D]
 
 ## Verse 1
 
 Said said  
-[C] said I re[G/B]member  
-[Am] when we used to sit [F]  
-[C] In the govern[G/B]ment yard  
-in [Am] trenchtown [F]
+[G] said I re[D]member  
+[Em] when we used to sit [C]  
+[G] In the govern[D]ment yard  
+in [Em] trenchtown [C]
 
-[C] And then [G/B] Georgie  
-would [Am] make a fire light [F]  
-as it was [C] log wood [G/B] burnin  
-through the nights [Am] [F]
+[G] And then [D] Georgie  
+would [Em] make a fire light [C]  
+as it was [G] log wood [D] burnin  
+through the nights [Em] [C]
 
 ---
 
-[C] Then we [G/B] would cook  
-corn [Am] meal porridge [F]  
-[C] of which I'll [G/B] share  
-with you [Am] yeah [F]
+[G] Then we [D] would cook  
+corn [Em] meal porridge [C]  
+[G] of which I'll [D] share  
+with you [Em] yeah [C]
 
-[C] My feet [G/B] is my [Am] only carriage [F]  
-[C] and so I've got [G/B] to  
-push on through [Am]  
-But while I'm [F] gone
+[G] My feet [D] is my [Em] only carriage [C]  
+[G] and so I've got [D] to  
+push on through [Em]  
+But while I'm [C] gone
 
 ## Bridge
 
-[C] Everything's gonna [G/B] be alright  
-[Am] Everything's gonna [F] be alright
+[G] Everything's gonna [D] be alright  
+[Em] Everything's gonna [C] be alright
 
 _(x4)_
 
 ## Chorus
 
-[C] No [G/B] woman no cry [Am] [F]  
-[C] No [F] woman no cry [C] [G]
+[G] No [D] woman no cry [Em] [C]  
+[G] No [C] woman no cry [G] [D]
 
 ~~No woman no cry~~  
-**[C] Here [G/B] little darlin'**  
-**[Am] don't shed no [F] tears**  
-[C] No [F] woman no cry [C] [G]
+**[G] Here [D] little darlin'**  
+**[Em] don't shed no [C] tears**  
+[G] No [C] woman no cry [G] [D]
 
 ## Outro
 
 _(Instrumental)_
 
-[C] [G/B] [Am] [F]  
-[C] [F] [C] [G]
+[G] [D] [Em] [C]  
+[G] [C] [G] [D]
 
 _(Repeat and fade)_
 
