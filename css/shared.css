@@ -1,0 +1,27 @@
+.reveal section code {
+  color: #000;
+  padding: 0 .2em;
+  border-radius: 0.25em;
+  line-height: 1;
+}
+
+.reveal section code.a { background-color: #ff5959; } /* Red */
+.reveal section code.b { background-color: #a9a9a9; } /* Gray */
+.reveal section code.c { background-color: #3cc0ff; } /* Blue */
+.reveal section code.d { background-color: #45ff6d; } /* Orange */
+.reveal section code.e { background-color: #ffe149; } /* Yellow */
+.reveal section code.f { background-color: #fb63f6; } /* Violet */
+.reveal section code.g { background-color: #c78430; } /* Brown */
+
+.reveal section em {
+  opacity: .5;
+}
+
+.reveal section strong {
+  color: #5ad066;
+  font-weight: normal;
+}
+
+.reveal section del {
+  color: #bb0000;
+}

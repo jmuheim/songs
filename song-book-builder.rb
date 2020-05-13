@@ -30,7 +30,7 @@ puts `pandoc -t revealjs -s -o index.html tmp/all-songs.md --slide-level=2 --no-
 result = File.open("index.html").read
 
 result.gsub!("<body>", '<body><input type="checkbox" id="toggle-chords-visibility" /><label for="toggle-chords-visibility"></label><a href="#" id="toggle-theme" onclick="document.getElementById(\'theme\').setAttribute(\'href\',\'revealjs/css/theme/serif.css\'); return false;"></a><a href="#/1" id="go-to-toc"></a>')
-result.gsub!('<style>', '<style>' + File.open("css/night.css").read + File.open("css/chords.css").read)
+result.gsub!('<style>', '<style>' + File.open("css/night.css").read + File.open("css/shared.css").read)
 
 file = File.open("index.html", "w")
 file.write(result)
@@ -47,7 +47,8 @@ puts `pandoc -t revealjs -s -o tmp/print.html tmp/all-songs.md --slide-level=2 -
 
 result = File.open("tmp/print.html").read
 
-result.gsub!('<style>', '<style>' + File.open("css/serif.css").read + File.open("css/chords.css").read)
+result.gsub!('<style>', '<style>' + File.open("css/serif.css").read + File.open("css/shared.css").read) # Add 
+result.gsub!(/<section id="resources-?[\d+]?" class="slide level2">(.*?)<\/section>/m, "") # Remove "Resources" slides (they contain links that are useless/ugly in a printed document)
 
 file = File.open("tmp/print.html", "w")
 file.write(result)
@@ -55,9 +56,4 @@ file.close
 
 print_file = "#{URI::encode(File.expand_path(File.dirname(__FILE__))).to_s}/tmp/print.html"
 `rm -rf tmp/screenshots/*`
-puts `decktape --screenshots --screenshots-directory=tmp/screenshots --screenshots-size=2400x1800 --screenshots-format=jpg file://#{print_file} test.pdf`
-`unlink tmp/print.html`
-
-# Cleanup
-
-`unlink tmp/all-songs.md`
+puts `decktape --screenshots --screenshots-directory=tmp/screenshots --screenshots-size=2400x1800 --screenshots-format=jpg file://#{print_file} print.pdf`

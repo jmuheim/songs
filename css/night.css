@@ -41,19 +41,6 @@ label[for="toggle-chords-visibility"]:hover {
   color: #e7ad52 !important;
 }
 
-.reveal section em {
-  opacity: .5;
-}
-
-.reveal section strong {
-  color: #5ad066;
-  font-weight: normal;
-}
-
-.reveal section del {
-  color: #bb0000;
-}
-
 .reveal section pre {
   display: inline-block;
   width: auto;
