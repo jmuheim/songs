@@ -44,7 +44,6 @@ ich [G] glaub das einfach [Am] nicht.
 
 ---
 
-                              
 [C] Gegenüber steht 'n Telefon  
 es [G] lacht mich ständig an voll Hohn  
 Es [Am] klingelt, [G] klingelt aber [Am] nicht.
@@ -68,4 +67,4 @@ _(Repeat and fade)_
 
 - [Song](https://www.youtube.com/watch?v=x6q0ciiqyG0)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929)
-- [Guitar tutorial]()
+- [Guitar cover](https://www.youtube.com/watch?v=GIlCtOrisx0)
