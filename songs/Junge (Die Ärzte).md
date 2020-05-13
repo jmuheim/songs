@@ -4,9 +4,7 @@
 
 [C] [D] [Em] [Em] _(x2)_
 
-## Verse 1
-
-_(Picking)_
+## Verse 1 (Picking)
 
 [C] Junge, warum [D] hast Du  
 nichts gelernt? [Em]  
@@ -20,9 +18,7 @@ wenn Du ihn darum bittest
 
 [C] Junge... [D]
  
-## Chorus 1
-
-_(Strumming)_
+## Chorus 1 (Strumming)
 
 ...und wie du wieder aus[C]siehst  
 Löcher in der Ho[Am]se  
@@ -34,12 +30,10 @@ da fehlen mir die Wor[Am]te
 musst du die denn färb'n? [Em]  
 (Was soll'n die Nach[G]barn sagen?)
 
-Nie kommst du nach Hau[C]se
+Nie kommst du nach Hau[C]se  
 wir wissen nicht mehr wei[Am]ter
 
-## Verse 2
-
-_(Picking)_
+## Verse 2 (Picking)
 
 [C] Junge, [D] brich deiner  
 Mutter nicht das Herz [Em]  
@@ -52,9 +46,7 @@ eine eigene Praxis
 
 [C] Junge... [D]
 
-# Chorus 2
-
-_(Strumming)_
+# Chorus 2 (Strumming)
 
 ...und wie du wieder aus[C]siehst  
 Löcher in der Ho[Am]se  
@@ -76,9 +68,7 @@ wir werden dich enterb'n [Em]
 wo soll das alles en[C]den?  
 Wir machen uns doch Sor[Am]gen
  
-## Bridge
-
-_(Very fast strumming)_
+## Bridge (Very fast strumming)
 
 [C] und du warst [Am] so ein süßes [Em] Kind  
 und du warst [G] so ein süßes [C] Kind  

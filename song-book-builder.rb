@@ -12,7 +12,7 @@ markdown << <<~EOS
 
 markdown << File.open("Introduction.md").read
 
-markdown += Dir["songs/B*.md"].sort.map do |filename|
+markdown += Dir["songs/*.md"].sort.map do |filename|
               content = File.open(filename).read
             
               content.gsub!(/(\[)(([A-Z]).*?)(\])([^\(])/) do
@@ -48,7 +48,7 @@ puts `pandoc -t revealjs -s -o tmp/print.html tmp/all-songs.md --slide-level=2 -
 result = File.open("tmp/print.html").read
 
 result.gsub!('<style>', '<style>' + File.open("css/serif.css").read + File.open("css/shared.css").read) # Add 
-result.gsub!(/<section id="resources-?[\d+]?" class="slide level2">(.*?)<\/section>/m, "") # Remove "Resources" slides (they contain links that are useless/ugly in a printed document)
+result.gsub!(/<section id="resources[-\d]*?" class="slide level2">(.*?)<\/section>/m, "") # Remove "Resources" slides (they contain links that are useless/ugly in a printed document)
 
 file = File.open("tmp/print.html", "w")
 file.write(result)

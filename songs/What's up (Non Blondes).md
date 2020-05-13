@@ -14,7 +14,7 @@ I [D] realized quickly when I knew I should
 That the world [Em] was made of this brotherhood  
 Of man, [G] for whatever that means [D]
  
-## Pre-Dhorus
+## Pre-Chorus
 
 And so I [D] cry sometimes when I'm lying in bed  
 Just to [Em] get it all out, what's in my head  
@@ -26,7 +26,7 @@ I [G] scream at the top of my lungs:
 
 "What's going [D] on?"
 
-## Dhorus
+## Chorus
 
 And I said [D] "Heyeyeyeyey [Em] Heyeyey"  
 I said "Hey, [G] what's going on?" [D]  
@@ -45,7 +45,7 @@ And I pray, [D] oh my god do I pray [Em]
 I pray every single day [G]  
 For a revo[D]lution
 
-## Pre-Dhorus
+## Pre-Chorus
 
 And so I [D] cry sometimes when I'm lying in bed  
 Just to [Em] get it all out, what's in my head  
