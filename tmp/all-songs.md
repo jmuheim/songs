@@ -605,106 +605,6 @@ Hey Baby, `D`{.d} ich `Em`{.e} bin dein grösster `C`{.c} Fan
 - [Song](https://www.youtube.com/watch?v=u9Hrq1zmk2s)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/clueso/fanpost-chords-1745083)
 
-# Father and son (Cat Stevens)
-
-## Instructions
-
-```
-   Riff:
-e |3--3-3-3-3|
-B |0--0-0-0-1|
-G |0--0-0-0-0|
-D |0--0-0-0-0|
-A |x--x-x-x-x| Mute with finger on E string
-E |3--3-3-3-3|
-```
-
-## Intro
-
-_(Riff x4)_
-
-## Verse 1 - Father
-
-It's not `G`{.g} time to make a change `D`{.d}  
-just relax `C`{.c} and take it ea`Am`{.a}sy  
-You're still `G`{.g} young, that's your fault `Em`{.e}  
-there's so `Am`{.a} much you have to know `D`{.d}
-
-Find a `G`{.g} girl, settle down `D`{.d}  
-if you want `C`{.c}, you can mar`Am`{.a}ry  
-Look at me `G`{.g}, I am old `Em`{.e}  
-but I'm `Am`{.a} happy `D`{.d}
-
----
-
-I was `G`{.g} once like you are now `D`{.d}  
-and I know `C`{.c} that it's not ea`Am`{.a}sy  
-To be `G`{.g} calm when you've found `Em`{.e}  
-something `Am`{.a} going on `D`{.d}
-
-But take your time `G`{.g}, think a lot `D`{.d}  
-why think of ev`C`{.c}erything you've got `Am`{.a}  
-For you will `G`{.g} still be here tomorrow `Em`{.e}  
-but your `Am`{.a} dreams `D`{.d} may `G`{.g} not
-
-_(Riff x2)_
-
-## Verse 2 - Son
-
-How can I `G`{.g} try to explain? `D`{.d}  
-'cause when I `C`{.c} do he turns a`Am`{.a}way again  
-It's al`G`{.g}ways been the same `Em`{.e}  
-same old `Am`{.a} story `D`{.d}
-
-From the mo`G`{.g}ment I could talk `D`{.d}  
-I was or`C`{.c}dered to lis`Am`{.a}ten  
-Now there's a way `G`{.g}, and I know `Em`{.e} that I `D`{.d} have to go away `G`{.g}  
-I `D`{.d} know I `C`{.c} have to `G`{.g} go
-
-_(Riff x2)_
-
-## Interlude
-
-_(Instrumental)_
-
-`G`{.g} `D`{.d} `C`{.c} `Am`{.a}  
-`G`{.g} `Em`{.e} `Am`{.a} `C`{.c} `D`{.d}  
-`G`{.g} `D`{.d} `C`{.c} `Am`{.a}  
-`G`{.g} `Em`{.e} `D`{.d} `G`{.g}  
-`D`{.d} `C`{.c} `G`{.g}
-
-## Verse 3 - Father
-
-It's not `G`{.g} time to make a change `D`{.d}  
-just ~~relax~~ **sit down** `C`{.c} and take it ~~easy~~ **slow`Am`{.a}ly**  
-You're still `G`{.g} young, that's your fault `Em`{.e}  
-there's so `Am`{.a} much you have to ~~know~~ **go through** `D`{.d}
-
-Find a `G`{.g} girl, settle down `D`{.d}  
-if you want `C`{.c}, you can mar`Am`{.a}ry  
-Look at me `G`{.g}, I am old `Em`{.e}  
-but I'm `Am`{.a} happy `D`{.d}
-
-## Verse 4 - Son
-
-All the times `G`{.g} that I've cried `D`{.d}  
-keeping all `C`{.c} the things I knew `Am`{.a} inside  
-It's hard `G`{.g}
-but it's har`Em`{.e}der to ig`Am`{.a}nore it `D`{.d}
-
-If they were right `G`{.g}, I'd agree `D`{.d} _(I love this one!)_  
-but it's them `C`{.c} they know, not me `Am`{.a}
-Now there's a way `G`{.g}, and I know `Em`{.e}  
-that I `D`{.d} have to go away `G`{.g}
-
-I `D`{.d} know I `C`{.c} have to `G`{.g} go
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=P6zaCV4niKk)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/father-and-son-chords-84491)
-- [Guitar tutorial](https://www.youtube.com/watch?v=fP7VC-2J_Ok)
-
 # Hurt (Johnny Cash)
 
 ## Instructions
@@ -965,7 +865,7 @@ Guck Dir den `C`{.c} Dieter an:
 
 Warum `C`{.c} gehst Du nicht zu  
 Onkel Werner in die Werk`D`{.d}statt?  
-Der gibt Dir ne `Em`{.e} Festanstellung
+Der gibt Dir ne `Em`{.e} Festanstellung  
 wenn Du ihn darum bittest
 
 `C`{.c} Junge... `D`{.d}

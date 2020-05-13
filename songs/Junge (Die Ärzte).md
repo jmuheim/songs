@@ -13,7 +13,7 @@ Guck Dir den [C] Dieter an:
 
 Warum [C] gehst Du nicht zu  
 Onkel Werner in die Werk[D]statt?  
-Der gibt Dir ne [Em] Festanstellung
+Der gibt Dir ne [Em] Festanstellung  
 wenn Du ihn darum bittest
 
 [C] Junge... [D]
