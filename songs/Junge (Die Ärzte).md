@@ -46,7 +46,7 @@ eine eigene Praxis
 
 [C] Junge... [D]
 
-# Chorus 2 (Strumming)
+## Chorus 2 (Strumming)
 
 ...und wie du wieder aus[C]siehst  
 Löcher in der Ho[Am]se  

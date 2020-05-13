@@ -9,7 +9,8 @@ _(Repeat)_
 
 ## Verse 1
 
-Although [Em] loneliness has always been a [C] friend of mine  
+Although [Em] loneliness has always been  
+a [C] friend of mine  
 I'm [D] leavin' my life in your hands [G] [D]  
 [Em] People say I'm crazy and that [C] I am blind  
 [D] Risking it all in a glance [G] [D]

@@ -10,8 +10,11 @@ Hey [Am] mmmh [C] mmmh... [D] [Em] [C]
 ## Verse 1
 
 [G] Was da so ab und zu [Em] zwischen uns läuft  
-ist wirklich [G] schwer zu beschreiben in einem [Em] Text. 
-Nur wer bei [G] deinem Blick mal kurz zwischen den [Em] Zeilen liest
+ist wirklich [G] schwer zu beschreiben  
+in einem [Em] Text.
+
+Nur wer bei [G] deinem Blick mal kurz  
+zwischen den [Em] Zeilen liest  
 Ist völlig [C] hin, hin und weg und perplex
 
 ## Chorus

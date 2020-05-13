@@ -550,8 +550,11 @@ Hey `Am`{.a} mmmh `C`{.c} mmmh... `D`{.d} `Em`{.e} `C`{.c}
 ## Verse 1
 
 `G`{.g} Was da so ab und zu `Em`{.e} zwischen uns läuft  
-ist wirklich `G`{.g} schwer zu beschreiben in einem `Em`{.e} Text. 
-Nur wer bei `G`{.g} deinem Blick mal kurz zwischen den `Em`{.e} Zeilen liest
+ist wirklich `G`{.g} schwer zu beschreiben  
+in einem `Em`{.e} Text.
+
+Nur wer bei `G`{.g} deinem Blick mal kurz  
+zwischen den `Em`{.e} Zeilen liest  
 Ist völlig `C`{.c} hin, hin und weg und perplex
 
 ## Chorus
@@ -710,7 +713,8 @@ _(Repeat)_
 
 ## Verse 1
 
-Although `Em`{.e} loneliness has always been a `C`{.c} friend of mine  
+Although `Em`{.e} loneliness has always been  
+a `C`{.c} friend of mine  
 I'm `D`{.d} leavin' my life in your hands `G`{.g} `D`{.d}  
 `Em`{.e} People say I'm crazy and that `C`{.c} I am blind  
 `D`{.d} Risking it all in a glance `G`{.g} `D`{.d}
@@ -771,7 +775,7 @@ _(Repeat and fade)_
 - [Song](https://www.youtube.com/watch?v=960wzRtcl-Y)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/backstreet-boys/as-long-as-you-love-me-chords-263108) (transposed +7)
 
-# ❤️ Jolene (Dolly Parton)
+# Jolene (Dolly Parton)
 
 ## Intro
 
@@ -898,7 +902,7 @@ eine eigene Praxis
 
 `C`{.c} Junge... `D`{.d}
 
-# Chorus 2 (Strumming)
+## Chorus 2 (Strumming)
 
 ...und wie du wieder aus`C`{.c}siehst  
 Löcher in der Ho`Am`{.a}se  
@@ -944,111 +948,6 @@ denk' an deine El`Am`{.a}tern...
 - [Song](https://www.youtube.com/watch?v=iK-1oGphELM)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/751634) (transpose +7)
 - [Acoustic guitar interpretation](https://www.youtube.com/watch?v=YycHXyyI4fI)
-
-# No woman no cry (Bob Marley)
-
-## Intro
- 
-_(Instrumental)_
- 
-`G`{.g} `D`{.d} `Em`{.e} `C`{.c}  
-`G`{.g} `C`{.c} `G`{.g} `D`{.d}
- 
-## Chorus
-
-`G`{.g} No `D`{.d} woman no cry `Em`{.e} `C`{.c}  
-`G`{.g} No `C`{.c} woman no cry `G`{.g} `D`{.d}
-
-_(Repeat)_
-
-## Verse 1
-
-Said said  
-`G`{.g} said I re`D`{.d}member  
-`Em`{.e} when we used to sit `C`{.c}  
-`G`{.g} In the govern`D`{.d}ment yard  
-in `Em`{.e} trenchtown `C`{.c}
-
-`G`{.g} Oba-oba`D`{.d}serving the `Em`{.e} hypo`C`{.c}crites  
-As they would `G`{.g} mingle  
-with the good `D`{.d} people we meet `Em`{.e} `C`{.c}
-
----
-
-`G`{.g} good friends `D`{.d} we had oh  
-`Em`{.e} good friend we lost `C`{.c}  
-`G`{.g} along `D`{.d} the way `Em`{.e} `C`{.c}
-
-`G`{.g} In this bright `D`{.d} future  
-you `Em`{.e} cant forget your past `C`{.c}  
-`G`{.g} So dry your tears `D`{.d} I say `Em`{.e} `C`{.c}
-
-## Chorus
-
-`G`{.g} No `D`{.d} woman no cry `Em`{.e} `C`{.c}  
-`G`{.g} No `C`{.c} woman no cry `G`{.g} `D`{.d}
-
-~~No woman no cry~~  
-**`G`{.g} Here `D`{.d} little darlin'**  
-**`Em`{.e} don't shed no `C`{.c} tears**  
-`G`{.g} No `C`{.c} woman no cry `G`{.g} `D`{.d}
-
-## Verse 1
-
-Said said  
-`G`{.g} said I re`D`{.d}member  
-`Em`{.e} when we used to sit `C`{.c}  
-`G`{.g} In the govern`D`{.d}ment yard  
-in `Em`{.e} trenchtown `C`{.c}
-
-`G`{.g} And then `D`{.d} Georgie  
-would `Em`{.e} make a fire light `C`{.c}  
-as it was `G`{.g} log wood `D`{.d} burnin  
-through the nights `Em`{.e} `C`{.c}
-
----
-
-`G`{.g} Then we `D`{.d} would cook  
-corn `Em`{.e} meal porridge `C`{.c}  
-`G`{.g} of which I'll `D`{.d} share  
-with you `Em`{.e} yeah `C`{.c}
-
-`G`{.g} My feet `D`{.d} is my `Em`{.e} only carriage `C`{.c}  
-`G`{.g} and so I've got `D`{.d} to  
-push on through `Em`{.e}  
-But while I'm `C`{.c} gone
-
-## Bridge
-
-`G`{.g} Everything's gonna `D`{.d} be alright  
-`Em`{.e} Everything's gonna `C`{.c} be alright
-
-_(x4)_
-
-## Chorus
-
-`G`{.g} No `D`{.d} woman no cry `Em`{.e} `C`{.c}  
-`G`{.g} No `C`{.c} woman no cry `G`{.g} `D`{.d}
-
-~~No woman no cry~~  
-**`G`{.g} Here `D`{.d} little darlin'**  
-**`Em`{.e} don't shed no `C`{.c} tears**  
-`G`{.g} No `C`{.c} woman no cry `G`{.g} `D`{.d}
-
-## Outro
-
-_(Instrumental)_
-
-`G`{.g} `D`{.d} `Em`{.e} `C`{.c}  
-`G`{.g} `C`{.c} `G`{.g} `D`{.d}
-
-_(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=aEtfgfv5iN4)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-marley/no-woman-no-cry-chords-45479)
-- [Guitar tutorial](https://www.youtube.com/watch?v=7lasK3XSICc)
 
 # Rivers of Babylon (Boney M.)
 
@@ -1290,7 +1189,7 @@ _(Repeat and fade)_
 - [Source tab](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929) (transposed +7)
 - [Guitar cover](https://www.youtube.com/watch?v=GIlCtOrisx0)
 
-# ❤️ Whats up (4 Non Blondes)
+# Whats up (4 Non Blondes)
 
 ## Intro
 
@@ -1374,7 +1273,7 @@ Of `G`{.g} hope for a destina`D`{.d}tion
 - [Source tab](https://tabs.ultimate-guitar.com/tab/4-non-blondes/whats-up-chords-268676)
 - [Guitar tutorial]()
 
-# ❤️ Wish you were here (Pink Floyd)
+# Wish you were here (Pink Floyd)
 
 ## Intro
 
