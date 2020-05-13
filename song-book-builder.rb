@@ -5,8 +5,8 @@
 markdown = []
 markdown << <<~EOS
               ---
-              author: 😊 Monika and friends ❤️
-              title:  Our Favourite Guitar Songs 🔥🎶🌛
+              author: 😊 For good times together ❤️
+              title:  Monika's Guitar Songs 🔥🎶🌛
               ---
             EOS
 
@@ -43,7 +43,7 @@ file.close
 # puts `pandoc -s -o songs.pptx tmp/all-songs.md --slide-level=2`
 
 # Printable song book
-puts `pandoc -t revealjs -s -o tmp/print.html tmp/all-songs.md --slide-level=2 --no-highlight -V theme=serif -V progress=false -V revealjs-url=../revealjs`
+puts `pandoc -t revealjs -s -o tmp/print.html tmp/all-songs.md --slide-level=2 --no-highlight --toc --toc-depth=1 -V theme=serif -V progress=false -V revealjs-url=../revealjs`
 
 result = File.open("tmp/print.html").read
 

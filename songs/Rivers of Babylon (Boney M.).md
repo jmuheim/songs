@@ -18,7 +18,7 @@ _(x2)_
  
 ## Verse 1
 
-(When the wicked)
+(When the wicked)  
 [G] Carried us away in cap[G7]tivity  
 Re[C]quired from us a song [G]  
 Now how shall we sing the lord's song  

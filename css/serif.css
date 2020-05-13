@@ -13,3 +13,7 @@ body {
 .reveal section pre code {
   background-color: #e2e2e2;
 }
+
+#TOC ul {
+  font-size: 0.85em;
+}

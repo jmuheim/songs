@@ -5,12 +5,13 @@
 This is a collection of Monika's first guitar songs.  
 🎤😍🎸🔥
 
-All songs only use the beginner-friendly open chords. Hence some of the songs have been simplified a bit or transposed to a different key (feel free to use a capo to re-adjust).
+They only use the beginner-friendly open chords. Hence some of the songs have been simplified a bit or transposed to a different key (feel free to use a capo to re-adjust).
 
-💫 Let's sing together and have some fun! 🌛
+💫 Let's sing together and have some fun! 🌛 
 
-🙏 Happy birthday, my Love!  
-Joshua ❤️
+##  ❤️ Happy birthday! ❤️
+
+![For Monika, my Love --- from Joshua](../tmp/monika.jpeg){width=60%}
 
 ## Basic chords
 

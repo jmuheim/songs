@@ -1,6 +1,6 @@
 ---
-author: 😊 Monika and friends ❤️
-title:  Our Favourite Guitar Songs 🔥🎶🌛
+author: 😊 For good times together ❤️
+title:  Monika's Guitar Songs 🔥🎶🌛
 ---
 
 # Introduction
@@ -10,12 +10,13 @@ title:  Our Favourite Guitar Songs 🔥🎶🌛
 This is a collection of Monika's first guitar songs.  
 🎤😍🎸🔥
 
-All songs only use the beginner-friendly open chords. Hence some of the songs have been simplified a bit or transposed to a different key (feel free to use a capo to re-adjust).
+They only use the beginner-friendly open chords. Hence some of the songs have been simplified a bit or transposed to a different key (feel free to use a capo to re-adjust).
 
-💫 Let's sing together and have some fun! 🌛
+💫 Let's sing together and have some fun! 🌛 
 
-🙏 Happy birthday, my Love!  
-Joshua ❤️
+##  ❤️ Happy birthday! ❤️
+
+![For Monika, my Love --- from Joshua](../tmp/monika.jpeg){width=60%}
 
 ## Basic chords
 
@@ -585,7 +586,8 @@ Hey Baby, `D`{.d} ich `Em`{.e} bin dein grösster `C`{.c} Fan
 
 ## Bridge
 
-`Am`{.a} Die kleinen Momente mit dir lassen nicht mehr `C`{.c} los
+`Am`{.a} Die kleinen Momente mit dir  
+lassen nicht mehr `C`{.c} los
 
 `G`{.g} `Em`{.e} _(x3)_
 
@@ -969,7 +971,7 @@ _(x2)_
  
 ## Verse 1
 
-(When the wicked)
+(When the wicked)  
 `G`{.g} Carried us away in cap`G7`{.g}tivity  
 Re`C`{.c}quired from us a song `G`{.g}  
 Now how shall we sing the lord's song  

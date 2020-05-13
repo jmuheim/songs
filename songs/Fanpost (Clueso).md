@@ -45,7 +45,8 @@ Hey Baby, [D] ich [Em] bin dein grösster [C] Fan
 
 ## Bridge
 
-[Am] Die kleinen Momente mit dir lassen nicht mehr [C] los
+[Am] Die kleinen Momente mit dir  
+lassen nicht mehr [C] los
 
 [G] [Em] _(x3)_
 
