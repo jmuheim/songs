@@ -14,7 +14,7 @@ Weil [D] ich so verliebt in Dich bin.
 
 ## Bridge 1
 
-[C] Gleich wird es dunkel, [Bm] bald ist es Nacht,  
+[C] Gleich wird es dunkel, [Em] bald ist es Nacht,  
 Da [C] ist ein Wort der Warnung angebracht! [D]
 
 ## Chorus 1
@@ -38,7 +38,7 @@ Ge[D]fühle sind ihm völlig fremd.
 
 ## Bridge 2
 
-[C] Für ihn ist Liebe gleich [Bm] Samenverlust,  
+[C] Für ihn ist Liebe gleich [Em] Samenverlust,  
 [C] Mädchen, sei Dir dessen stets bewusst! [D]
 
 ## Chorus 2
@@ -67,7 +67,7 @@ Und [D] rülpst und furzt im Ehebett.
 
 ## Bridge 3
 
-[C] Dann hast du King Kong [Bm] zum Ehemann!
+[C] Dann hast du King Kong [Em] zum Ehemann!
 Drum [C] sag' ich Dir - denk bitte stets daran: [D]
 
 ## Chorus 3

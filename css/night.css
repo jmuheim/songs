@@ -1,0 +1,111 @@
+label[for="toggle-chords-visibility"] {
+  position: absolute;
+  bottom: 2.5em;
+  left: 1em;
+  z-index: 100;
+  opacity: 0.75;
+}
+
+label[for="toggle-chords-visibility"]::before {
+  font-size: 2.5em;
+  content: '🎹'
+}
+
+label[for="toggle-chords-visibility"]:hover {
+  cursor: pointer;
+}
+
+#toggle-chords-visibility:checked + label[for="toggle-chords-visibility"]::after {
+  font-size: 2.5em;
+  content: '❌';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+#toggle-chords-visibility {
+  opacity: 0;
+  position: absolute;
+}
+
+#toggle-chords-visibility:checked ~ .reveal code {
+  display: none;
+}
+
+.reveal section code.x {
+  border: 1px solid #eee;
+  color: #eee;
+}
+
+.reveal section h1, h2, em {
+  color: #e7ad52 !important;
+}
+
+.reveal section pre code {
+  background-color: #ffe4ba;
+}
+
+html {
+  --scrollbarBG: transparent;
+  --thumbBG: #be7e1b;
+}
+
+section#TOC {
+  overflow-y: scroll;
+  height: 100%;
+  padding: 0;
+}
+
+section#TOC::-webkit-scrollbar {
+  width: .3em;
+}
+section#TOC {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+section#TOC::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+
+section#TOC::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG) ;
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
+}
+
+a#go-to-toc {
+  position: absolute;
+  top: 2.5em;
+  left: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#go-to-toc::before {
+  font-size: 2.5em;
+  content: '📖'
+}
+
+a#toggle-theme {
+  display: none;
+  position: absolute;
+  top: 2.5em;
+  right: 1em;
+  z-index: 100;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a#toggle-theme::before {
+  font-size: 2.5em;
+  content: '🌞';
+}
+
+.reveal section strong {
+  color: #5ad066;
+}
+
+.reveal section del {
+  color: #bb0000;
+}

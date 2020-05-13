@@ -1,0 +1,15 @@
+body {
+  background-color: transparent !important;
+}
+
+.reveal section strong {
+  color: #38920b;
+}
+
+.reveal section del {
+  color: #ec3737;
+}
+
+.reveal section pre code {
+  background-color: #e2e2e2;
+}
