@@ -2,103 +2,103 @@
 
 ## Intro
 
-[F] [G] [Am] [Am] _(x2)_
+[C] [D] [Em] [Em] _(x2)_
 
 ## Verse 1
 
 _(Picking)_
 
-[F] Junge, warum [G] hast Du  
-nichts gelernt? [Am]  
-Guck Dir den [F] Dieter an:  
-[G] der hat sogar ein [Am] Auto! [Em]
+[C] Junge, warum [D] hast Du  
+nichts gelernt? [Em]  
+Guck Dir den [C] Dieter an:  
+[D] der hat sogar ein [Em] Auto!
 
-Warum [F] gehst Du nicht zu  
-Onkel Werner in die Werk[G]statt?  
-Der gibt Dir ne [Am] Festanstellung
+Warum [C] gehst Du nicht zu  
+Onkel Werner in die Werk[D]statt?  
+Der gibt Dir ne [Em] Festanstellung
 wenn Du ihn darum bittest
 
-[F] Junge... [G]
+[C] Junge... [D]
  
 ## Chorus 1
 
 _(Strumming)_
 
-...und wie du wieder aus[F]siehst  
-Löcher in der Ho[Dm]se  
-und ständig dieser Lärm [Am]  
-(Was soll'n die Nach[C]barn sagen?)
+...und wie du wieder aus[C]siehst  
+Löcher in der Ho[Am]se  
+und ständig dieser Lärm [Em]  
+(Was soll'n die Nach[G]barn sagen?)
 
-Und dann noch deine Ha[F]are  
-da fehlen mir die Wor[Dm]te  
-musst du die denn färb'n? [Am]  
-(Was soll'n die Nach[C]barn sagen?)
+Und dann noch deine Ha[C]are  
+da fehlen mir die Wor[Am]te  
+musst du die denn färb'n? [Em]  
+(Was soll'n die Nach[G]barn sagen?)
 
-Nie kommst du nach Hau[F]se
-wir wissen nicht mehr wei[Dm]ter
+Nie kommst du nach Hau[C]se
+wir wissen nicht mehr wei[Am]ter
 
 ## Verse 2
 
 _(Picking)_
 
-[F] Junge, [G] brich deiner  
-Mutter nicht das Herz [Am]  
-es ist noch [F] nicht zu spät  
-[G] dich an der Uni einzu[Am]schreiben
+[C] Junge, [D] brich deiner  
+Mutter nicht das Herz [Em]  
+es ist noch [C] nicht zu spät  
+[D] dich an der Uni einzu[Em]schreiben
 
-du hast dich doch [F] früher so für Tiere interessiert [G]
-wäre das nichts für [Am] dich:
+du hast dich doch [C] früher so für Tiere interessiert [D]
+wäre das nichts für [Em] dich:
 eine eigene Praxis
 
-[F] Junge... [G]
+[C] Junge... [D]
 
 # Chorus 2
 
 _(Strumming)_
 
-...und wie du wieder aus[F]siehst  
-Löcher in der Ho[Dm]se  
-und ständig dieser Lärm [Am]  
-(Was soll'n die Nach[C]barn sagen?)
+...und wie du wieder aus[C]siehst  
+Löcher in der Ho[Am]se  
+und ständig dieser Lärm [Em]  
+(Was soll'n die Nach[G]barn sagen?)
 
-Elektrische Gi[F]tarren  
-und immer diese Tex[Dm]te  
-das will doch keiner hör'n [Am]  
-(Was soll'n die Nach[C]barn sagen?)
+Elektrische Gi[C]tarren  
+und immer diese Tex[Am]te  
+das will doch keiner hör'n [Em]  
+(Was soll'n die Nach[G]barn sagen?)
 
 ---
 
-Nie kommst du nach Hau[F]se  
-so viel schlechter Um[Dm]gang  
-wir werden dich enterb'n [Am]  
-(was soll das Finanz[C]amt sagen?)
+Nie kommst du nach Hau[C]se  
+so viel schlechter Um[Am]gang  
+wir werden dich enterb'n [Em]  
+(was soll das Finanz[G]amt sagen?)
 
-wo soll das alles en[F]den?  
-Wir machen uns doch Sor[Dm]gen
+wo soll das alles en[C]den?  
+Wir machen uns doch Sor[Am]gen
  
 ## Bridge
 
 _(Very fast strumming)_
 
-[F] und du warst [Dm] so ein süßes [Am] Kind  
-und du warst [C] so ein süßes [F] Kind  
-und du warst [Dm] so ein süßes [Am] Kind  
-du warst so [C] süss 
+[C] und du warst [Am] so ein süßes [Em] Kind  
+und du warst [G] so ein süßes [C] Kind  
+und du warst [Am] so ein süßes [Em] Kind  
+du warst so [G] süss 
  
 ## Chorus
 
-Und immer deine Freun[F]de  
-ihr nehmt doch alle Dro[Dm]gen  
-und ständig dieser Lärm [Am]  
-(Was soll'n die Nach[C]barn sagen?)
+Und immer deine Freun[C]de  
+ihr nehmt doch alle Dro[Am]gen  
+und ständig dieser Lärm [Em]  
+(Was soll'n die Nach[G]barn sagen?)
 
-denk' an deine Zu[F]kunft  
-denk' an deine El[Dm]tern...
+denk' an deine Zu[C]kunft  
+denk' an deine El[Am]tern...
 
-...willst du, dass wir [Am] sterb'n?
+...willst du, dass wir [Em] sterb'n?
 
 ## Resources
 
 - [Song](https://www.youtube.com/watch?v=iK-1oGphELM)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/751634)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/751634) (transpose +7)
 - [Acoustic guitar interpretation](https://www.youtube.com/watch?v=YycHXyyI4fI)

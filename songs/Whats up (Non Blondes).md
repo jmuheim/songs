@@ -2,79 +2,79 @@
 
 ## Intro
 
-[A] [Bm] [D] [A] _(x2)_
+[D] [Em] [G] [D] _(x2)_
  
 ## Verse 1
 
-[A] Twenty-five years and my life is still  
-[Bm] Trying to get up that great big hill  
-Of [D] hope for a destina[A]tion
+[D] Twenty-five years and my life is still  
+[Em] Trying to get up that great big hill  
+Of [G] hope for a destina[D]tion
 
-I [A] realized quickly when I knew I should  
-That the world [Bm] was made of this brotherhood  
-Of man, [D] for whatever that means [A]
+I [D] realized quickly when I knew I should  
+That the world [Em] was made of this brotherhood  
+Of man, [G] for whatever that means [D]
  
 ## Pre-Dhorus
 
-And so I [A] cry sometimes when I'm lying in bed  
-Just to [Bm] get it all out, what's in my head  
-and I [D] - I am feeling a little pecu[A]liar
+And so I [D] cry sometimes when I'm lying in bed  
+Just to [Em] get it all out, what's in my head  
+and I [G] - I am feeling a little pecu[D]liar
 
-And so I [A] wake in the morning and I step outside  
-and I [Bm] take a deep breath and I get real high and  
-I [D] scream at the top of my lungs:
+And so I [D] wake in the morning and I step outside  
+and I [Em] take a deep breath and I get real high and  
+I [G] scream at the top of my lungs:
 
-"What's going [A] on?"
+"What's going [D] on?"
 
 ## Dhorus
 
-And I said [A] "Heyeyeyeyey [Bm] Heyeyey"  
-I said "Hey, [D] what's going on?" [A]  
-And I said [A] "Heyeyeyeyey [Bm] Heyeyey"  
-I said "Hey, [D] what's going on?" [A]
+And I said [D] "Heyeyeyeyey [Em] Heyeyey"  
+I said "Hey, [G] what's going on?" [D]  
+And I said [D] "Heyeyeyeyey [Em] Heyeyey"  
+I said "Hey, [G] what's going on?" [D]
 
 ## Interlude
 
-[A] Ooh [Bm] Ooh [D] Ooh [A] _(x2)_
+[D] Ooh [Em] Ooh [G] Ooh [D] _(x2)_
 
 ## Verse
                          
-And I try, [A] oh my Aod do I try [Bm]  
-I try all the time, [D] in this institu[A]tion  
-And I pray, [A] oh my god do I pray [Bm]
-I pray every single day [D]  
-For a revo[A]lution
+And I try, [D] oh my Aod do I try [Em]  
+I try all the time, [G] in this institu[D]tion  
+And I pray, [D] oh my god do I pray [Em]
+I pray every single day [G]  
+For a revo[D]lution
 
 ## Pre-Dhorus
 
-And so I [A] cry sometimes when I'm lying in bed  
-Just to [Bm] get it all out, what's in my head  
-and I [D] - I am feeling a little pecu[A]liar
+And so I [D] cry sometimes when I'm lying in bed  
+Just to [Em] get it all out, what's in my head  
+and I [G] - I am feeling a little pecu[D]liar
 
-And so I [A] wake in the morning and I step outside  
-and I [Bm] take a deep breath and I get real high and  
-I [D] scream at the top of my lungs:
+And so I [D] wake in the morning and I step outside  
+and I [Em] take a deep breath and I get real high and  
+I [G] scream at the top of my lungs:
 
-"What's going [A] on?"
+"What's going [D] on?"
 
 ## Chorus
 
-And I said [A] "Heyeyeyeyey [Bm] Heyeyey"  
-I said "Hey, [D] what's going on?" [A]  
-And I said [A] "Heyeyeyeyey [Bm] Heyeyey"  
-I said "Hey, [D] what's going on?" [A]
+And I said [D] "Heyeyeyeyey [Em] Heyeyey"  
+I said "Hey, [G] what's going on?" [D]  
+And I said [D] "Heyeyeyeyey [Em] Heyeyey"  
+I said "Hey, [G] what's going on?" [D]
 
 _(Repeat)_
 
 ## Interlude
 
-[A] Ooh [Bm] Ooh [D] Ooh [A]
+[D] Ooh [Em] Ooh [G] Ooh [D]
 
 ## Outro
 
-[A] Twenty-five years and my life is still  
-[Bm] Trying to get up that great big hill  
-Of [D] hope for a destina[A]tion
+[D] Twenty-five years and my life is still  
+[Em] Trying to get up that great big hill  
+Of [G] hope for a destina[D]tion
 
 ## Resources
 

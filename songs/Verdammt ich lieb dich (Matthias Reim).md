@@ -2,69 +2,69 @@
 
 ## Verse 1
 
-Ich [Am] ziehe durch die Straßen bis nach Mitternacht  
+Ich [Em] ziehe durch die Straßen bis nach Mitternacht  
 hab das früher auch gern gemacht  
-dich [G] brauch ich dafür [Am] nicht!
+dich [D] brauch ich dafür [Em] nicht!
 
-Ich [Am] sitze am Tresen, trinke noch 'n Bier  
+Ich [Em] sitze am Tresen, trinke noch 'n Bier  
 früher war'n wir oft gemeinsam hier  
-das [G] macht mir, macht mir [Am] nichts!
+das [D] macht mir, macht mir [Em] nichts!
 
 ---
 
-[C] Gegenüber sitzt 'n Typ wie'n Bär  
-ich [G] stell' mir vor, wenn das dein Neuer wär'  
-Das [Am] juckt mich [G] überhaupt [Am] nicht.
+[G] Gegenüber sitzt 'n Typ wie'n Bär  
+ich [D] stell' mir vor, wenn das dein Neuer wär'  
+Das [Em] juckt mich [D] überhaupt [Em] nicht.
 
-Auf [C] einmal packt's mich, ich geh auf ihn zu  
-und [G] mach ihn an: "Lass meine Frau in Ruh!"
-Er [Am] fragt nur: [G] "Hast du'n [Am] Stich?"
+Auf [G] einmal packt's mich, ich geh auf ihn zu  
+und [D] mach ihn an: "Lass meine Frau in Ruh!"
+Er [Em] fragt nur: [D] "Hast du'n [Em] Stich?"
 
-Und ich [F] denke schon wieder nur an [G] dich...
+Und ich [F] denke schon wieder nur an [D] dich...
 
 ## Chorus
 
 _(x2: gently first time, then repeat intensively)_
 
-Verdammt, ich [C] lieb' dich, ich lieb' dich [G] nicht.  
-Verdammt, ich [Dm] brauch' dich, brauch' dich [Am] nicht. [G]  
-Verdammt, ich [C] will dich, ich will dich [G] nicht,  
-Ich [F] will dich nicht verli[Am]er'n!
+Verdammt, ich [G] lieb' dich, ich lieb' dich [D] nicht.  
+Verdammt, ich [Am] brauch' dich, brauch' dich [Em] nicht. [D]  
+Verdammt, ich [G] will dich, ich will dich [D] nicht,  
+Ich [F] will dich nicht verli[Em]er'n!
 
 ## Verse 2
 
-So [Am] langsam fällt mir alles wieder ein:
+So [Em] langsam fällt mir alles wieder ein:
 Ich wollt doch nur'n bisschen freier sein.  
-Jetzt [G] bin ich's - oder [Am] nicht?
+Jetzt [D] bin ich's - oder [Em] nicht?
 
 
-Ich [Am] passte nicht in deine heile Welt  
+Ich [Em] passte nicht in deine heile Welt  
 doch die und du ist, was mir jetzt so fehlt  
-ich [G] glaub das einfach [Am] nicht.
+ich [D] glaub das einfach [Em] nicht.
 
 ---
 
-[C] Gegenüber steht 'n Telefon  
-es [G] lacht mich ständig an voll Hohn  
-Es [Am] klingelt, [G] klingelt aber [Am] nicht.
+[G] Gegenüber steht 'n Telefon  
+es [D] lacht mich ständig an voll Hohn  
+Es [Em] klingelt, [D] klingelt aber [Em] nicht.
 
-[C] Sieben Bier, zuviel geraucht  
-das [G] ist es, was ein Mann so braucht,  
-Doch [F] niemand, [G] niemand sagt: "Hör auf". [Am]
+[G] Sieben Bier, zuviel geraucht  
+das [D] ist es, was ein Mann so braucht,  
+Doch [F] niemand, [D] niemand sagt: "Hör auf". [Em]
 
-Und ich [F] denke schon wieder nur an [G] dich...
+Und ich [F] denke schon wieder nur an [D] dich...
 
 ## Chorus
 
-Verdammt, ich [C] lieb' dich, ich lieb' dich [G] nicht.  
-Verdammt, ich [Dm] brauch' dich, brauch' dich [Am] nicht. [G]  
-Verdammt, ich [C] will dich, ich will dich [G] nicht,  
-Ich [F] will dich nicht verli[Am]er'n! - Ooooh!
+Verdammt, ich [G] lieb' dich, ich lieb' dich [D] nicht.  
+Verdammt, ich [Am] brauch' dich, brauch' dich [Em] nicht. [D]  
+Verdammt, ich [G] will dich, ich will dich [D] nicht,  
+Ich [F] will dich nicht verli[Em]er'n! - Ooooh!
 
 _(Repeat and fade)_
 
 ## Resources
 
 - [Song](https://www.youtube.com/watch?v=x6q0ciiqyG0)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929) (transposed +7)
 - [Guitar cover](https://www.youtube.com/watch?v=GIlCtOrisx0)
