@@ -4,12 +4,12 @@
 
 [Am] Yo, what's up, this is Wyclef with Mary J. [Em]  
 [Dm] I serenade the girls with my accoustic guitar  
-[C] You know what I'm sayin'? [Em] _(Mary: Uuuuuh)_  
+[C] You know what I'm sayin'? [Em] _(Mary: Uuuuuh)_
 
 [Am] Yo, fellas havin' problems with the chicks? [Em]  
 [Dm] I want you right now to turn the lights down low  
 [C] Pull your girl up next to you  
-[Em]I want you to sing this to her
+[Em] I want you to sing this to her
 
 ## Verse 1 (Wyclef)
 
@@ -31,7 +31,7 @@ Man, I'm in [Dm] trouble
 I'm in real big [C] trouble [Em]
 
 If [Am] this is the kind of love  
-That the old folks used to [Em] warn me about
+That the old folks used to [Em] warn me about  
 Man, I'm in [Dm] trouble  
 I'm in real big [C] trouble [Em]  
 
@@ -61,7 +61,7 @@ Is as hard as these [Dm] four walls I wanna break [C] [Em]
 I [Am] told the cops you wasn't here tonight [Em] (_Wyclef:_ right)  
 Messin' around with me is gonna [Dm] get you life  
 [C] Oh yeah, [Em] yeah  
-But ev[Am]erytime I look into your eyes [Em]
+But ev[Am]erytime I look into your eyes [Em]  
 Then it's worth the [Dm] sacrifice [C] [Em]
 
 ## Bridge (Wyclef)
