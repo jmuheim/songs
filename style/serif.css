@@ -1,3 +1,24 @@
+#title-slide h1, #title-slide p.author {
+  color: black;
+  text-shadow: 1px 2px 4px #ffffff;
+}
+
 body {
   background-color: transparent !important;
+}
+
+.reveal section strong {
+  color: #38920b;
+}
+
+.reveal section del {
+  color: #ec3737;
+}
+
+.reveal section pre code {
+  background-color: #e2e2e2;
+}
+
+#TOC ul {
+  font-size: 0.85em;
 }

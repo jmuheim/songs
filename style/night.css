@@ -41,19 +41,8 @@ label[for="toggle-chords-visibility"]:hover {
   color: #e7ad52 !important;
 }
 
-.reveal section pre {
-  display: inline-block;
-  width: auto;
-  text-align: center;
-}
-
 .reveal section pre code {
   background-color: #ffe4ba;
-  border-radius: .5em;
-  padding: .75em 1em;
-  display: inline-block;
-  max-height: initial;
-  text-align: left;
 }
 
 html {
@@ -111,4 +100,12 @@ a#toggle-theme {
 a#toggle-theme::before {
   font-size: 2.5em;
   content: '🌞';
+}
+
+.reveal section strong {
+  color: #5ad066;
+}
+
+.reveal section del {
+  color: #bb0000;
 }
