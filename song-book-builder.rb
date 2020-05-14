@@ -49,12 +49,11 @@ result = File.open("print.html").read
 
 result.gsub!('<style>', '<style>' + File.open("style/serif.css").read + File.open("style/shared.css").read) # Add 
 result.gsub!(/<section id="resources[-\d]*?" class="slide level2">(.*?)<\/section>/m, "") # Remove "Resources" slides (they contain links that are useless/ugly in a printed document)
-result.gsub!('<section id="title-slide"', '<section id="title-slide" data-background-image="style/background.jpg"') # Remove "Resources" slides (they contain links that are useless/ugly in a printed document)
+result.gsub!('<section id="title-slide"', '<section id="title-slide" data-background-image="style/background.jpg"') # Add background to title slide
 
 file = File.open("print.html", "w")
 file.write(result)
 file.close
 
 print_file = "#{URI::encode(File.expand_path(File.dirname(__FILE__))).to_s}/print.html"
-`rm -rf screenshots/*`
 puts `decktape -s 1600x1200 file://#{print_file} print.pdf`
