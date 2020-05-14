@@ -49,6 +49,7 @@ result = File.open("print.html").read
 
 result.gsub!('<style>', '<style>' + File.open("style/serif.css").read + File.open("style/shared.css").read) # Add 
 result.gsub!(/<section id="resources[-\d]*?" class="slide level2">(.*?)<\/section>/m, "") # Remove "Resources" slides (they contain links that are useless/ugly in a printed document)
+result.gsub!('<section id="title-slide"', '<section id="title-slide" data-background-image="style/background.jpg"') # Remove "Resources" slides (they contain links that are useless/ugly in a printed document)
 
 file = File.open("print.html", "w")
 file.write(result)
