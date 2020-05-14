@@ -10,9 +10,9 @@ markdown << <<~EOS
               ---
             EOS
 
-markdown << File.open("Introduction.md").read
+markdown << File.open("content/Introduction.md").read
 
-# markdown += Dir["songs/*.md"].sort.map do |filename|
+# markdown += Dir["content/songs/*.md"].sort.map do |filename|
 #               content = File.open(filename).read
 #
 #               content.gsub!(/(\[)(([A-Z]).*?)(\])([^\(])/) do
@@ -25,7 +25,7 @@ file.puts(markdown.join("\n"))
 file.close
 
 # HTML slides (Reveal.js)
-puts `pandoc -t revealjs -s -o index.html all-songs.md --slide-level=2 --no-highlight --toc --toc-depth=1 -V theme=night -V progress=false -V revealjs-url=./revealjs`
+puts `pandoc -t revealjs -s -o index.html all-songs.md --slide-level=2 --no-highlight --toc --toc-depth=1 -V theme=night -V progress=false -V revealjs-url=./style/revealjs`
 
 result = File.open("index.html").read
 
@@ -43,7 +43,7 @@ file.close
 # puts `pandoc -s -o songs.pptx all-songs.md --slide-level=2`
 
 # Printable song book
-puts `pandoc -t revealjs -s -o print.html all-songs.md --slide-level=2 --no-highlight --toc --toc-depth=1 -V theme=serif -V progress=false -V revealjs-url=./revealjs`
+puts `pandoc -t revealjs -s -o print.html all-songs.md --slide-level=2 --no-highlight --toc --toc-depth=1 -V theme=serif -V progress=false -V revealjs-url=./style/revealjs`
 
 result = File.open("print.html").read
 
