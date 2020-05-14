@@ -12,13 +12,13 @@ markdown << <<~EOS
 
 markdown << File.open("content/Introduction.md").read
 
-# markdown += Dir["content/songs/*.md"].sort.map do |filename|
-#               content = File.open(filename).read
-#
-#               content.gsub!(/(\[)(([A-Z]).*?)(\])([^\(])/) do
-#                 "`#{$2}`{.#{$3.downcase}}#{$5}"
-#               end
-#             end
+markdown += Dir["content/songs/*.md"].sort.map do |filename|
+              content = File.open(filename).read
+
+              content.gsub!(/(\[)(([A-Z]).*?)(\])([^\(])/) do
+                "`#{$2}`{.#{$3.downcase}}#{$5}"
+              end
+            end
 
 file = File.new("all-songs.md", "w")
 file.puts(markdown.join("\n"))
