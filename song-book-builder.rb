@@ -5,8 +5,8 @@
 markdown = []
 markdown << <<~EOS
               ---
-              author: 😊 For good times together ❤️
-              title:  Monika's Guitar Songs 🔥🎶🌛
+              author: 😊 For good times together ❤️🌛
+              title:  Monika's Guitar 🔥 Songs 🎶
               ---
             EOS
 
@@ -14,7 +14,7 @@ markdown << File.open("Introduction.md").read
 
 markdown += Dir["songs/*.md"].sort.map do |filename|
               content = File.open(filename).read
-            
+
               content.gsub!(/(\[)(([A-Z]).*?)(\])([^\(])/) do
                 "`#{$2}`{.#{$3.downcase}}#{$5}"
               end

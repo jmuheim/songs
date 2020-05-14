@@ -1,3 +1,13 @@
+/* Uncomment to create slides with background (for title slide) */
+/*body {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%), url('../tmp/guitar.jpg') !important;
+}
+
+#title-slide h1, #title-slide p.author {
+  color: black;
+  text-shadow: 1px 2px 4px #ffffff;
+}*/
+
 body {
   background-color: transparent !important;
 }
