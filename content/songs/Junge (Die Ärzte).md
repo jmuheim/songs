@@ -52,7 +52,7 @@ eine eigene Praxis
 
 [F] Junge... [G]
 
-# Chorus 2
+## Chorus 2
 
 _(Strumming)_
 
