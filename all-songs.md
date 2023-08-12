@@ -1,5 +1,5 @@
 ---
-author: 😊 Joshua and friends ❤️
+author: 😊 Josua and friends ❤️
 title:  Our Songs 🔥🎶🌛
 ---
 
@@ -16,7 +16,7 @@ This is a collection of my favourite guitar songs.
 
 Let's sing together and have some fun! 💫
 
-🙏 Cheers, Joshua 🌛
+🙏 Cheers, Josua 🌛
 
 ## Basic chords
 
@@ -363,7 +363,7 @@ a`A`{.a}cross the universe `A7`{.a}
 
 ## Outro
 
-`D`{.d} Jai guru deva om `A7sus4`{.a} _(Repeat and fade)
+`D`{.d} Jai guru deva om `A7sus4`{.a} _(Repeat and fade)_
 
 ## Resources
 
@@ -1404,7 +1404,7 @@ With `G`{.g} nothing on my `E`{.e} tongue but halle`Am`{.a}lujah
 Halle`F`{.f}lujah, halle`Am`{.a}lujah  
 Galle`F`{.f}lujah, halle`C`{.c}lu`G`{.g}jah `C`{.c} `G`{.g}
 
-_(4x)
+_(4x)_
 
 ## Resources
 
@@ -2054,6 +2054,87 @@ _(Fade out)_
 - [Source tab](https://tabs.ultimate-guitar.com/tab/roger-miller/king-of-the-road-chords-76462)
 - [Guitar tutorial](https://www.youtube.com/watch?v=tWNBt4imVWE) and [Inspiration by Fretkillr](https://www.youtube.com/watch?v=2CYWdpVVtB8)
 
+# Leev Marie (Paveier)
+
+## Instructions
+
+```
+   |E A D G B e|
+   |-----------|
+B7 |x 2 1 2 0 2|
+F# |2 4 4 3 2 2|
+```
+
+## Intro 1
+
+`Em`{.e} `Am`{.a} `Em`{.e} `B7`{.b} `Em`{.e}
+
+## Intro 2
+
+`Em`{.e} `Am`{.a} `D`{.d} `G`{.g} `B7`{.b}  
+`Em`{.e} `Am`{.a} `Em`{.e} `B7`{.b} `Em`{.e}
+
+## Verse 1
+
+`Em`{.e} Wenn ich samstags Ovend eimol russ jon,  
+`Em`{.e} laufe mir die Mädche hinger`B7`{.b}her.  
+`B7`{.b} Ich kann doch nit dofür dat ich su us sinn.  
+`B7`{.b} Ne Mischung us George Clooney un nem `Em`{.e} Bär.
+
+`E7`{.e} Tag und Nacht such ich die große `Am`{.a} Liebe.  
+Selvs Mar`D`{.d}ie will immer `G`{.g} nur das `B7`{.b} eine  
+`Em`{.e} Ich - bin anders als die `Am`{.a} ander´n,  
+`F#`{.f} ich will noch so viel `B7`{.b} mehr
+
+## Chorus
+                             
+`B7`{.b} Leev Ma`Em`{.e}rie, ich bin kein Mann für `Am`{.a} eine Nacht  
+Leev Ma`D`{.d}rie, das habe ich noch `G`{.g} nie gemacht  
+`B7`{.b}Leev Marie`Em`{.e}, es `E7`{.e} muß die wahre `Am`{.a} Liebe sein  
+`Am`{.a} Für eine `Em`{.e} Nacht bleib ich `B7`{.b} lieber al`Em`{.e}lein
+ 
+`Em`{.e} `Am`{.a} `Em`{.e} `B7`{.b} `Em`{.e}
+
+## Verse 2
+
+`Em`{.e} Wat hann se mir nit alles schun versproche  
+`Em`{.e} Doch beim Fröhstück soß ich dann al`B7`{.b}lein  
+`B7`{.b}Wie oft hann se mir et Hätz jebroche  
+`B7`{.b} Veel zu oft fiehl ich dropp `Em`{.e}rin
+
+`E7`{.e} Mein Körper ist mir dafür viel zu `Am`{.a} schade  
+Nein ich `D`{.d} lasse mich nicht `G`{.g} mehr be`B7`{.b}nutzen  
+`Em`{.e} Ich kann sie nicht mehr hören diese `Am`{.a} Frage  
+`F#`{.f} Jon mer zu dir oder zu `B7`{.b} mir?
+
+## Chorus
+                             
+`B7`{.b} Leev Ma`Em`{.e}rie, ich bin kein Mann für `Am`{.a} eine Nacht  
+Leev Ma`D`{.d}rie, das habe ich noch `G`{.g} nie gemacht  
+`B7`{.b}Leev Marie`Em`{.e}, es `E7`{.e} muß die wahre `Am`{.a} Liebe sein  
+`Am`{.a} Für eine `Em`{.e} Nacht bleib ich `B7`{.b} lieber al`Em`{.e}lein
+
+## Instrumental
+
+`Em`{.e} LaLa... `Am`{.a} `D`{.d} `G`{.g} `B7`{.b}  
+`Em`{.e} `Am`{.a} `Em`{.e} `B7`{.b} `Em`{.e}  
+`Em`{.e} LaLa... `Am`{.a} `D`{.d} `G`{.g} `B7`{.b}  
+`Em`{.e} `Am`{.a} `Em`{.e} `B7`{.b} `Em`{.e}
+
+## Chorus
+                             
+`B7`{.b} Leev Ma`Em`{.e}rie, ich bin kein Mann für `Am`{.a} eine Nacht  
+Leev Ma`D`{.d}rie, das habe ich noch `G`{.g} nie gemacht  
+`B7`{.b}Leev Marie`Em`{.e}, es `E7`{.e} muß die wahre `Am`{.a} Liebe sein  
+`Am`{.a} Für eine `Em`{.e} Nacht bleib ich `B7`{.b} lieber al`Em`{.e}lein _(2x)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=vC-R_olORhU)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/paveier/leev-marie-chords-2289125)
+- [Guitar tutorial](https://www.youtube.com/watch?v=CQ1P8IQc8AY)
+- [Interpretation by Fiona Apple](https://www.youtube.com/watch?v=RhMEKiIb86I)
+
 # Lemon tree (Fool's Garden)
 
 
@@ -2175,101 +2256,6 @@ Is `Cadd9`{.c} just a yellow `G7`{.g} lemon tree `G`{.g}
 - [Source tab](https://tabs.ultimate-guitar.com/tab/fools-garden/lemon-tree-chords-145589)
 - [Guitar tutorial](https://www.youtube.com/watch?v=_hk3cZqEf30)
 
-# Morning has broken (Cat Stevens)
-
-## Instructions
-
-```
-       |E A D G B e|
-       |-----------|
-A7/D   |x x 0 0 1 0|
-D7sus4 |x x 0 2 1 3|
-F#     |2=4=4=3=2=2|
-F#m    |2=4=4=2=2=2|
-G7sus4 |x x 0 0 1 1|
-```
-
-## Intro
-
-`D`{.d} `G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
-`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
-
-## Verse 1
-
-Morning has `C`{.c}brok`Dm`{.d}en  
-`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
-`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
-`D7sus4`{.d} like the first `G`{.g} bird
-
-`C`{.c} Praise for the `F`{.f} singing  
-`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
-`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
-`G7`{.g} fresh from the `C`{.c} world
-
-## Instrumental
-
-`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
-`G7`{.g} `C`{.c} `G7sus4`{.g}
-
-## Verse 2
-
-Sweet the rain's `C`{.c} new `Dm`{.d} fall  
-`G`{.g} sunlit from `F`{.f} heav`C`{.c}en  
-`C`{.c} Like the first `Em`{.e} dew `Am`{.a} fall  
-`D7sus4`{.d} on the first `G`{.g} grass
-
-`C`{.c} Praise for the `F`{.f} sweetness  
-`C`{.c} of the wet `Am`{.a} gard`D`{.d}en  
-`G`{.g} Sprung in comp`C`{.c}lete`F`{.f}ness  
-`G7`{.g} where his feet `C`{.c} pass
-
-## Instrumental
-
-`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
-`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
-`A7/D`{.a} `D`{.d}
-
-## Verse 3
-
-Mine is the `D`{.d} sun`Em`{.e}light  
-`A`{.a} mine is the `G`{.g} morn`D`{.d}ing  
-Born of the `F#m`{.f} one `Bm`{.b} light  
-`E7`{.e} Eden saw `A`{.a} play `A7`{.a}
-
-`D`{.d} Praise with el`G`{.g}ation  
-`D`{.d} praise every `Bm`{.b} morn`E`{.e}ing  
-`A`{.a} God's recre`D`{.d}a`G`{.g}tion  
-`A7`{.a} of the new `D`{.d} day
-
-## Instrumental
-
-`G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
-`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
-
-## Verse 1
-
-Morning has `C`{.c}brok`Dm`{.d}en  
-`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
-`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
-`D7sus4`{.d} like the first `G`{.g} bird
-
-`C`{.c} Praise for the `F`{.f} singing  
-`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
-`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
-`G7`{.g} fresh from the `C`{.c} world
-
-## Outro
-
-`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
-`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
-`A7/D`{.a} `D`{.d}
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=uZAsfB1Np-8)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/morning-has-broken-chords-84520)
-- [Guitar tutorial](https://www.youtube.com/watch?v=eyRVPNenXlg)
-
 # Männer sind Schweine (Die Ärzte)
 
 ## Verse 1
@@ -2370,6 +2356,101 @@ Yeah, yeah, yeah, yeaääääää `Am`{.a}
 
 - [Song](https://www.youtube.com/watch?v=404oPn6tudE)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/568214)
+
+# Morning has broken (Cat Stevens)
+
+## Instructions
+
+```
+       |E A D G B e|
+       |-----------|
+A7/D   |x x 0 0 1 0|
+D7sus4 |x x 0 2 1 3|
+F#     |2=4=4=3=2=2|
+F#m    |2=4=4=2=2=2|
+G7sus4 |x x 0 0 1 1|
+```
+
+## Intro
+
+`D`{.d} `G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
+`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
+
+## Verse 1
+
+Morning has `C`{.c}brok`Dm`{.d}en  
+`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
+`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
+`D7sus4`{.d} like the first `G`{.g} bird
+
+`C`{.c} Praise for the `F`{.f} singing  
+`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
+`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
+`G7`{.g} fresh from the `C`{.c} world
+
+## Instrumental
+
+`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
+`G7`{.g} `C`{.c} `G7sus4`{.g}
+
+## Verse 2
+
+Sweet the rain's `C`{.c} new `Dm`{.d} fall  
+`G`{.g} sunlit from `F`{.f} heav`C`{.c}en  
+`C`{.c} Like the first `Em`{.e} dew `Am`{.a} fall  
+`D7sus4`{.d} on the first `G`{.g} grass
+
+`C`{.c} Praise for the `F`{.f} sweetness  
+`C`{.c} of the wet `Am`{.a} gard`D`{.d}en  
+`G`{.g} Sprung in comp`C`{.c}lete`F`{.f}ness  
+`G7`{.g} where his feet `C`{.c} pass
+
+## Instrumental
+
+`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
+`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
+`A7/D`{.a} `D`{.d}
+
+## Verse 3
+
+Mine is the `D`{.d} sun`Em`{.e}light  
+`A`{.a} mine is the `G`{.g} morn`D`{.d}ing  
+Born of the `F#m`{.f} one `Bm`{.b} light  
+`E7`{.e} Eden saw `A`{.a} play `A7`{.a}
+
+`D`{.d} Praise with el`G`{.g}ation  
+`D`{.d} praise every `Bm`{.b} morn`E`{.e}ing  
+`A`{.a} God's recre`D`{.d}a`G`{.g}tion  
+`A7`{.a} of the new `D`{.d} day
+
+## Instrumental
+
+`G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
+`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
+
+## Verse 1
+
+Morning has `C`{.c}brok`Dm`{.d}en  
+`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
+`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
+`D7sus4`{.d} like the first `G`{.g} bird
+
+`C`{.c} Praise for the `F`{.f} singing  
+`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
+`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
+`G7`{.g} fresh from the `C`{.c} world
+
+## Outro
+
+`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
+`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
+`A7/D`{.a} `D`{.d}
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=uZAsfB1Np-8)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/morning-has-broken-chords-84520)
+- [Guitar tutorial](https://www.youtube.com/watch?v=eyRVPNenXlg)
 
 # No woman no cry (Bob Marley)
 
