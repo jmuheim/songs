@@ -1,21 +1,23 @@
-label[for="toggle-chords-visibility"] {
+#toggle-chords-visibility {
   position: absolute;
   bottom: 2.5em;
   left: 1em;
   z-index: 100;
   opacity: 0.75;
-}
-
-label[for="toggle-chords-visibility"]::before {
-  font-size: 2.5em;
-  content: '🎹'
-}
-
-label[for="toggle-chords-visibility"]:hover {
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
+  font-family: inherit;
+  line-height: 1;
 }
 
-#toggle-chords-visibility:checked + label[for="toggle-chords-visibility"]::after {
+#toggle-chords-visibility::before {
+  font-size: 2.5em;
+  content: '🎹';
+}
+
+body.chords-hidden #toggle-chords-visibility::after {
   font-size: 2.5em;
   content: '❌';
   position: absolute;
@@ -23,12 +25,7 @@ label[for="toggle-chords-visibility"]:hover {
   bottom: 0;
 }
 
-#toggle-chords-visibility {
-  opacity: 0;
-  position: absolute;
-}
-
-#toggle-chords-visibility:checked ~ .reveal code {
+body.chords-hidden .reveal code {
   display: none;
 }
 

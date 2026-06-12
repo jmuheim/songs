@@ -1,4 +1,9 @@
-<input type="checkbox" id="toggle-chords-visibility" />
-<label for="toggle-chords-visibility"></label>
+<button id="toggle-chords-visibility"></button>
+<script>
+  document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
+    document.body.classList.toggle('chords-hidden');
+    this.blur();
+  });
+</script>
 <a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/style/theme/serif.css'); return false;"></a>
 <a href="#/1" id="go-to-toc"></a>
