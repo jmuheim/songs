@@ -3,14 +3,29 @@
   <button id="show-qr"></button>
   <button id="master-mode"></button>
 </div>
+<a href="#" id="toggle-theme"></a>
+<a href="#/1" id="go-to-toc"></a>
 <script>
   document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
     document.body.classList.toggle('chords-hidden');
     this.blur();
   });
+
+  (function() {
+    function applyTheme(bright) {
+      document.body.classList.toggle('theme-bright', bright);
+    }
+
+    applyTheme(localStorage.getItem('theme') === 'bright');
+
+    document.getElementById('toggle-theme').addEventListener('click', function(e) {
+      e.preventDefault();
+      var bright = !document.body.classList.contains('theme-bright');
+      applyTheme(bright);
+      localStorage.setItem('theme', bright ? 'bright' : 'dark');
+    });
+  })();
 </script>
-<a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/style/theme/serif.css'); return false;"></a>
-<a href="#/1" id="go-to-toc"></a>
 
 <div id="master-modal" class="overlay-modal">
   <div class="modal-box">
