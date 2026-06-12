@@ -30,8 +30,8 @@ puts
 markdown = []
 markdown << <<~EOS
               ---
-              author: 😊 Josua and friends ❤️
-              title:  Our Songs 🔥🎶🌛
+              title:  Lieblings-Songs 🔥🎶🌛
+              author: 😊 Josua & Monika ❤️
               ---
             EOS
 
