@@ -1,0 +1,85 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'shellwords'
+
+Dir.chdir(__dir__)
+
+options = { pdf: false, deploy: false }
+OptionParser.new do |opts|
+  opts.banner = "Usage: build [options]"
+  opts.on("--pdf",    "Generate PDF (slow)")               { options[:pdf]    = true }
+  opts.on("--deploy", "Deploy to josh.ch/songs via rsync") { options[:deploy] = true }
+end.parse!
+
+def step(emoji, label)
+  print "#{emoji}  #{label}... "
+  t = Time.now
+  result = yield
+  puts "✅ (#{"%.1f" % (Time.now - t)}s)"
+  result
+end
+
+def pandoc(output:, theme:)
+  result = `pandoc -t revealjs -s -o #{output} all-songs.md --slide-level=2 --syntax-highlighting=none --toc --toc-depth=1 -V theme=#{theme} -V progress=false -V revealjs-url=./style/revealjs 2>&1`
+  print result unless result.strip.empty?
+end
+
+puts "🎸 Building song book"
+puts
+
+song_files = Dir["content/songs/*.md"].sort
+puts "🎵 Songs (#{song_files.size}):"
+song_files.each { |f| puts "   🎶 #{File.basename(f, ".md")}" }
+puts
+
+songs_md = song_files.map do |file|
+  File.read(file).gsub(/\[([A-Z][^\]]*)\]([^\(])/) { "`#{$1}`{.#{$1[0].downcase}}#{$2}" }
+end
+
+step("📝", "Writing all-songs.md") do
+  frontmatter = <<~MD
+    ---
+    title:  Lieblings-Songs 🔥🎶🌛
+    author: 😊 Josua & Monika ❤️
+    ---
+  MD
+  File.write("all-songs.md", [frontmatter, File.read("content/Introduction.md"), *songs_md].join("\n"))
+end
+
+step("🌙", "Generating index.html (Pandoc)") { pandoc(output: "index.html", theme: "night") }
+
+step("✨", "Post-processing index.html") do
+  html = File.read("index.html")
+  html.sub!("<body>", "<body>" + File.read("style/body-controls.html").strip)
+  html.sub!("<style>", "<style>" + File.read("style/night.css") + File.read("style/shared.css"))
+  File.write("index.html", html)
+end
+
+step("🖨️", "Generating print.html (Pandoc)") { pandoc(output: "print.html", theme: "serif") }
+
+step("✨", "Post-processing print.html") do
+  html = File.read("print.html")
+  html.sub!("<style>", "<style>" + File.read("style/serif.css") + File.read("style/shared.css"))
+  html.gsub!(/<section id="resources[-\d]*?" class="slide level2">.*?<\/section>/m, "")
+  html.sub!('<section id="title-slide"', '<section id="title-slide" data-background-image="style/background.jpg"')
+  File.write("print.html", html)
+end
+
+if options[:pdf]
+  step("📄", "Generating print.pdf (DeckTape)") do
+    url = Shellwords.shellescape("file://#{File.expand_path('print.html')}")
+    output = `decktape -s 1600x1200 #{url} print.pdf 2>&1`
+    print "\n#{output}" unless output.strip.empty?
+  end
+end
+
+if options[:deploy]
+  step("🚀", "Deploying to josh.ch/songs") do
+    puts
+    system("rsync -avz --delete index.html style maroni@greip.uberspace.de:/var/www/virtual/maroni/josh.ch/songs/")
+  end
+end
+
+puts
+puts "🎉 Done!"
