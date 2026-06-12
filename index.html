@@ -118,6 +118,127 @@ a#toggle-theme::before {
 .reveal section del {
   color: #bb0000;
 }
+
+#master-mode,
+#show-qr {
+  position: absolute;
+  z-index: 100;
+  opacity: 0.75;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: 1;
+}
+
+#master-mode {
+  bottom: 2.5em;
+  right: 1em;
+}
+
+#master-mode::before {
+  font-size: 2.5em;
+  content: '🎤';
+}
+
+#master-mode.is-master::before {
+  content: '🎙️';
+}
+
+#show-qr {
+  bottom: 7.5em;
+  right: 1em;
+}
+
+#show-qr::before {
+  font-size: 2.5em;
+  content: '📱';
+}
+
+.overlay-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-modal.visible {
+  display: flex;
+}
+
+.modal-box {
+  background: #1c1c1c;
+  border: 1px solid #555;
+  border-radius: 0.5em;
+  padding: 1.5em 2em;
+  text-align: center;
+  color: #fff;
+  font-size: 1.1rem;
+  min-width: 18em;
+}
+
+.modal-box p {
+  margin: 0 0 0.75em;
+}
+
+.modal-box input[type="password"] {
+  display: block;
+  width: 100%;
+  padding: 0.4em 0.6em;
+  margin-bottom: 1em;
+  font-size: 1em;
+  background: #333;
+  border: 1px solid #666;
+  border-radius: 0.3em;
+  color: #fff;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.modal-box input[type="password"]:focus {
+  border-color: #e7ad52;
+}
+
+.modal-box input.shake {
+  animation: modal-shake 0.4s;
+  border-color: #f55;
+}
+
+@keyframes modal-shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-8px); }
+  40%       { transform: translateX(8px); }
+  60%       { transform: translateX(-8px); }
+  80%       { transform: translateX(8px); }
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 0.5em;
+  justify-content: center;
+}
+
+.modal-box button {
+  padding: 0.4em 1.2em;
+  font-size: 1em;
+  border-radius: 0.3em;
+  border: 1px solid #888;
+  background: #444;
+  color: #fff;
+  cursor: pointer;
+}
+
+.modal-box button:hover {
+  background: #555;
+}
+
+#qr-canvas {
+  margin-bottom: 1em;
+}
 .reveal section h1 {
   font-size: 3em;
 }
@@ -184,7 +305,7 @@ a#toggle-theme::before {
   </style>
   <link rel="stylesheet" href="./style/revealjs/dist/theme/night.css" id="theme">
 </head>
-<body><button id="toggle-chords-visibility"></button>
+<body><script>window.MULTIPLEX={"url":"https://multiplex.up.railway.app","socketId":"c16324e0117e6da00c62c91a5594b6fc1d196313432409c79366c93078ac1fe7","secret":"cc58ea930602b842d3aecf51f01acba1","password":"guitar"};</script><button id="toggle-chords-visibility"></button>
 <script>
   document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
     document.body.classList.toggle('chords-hidden');
@@ -193,6 +314,114 @@ a#toggle-theme::before {
 </script>
 <a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/style/theme/serif.css'); return false;"></a>
 <a href="#/1" id="go-to-toc"></a>
+<button id="master-mode"></button>
+<button id="show-qr"></button>
+
+<div id="master-modal" class="overlay-modal">
+  <div class="modal-box">
+    <p>Master password</p>
+    <input type="password" id="master-pw" autocomplete="off">
+    <div class="modal-buttons">
+      <button id="master-cancel">Cancel</button>
+      <button id="master-confirm">OK</button>
+    </div>
+  </div>
+</div>
+
+<div id="qr-modal" class="overlay-modal">
+  <div class="modal-box">
+    <div id="qr-canvas"></div>
+    <button id="qr-close">Close</button>
+  </div>
+</div>
+
+<script>
+window.addEventListener('load', function() {
+  var cfg = window.MULTIPLEX;
+  if (!cfg || !window.io) return;
+
+  var isMaster = false;
+  var socket = io(cfg.url);
+
+  socket.on(cfg.socketId, function(data) {
+    if (!isMaster && data && data.state) Reveal.setState(data.state);
+  });
+
+  function broadcast() {
+    socket.emit('multiplex-statechanged', {
+      secret: cfg.secret,
+      socketId: cfg.socketId,
+      state: Reveal.getState()
+    });
+  }
+
+  function becomeMaster() {
+    isMaster = true;
+    document.getElementById('master-mode').classList.add('is-master');
+    ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewshown', 'overviewhidden', 'paused', 'resumed'].forEach(function(ev) {
+      Reveal.on(ev, broadcast);
+    });
+    broadcast();
+  }
+
+  var masterBtn    = document.getElementById('master-mode');
+  var masterModal  = document.getElementById('master-modal');
+  var masterPw     = document.getElementById('master-pw');
+  var qrModal      = document.getElementById('qr-modal');
+
+  masterBtn.addEventListener('click', function() {
+    if (isMaster) return;
+    masterModal.classList.add('visible');
+    masterPw.focus();
+  });
+
+  masterModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
+
+  document.getElementById('master-cancel').addEventListener('click', function() {
+    masterModal.classList.remove('visible');
+    masterPw.value = '';
+  });
+
+  document.getElementById('master-confirm').addEventListener('click', function() {
+    if (masterPw.value === cfg.password) {
+      masterModal.classList.remove('visible');
+      masterPw.value = '';
+      becomeMaster();
+    } else {
+      masterPw.classList.add('shake');
+      setTimeout(function() { masterPw.classList.remove('shake'); }, 500);
+      masterPw.value = '';
+      masterPw.focus();
+    }
+  });
+
+  masterPw.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter')  document.getElementById('master-confirm').click();
+    if (e.key === 'Escape') document.getElementById('master-cancel').click();
+  });
+
+  document.getElementById('show-qr').addEventListener('click', function() {
+    if (!window.QRCode) return;
+    var url = window.location.href.split('#')[0];
+    var container = document.getElementById('qr-canvas');
+    container.innerHTML = '';
+    new QRCode(container, { text: url, width: 256, height: 256, colorDark: '#000000', colorLight: '#ffffff' });
+    qrModal.classList.add('visible');
+  });
+
+  qrModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
+
+  document.getElementById('qr-close').addEventListener('click', function() {
+    qrModal.classList.remove('visible');
+  });
+
+  [masterModal, qrModal].forEach(function(modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) modal.classList.remove('visible');
+    });
+  });
+});
+</script>
   <div class="reveal">
     <div class="slides">
 
@@ -4930,5 +5159,7 @@ tutorial</a></li>
         plugins: []
       });
     </script>
-    </body>
+      <script src="https://multiplex.up.railway.app/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</body>
 </html>

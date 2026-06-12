@@ -7,3 +7,111 @@
 </script>
 <a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/style/theme/serif.css'); return false;"></a>
 <a href="#/1" id="go-to-toc"></a>
+<button id="master-mode"></button>
+<button id="show-qr"></button>
+
+<div id="master-modal" class="overlay-modal">
+  <div class="modal-box">
+    <p>Master password</p>
+    <input type="password" id="master-pw" autocomplete="off">
+    <div class="modal-buttons">
+      <button id="master-cancel">Cancel</button>
+      <button id="master-confirm">OK</button>
+    </div>
+  </div>
+</div>
+
+<div id="qr-modal" class="overlay-modal">
+  <div class="modal-box">
+    <div id="qr-canvas"></div>
+    <button id="qr-close">Close</button>
+  </div>
+</div>
+
+<script>
+window.addEventListener('load', function() {
+  var cfg = window.MULTIPLEX;
+  if (!cfg || !window.io) return;
+
+  var isMaster = false;
+  var socket = io(cfg.url);
+
+  socket.on(cfg.socketId, function(data) {
+    if (!isMaster && data && data.state) Reveal.setState(data.state);
+  });
+
+  function broadcast() {
+    socket.emit('multiplex-statechanged', {
+      secret: cfg.secret,
+      socketId: cfg.socketId,
+      state: Reveal.getState()
+    });
+  }
+
+  function becomeMaster() {
+    isMaster = true;
+    document.getElementById('master-mode').classList.add('is-master');
+    ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewshown', 'overviewhidden', 'paused', 'resumed'].forEach(function(ev) {
+      Reveal.on(ev, broadcast);
+    });
+    broadcast();
+  }
+
+  var masterBtn    = document.getElementById('master-mode');
+  var masterModal  = document.getElementById('master-modal');
+  var masterPw     = document.getElementById('master-pw');
+  var qrModal      = document.getElementById('qr-modal');
+
+  masterBtn.addEventListener('click', function() {
+    if (isMaster) return;
+    masterModal.classList.add('visible');
+    masterPw.focus();
+  });
+
+  masterModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
+
+  document.getElementById('master-cancel').addEventListener('click', function() {
+    masterModal.classList.remove('visible');
+    masterPw.value = '';
+  });
+
+  document.getElementById('master-confirm').addEventListener('click', function() {
+    if (masterPw.value === cfg.password) {
+      masterModal.classList.remove('visible');
+      masterPw.value = '';
+      becomeMaster();
+    } else {
+      masterPw.classList.add('shake');
+      setTimeout(function() { masterPw.classList.remove('shake'); }, 500);
+      masterPw.value = '';
+      masterPw.focus();
+    }
+  });
+
+  masterPw.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter')  document.getElementById('master-confirm').click();
+    if (e.key === 'Escape') document.getElementById('master-cancel').click();
+  });
+
+  document.getElementById('show-qr').addEventListener('click', function() {
+    if (!window.QRCode) return;
+    var url = window.location.href.split('#')[0];
+    var container = document.getElementById('qr-canvas');
+    container.innerHTML = '';
+    new QRCode(container, { text: url, width: 256, height: 256, colorDark: '#000000', colorLight: '#ffffff' });
+    qrModal.classList.add('visible');
+  });
+
+  qrModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
+
+  document.getElementById('qr-close').addEventListener('click', function() {
+    qrModal.classList.remove('visible');
+  });
+
+  [masterModal, qrModal].forEach(function(modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) modal.classList.remove('visible');
+    });
+  });
+});
+</script>

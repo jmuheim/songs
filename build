@@ -2,8 +2,16 @@
 
 require 'optparse'
 require 'shellwords'
+require 'json'
+require 'net/http'
 
 Dir.chdir(__dir__)
+
+MULTIPLEX_URL     = 'https://multiplex.up.railway.app'
+MASTER_PASSWORD   = ENV.fetch('MASTER_PASSWORD', 'guitar')
+MULTIPLEX_TOKEN   = File.exist?('multiplex-token.json') \
+  ? JSON.parse(File.read('multiplex-token.json')) \
+  : JSON.parse(Net::HTTP.get(URI("#{MULTIPLEX_URL}/token"))).tap { |t| File.write('multiplex-token.json', JSON.generate(t)) }
 
 options = { pdf: false, deploy: false }
 OptionParser.new do |opts|
@@ -51,11 +59,13 @@ step("🌙", "Generating index.html (Pandoc)") { pandoc(output: "index.html", th
 
 step("✨", "Post-processing index.html") do
   html = File.read("index.html")
-  html.sub!("<body>", "<body>" + File.read("style/body-controls.html").strip)
+  multiplex_config = { url: MULTIPLEX_URL, socketId: MULTIPLEX_TOKEN['socketId'], secret: MULTIPLEX_TOKEN['secret'], password: MASTER_PASSWORD }.to_json
+  html.sub!("<body>", "<body><script>window.MULTIPLEX=#{multiplex_config};</script>" + File.read("style/body-controls.html").strip)
   html.sub!("<style>", "<style>" + File.read("style/night.css") + File.read("style/shared.css"))
   html.gsub!(%r{  <script src="./style/revealjs/plugin/(notes|search|zoom)/\1\.js"></script>\n}, "")
   html.sub!("plugins: [\n          RevealNotes,\n          RevealSearch,\n          RevealZoom\n        ]", "plugins: []")
   html.sub!("keyboard: true,", "keyboard: { 83: null }, // 's' disabled (was: speaker notes)")
+  html.sub!("</body>", "  <script src=\"#{MULTIPLEX_URL}/socket.io/socket.io.js\"></script>\n  <script src=\"https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js\"></script>\n</body>")
   File.write("index.html", html)
 end
 

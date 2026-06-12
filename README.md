@@ -1,31 +1,50 @@
 # My Songs
 
-This is a repository of beloved songs that I can perform on guitar. They are written in Markdown syntax.
+A collection of songs I perform on guitar. Written in Markdown with inline chord notation, compiled into an interactive Reveal.js slideshow and a printable PDF.
 
-To make it easy for people to join singing, I created a little script that generates:
+A live version is at [josh.ch/songs](https://josh.ch/songs).
 
-- a website song book that can be controlled similar to an app, e.g. using swipe gestures (left/right to change songs, up/down to go through song parts)
-- a beautiful printable PDF version of the same song book
+## Features
 
-A recent version of the song book can be visited here: [josh.ch/songs](https://josh.ch/songs).
+- Swipe left/right to change songs, up/down to navigate song sections
+- Colour-coded chords (each root letter gets its own colour)
+- Toggle chord visibility (🎹 button)
+- **Live sync** — open the song book on your phone and follow along as the presenter advances slides (see below)
+- Printable PDF version
 
 ## Installation
 
-- You need [Ruby](https://www.ruby-lang.org/) installed (I have version `3.0`)
-- You need [Pandoc](https://pandoc.org/) installed: `$ brew install pandoc` (I have version `3.1.2`)
-- We use [DeckTape](https://github.com/astefanutti/decktape) to generate PDFs, so install it: `$ npm install -g decktape`
-- Last but not least, the script file needs to be executable: `$ chmod +x song-book-builder.rb`
+- [Ruby](https://www.ruby-lang.org/) 3.x
+- [Pandoc](https://pandoc.org/): `brew install pandoc`
+- [DeckTape](https://github.com/astefanutti/decktape) (PDF only): `npm install -g decktape`
+
+## Build
+
+```bash
+LANG=en_US.UTF-8 ./build           # HTML only (fast)
+LANG=en_US.UTF-8 ./build --pdf     # HTML + PDF (slow)
+LANG=en_US.UTF-8 ./build --deploy  # HTML + deploy to josh.ch/songs
+```
+
+> `LANG=en_US.UTF-8` is required because song files contain non-ASCII characters.
 
 ## Adding songs
 
-Simply add more songs to `content/songs`.
+Add a Markdown file to `content/songs/` following the naming convention `Title (Artist).md`. Chords go inline as `[Am]`, `[G7]`, etc.
 
-## Compile HTML and PDF
+## Live sync (multiplex)
 
-Run the following command: `$ ./song-book-builder.rb`.
+The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multiplex/) so everyone in the room can follow along on their own device.
 
-PDF generation is slow and skipped by default. Pass `--pdf` to include it:
+| Button | Position | Function |
+|--------|----------|----------|
+| 📱 | Bottom-right | Show QR code — scan to open the song book |
+| 🎤 | Bottom-right (below 📱) | Become the presenter (asks for password) |
 
-```
-$ ./song-book-builder.rb --pdf
+Once you enter the password and become master (🎙️), your slide navigation is broadcast live to everyone who has the page open.
+
+Default password: `guitar`. Change it with:
+
+```bash
+MASTER_PASSWORD=yourpassword LANG=en_US.UTF-8 ./build
 ```
