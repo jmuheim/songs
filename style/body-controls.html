@@ -14,8 +14,10 @@
 
 <div id="master-modal" class="overlay-modal">
   <div class="modal-box">
-    <p>Master password</p>
-    <p id="master-info">Möchtest du für alle Teilnehmenden durch die Präsentation navigieren?</p>
+    <p>Passwort benötigt</p>
+    <div id="master-info">
+      <p>Möchtest du das Navigieren übernehmen?</p><p>Alle anderen werden dir durch die Präsentation folgen.</p>
+    </div>
     <input type="password" id="master-pw" autocomplete="off">
     <div class="modal-buttons">
       <button id="master-cancel">Cancel</button>
@@ -26,7 +28,7 @@
 
 <div id="qr-modal" class="overlay-modal">
   <div class="modal-box">
-    <p>Lied-Buch öffnen</p>
+    <p>Song Book öffnen</p>
     <p id="qr-info">Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.</p>
     <div id="qr-canvas"></div>
     <button id="qr-close">Schliessen</button>

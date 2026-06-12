@@ -166,7 +166,8 @@ a#toggle-theme::before {
   padding: 1.5em 2em;
   text-align: center;
   color: #fff;
-  font-size: 1.1rem;
+  font-family: sans-serif;
+  font-size: 2rem;
   min-width: 18em;
 }
 
@@ -233,6 +234,8 @@ a#toggle-theme::before {
 }
 
 #qr-canvas {
+  display: flex;
+  justify-content: center;
   margin-bottom: 1em;
 }
 .reveal section h1 {
@@ -317,8 +320,10 @@ a#toggle-theme::before {
 
 <div id="master-modal" class="overlay-modal">
   <div class="modal-box">
-    <p>Master password</p>
-    <p id="master-info">Möchtest du für alle Teilnehmenden durch die Präsentation navigieren?</p>
+    <p>Passwort benötigt</p>
+    <div id="master-info">
+      <p>Möchtest du das Navigieren übernehmen?</p><p>Alle anderen werden dir durch die Präsentation folgen.</p>
+    </div>
     <input type="password" id="master-pw" autocomplete="off">
     <div class="modal-buttons">
       <button id="master-cancel">Cancel</button>
@@ -329,7 +334,7 @@ a#toggle-theme::before {
 
 <div id="qr-modal" class="overlay-modal">
   <div class="modal-box">
-    <p>Lied-Buch öffnen</p>
+    <p>Song Book öffnen</p>
     <p id="qr-info">Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.</p>
     <div id="qr-canvas"></div>
     <button id="qr-close">Schliessen</button>
