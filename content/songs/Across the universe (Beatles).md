@@ -71,7 +71,7 @@ a[A]cross the universe [A7]
 
 ## Outro
 
-[D] Jai guru deva om [A7sus4] _(Repeat and fade)
+[D] Jai guru deva om [A7sus4] _(Repeat and fade)_
 
 ## Resources
 

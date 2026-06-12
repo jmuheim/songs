@@ -1,5 +1,5 @@
 ---
-author: 😊 Joshua and friends ❤️
+author: 😊 Josua and friends ❤️
 title:  Our Songs 🔥🎶🌛
 ---
 
@@ -363,7 +363,7 @@ a`A`{.a}cross the universe `A7`{.a}
 
 ## Outro
 
-`D`{.d} Jai guru deva om `A7sus4`{.a} _(Repeat and fade)
+`D`{.d} Jai guru deva om `A7sus4`{.a} _(Repeat and fade)_
 
 ## Resources
 
@@ -1171,128 +1171,6 @@ I `D`{.d} know I `C`{.c} have to `G`{.g} go
 - [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/father-and-son-chords-84491)
 - [Guitar tutorial](https://www.youtube.com/watch?v=fP7VC-2J_Ok)
 
-# Gimme hope, Jo'anna (Eddy Grant)
-
-## Intro
-
-`A`{.a} `D`{.d} `A`{.a} `D`{.d}  
-`A`{.a} `D`{.d} `A`{.a} `E`{.e}
-`A`{.a}
-
-## Verse 1
-
-Well Jo`A`{.a}'anna she runs a coun`D`{.d}try  
-She runs in `A`{.a} Durban and the Transvaal `E`{.e}  
-She makes a `A`{.a} few of her people ha`D`{.d}ppy, oh `Dm`{.d}  
-She don't `A`{.a} care about the `E`{.e} rest at all `A`{.a}
-
-## Verse 2
-
-She's got a `A`{.a} system they call apart`D`{.d}heid  
-It keeps a `A`{.a} brother in a subjec`E`{.e}tion  
-But maybe `A`{.a} pressure can make Jo'`D`{.d}anna see `Dm`{.d}  
-How every`A`{.a}body could a `E`{.e} live as `A`{.a} one, oh `E`{.e}
-
-## Chorus
-
-Gimme `A`{.a} hope, Jo'anna  
-Gimme `D`{.d} hope, Jo'anna  
-Gimme `A`{.a} hope, Jo'anna  
-'Fore the `E`{.e} morning come
-
-Oh gimme `A`{.a} hope, Jo'anna  
-Gimme `D`{.d} hope, Jo'anna  
-`A`{.a} Hope before the `E`{.e} morning come `A`{.a}
-
-## Verse 3
-
-I hear she `A`{.a} makes all the golden mo`D`{.d}ney  
-To buy new `A`{.a} weapons, any shape of guns `E`{.e}  
-While every `A`{.a} mother in black So`D`{.d}weto fears `Dm`{.d}  
-The `A`{.a} killing of an`E`{.e}other son `A`{.a}
-
-## Verse 4
-
-Sneakin' a`A`{.a}cross all the neighbors' bor`D`{.d}ders  
-Now and a`A`{.a}gain having little fun `E`{.e}  
-She doesn't `A`{.a} care if the fun and games `D`{.d} she play `Dm`{.d}  
-is `A`{.a} dang'rous to `E`{.e} ev'ryone, `A`{.a} oh `E`{.e}
-
-## Chorus
-
-Gimme `A`{.a} hope, Jo'anna  
-Gimme `D`{.d} hope, Jo'anna  
-Gimme `A`{.a} hope, Jo'anna  
-'Fore the `E`{.e} morning come
-
-Oh gimme `A`{.a} hope, Jo'anna  
-Gimme `D`{.d} hope, Jo'anna  
-`A`{.a} Hope before the `E`{.e} morning come `A`{.a}
-
-## Instrumental
-
-`A`{.a} `D`{.d} `A`{.a} `E`{.e}
-`A`{.a} `D`{.d} `E`{.e} `A`{.a}
-
-## Verse 5
-
-She's got su`A`{.a}pporters in high up pla`D`{.d}ces  
-Who turn their `A`{.a} heads to the city sun `E`{.e}  
-Jo'anna `A`{.a} give them the fancy mo`D`{.d}ney, oh `Dm`{.d}  
-to `A`{.a} tempt any`E`{.e}one who'd `A`{.a} come
-
-## Verse 6
-
-She even `A`{.a} knows how to swing o`D`{.d}pinion  
-In every `A`{.a} magazine and the journals `E`{.e}  
-For every `A`{.a} bad move that this Jo'`D`{.d}anna makes `Dm`{.d}  
-They got a `A`{.a} good expla`E`{.e}nation, `A`{.a} oh `E`{.e}
-
-## Chorus
-
-Gimme `A`{.a} hope, Jo'anna  
-Gimme `D`{.d} hope, Jo'anna  
-Gimme `A`{.a} hope, Jo'anna  
-'Fore the `E`{.e} morning come
-
-Oh gimme `A`{.a} hope, Jo'anna  
-Gimme `D`{.d} hope, Jo'anna  
-`A`{.a} Hope before the `E`{.e} morning come `A`{.a}
-
-## Verse 7
-
-Even the `A`{.a} preacher who works for Je`D`{.d}sus  
-The Arch`A`{.a}bishop who's a peaceful man `E`{.e}  
-Together `A`{.a} say that the freedom fi`D`{.d}ghters will `Dm`{.d}  
-`A`{.a}overcome the very `E`{.e} strong `A`{.a}
-
-## Verse 8
-
-I want to `A`{.a} know if you're blind Jo'`D`{.d}anna  
-If you `A`{.a} want to hear the sound of drums `E`{.e}  
-Can't you `A`{.a} see that the tide is `D`{.d} turning, oh `Dm`{.d}  
-don't make me `A`{.a} wait till the `E`{.e} morning `A`{.a} come, oh `E`{.e}
-
-## Chorus
-
-Gimme `A`{.a} hope, Jo'anna  
-Gimme `D`{.d} hope, Jo'anna  
-Gimme `A`{.a} hope, Jo'anna  
-'Fore the `E`{.e} morning come
-
-Oh gimme `A`{.a} hope, Jo'anna  
-Gimme `D`{.d} hope, Jo'anna  
-`A`{.a} Hope before the `E`{.e} morning come `A`{.a}
-
-_(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=MpMgzWBpu2o)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/eddy-grant/gimme-hope-joanna-chords-422774)
-- [Guitar tutorial](https://www.youtube.com/watch?v=7H1hcg79W-Q)
-- [Guitar solo tab](https://www.youtube.com/watch?v=_9VP53r_bow)
-
 # ❤️ Hallelujah (Leonard Cohen)
 
 ## Intro
@@ -1404,7 +1282,7 @@ With `G`{.g} nothing on my `E`{.e} tongue but halle`Am`{.a}lujah
 Halle`F`{.f}lujah, halle`Am`{.a}lujah  
 Galle`F`{.f}lujah, halle`C`{.c}lu`G`{.g}jah `C`{.c} `G`{.g}
 
-_(4x)
+_(4x)_
 
 ## Resources
 
@@ -1627,101 +1505,6 @@ Oh Lord, to be `Am`{.a} near you, to be free. `G`{.g}
 - [Source tab](https://tabs.ultimate-guitar.com/tab/rod-stewart/sailing-chords-380559) (transpose by -5 to start with G instead of B)
 - [Guitar tutorial](https://www.youtube.com/watch?v=m4KTNKZSFVs)
     - [Another guitar tutorial with additional inspirations](https://www.youtube.com/watch?v=JmiW9-kpGck)
-
-# I'm your man (Leonard Cohen)
-
-## Instructions
-
-```
-    |E A D G B e|
-    |-----------|
-F#m |2=4=4=2=2=2|
-```
-
-## Intro
-
-`Em`{.e} `Bm`{.b} `G`{.g} `F#`{.f} `Bm`{.b}
-
-## Verse 1
-
-If you want a `Em`{.e} lover  
-I'll do anything you `D`{.d} ask me to.
-And if you want an`Em`{.e}other kind of love  
-I'll wear a `D`{.d} mask for you.
-
-If you want a `Bm`{.b} partner take my hand  
-or if you want to `G`{.g} strike me down in anger  
-`A`{.a} here I stand  
-I'm your man `Bm`{.b}
-
-## Verse 2
-
-If you want a `Em`{.e} boxer  
-I will step into the `D`{.d} ring for you  
-And if you want a `Em`{.e} doctor  
-I'll examine every `D`{.d} inch of you
-
-If you want a `Bm`{.b} driver climb inside  
-Or if you want a `G`{.g} take me for a ride,  
-You `A`{.a} know you can  
-I'm your man `Bm`{.b}
-
-## Bridge
-
-Ah, the `D`{.d} moon's too bright  
-the `G`{.g} chain's too tight  
-the `A`{.a} beast won't go to `D`{.d} sleep
-
-I've been `F#m`{.f} running through  
-these promises to you  
-that I made `Bm`{.b} and I could not keep
-
----
-
-Ah, but a `F#`{.f} man never got a women back  
-not by `Bm`{.b} begging on his knees  
-Or I'd `G`{.g} crawl to you, baby  
-and I'd `F#`{.f} fall at your feet
-
-And I'd `G`{.g} howl at your beauty  
-like a `F#`{.f} dog in heat  
-And I'd `G`{.g} claw at your heart  
-and I'd `E`{.e} tear at your sheet
-
-I'd say: please `A`{.a}  
-please, I'm your man `Bm`{.b}
-
-## Verse 3
-
-And if you've `Em`{.e} got to sleep a moment  
-on the road, I will `D`{.d} steer for you  
-And if you want to `Em`{.e} walk the street alone  
-I'll disa`D`{.d}ppear for you
-
-If you want a `Bm`{.b} father for your child  
-or only want to `G`{.g} walk with me  
-a while across the `A`{.a} sand  
-I'm your man `Bm`{.b}
-
-## Verse 1
-
-_(Fade out slowly)_
-
-If you want a `Em`{.e} lover  
-I'll do anything you `D`{.d} ask me to.
-And if you want an`Em`{.e}other kind of love  
-I'll wear a `D`{.d} mask for you.
-
-If you want a `Bm`{.b} driver climb inside  
-Or if you want a `G`{.g} take me for a ride,  
-You `A`{.a} know you can  
-I'm your man `Bm`{.b}
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=ttEMYvpoR-k)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/leonard-cohen/im-your-man-chords-64981)
-- [Guitar tutorial](https://www.youtube.com/watch?v=M5_q2Zr6KRU)
 
 # ❤️ Jolene (Dolly Parton)
 
@@ -2175,101 +1958,6 @@ Is `Cadd9`{.c} just a yellow `G7`{.g} lemon tree `G`{.g}
 - [Source tab](https://tabs.ultimate-guitar.com/tab/fools-garden/lemon-tree-chords-145589)
 - [Guitar tutorial](https://www.youtube.com/watch?v=_hk3cZqEf30)
 
-# Morning has broken (Cat Stevens)
-
-## Instructions
-
-```
-       |E A D G B e|
-       |-----------|
-A7/D   |x x 0 0 1 0|
-D7sus4 |x x 0 2 1 3|
-F#     |2=4=4=3=2=2|
-F#m    |2=4=4=2=2=2|
-G7sus4 |x x 0 0 1 1|
-```
-
-## Intro
-
-`D`{.d} `G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
-`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
-
-## Verse 1
-
-Morning has `C`{.c}brok`Dm`{.d}en  
-`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
-`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
-`D7sus4`{.d} like the first `G`{.g} bird
-
-`C`{.c} Praise for the `F`{.f} singing  
-`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
-`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
-`G7`{.g} fresh from the `C`{.c} world
-
-## Instrumental
-
-`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
-`G7`{.g} `C`{.c} `G7sus4`{.g}
-
-## Verse 2
-
-Sweet the rain's `C`{.c} new `Dm`{.d} fall  
-`G`{.g} sunlit from `F`{.f} heav`C`{.c}en  
-`C`{.c} Like the first `Em`{.e} dew `Am`{.a} fall  
-`D7sus4`{.d} on the first `G`{.g} grass
-
-`C`{.c} Praise for the `F`{.f} sweetness  
-`C`{.c} of the wet `Am`{.a} gard`D`{.d}en  
-`G`{.g} Sprung in comp`C`{.c}lete`F`{.f}ness  
-`G7`{.g} where his feet `C`{.c} pass
-
-## Instrumental
-
-`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
-`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
-`A7/D`{.a} `D`{.d}
-
-## Verse 3
-
-Mine is the `D`{.d} sun`Em`{.e}light  
-`A`{.a} mine is the `G`{.g} morn`D`{.d}ing  
-Born of the `F#m`{.f} one `Bm`{.b} light  
-`E7`{.e} Eden saw `A`{.a} play `A7`{.a}
-
-`D`{.d} Praise with el`G`{.g}ation  
-`D`{.d} praise every `Bm`{.b} morn`E`{.e}ing  
-`A`{.a} God's recre`D`{.d}a`G`{.g}tion  
-`A7`{.a} of the new `D`{.d} day
-
-## Instrumental
-
-`G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
-`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
-
-## Verse 1
-
-Morning has `C`{.c}brok`Dm`{.d}en  
-`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
-`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
-`D7sus4`{.d} like the first `G`{.g} bird
-
-`C`{.c} Praise for the `F`{.f} singing  
-`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
-`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
-`G7`{.g} fresh from the `C`{.c} world
-
-## Outro
-
-`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
-`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
-`A7/D`{.a} `D`{.d}
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=uZAsfB1Np-8)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/morning-has-broken-chords-84520)
-- [Guitar tutorial](https://www.youtube.com/watch?v=eyRVPNenXlg)
-
 # Männer sind Schweine (Die Ärzte)
 
 ## Verse 1
@@ -2370,6 +2058,101 @@ Yeah, yeah, yeah, yeaääääää `Am`{.a}
 
 - [Song](https://www.youtube.com/watch?v=404oPn6tudE)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/568214)
+
+# Morning has broken (Cat Stevens)
+
+## Instructions
+
+```
+       |E A D G B e|
+       |-----------|
+A7/D   |x x 0 0 1 0|
+D7sus4 |x x 0 2 1 3|
+F#     |2=4=4=3=2=2|
+F#m    |2=4=4=2=2=2|
+G7sus4 |x x 0 0 1 1|
+```
+
+## Intro
+
+`D`{.d} `G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
+`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
+
+## Verse 1
+
+Morning has `C`{.c}brok`Dm`{.d}en  
+`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
+`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
+`D7sus4`{.d} like the first `G`{.g} bird
+
+`C`{.c} Praise for the `F`{.f} singing  
+`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
+`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
+`G7`{.g} fresh from the `C`{.c} world
+
+## Instrumental
+
+`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
+`G7`{.g} `C`{.c} `G7sus4`{.g}
+
+## Verse 2
+
+Sweet the rain's `C`{.c} new `Dm`{.d} fall  
+`G`{.g} sunlit from `F`{.f} heav`C`{.c}en  
+`C`{.c} Like the first `Em`{.e} dew `Am`{.a} fall  
+`D7sus4`{.d} on the first `G`{.g} grass
+
+`C`{.c} Praise for the `F`{.f} sweetness  
+`C`{.c} of the wet `Am`{.a} gard`D`{.d}en  
+`G`{.g} Sprung in comp`C`{.c}lete`F`{.f}ness  
+`G7`{.g} where his feet `C`{.c} pass
+
+## Instrumental
+
+`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
+`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
+`A7/D`{.a} `D`{.d}
+
+## Verse 3
+
+Mine is the `D`{.d} sun`Em`{.e}light  
+`A`{.a} mine is the `G`{.g} morn`D`{.d}ing  
+Born of the `F#m`{.f} one `Bm`{.b} light  
+`E7`{.e} Eden saw `A`{.a} play `A7`{.a}
+
+`D`{.d} Praise with el`G`{.g}ation  
+`D`{.d} praise every `Bm`{.b} morn`E`{.e}ing  
+`A`{.a} God's recre`D`{.d}a`G`{.g}tion  
+`A7`{.a} of the new `D`{.d} day
+
+## Instrumental
+
+`G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
+`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
+
+## Verse 1
+
+Morning has `C`{.c}brok`Dm`{.d}en  
+`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
+`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
+`D7sus4`{.d} like the first `G`{.g} bird
+
+`C`{.c} Praise for the `F`{.f} singing  
+`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
+`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
+`G7`{.g} fresh from the `C`{.c} world
+
+## Outro
+
+`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
+`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
+`A7/D`{.a} `D`{.d}
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=uZAsfB1Np-8)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/morning-has-broken-chords-84520)
+- [Guitar tutorial](https://www.youtube.com/watch?v=eyRVPNenXlg)
 
 # No woman no cry (Bob Marley)
 
@@ -2913,249 +2696,6 @@ Dass i's vom Teppich wider `C`{.c} furt ha gno
 - [Song](https://www.youtube.com/watch?v=PkGatIgXERI)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/1197401)
 
-# ❤️ S.O.B. (Nathaniel Rateliff)
-
-## Verse 1
-
-_(No guitar, only stomping on beat  
-and clapping off beat)_
-
-`E`{.e} Mmmm hmm, mmmm hmm  
-mmmm hmm hmm hmm _(x2)_
-
----
-
-_(Continue)_
-
-`E`{.e} I'm gonna need someone to help me  
-I'm gonna need somebody's hand  
-`E`{.e} I'm gonna need someone to hold `A`{.a} me down  
-I'm gonna `E`{.e} need someone to care
-
-`E`{.e} I'm gonna writhe and shake my body  
-I'll start pulling out my hair  
-`E`{.e} I'm gonna cover myself with the `A`{.a} ashes of you  
-and `E`{.e} nobody's gonna give a damn
- 
-## Chorus
-
-_(Only guitar)_
-
-Son of a bitch `E`{.e} give me a drink `A`{.a}  
-One more night `E`{.e} this can't be me `B7`{.b}
-
-Son of a bitch `E`{.e} if I can't get clean `A`{.a}  
-I'm gonna drink `E`{.e} my life away `A`{.a} `E`{.e}
- 
-## Verse 2
-
-_(Only stomping and clapping)_
-
-`E`{.e} **Whoa oh**, whoa oh  
-whoa oh oh oh  _(x2)_
-
-Now for se`E`{.e}venteen years  
-I've been throwing them back  
-`E`{.e} Seventeen more will bury me  
-Can `E`{.e} somebody please just `A`{.a} tie me `E`{.e} down?  
-Or `E`{.e} somebody give me a goddamn drink?
-
-## Chorus
-
-_(Only guitar)_
-
-Son of a bitch `E`{.e} give me a drink `A`{.a}  
-One more night `E`{.e} this can't be me `B7`{.b}
-
-Son of a bitch `E`{.e} if I can't get clean `A`{.a}  
-I'm gonna drink `E`{.e} my life away `A`{.a} `E`{.e}
-
-## Interlude
-
-_(Only stomping and clapping)_
-
-`E`{.e} **Mmmm hmm**, mmmm hmm  
-mmmm hmm hmm hmm _(x2)_
-
-_(Only finger snapping off beat)_
-
-My `E`{.e} heart was breaking, hands are shaking  
-bugs are crawling all over me _(x4, cont. raise voice)_
-
-## Chorus
-
-_(Only guitar)_
-
-Son of a bitch `E`{.e} give me a drink `A`{.a}  
-One more night `E`{.e} this can't be me `B7`{.b}
-
-Son of a bitch `E`{.e} if I can't get clean `A`{.a}  
-I'm gonna drink `E`{.e} my life away `A`{.a} `E`{.e}
-
-_(Repeat and add 2nd voice)_  
-`E`{.e} **Whoa oh**, whoa oh  
-whoa oh oh oh...
-
-## Outro
-
-_(Only stomping and clapping)_
-
-`E`{.e} **Whoa oh**, whoa oh  
-whoa oh oh oh  _(x2)_
-
-_(Vocals only)_
-
-`E`{.e} Whoa oh, whoa oh  
-whoa oh oh oh
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=1iAYhQsQhSY)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/nathaniel-rateliff/sob-chords-1860098)
-- [Guitar tutorial](https://www.youtube.com/watch?v=N-AEhOUtkh0)
-
-# Schunder-Song (Die Ärzte)
-
-```
-The chords sequence C, B, Am (at the beginning of each verse)
-is very fast. Instead of open C and Am, it might be easier to
-play C and B as power chords (on the A string).
-
-As an easy alternative using open chords, instead of B, simply
-use a G/B chord while only playing the lower 2 or 3 strings
-(like power chords) to imitate a distorted guitar.
-
-    |E A D G B e|
-    |-----------|
-G/B |x 2 0 0 x x|
-```
-
-## Verse 1
-
-`C`{.c} `B`{.b} `Am`{.a}
-
-Du hast mich so oft angespuckt  
-geschlagen und getreten  `C`{.c} `B`{.b} `Am`{.a}  
-Das war nicht sehr nett von dir  
-ich hatte nie darum gebe`G`{.g}ten `C`{.c} `B`{.b} `Am`{.a}
-
-Deine Feunde haben `F`{.f} applaudiert  
-`C`{.c} sie fanden es ganz `G`{.g} toll  
-`Am`{.a} Wenn du mich ver`F`{.f}möbelt hast  
-doch `C`{.c} jetzt ist das Fass `G`{.g} voll
-
-## Pre-Chorus
-
-`C`{.c} Gewalt erzeugt `G`{.g} Gegengewalt  
-hat man `F`{.f} dir das nicht erklärt? `G`{.g}  
-Oder `C`{.c} hast du da auch `G`{.g} wie so oft  
-einfach `F`{.f} nicht genau zugehört? `G`{.g}
-
-`F`{.f} Jetzt stehst du vor mir  
-und `G`{.g} wir sind ganz allein  
-`F`{.f} Keiner kann dir helfen, `G`{.g} keiner steht dir bei  
-`F`{.f} Ich schlag nur noch auf dich ein `G`{.g}
-
-## Chorus
-
-Immer mitten in die `C`{.c} Fresse rein `G`{.g} `Dm`{.d} `F`{.f} _(x2)_
-
-## Verse 2
-
-`C`{.c} `B`{.b} `Am`{.a}
-Ich bin nicht stark und ich bin kein Held  
-doch was zuviel ist ist zuviel `C`{.c} `B`{.b} `Am`{.a}  
-Für deine Agressionen  
-war ich immer das Ven`G`{.g}til `C`{.c} `B`{.b} `Am`{.a}
-
-Deine Kumpels waren `F`{.f} immer dabei  
-doch jetzt `C`{.c} wendet sich das Blatt `G`{.g}  
-`Am`{.a} Auch wenn ich morgen besser `F`{.f} umzieh'  
-irgend`C`{.c}wo in eine andere `G`{.g} Stadt
-
-## Pre-Chorus
-
-`C`{.c} Gewalt erzeugt `G`{.g} Gegengewalt  
-hat man `F`{.f} dir das nicht ~~erklärt~~ **erzählt**? `G`{.g}  
-Oder `C`{.c} hast du da auch `G`{.g} wie so oft  
-~~einfach nicht genau zugehört~~  
-**im `F`{.f} Unterricht gefehlt?** `G`{.g}
-
-`F`{.f} Jetzt ~~stehst~~ **liegst** du vor mir  
-und `G`{.g} wir sind ganz allein  
-`F`{.f} Und ich schlage `G`{.g} weiter auf dich ein  
-`F`{.f} Das tut gut, das musste `G`{.g} einfach mal sein
-
-## Chorus
-
-Immer mitten in die `C`{.c} Fresse rein `G`{.g} `Dm`{.d} `F`{.f} _(x2)_
-
-Mitten in die `C`{.c} Fresse `G`{.g} `Dm`{.d} `F`{.f} _(x2)_
-
-Mitten - `C`{.c} Fresse `G`{.g} `Dm`{.d} `F`{.f}
-
-Mitten in die `C`{.c} Fresse `G`{.g} `Dm`{.d} `F`{.f} _(x2)_
-
-Mitten in die `C`{.c} Fresse
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=IviYsUdUj6w)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/18431)
-
-# Sittin' on the dock of the bay (Otis Redding)
- 
-## Verse 1
-
-`G`{.g} Sittin' in the mornin' sun `B7`{.b}  
-I'll be `C`{.c} sittin' when the evenin' comes `A`{.a}  
-`G`{.g} Watching the ships roll in `B7`{.b}  
-And then I `C`{.c} watch 'em roll away again `A`{.a} yeah
-
-## Chorus
-
-I'm `G`{.g} sittin' on the dock of the `E`{.e} bay  
-Watching the `G`{.g} tide roll `E`{.e}away, ooo  
-I'm just `G`{.g} sittin' on the dock of the `A`{.a} bay  
-Wastin' `G`{.g} time `E`{.e}
-
-## Verse 2
-
-I `G`{.g} left my home in `B7`{.b} Georgia  
-`C`{.c} Headed for the 'Frisco Bay `A`{.a}  
-`G`{.g} 'Cause I've had nothing to `B7`{.b} live for  
-And look like `C`{.c} nothin's gonna come my way `A`{.a}
-
-## Chorus
-
-~~I'm sittin'~~ **So I'm just gonna `G`{.g} sit** on the dock of the `E`{.e} bay  
-Watching the `G`{.g} tide roll `E`{.e}away, ooh  
-~~I'm just~~ **Ooo I'm** `G`{.g} sittin' on the dock of the `A`{.a} bay  
-Wastin' `G`{.g} time `E`{.e}
-
-## Bridge
-
-                         
-`G`{.g} Looks like `D`{.d} nothing's `C`{.c} gonna change `G`{.g}  
-`G`{.g} Everything `D`{.d} still remains `C`{.c} the same `G`{.g}  
-`G`{.g} I can't `D`{.d} do what `C`{.c} ten people `G`{.g} tell me to do  
-So I `F`{.f} guess I'll remain the `D`{.d} same, yes
-
-## Chorus
-
-**Now** I'm `G`{.g} sitting on the dock of the `E`{.e} bay  
-Watching the `G`{.g} tide roll `E`{.e}away, ooh  
-~~I'm just~~ **Ooo I'm** `G`{.g} sittin' on the dock of the `A`{.a} bay  
-Wastin' `G`{.g} time `E`{.e}
-
-_(Repeat and whistle, fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=wyPKRcBTsFQ)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/otis-redding/sittin-on-the-dock-of-the-bay-chords-1088518)
-- [Guitar tutorial](https://www.youtube.com/watch?v=WNvoNPbmREY)
-
 # Something stupid (Robbie Williams)
 
 ## Instructions
@@ -3384,72 +2924,6 @@ you'll `F`{.f} find me
 
 - [Song](https://www.youtube.com/watch?v=Z26BvHOD_sg)
 - [Source tab](https://ukutabs.com/i/israel-kamakawiwoole/somewhere-over-the-rainbow-what-a-wonderful-world/)
-
-# ❤️ Sounds of silence (Simon and Garfunkel)
-
-## Verse 1
-
-`Am`{.a} Hello darkness, my old `G`{.g} friend  
-I've come to talk with you a`Am`{.a}gain  
-Because a vision softly `F`{.f} cree`C`{.c}ping  
-`F`{.f} Left its seeds while I was slee`C`{.c}ping
-
-And the `F`{.f} vision that was planted  
-in my `C`{.c} brain still re`Am`{.a}mains  
-`C`{.c}Within the `G`{.g} sound of `Am`{.a} silence
- 
-## Verse 2
-
-In restless dreams I walked a`G`{.g}lone  
-Narrow streets of cobble`Am`{.a}stone  
-'neath the halo of a `F`{.f} street `C`{.c} lamp  
-I turned my collar to the `F`{.f} cold and `C`{.c} damp
-
-When my `F`{.f} eyes were stabbed  
-by the flash of a neon `C`{.c} light  
-That split the night `Am`{.a}  
-`C`{.c} And touched the `G`{.g} sound of `Am`{.a} silence
- 
-## Verse 3
-
-And in the naked light I `G`{.g} saw  
-Ten thousand people, maybe `Am`{.a} more  
-People talking with`F`{.f}out speak`C`{.c}ing  
-People hearing with`F`{.f}out lis`C`{.c}tening
-
-People writing `F`{.f} songs  
-that voices never share `C`{.c}  
-And no one `Am`{.a} dare  
-`C`{.c} Disturb the sound `G`{.g} of `Am`{.a} silence
- 
-## Verse 4
-
-Fools said I, you do not `G`{.g} know  
-Silence like a cancer `Am`{.a} grows  
-Hear my words that I might `F`{.f} teach `C`{.c} you  
-Take my arms that I might `F`{.f} reach you `C`{.c}
-
-But my `F`{.f} words like silent raindrops `C`{.c} fell `Am`{.a}  
-_(Pause)_  
-`C`{.c} And echoed  
-In the `G`{.g} wells of `Am`{.a} silence  
- 
-## Verse 5
-
-And the people bowed and `G`{.g} prayed  
-To the neon God they `Am`{.a} made  
-And the sign flashed out `F`{.f} its war`C`{.c}ning  
-In the words that it was `F`{.f} forming `C`{.c}
-                       
-And the sign said the `F`{.f} words of the prophets  
-Are written on the subway `C`{.c} walls  
-And tenement `Am`{.a} halls  
-And `C`{.c} whisper'd in the `G`{.g} sounds of `Am`{.a} silence
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=4fWyzwo1xg0)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/simon-garfunkel/the-sound-of-silence-chords-159157)
 
 # Summer wine (Nancy Sinatra & Lee Hazlewood)
 
@@ -3954,70 +3428,3 @@ _(Fade out slowly)_
 - [Song](https://www.youtube.com/watch?v=IXdNnw99-Ic)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/pink-floyd/wish-you-were-here-chords-1088963)
 - [Guitar tutorial](https://www.youtube.com/watch?v=N2dQRYyaglk)
-
-# You can get it if you really want (Jimmy Cliff)
-
-## Intro
- 
-_(Slide up to)_ `C`{.c} _(x2)_
-
-## Chorus
-
-`C`{.c} You can get it `G`{.g} if you `F`{.f} really want `G`{.g} _(x3)_
-
-But you must `C`{.c} try, try and `G`{.g} try, try and `F`{.f} try  
-`G`{.g} You'll succeed at last
-
-`C`{.c} `G`{.g} `F`{.f} Mmh hm `G`{.g}  
-`C`{.c} `G`{.g} `F`{.f} `G`{.g}
-
-## Verse 1
-
-`C`{.c} Perse`G`{.g}cution `F`{.f} you must bear `G`{.g}  
-`C`{.c} Win or lose, `G`{.g} you `F`{.f} got to get your share  
-`Em`{.e} Got your mind set `F`{.f} on a dream  
-`G`{.g} You can get it though `G7`{.g} hard it may seem, now
-
-## Chorus
-
-`C`{.c} You can get it `G`{.g} if you `F`{.f} really want `G`{.g} _(x3)_
-
-But you must `C`{.c} try, try and `G`{.g} try, try and `F`{.f} try  
-`G`{.g} You'll succeed at last
-
-`C`{.c} `G`{.g} `F`{.f} I know it `G`{.g}  
-`C`{.c} `G`{.g} `F`{.f} listen `G`{.g}
-
-## Verse 2
-
-`C`{.c} Rome was `G`{.g} not `F`{.f} built in a day `G`{.g}  
-`C`{.c} Opposition `G`{.g} will `F`{.f} come your way  
-`Em`{.e} But the harder the `F`{.f} battle you see  
-`G`{.g} It's the sweeter the `G7`{.g} victory, now
-
-## Chorus
-
-`C`{.c} You can get it `G`{.g} if you `F`{.f} really want `G`{.g} _(x3)_
-
-But you must `C`{.c} try, try and `G`{.g} try, try and `F`{.f} try  
-`G`{.g} You'll succeed at last
-
-## Interlude
-
-_(All barred)_
-
-`C`{.c} `Eb`{.e} `F`{.f}  
-`G`{.g} `F`{.f} `Eb`{.e} `Db`{.d} _(x2)_
-
-## Chorus
-
-`C`{.c} You can get it `G`{.g} if you `F`{.f} really want `G`{.g} _(x3)_
-
-But you must `C`{.c} try, try and `G`{.g} try, try and `F`{.f} try  
-`G`{.g} You'll succeed at last _(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=18EAqHx2lMk)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/jimmy-cliff/you-can-get-it-if-you-really-want-chords-64801)
-- [Guitar tutorial](https://www.youtube.com/watch?v=1rpzDo53Sbw&t=88s)

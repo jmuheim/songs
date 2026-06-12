@@ -5,7 +5,7 @@
 markdown = []
 markdown << <<~EOS
               ---
-              author: 😊 Joshua and friends ❤️
+              author: 😊 Josua and friends ❤️
               title:  Our Songs 🔥🎶🌛
               ---
             EOS

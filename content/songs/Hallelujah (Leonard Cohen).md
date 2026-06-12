@@ -109,7 +109,7 @@ With [G] nothing on my [E] tongue but halle[Am]lujah
 Halle[F]lujah, halle[Am]lujah  
 Galle[F]lujah, halle[C]lu[G]jah [C] [G]
 
-_(4x)
+_(4x)_
 
 ## Resources
 

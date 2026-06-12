@@ -9,11 +9,20 @@ To make it easy for people to join singing, I created a little script that gener
 
 A recent version of the song book can be visited here: [josh.ch/songs](https://josh.ch/songs).
 
-## Usage
+## Installation
 
-Simply add more songs to `content/songs`. Then fire up a console, go to this folder and run the following command: `$ ./song-book-builder.rb`.
+- You need [Ruby](https://www.ruby-lang.org/) installed (I have version `3.0`)
+- You need [Pandoc](https://pandoc.org/) installed: `$ brew install pandoc` (I have version `3.1.2`)
+- We use [DeckTape](https://github.com/astefanutti/decktape) to generate PDFs, so install it: `$ npm install -g decktape`
+- Last but not least, the script file needs to be executable: `$ chmod +x song-book-builder.rb`
 
-You need Ruby installed. And the script file needs to be executable (`$ chmod +x song-book-builder.rb`).
+## Adding songs
+
+Simply add more songs to `content/songs`.
+
+## Compile HTML and PDF
+
+Run the following command: `$ ./song-book-builder.rb`.
 
 The command will run for quite some time, as PDF generation is slow.
 
