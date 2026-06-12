@@ -2,7 +2,7 @@
 
 A collection of songs I perform on guitar. Written in Markdown with inline chord notation, compiled into an interactive Reveal.js slideshow and a printable PDF.
 
-A live version is at [josh.ch/songs](https://josh.ch/songs).
+A live version is at [songs.josh.ch](https://songs.josh.ch).
 
 ## Features
 
@@ -23,7 +23,7 @@ A live version is at [josh.ch/songs](https://josh.ch/songs).
 ```bash
 LANG=en_US.UTF-8 ./build           # HTML only (fast)
 LANG=en_US.UTF-8 ./build --pdf     # HTML + PDF (slow)
-LANG=en_US.UTF-8 ./build --deploy  # HTML + deploy to josh.ch/songs
+LANG=en_US.UTF-8 ./build --deploy  # HTML + deploy to songs.josh.ch
 ```
 
 > `LANG=en_US.UTF-8` is required because song files contain non-ASCII characters.

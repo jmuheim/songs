@@ -17,7 +17,7 @@ options = { pdf: false, deploy: false }
 OptionParser.new do |opts|
   opts.banner = "Usage: build [options]"
   opts.on("--pdf",    "Generate PDF (slow)")               { options[:pdf]    = true }
-  opts.on("--deploy", "Deploy to josh.ch/songs via rsync") { options[:deploy] = true }
+  opts.on("--deploy", "Deploy to songs.josh.ch via rsync") { options[:deploy] = true }
 end.parse!
 
 def step(emoji, label)
@@ -90,9 +90,9 @@ if options[:pdf]
 end
 
 if options[:deploy]
-  step("🚀", "Deploying to josh.ch/songs") do
+  step("🚀", "Deploying to songs.josh.ch") do
     puts
-    system("rsync -avz --delete index.html style maroni@greip.uberspace.de:/var/www/virtual/maroni/josh.ch/songs/")
+    system("rsync -avz --delete index.html style maroni@greip.uberspace.de:/var/www/virtual/maroni/songs.josh.ch/")
   end
 end
 

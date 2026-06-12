@@ -3,7 +3,7 @@
 ## Welcome
 
 This is a collection of my favourite guitar songs.  
-🎤😍🎸🔥 Find it on [josh.ch/songs](http://josh.ch/songs).
+🎤😍🎸🔥 Find it on [songs.josh.ch](https://songs.josh.ch).
 
 - Use arrow keys or swipe gestures to navigate
 - To toggle chords display, click 🎹
