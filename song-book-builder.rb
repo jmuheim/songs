@@ -2,11 +2,12 @@
 
 require 'optparse'
 
-options = { pdf: false }
+options = { pdf: false, deploy: false }
 
 OptionParser.new do |opts|
   opts.banner = "Usage: song-book-builder.rb [options]"
   opts.on("--pdf", "Generate PDF (slow)") { options[:pdf] = true }
+  opts.on("--deploy", "Deploy to josh.ch/songs via rsync") { options[:deploy] = true }
 end.parse!
 
 def step(emoji, label)
@@ -86,6 +87,14 @@ if options[:pdf]
   step("📄", "Generating print.pdf (DeckTape)") do
     print_file = "#{URI::encode(File.expand_path(File.dirname(__FILE__))).to_s}/print.html"
     output = `decktape -s 1600x1200 file://#{print_file} print.pdf 2>&1`
+    print "\n#{output}" unless output.strip.empty?
+  end
+end
+
+if options[:deploy]
+  step("🚀", "Deploying to josh.ch/songs") do
+    remote = "maroni@greip.uberspace.de:/var/www/virtual/maroni/josh.ch/songs/"
+    output = `rsync -avz --delete index.html style/ #{remote} 2>&1`
     print "\n#{output}" unless output.strip.empty?
   end
 end
