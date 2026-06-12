@@ -1,8 +1,16 @@
-#toggle-chords-visibility {
+#bottom-left-controls {
   position: absolute;
   bottom: 2.5em;
   left: 1em;
   z-index: 100;
+  display: flex;
+  align-items: center;
+}
+
+#toggle-chords-visibility,
+#master-mode,
+#show-qr {
+  position: relative;
   opacity: 0.75;
   background: none;
   border: none;
@@ -107,24 +115,6 @@ a#toggle-theme::before {
   color: #bb0000;
 }
 
-#master-mode,
-#show-qr {
-  position: absolute;
-  z-index: 100;
-  opacity: 0.75;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  font-family: inherit;
-  line-height: 1;
-}
-
-#master-mode {
-  bottom: 2.5em;
-  right: 1em;
-}
-
 #master-mode::before {
   font-size: 2.5em;
   content: '🎤';
@@ -132,11 +122,6 @@ a#toggle-theme::before {
 
 #master-mode.is-master::before {
   content: '🎙️';
-}
-
-#show-qr {
-  bottom: 7.5em;
-  right: 1em;
 }
 
 #show-qr::before {

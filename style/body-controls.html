@@ -1,4 +1,8 @@
-<button id="toggle-chords-visibility"></button>
+<div id="bottom-left-controls">
+  <button id="toggle-chords-visibility"></button>
+  <button id="show-qr"></button>
+  <button id="master-mode"></button>
+</div>
 <script>
   document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
     document.body.classList.toggle('chords-hidden');
@@ -7,8 +11,6 @@
 </script>
 <a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/style/theme/serif.css'); return false;"></a>
 <a href="#/1" id="go-to-toc"></a>
-<button id="master-mode"></button>
-<button id="show-qr"></button>
 
 <div id="master-modal" class="overlay-modal">
   <div class="modal-box">
