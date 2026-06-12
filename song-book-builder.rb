@@ -94,7 +94,7 @@ end
 if options[:deploy]
   step("🚀", "Deploying to josh.ch/songs") do
     remote = "maroni@greip.uberspace.de:/var/www/virtual/maroni/josh.ch/songs/"
-    output = `rsync -avz --delete index.html style/ #{remote} 2>&1`
+    output = `rsync -avz --delete index.html style #{remote} 2>&1`
     print "\n#{output}" unless output.strip.empty?
   end
 end
