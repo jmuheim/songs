@@ -24,8 +24,8 @@ Simply add more songs to `content/songs`.
 
 Run the following command: `$ ./song-book-builder.rb`.
 
-The command will run for quite some time, as PDF generation is slow.
+PDF generation is slow and skipped by default. Pass `--pdf` to include it:
 
-## TODOs
-
-- Add switch to disable PDF generation when running script
+```
+$ ./song-book-builder.rb --pdf
+```

@@ -1,6 +1,13 @@
 #!/usr/bin/ruby
 
-# require 'pry'
+require 'optparse'
+
+options = { pdf: false }
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: song-book-builder.rb [options]"
+  opts.on("--pdf", "Generate PDF (slow)") { options[:pdf] = true }
+end.parse!
 
 markdown = []
 markdown << <<~EOS
@@ -55,5 +62,7 @@ file = File.open("print.html", "w")
 file.write(result)
 file.close
 
-print_file = "#{URI::encode(File.expand_path(File.dirname(__FILE__))).to_s}/print.html"
-puts `decktape -s 1600x1200 file://#{print_file} print.pdf`
+if options[:pdf]
+  print_file = "#{URI::encode(File.expand_path(File.dirname(__FILE__))).to_s}/print.html"
+  puts `decktape -s 1600x1200 file://#{print_file} print.pdf`
+end
