@@ -36,10 +36,6 @@
 </div>
 
 <script>
-if (screen.orientation && screen.orientation.lock) {
-  screen.orientation.lock('landscape').catch(function() {});
-}
-
 window.addEventListener('load', function() {
   var cfg = window.MULTIPLEX;
   if (!cfg || !window.io) return;
