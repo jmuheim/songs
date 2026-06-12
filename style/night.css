@@ -1,5 +1,5 @@
 #bottom-left-controls {
-  position: absolute;
+  position: fixed;
   bottom: 2.5em;
   left: 1em;
   z-index: 100;
@@ -79,7 +79,7 @@ section#TOC::-webkit-scrollbar-thumb {
 }
 
 a#go-to-toc {
-  position: absolute;
+  position: fixed;
   top: 2.5em;
   left: 1em;
   z-index: 100;
@@ -94,7 +94,7 @@ a#go-to-toc::before {
 
 a#toggle-theme {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 2.5em;
   right: 1em;
   z-index: 100;
