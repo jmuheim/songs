@@ -55,13 +55,19 @@ window.addEventListener('load', function() {
     });
   }
 
+  var REVEAL_EVENTS = ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewshown', 'overviewhidden', 'paused', 'resumed'];
+
   function becomeMaster() {
     isMaster = true;
     document.getElementById('master-mode').classList.add('is-master');
-    ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewshown', 'overviewhidden', 'paused', 'resumed'].forEach(function(ev) {
-      Reveal.on(ev, broadcast);
-    });
+    REVEAL_EVENTS.forEach(function(ev) { Reveal.on(ev, broadcast); });
     broadcast();
+  }
+
+  function becomeClient() {
+    isMaster = false;
+    document.getElementById('master-mode').classList.remove('is-master');
+    REVEAL_EVENTS.forEach(function(ev) { Reveal.off(ev, broadcast); });
   }
 
   var masterBtn    = document.getElementById('master-mode');
@@ -70,7 +76,7 @@ window.addEventListener('load', function() {
   var qrModal      = document.getElementById('qr-modal');
 
   masterBtn.addEventListener('click', function() {
-    if (isMaster) return;
+    if (isMaster) { becomeClient(); return; }
     masterModal.classList.add('visible');
     masterPw.focus();
   });
