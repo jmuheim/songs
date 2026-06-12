@@ -1,0 +1,64 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What this project is
+
+A guitar song book generator. Songs are written in Markdown with inline chord notation. A Ruby script compiles them into an interactive Reveal.js HTML slideshow (`index.html`) and a printable PDF-ready version (`print.html` / `print.pdf`).
+
+## Build command
+
+```bash
+./song-book-builder.rb
+```
+
+Dependencies: Ruby 3.x, Pandoc (`brew install pandoc`), DeckTape (`npm install -g decktape`).
+
+PDF generation (via DeckTape) is slow — if you only need the HTML output, you can comment out the `decktape` line at the bottom of `song-book-builder.rb`.
+
+## Song file format
+
+Each song lives in `content/songs/<Title> (<Artist>).md`. Structure:
+
+```markdown
+# ❤️ Song Title (Artist Name)
+
+## Section Name
+
+Lyrics with [Chord] inline like this [Am] and here [G7].
+
+## Resources
+
+- [Song](https://youtube.com/...)
+```
+
+- **H1** = song title (one per file, shown as the slide title)
+- **H2** = section (each becomes a sub-slide)
+- **Chords** use `[ChordName]` inline in lyrics
+- A `## Resources` section is automatically stripped from `print.html` (links are useless in print)
+- `content/Introduction.md` is always prepended as the first slide
+
+## Chord rendering pipeline
+
+The Ruby script transforms `[Chord]` markers before passing to Pandoc:
+
+```
+[C] → `C`{.c}    (CSS class = lowercase first letter)
+[Am] → `Am`{.a}
+[G7] → `G7`{.g}
+```
+
+Pandoc renders these as `<code class="a">Am</code>` etc. CSS in `style/shared.css` assigns a distinct color per chord letter (A=red, B=gray, C=blue, D=green, E=yellow, F=violet, G=brown).
+
+The regex only matches `[Word]` not followed by `(` — so standard Markdown links `[text](url)` are left untouched.
+
+## Output files
+
+- `all-songs.md` — intermediate concatenated Markdown (committed, regenerated on each build)
+- `index.html` — interactive night-themed Reveal.js presentation (committed)
+- `print.html` — serif-themed version for PDF printing (committed)
+- `print.pdf` — generated PDF (committed)
+
+## Legacy songs
+
+`content/legacy-songs/` holds songs removed from the active set. They are not included in the build.
