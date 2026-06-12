@@ -12,9 +12,10 @@ A guitar song book generator. Songs are written in Markdown with inline chord no
 ./build           # HTML only (fast)
 ./build --pdf     # HTML + PDF (slow)
 ./build --deploy  # HTML + deploy to songs.josh.ch
+./dev             # Watch, rebuild, deploy, and live-reload on every change
 ```
 
-Dependencies: Ruby 3.x, Pandoc (`brew install pandoc`), DeckTape (`npm install -g decktape`).
+Dependencies: Ruby 3.x, Pandoc (`brew install pandoc`), DeckTape (`npm install -g decktape`), fswatch (`brew install fswatch`), browser-sync (`npm install -g browser-sync`).
 
 ## Song file format
 

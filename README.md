@@ -17,6 +17,8 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - [Ruby](https://www.ruby-lang.org/) 3.x
 - [Pandoc](https://pandoc.org/): `brew install pandoc`
 - [DeckTape](https://github.com/astefanutti/decktape) (PDF only): `npm install -g decktape`
+- [fswatch](https://github.com/emcrisostomo/fswatch) (dev watch only): `brew install fswatch`
+- [browser-sync](https://browsersync.io/) (dev watch only): `npm install -g browser-sync`
 
 ## Build
 
@@ -24,6 +26,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 LANG=en_US.UTF-8 ./build           # HTML only (fast)
 LANG=en_US.UTF-8 ./build --pdf     # HTML + PDF (slow)
 LANG=en_US.UTF-8 ./build --deploy  # HTML + deploy to songs.josh.ch
+LANG=en_US.UTF-8 ./dev             # Watch, rebuild, deploy, and live-reload on every change
 ```
 
 > `LANG=en_US.UTF-8` is required because song files contain non-ASCII characters.
