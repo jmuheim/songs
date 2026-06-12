@@ -226,6 +226,7 @@ Yeah...)
 - [Song](https://www.youtube.com/watch?v=qtVa-BwoZsU)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/freundeskreis/anna-chords-426527)
 - [Guitar tutorial](https://www.youtube.com/watch?v=jE2A4syC0AU)
+
 # Across the universe (Beatles)
 
 ## Instructions
@@ -559,6 +560,7 @@ _(Repeat and fade)_
 - [Song](https://www.youtube.com/watch?v=d-diB65scQU)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/bobby-mcferrin/dont-worry-be-happy-chords-484289)
 - [Guitar tutorial](https://www.youtube.com/watch?v=vJfE-WNl_z8)
+
 # Dr Eskimo (Mani Matter)
 
 ## Verse 1
@@ -1326,6 +1328,7 @@ _(Repeat and fade)_
 
 - [Song](https://www.youtube.com/watch?v=960wzRtcl-Y)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/backstreet-boys/as-long-as-you-love-me-chords-263108) (transposed +7)
+
 # ❤️ Jolene (Dolly Parton)
 
 ## Intro
@@ -3056,6 +3059,7 @@ Of `G`{.g} hope for a destina`D`{.d}tion
 - [Song](https://www.youtube.com/watch?v=6NXnxTNIWkc)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/4-non-blondes/whats-up-chords-268676)
 - [Guitar tutorial]()
+
 # Wild world (Cat Stevens)
 
 ## Instructions

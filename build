@@ -52,7 +52,8 @@ step("📝", "Writing all-songs.md") do
     author: 😊 Josua & Monika ❤️
     ---
   MD
-  File.write("all-songs.md", [frontmatter, File.read("content/Introduction.md"), *songs_md].join("\n"))
+  parts = [frontmatter, File.read("content/Introduction.md"), *songs_md].map(&:rstrip)
+  File.write("all-songs.md", parts.join("\n\n") + "\n")
 end
 
 step("🌙", "Generating index.html (Pandoc)") { pandoc(output: "index.html", theme: "night") }
