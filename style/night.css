@@ -162,7 +162,8 @@ a#toggle-theme::before {
   margin: 0 0 0.75em;
 }
 
-#master-info {
+#master-info,
+#qr-info {
   font-size: 0.8em;
   opacity: 0.6;
   margin-top: -0.4em;

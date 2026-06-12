@@ -26,8 +26,10 @@
 
 <div id="qr-modal" class="overlay-modal">
   <div class="modal-box">
+    <p>Lied-Buch öffnen</p>
+    <p id="qr-info">Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.</p>
     <div id="qr-canvas"></div>
-    <button id="qr-close">Close</button>
+    <button id="qr-close">Schliessen</button>
   </div>
 </div>
 
@@ -101,7 +103,7 @@ window.addEventListener('load', function() {
     var url = window.location.href.split('#')[0];
     var container = document.getElementById('qr-canvas');
     container.innerHTML = '';
-    new QRCode(container, { text: url, width: 256, height: 256, colorDark: '#000000', colorLight: '#ffffff' });
+    new QRCode(container, { text: url, width: 400, height: 400, colorDark: '#000000', colorLight: '#ffffff' });
     qrModal.classList.add('visible');
   });
 
