@@ -309,6 +309,79 @@ a`A`{.a}cross the universe `A7`{.a}
 - [Guitar tutorial](https://www.youtube.com/watch?v=CQ1P8IQc8AY)
 - [Interpretation by Fiona Apple](https://www.youtube.com/watch?v=RhMEKiIb86I)
 
+# As long as you love me (Backstreet Boys)
+
+## Intro
+
+`C`{.c} `G`{.g} `Em`{.e} `D`{.d}  
+As long as you love me
+
+_(Repeat)_
+
+## Verse 1
+
+Although `Em`{.e} loneliness has always been  
+a `C`{.c} friend of mine  
+I'm `D`{.d} leavin' my life in your hands `G`{.g} `D`{.d}  
+`Em`{.e} People say I'm crazy and that `C`{.c} I am blind  
+`D`{.d} Risking it all in a glance `G`{.g} `D`{.d}
+
+And `Em`{.e} how you got me blind is still a `C`{.c} mystery  
+I `D`{.d} can't get you out of my head `G`{.g} `D`{.d}  
+`Em`{.e} Don't care what is written in your `C`{.c} history  
+As `D`{.d} long as you're here with me `G`{.g}
+
+## Chorus
+
+I don't care who `C`{.c} you are  
+Where `G`{.g} you're from  
+What `Em`{.e} you did  
+As long `D`{.d} as you love me
+
+_(Repeat)_
+
+## Verse 2
+
+`Em`{.e} Every little thing that you have `C`{.c} said and done  
+Feels `D`{.d} like it's deep within me `G`{.g} `D`{.d}  
+`Em`{.e} Doesn't really matter if you're `C`{.c} on the run  
+It `D`{.d} seems like we're `G`{.g} meant to be `D`{.d}
+
+## Chorus
+
+I don't care who `C`{.c} you are  
+Where `G`{.g} you're from  
+What `Em`{.e} you did  
+As long `D`{.d} as you love me (yeah)
+
+_(Repeat)_
+
+`C`{.c} `G`{.g} `Em`{.e} `D`{.d} _(x2)_
+
+## Bridge
+
+`Em`{.e} I've tried to hide it so that `G`{.g} no one knows  
+But I `C`{.c} guess it shows  
+When you `C`{.c} look into my eyes `D`{.d}  
+
+`Em`{.e} What you did and where you're `G`{.g} comin from  
+I don't `D`{.d} care, `C`{.c} as long `D`{.d} as you `C`{.c} love me, baby  
+`G`{.g} `D`{.d} `Em`{.e} `C`{.c} `D`{.d}
+
+## Chorus
+
+I don't care who `C`{.c} you are  
+Where `G`{.g} you're from  
+What `Em`{.e} you did  
+As long `D`{.d} as you love me
+
+_(Repeat and fade)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=960wzRtcl-Y)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/backstreet-boys/as-long-as-you-love-me-chords-263108) (transposed +7)
+
 # Baby one more time (Britney Spears)
 
 ## Intro
@@ -921,6 +994,273 @@ I `D`{.d} know I `C`{.c} have to `G`{.g} go
 - [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/father-and-son-chords-84491)
 - [Guitar tutorial](https://www.youtube.com/watch?v=fP7VC-2J_Ok)
 
+# Feel (Robbie Williams)
+
+## Intro
+
+`Dm`{.d} `Am`{.a} `Dm`{.d} `Am`{.a} _(2x)_
+
+## Verse 1
+
+Come on and hold my `Dm`{.d} hand  
+`Am`{.a} I wanna contact the living `A`{.a} `A7`{.a}  
+Not sure I under`Gm`{.g}stand  
+`Dm`{.d} This role I've been gi`A`{.a}ven `A7`{.a}
+
+---
+
+I sit and talk to `Dm`{.d} God  
+`Am`{.a} and he just laughs at my `A`{.a} plans `A7`{.a}  
+My head speaks a `Gm`{.g} language  
+`Dm`{.d} I don't understand `A`{.a} `A7`{.a}
+
+## Chorus 1
+
+I just wanna `Bb`{.b} feel real lo`F`{.f}ve  
+Fill the home that I li`C`{.c}ve in  
+Cause I got too much li`Bb`{.b}fe  
+Running through my ve`F`{.f}igns  
+Going to waste `C`{.c}
+
+## Verse 2
+
+I dont wanna `Dm`{.d} die  
+`Am`{.a} But I ain't keen on living ei`A`{.a}ther `A7`{.a}  
+Before I fall in `Gm`{.g} love  
+`Dm`{.d} I'm preparing to le`A`{.a}ave her `A7`{.a}
+
+---
+
+I scare myself to de`Dm`{.d}ath  
+`Am`{.a} That's why I keep on run`A`{.a}ning `A7`{.a}  
+Before I've ar`Gm`{.g}rived  
+`Dm`{.d} I can see myself co`A`{.a}ming `A7`{.a}
+
+## Chorus 2
+
+I just wanna `Bb`{.b} feel real lo`F`{.f}ve  
+Fill the home that I li`C`{.c}ve in  
+Cause I got too much li`Bb`{.b}fe  
+Running through my ve`F`{.f}igns  
+Going to waste `C`{.c}
+
+---
+
+I just wanna feel `Bb`{.b} real lo`F`{.f}ve  
+And the life ever af`C`{.c}ter  
+I cannot get enough
+
+`Dm`{.d} `Am`{.a} `Dm`{.d} `Am`{.a} _(3x)_
+
+`Dm`{.d} `Am`{.a} _(Pause)_
+
+## Chorus 2
+
+I just wanna `Bb`{.b} feel real lo`F`{.f}ve  
+Fill the home that I li`C`{.c}ve in  
+Cause I got too much li`Bb`{.b}fe  
+Running through my ve`F`{.f}igns  
+Going to `C`{.c} waste
+
+---
+
+I just wanna feel `Bb`{.b} real lo`F`{.f}ve  
+And the life ever af`C`{.c}ter  
+There's a hole in my soul `Bb`{.b}  
+you can see it in my face `F`{.f}  
+it's a real big place `C`{.c}
+
+## Bridge
+
+`Dm`{.d} `Am`{.a} _(2x)_
+
+Come on and hold my `Dm`{.d} hand  
+`Am`{.a} I wanna contact the li`Dm`{.d}ving  
+`Am`{.a} Not sure I under`Dm`{.d}stand  
+`Am`{.a} This role I've been gi`Dm`{.d}ven
+
+`Am`{.a} Not sure I under`Dm`{.d}stand _(4x)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=iy4mXZN1Zzk)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/feel-chords-133140)
+- [Guitar tutorial](https://www.youtube.com/watch?v=LVGNZyeff7)
+
+# Further on up the road (Johnny Cash)
+
+## Intro
+
+`Am`{.a} `C`{.c} `Am`{.a} `E7`{.e} `Am`{.a}
+
+## Verse 1
+
+Where the road is `Am`{.a} dark  
+And the seed is `C`{.c} sowed  
+Where the gun is `Am`{.a} cocked  
+As the bullet's `C`{.c} cold
+
+Where the miles are `Am`{.a} marked  
+`G`{.g} In the blood and the `Am`{.a} gold  
+`G`{.g} I'll `F`{.f} meet you further `G`{.g} on up the road `Am`{.a}
+
+## Verse 2
+
+Got on my dead man `Am`{.a} suit  
+And my smilin' skull `C`{.c} ring  
+My lucky graveyard `Am`{.a} boots  
+And a song to `C`{.c} sing
+
+I got a song to `Am`{.a} sing  
+`G`{.g} That keeps me out of the `Am`{.a} cold  
+`G`{.g} And I'll `F`{.f} meet you  
+further `G`{.g} on up the `Am`{.a} road
+
+## Chorus 1
+
+Further on up the `C`{.c} road  
+Further on up the `Am`{.a} road  
+Where the way is `C`{.c} dark  
+And the night is `E7`{.e} cold
+
+One sunny `Am`{.a} mornin'  
+`G`{.g} We'll rise I `Am`{.a} know  
+`G`{.g} And I'll `F`{.f} meet you  
+further `G`{.g} on up the `Am`{.a} road
+
+## Instrumental
+
+`Am`{.a} `C`{.c} `Am`{.a} `E7`{.e} `Am`{.a}
+
+## Verse 3
+
+Now I've been out in the `Am`{.a} desert  
+Just don't my `C`{.c} time  
+Searchin' through the `Am`{.a} dust  
+Lookin' for a `C`{.c} sign
+
+If there's a light up a`G`{.g}head  
+Well, brother I don't `Am`{.a} know  
+`G`{.g} But I've `F`{.f} got  
+this fever `G`{.g} burnin' in my soul `Am`{.a}
+
+## Chours 2
+
+Further on up the `C`{.c} road  
+Further on up the `Am`{.a} road  
+Further on up the `C`{.c} road  
+Further on up the `E7`{.e} road
+
+---
+
+One sunny `Am`{.a} mornin' `G`{.g}  
+We'll rise I `Am`{.a} know `G`{.g}
+
+And I'll `F`{.f} meet you  
+further `G`{.g} on up the `Am`{.a} road `G`{.g} _(2x)_
+
+And I'll `F`{.f} meet you  
+further `G`{.g} on up the `Am`{.a} road
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=HMCQgWtST5c)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/further-on-up-the-road-chords-520573)
+
+# Griechischer Wein (Udo Jürgens)
+
+## Intro
+
+`Am`{.a} `Dm`{.d} `F`{.f} `G`{.g}
+`C`{.c} `E`{.e} `Am`{.a}
+
+## Verse 1
+
+Es war schon `Am`{.a} dunkel, als ich durch  
+Vorstadtstrassen `F`{.f} heim`G`{.g}wärts `C`{.c} ging  
+Da war ein Wirtshaus, aus dem das  
+Licht noch auf den Geh`F`{.f}steig `G`{.g} schien
+
+Ich hatte `Am`{.a} Zeit und mir war `E`{.e} kalt  
+drum trat ich `Am`{.a} ein
+
+---
+
+Da sassen `Am`{.a} Männer mit braunen Augen  
+und mit `F`{.f} schwar`G`{.g}zem `C`{.c} Haar  
+Und aus der Jukebox erklang Musik  
+die fremd und süd`F`{.f}lich `G`{.g} war
+
+Als man mich sah `Am`{.a}, stand einer auf `E`{.e}  
+und lud mich ein `Am`{.a}
+
+## Chorus 1
+
+`F`{.f} Griechischer Wein ist so wie das Blut der Erde  
+`C`{.c} Komm schenk dir ein  
+Und wenn ich dann traurig werde, `G`{.g} liegt es daran  
+Dass ich immer träume von da`C`{.c}heim
+
+Du musst ver`E`{.e}zeihen!
+
+---
+
+`F`{.f} Griechischer Wein und die alt vertrauten Lieder  
+`C`{.c} Schenk nochmal ein  
+Denn ich fühl die Sehnsucht wieder  
+
+`G`{.g} In dieser Stadt  
+werd' ich immer nur ein Fremder `Am`{.a} sein  
+`E`{.e} und al`Am`{.a}lein
+
+## Verse 2
+
+Und dann er`Am`{.a}zählten sie mir von grünen Hügeln  
+`F`{.f} Meer `G`{.g} und `C`{.c} Wind  
+Von alten Häusern und jungen Frauen, die allei`F`{.f}ne `G`{.g} sind
+
+Und von dem `Am`{.a} Kind  
+das seinen `E`{.e} Vater noch nie `Am`{.a} sah
+
+---
+
+Sie sagten `Am`{.a} sich immer wieder  
+irgendwann geht `F`{.f} es `G`{.g} zu`C`{.c}rück  
+Und das Ersparte genügt zu Hause  
+für ein klei`F`{.f}nes `G`{.g} Glück
+
+Und bald denkt `Am`{.a} keiner mehr da`E`{.e}ran  
+wie es hier `Am`{.a} war
+
+## Chorus 2
+
+`F`{.f} Griechischer Wein ist so wie das Blut der Erde  
+`C`{.c} Komm schenk dir ein  
+Und wenn ich dann traurig werde, `G`{.g} liegt es daran  
+Dass ich immer träume von da`C`{.c}heim
+
+Du musst ver`E`{.e}zeihen!
+
+---
+
+`F`{.f} Griechischer Wein und die alt vertrauten Lieder  
+`C`{.c} Schenk nochmal ein  
+Denn ich fühl die Sehnsucht wieder
+
+`G`{.g} in dieser Stadt  
+Werd' ich immer nur ein Fremder `Am`{.a} sein  
+`E`{.e} und al`Am`{.a}lein
+
+## Outro
+
+`Am`{.a} `Dm`{.d} `F`{.f} `G`{.g}
+`C`{.c} `E`{.e} `Am`{.a}
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=6Ucp1IxujUg)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/1018193)
+
 # ❤️ Hallelujah (Leonard Cohen)
 
 ## Intro
@@ -1255,79 +1595,6 @@ Oh Lord, to be `Am`{.a} near you, to be free. `G`{.g}
 - [Source tab](https://tabs.ultimate-guitar.com/tab/rod-stewart/sailing-chords-380559) (transpose by -5 to start with G instead of B)
 - [Guitar tutorial](https://www.youtube.com/watch?v=m4KTNKZSFVs)
     - [Another guitar tutorial with additional inspirations](https://www.youtube.com/watch?v=JmiW9-kpGck)
-
-# As long as you love me (Backstreet Boys)
-
-## Intro
-
-`C`{.c} `G`{.g} `Em`{.e} `D`{.d}  
-As long as you love me
-
-_(Repeat)_
-
-## Verse 1
-
-Although `Em`{.e} loneliness has always been  
-a `C`{.c} friend of mine  
-I'm `D`{.d} leavin' my life in your hands `G`{.g} `D`{.d}  
-`Em`{.e} People say I'm crazy and that `C`{.c} I am blind  
-`D`{.d} Risking it all in a glance `G`{.g} `D`{.d}
-
-And `Em`{.e} how you got me blind is still a `C`{.c} mystery  
-I `D`{.d} can't get you out of my head `G`{.g} `D`{.d}  
-`Em`{.e} Don't care what is written in your `C`{.c} history  
-As `D`{.d} long as you're here with me `G`{.g}
-
-## Chorus
-
-I don't care who `C`{.c} you are  
-Where `G`{.g} you're from  
-What `Em`{.e} you did  
-As long `D`{.d} as you love me
-
-_(Repeat)_
-
-## Verse 2
-
-`Em`{.e} Every little thing that you have `C`{.c} said and done  
-Feels `D`{.d} like it's deep within me `G`{.g} `D`{.d}  
-`Em`{.e} Doesn't really matter if you're `C`{.c} on the run  
-It `D`{.d} seems like we're `G`{.g} meant to be `D`{.d}
-
-## Chorus
-
-I don't care who `C`{.c} you are  
-Where `G`{.g} you're from  
-What `Em`{.e} you did  
-As long `D`{.d} as you love me (yeah)
-
-_(Repeat)_
-
-`C`{.c} `G`{.g} `Em`{.e} `D`{.d} _(x2)_
-
-## Bridge
-
-`Em`{.e} I've tried to hide it so that `G`{.g} no one knows  
-But I `C`{.c} guess it shows  
-When you `C`{.c} look into my eyes `D`{.d}  
-
-`Em`{.e} What you did and where you're `G`{.g} comin from  
-I don't `D`{.d} care, `C`{.c} as long `D`{.d} as you `C`{.c} love me, baby  
-`G`{.g} `D`{.d} `Em`{.e} `C`{.c} `D`{.d}
-
-## Chorus
-
-I don't care who `C`{.c} you are  
-Where `G`{.g} you're from  
-What `Em`{.e} you did  
-As long `D`{.d} as you love me
-
-_(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=960wzRtcl-Y)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/backstreet-boys/as-long-as-you-love-me-chords-263108) (transposed +7)
 
 # ❤️ Jolene (Dolly Parton)
 
