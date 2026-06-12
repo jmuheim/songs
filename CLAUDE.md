@@ -59,6 +59,36 @@ The regex only matches `[Word]` not followed by `(` — so standard Markdown lin
 - `print.html` — serif-themed version for PDF printing (committed)
 - `print.pdf` — generated PDF (committed)
 
+## Multiplex (live sync)
+
+The presentation uses the [Reveal.js multiplex plugin](https://revealjs.com/multiplex/) via `multiplex.up.railway.app` so that audience members can follow the presenter's slides in real time on their own devices.
+
+- **Client** (default): anyone who opens the URL receives slide updates automatically.
+- **Master** (🎤 button, bottom-right): click → enter the password → your slide changes are broadcast to all clients. The button turns 🎙️ when active.
+- **QR code** (📱 button, above 🎤): shows a QR code of the current URL so new people can join.
+
+### Token (`multiplex-token.json`)
+
+The `socketId` / `secret` pair is fetched once from the server and cached in `multiplex-token.json` (committed). All viewers share this session. Delete the file and rebuild to start a fresh session.
+
+### Password
+
+Default password: `guitar`. Override with the `MASTER_PASSWORD` env var at build time:
+
+```bash
+MASTER_PASSWORD=mypassword ./build
+```
+
+The password is embedded in the generated HTML (visible in source). This is intentional — the goal is only to prevent accidental master takeover, not real security.
+
+### Build note
+
+The build script requires `LANG=en_US.UTF-8` (or any UTF-8 locale) because song files contain non-ASCII characters. Run as:
+
+```bash
+LANG=en_US.UTF-8 ./build
+```
+
 ## Legacy songs
 
 `content/legacy-songs/` holds songs removed from the active set. They are not included in the build.
