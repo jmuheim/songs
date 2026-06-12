@@ -38,10 +38,11 @@ G |3 2 0 0 0 3|      Gm |3 x 0 3 3 3|      G7 |3 2 3 0 0 1|
 
 Variations:
 
-  |E A D G B e|
-  |-----------|
-F |0 0 3 2 1 1| Easier, no barre
-G |3 x 0 0 0 1| Easier, A string muted
+   |E A D G B e|
+   |-----------|
+F  |0 0 3 2 1 1| Easier, no barre
+G  |3 x 0 0 0 1| Easier, A string muted
+Gm |3 x 0 0 1 1| Easier, A string muted
 
 Feeling bored of major chords (A, D, E...)?
   => Try playing a seventh chord instead (A7, D7, E7...)!
