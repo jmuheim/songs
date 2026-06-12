@@ -47,249 +47,185 @@ Feeling bored of major chords (A, D, E...)?
   => Try playing a seventh chord instead (A7, D7, E7...)!
 ```
 
-# 50 ways to leave your lover (Paul Simon)
+# A-N-N-A (Freundeskreis)
 
-## Instructions
+## Chorus
 
-```
-      |E A D G B e|
-      |-----------|
-Am7   |x 0 2 2 1 3|
-B7(2) |x x 1 2 0 x| Sounds also nice with open A string
-B7(3) |x 0 4 4 4 5|
-B7(4) |x 0 4 4 7 5|
-Bb    |7=9=9=8=7=7| For chorus, just move this shape to 3 (G) and 8 (C)
-Cdim7 |x 0 1 2 1 2|
-Cm6   |x x 1 2 1 x| Sounds also nice with open A and e strings
-CM7   |x 3 2 0 0 0|
-D6    |x x 0 2 0 2|
-Em(2) |x x 5 4 5 3|
-Em(3) |0 x 5 4 5 3| Mute A string with finger on D string
-```
+Immer wenn es `Em`{.e} regnet  
+muss ich an Dich `D`{.d} denken  
+Wie wir uns be`Am`{.a}gegneten  
+kann mich nicht ablenken  
+Nass bis auf die `Em`{.e} Haut  
+so stand sie `D`{.d} da  
 
----
-
-```
-   Riff:      Or with flageolets:
-e |---15-12|  |-----12|
-B |12------|  |12-----|
-G |--------|  |---5---|
-D |--------|  |-------|
-A |--------|  |-------|
-E |--------|  |-------|
-```
-
-## Intro
-
-`Em(2)`{.e} `D6`{.d} `CM7`{.c} `Cm6`{.c} `B7(2)`{.b}  
-`Em`{.e} `Am`{.a} `Cdim7`{.c} `B7(3)`{.b} `B7(4)`{.b}
-
-`Em(3)`{.e} `D6`{.d} `CM7`{.c} `Cm6`{.c} `B7(2)`{.b}  
-`Em`{.e} `Am`{.a} `Em`{.e}
+_(1st time:)_ Um uns war es `Am`{.a}  
+laut und wir kamen uns nah  
+_(2nd time:)_ A-N-N-`Am`{.a}A
 
 ## Verse 1
 
-`Em(2)`{.e} "The problem is `D6`{.d} all inside your head"  
-`CM7`{.c} she said to me `Cm6`{.c} `B7(2)`{.b}  
-`Em`{.e} "the answer is ea`Am`{.a}sy if you  
-`Cdim7`{.c} take it logic'lly. `B7(3)`{.b} `B7(4)`{.b}
-
-`Em(3)`{.e} I'd like to help `D6`{.d} you in your  
-`CM7`{.c} struggle to be free `Cm6`{.c} `B7(2)`{.b}  
-there must be `Em`{.e} fifty ways `Am`{.a}  
-to leave your lov`Em`{.e}er."
+`C`{.c} Pitsch, patsch nass, floh ich unter das  
+Vor`D`{.d}dach des Fachgeschäftes  
+Vom Himmel goss ein Bach. `Em`{.e}  
+Ich schätz' es war halb acht  
+Doch ich war hellwach  
+als mich Anna ansah, anlachte
 
 ---
 
-`Em(2)`{.e} She said, "It's `D6`{.d} really not my  
-`CM7`{.c} habit to intrude `Cm6`{.c} `B7(2)`{.b}  
-Further`Em`{.e}more I hope my mea`Am`{.a}ning won't be  
-lost `Cdim7`{.c} or misconstrued. `B7(3)`{.b} `B7(4)`{.b}
+`C`{.c} Ich dachte: "Sprich sie an"  
+denn sie sprach mich an  
+Die `D`{.d} Kleidung ganz durchnässt  
+klebte an ihr fest  
+Die `Em`{.e} Tasche in der Hand  
+stand sie an der Wand  
+Die dunkeln Augen funkelten  
+wie 'ne Nacht in Asien
 
-But I'll re`Em(3)`{.e}peat myself `D6`{.d} at the  
-`CM7`{.c} risk of being crude `Cm6`{.c} there `B7(2)`{.b} must be  
-`Em`{.e} fifty ways `Am`{.a} to leave your lov`Em`{.e}er  
-`Em`{.e} fifty ways `Am7`{.a} to leave your lov`Em`{.e}er
+---
 
-_(Riff)_
+`C`{.c} Strähnen im Gesicht  
+nehmen ihr die Sicht  
+Mein `D`{.d} Herz das klopft  
+die Nase tropft  
+Ich schäme mich  
+benehme mich `Em`{.e} dämlich  
+Bin nämlich eher schüchtern  
+"Mein Name ist Anna"  
+sagte sie sehr nüchtern
+
+---
+
+Ich fing an zu flüstern:  
+`C`{.c} "Ich bin Max aus dem  
+Schosse der Kolchose"  
+Doch `D`{.d} so 'ne Katastrophe  
+das ging mächtig in die Hose  
+Mach' mich `Em`{.e} lächerlich  
+Doch sie lächelte  
+Ehrlich wahr man! Sieh da  
+Anna war ein Hip Hop – Fan
 
 ## Chorus
 
-_(Rhythm guitar)_
+Immer wenn es `Em`{.e} regnet  
+muss ich an Dich `D`{.d} denken  
+Wie wir uns be`Am`{.a}gegneten  
+kann mich nicht ablenken  
+Nass bis auf die `Em`{.e} Haut  
+so stand sie `D`{.d} da  
 
-Just slip out the back, `G`{.g} Jack
-Make a new `Bb`{.b} plan, Stan
-You don't need to be coy, `C`{.c} Roy
-Just listen to me `G`{.g}
-
-Hop on the bus, `G`{.g} Gus
-You don't need to discuss `Bb`{.b} much
-Just drop off the key, `C`{.c} Lee
-and get yourself free `G`{.g}
-
-_(x2)_
+_(1st time:)_ Um uns war es `Am`{.a}  
+laut und wir kamen uns nah  
+_(2nd time:)_ A-N-N-`Am`{.a}A
 
 ## Verse 2
 
-`Em(2)`{.e} She said, "It `D6`{.d} grieves me so to  
-`CM7`{.c} see you in such pain `Cm6`{.c} `B7(2)`{.b}  
-oh I wish `Em`{.e} there's somethin' `Am`{.a} I could do to  
-`Cdim7`{.c} make you smile again." `B7(3)`{.b} And I said `B7(4)`{.b}
-
-"I a`Em(3)`{.e}ppreciate that, `D6`{.d} and  
-`CM7`{.c} could you please explain `Cm6`{.c} about `B7(2)`{.b}  
-the fifty wa`Em`{.e}ys?" `Am`{.a} `Em`{.e}
+`C`{.c} Plitsch, platsch fiel  
+ein Regen wie die Sintflut  
+Das `D`{.d} Vordach, die Insel  
+Wir waren wie Strandgut  
+Ich `Em`{.e} fand Mut  
+Bin selber überrascht  
+Über das Selbstverständnis  
+meines Geständnis'
 
 ---
 
-`Em(2)`{.e} She said, "Why `D6`{.d} don't we both just  
-`CM7`{.c} sleep on it tonight `Cm6`{.c} `B7(2)`{.b}  
-I be`Em`{.e}lieve that in the mor`Am`{.a}ning  
-you'll be`Cdim7`{.c}gin to see the light. `B7(3)`{.b} And then `B7(4)`{.b}
+"Anna, ich `C`{.c} fänd' es schön  
+mit Dir auszugehn  
+Könnt' mich `D`{.d} dran gewöhn'  
+Dich öfters zu sehn"  
+`Em`{.e} Anna zog mich an sich  
+An sich mach' ich das nicht  
+Spüre ihre süssen Küsse  
+wie sie mein Gesicht lieb`C`{.c}kost
 
-she `Em(3)`{.e} kissed me and I `D6`{.d} realized she  
-`CM7`{.c} probably was right `Cm6`{.c} there `B7(2)`{.b} must be  
-`Em`{.e} fifty ways `Am`{.a} to leave your lov`Em`{.e}er  
-`Em`{.e} fifty ways `Am7`{.a} to leave your lov`Em`{.e}er
+---
 
-_(Riff)_
- 
+Was geschieht bloss?  
+Lass mich nicht los, Anna  
+Ich `D`{.d} lieb bloss noch Dich  
+andere sind lieblos  
+Du bist wie `Em`{.e} Vinyl für meinen DJ  
+die Dialektik für Hegel  
+Pinsel für Picasso  
+für Philip der Schlagzeugschlegel
+
+---
+
+`C`{.c} Anna, wie war das da bei Dada?  
+
+Du bist von `D`{.d} hinten  
+wie von vorne: A-N-N-A  
+
+Du bist von `Em`{.e} hinten  
+wie von vorne: A-N-N-A _(x2)_
+
 ## Chorus
 
-_(Rhythm guitar)_
+Immer wenn es `Em`{.e} regnet  
+muss ich an Dich `D`{.d} denken  
+Wie wir uns be`Am`{.a}gegneten  
+kann mich nicht ablenken  
+Nass bis auf die `Em`{.e} Haut  
+so stand sie `D`{.d} da  
 
-Just slip out the back, `G`{.g} Jack
-Make a new `Bb`{.b} plan, Stan
-You don't need to be coy, `C`{.c} Roy
-Just listen to me `G`{.g}
+_(1st time:)_ Um uns war es `Am`{.a}  
+laut und wir kamen uns nah  
+_(2nd time:)_ A-N-N-`Am`{.a}A
 
-Hop on the bus, `G`{.g} Gus
-You don't need to discuss `Bb`{.b} much
-Just drop off the key, `C`{.c} Lee
-and get yourself free `G`{.g}
+## Verse 3
 
-_(x2)_
+Sie `C`{.c} gab mir 'nen Abschiedskuss  
+denn dann kam der Bus  
+Sie sagte: `D`{.d} "Max, ich muss!"  
+die Türe schloss  
+Was ist jetzt Schluss?  
 
-## Resources
+Es goss. Ich `Em`{.e} ging zu Fuss  
+Bin konfus, fast gerannt  
+Anna nahm mein' Verstand  
+Ich fand an Anna allerhand
 
-- [Song](https://www.youtube.com/watch?v=P6zaCV4niKk)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/paul-simon/50-ways-to-leave-your-lover-chords-84852)
-    - Somewhat close to the guitar tutorial, but not as nice
-- [Guitar tutorial](https://www.youtube.com/watch?v=hwJLwXLjyZw)
+---
 
-# 911 (Wyclef Jean feat. Mary J. Blige)
+Manchmal `C`{.c} lach' ich drüber  
+doch dann merk' ich wieder  
+wie 's mich trifft  
+`D`{.d} Komik ist Tragik in Spiegelschrift:  
+A-N-N-A  
+`Em`{.e} Von hinten, wie von vorne  
+Dein Name sei gesegnet  
+Ich denk' an Dich, immer wenn es...
 
-## Intro (Wyclef)
+## Chorus
 
-`Am`{.a} Yo, what's up, this is Wyclef with Mary J. `Em`{.e}  
-`Dm`{.d} I serenade the girls with my accoustic guitar  
-`C`{.c} You know what I'm sayin'? `Em`{.e} _(Mary: Uuuuuh)_
+Immer wenn es `Em`{.e} regnet  
+muss ich an Dich `D`{.d} denken  
+Wie wir uns be`Am`{.a}gegneten  
+kann mich nicht ablenken  
+Nass bis auf die `Em`{.e} Haut  
+so stand sie `D`{.d} da  
 
-`Am`{.a} Yo, fellas havin' problems with the chicks? `Em`{.e}  
-`Dm`{.d} I want you right now to turn the lights down low  
-`C`{.c} Pull your girl up next to you  
-`Em`{.e} I want you to sing this to her
-
-## Verse 1 (Wyclef)
-
-If death comes for me to`Am`{.a}night, girl `Em`{.e}  
-I want you to know that I `Dm`{.d} loved you `C`{.c} `Em`{.e}  
-And no mat`Am`{.a}ter how tough I wouldn't dare `Em`{.e}  
-Only to you I would re`Dm`{.d}veal my tears `C`{.c} `Em`{.e}
-
-So tell the `Am`{.a} police I ain't home tonight `Em`{.e}  
-Messin' around with you is gonna `Dm`{.d} get me life `C`{.c} `Em`{.e}  
-But when I `Am`{.a} look into your eyes `Em`{.e}  
-(Man) You're worth that `Dm`{.d} sacrafice `C`{.c} `Em`{.e}
-
-## Bridge (Wyclef)
-
-If `Am`{.a} this is the kind of love  
-That my mom used to `Em`{.e} warn me about  
-Man, I'm in `Dm`{.d} trouble  
-I'm in real big `C`{.c} trouble `Em`{.e}
-
-If `Am`{.a} this is the kind of love  
-That the old folks used to `Em`{.e} warn me about  
-Man, I'm in `Dm`{.d} trouble  
-I'm in real big `C`{.c} trouble `Em`{.e}  
-
-(I need y'all to do me a favor)
-
-## Chorus (Wyclef)
-
-`Am`{.a} Someone please call 91`Em`{.e}1 (pick up the phone yo)  
-`Dm`{.d} Tell them I just been shot `C`{.c} down  
-and the `Em`{.e} bullet's in my `Am`{.a} heart  
-And it's piercin through my `Em`{.e} soul (I'm losin blood yo)
-`Dm`{.d} Feel my body gettin' `C`{.c} cold `Em`{.e}
-
-`Am`{.a} Someone please call 91`Em`{.e}1 (pick up the phone yo)  
-`Dm`{.d} The alleged assai`C`{.c}lant, is `Em`{.e} five foot `Am`{.a} one  
-and she shot me through my `Em`{.e} soul `Dm`{.d}  
-Feel my body gettin `C`{.c} cold `Em`{.e} (_Mary:_ so cold)
-
-## Verse 2 (Mary)
-
-Some`Am`{.a}times I feel like I'm a prisoner `Em`{.e}  
-I think I'm trapped here `Dm`{.d} for a while `C`{.c} yeah `Em`{.e} yeah  
-(_Wyclef:_ but I'm always right here with you girl)  
-And `Am`{.a} every breath I fight to take `Em`{.e}  
-Is as hard as these `Dm`{.d} four walls I wanna break `C`{.c} `Em`{.e}
-
-I `Am`{.a} told the cops you wasn't here tonight `Em`{.e} (_Wyclef:_ right)  
-Messin' around with me is gonna `Dm`{.d} get you life  
-`C`{.c} Oh yeah, `Em`{.e} yeah  
-But ev`Am`{.a}erytime I look into your eyes `Em`{.e}  
-Then it's worth the `Dm`{.d} sacrifice `C`{.c} `Em`{.e}
-
-## Bridge (Wyclef)
-
-If `Am`{.a} this is the kind of love  
-That your mom used to `Em`{.e} warn you about  
-Mary, your are in `Dm`{.d} trouble (I am in real Big Trouble)  
-You're in real big `C`{.c} trouble `Em`{.e} (_Mary:_ Lord Knows I am in trouble)
-
-If `Am`{.a} this is the kind of love  
-That the old folks used to `Em`{.e} warn me about  
-(everyday, everynight) I'm in `Dm`{.d} trouble  
-I'm in real big `C`{.c} trouble  
-`Em`{.e} You got anything to say, girl?
- 
-## Chorus (Mary)
-
-`Am`{.a} Someone please call 91`Em`{.e}1 (_Wyclef:_ pick up the phone yo)  
-`Dm`{.d} Tell them I just ~~been~~ **got** shot `C`{.c} down  
-~~and the bullet's in my heart~~  
-**(Tell them I `Em`{.e} just got shot down)**
-
-`Am`{.a} And it's piercin through my `Em`{.e} soul (_Wyclef:_ I'm losin blood yo)
-`Dm`{.d} Feel my body gettin' `C`{.c} cold `Em`{.e}
-
-## Chorus (Wyclef)
-
-`Am`{.a} Someone please call 91`Em`{.e}1 (can you do that for me)  
-`Dm`{.d} The alleged assai`C`{.c}lant, ~~is~~ **was** `Em`{.e} five foot `Am`{.a} one  
-and she shot me through my `Em`{.e} soul (_Mary:_ and he shot me through my heart) `Dm`{.d}  
-Feel my body gettin `C`{.c} cold `Em`{.e}
-
-(_Mary:_ He didn't care, he didn't worry, he didn't wonder...)
+_(1st time:)_ Um uns war es `Am`{.a}  
+laut und wir kamen uns nah  
+_(2nd time:)_ A-N-N-`Am`{.a}A
 
 ## Outro
 
-`Am`{.a} `Em`{.e} `Dm`{.d} `C`{.c} `Em`{.e} _(repeat)_
+`Em`{.e} `D`{.d} `Am`{.a} `Em`{.e} `D`{.d}
 
-(_Wyclef:_ I'm feelin you girl, I understand)
-
-(_Mary:_ And you're doin' what you're doin', would you do it  
-and do it and do it and do it for me...)
+(Lass mich nicht im Regen stehn  
+Ich will dich wiedersehn  
+A-N-N-A...  
+Yeah...)
 
 ## Resources
 
-- [Song](https://www.youtube.com/watch?v=KiNRIR8tjFc)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/wyclef-jean/911-chords-745961) (transpose +5)
-- [Nice guitar interpretation](https://www.youtube.com/watch?v=qYk4TU34uik)
-
+- [Song](https://www.youtube.com/watch?v=qtVa-BwoZsU)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/freundeskreis/anna-chords-426527)
+- [Guitar tutorial](https://www.youtube.com/watch?v=jE2A4syC0AU)
 # Across the universe (Beatles)
 
 ## Instructions
@@ -371,88 +307,6 @@ a`A`{.a}cross the universe `A7`{.a}
 - [Source tab](https://tabs.ultimate-guitar.com/tab/the-beatles/across-the-universe-chords-202167)
 - [Guitar tutorial](https://www.youtube.com/watch?v=CQ1P8IQc8AY)
 - [Interpretation by Fiona Apple](https://www.youtube.com/watch?v=RhMEKiIb86I)
-
-# Alles aus Liebe (Die Toten Hosen)
-
-## Verse 1
-
-Ich `C`{.c} würde dir gern sagen, wie `Am`{.a} sehr ich dich mag  
-Und wa`F`{.f}rum ich nur noch an dich `G`{.g} denken kann.  
-Ich `C`{.c} fühl mich wie verhext und in Ge`Am`{.a}fangenschaft  
-Und `F`{.f} du allein trägst `G`{.g} Schuld daran.
-
-`Am`{.a} Worte sind da`F`{.f}für zu schwach  
-Ich be`G`{.g}fürchte du glaubst mir `E`{.e} nicht.  
-Mir kommt es `Am`{.a} vor als ob mich `F`{.f} jemand warnt:  
-Dieses `G`{.g} Märchen wird nicht gut ausgehen.
-
----
-
-Es ist die `C`{.c} Eifersucht, die `Am`{.a} mich auffrisst  
-Immer `F`{.f} dann wenn du nicht in meiner `G`{.g} Nähe bist.
-Von `C`{.c} Dr. Jekyll werd ich zu `Am`{.a} Mr. Hide  
-Ich kann `F`{.f} nichts dagegen tun plötzlich `G`{.g} ist es soweit.
-
-## Pre-Chorus
-
-Ich bin `Am`{.a} kurz davor, `F`{.f} durchzudrehen  
-Aus `G`{.g} Angst dich zu ver`E`{.e}lieren.
-Und `Am`{.a} dass uns jetzt kein `F`{.f} Unglück geschieht  
-Dafür `G`{.g} kann ich nicht garantieren.
-
-## Chorus
-
-Und alles `C`{.c} nur, `E`{.e} weil ich dich `Am`{.a} liebe  
-`G`{.g} Und ich nicht `C`{.c} weiß wie ich's beweisen `G`{.g} soll.  
-Komm ich `C`{.c} zeig dir wie `E`{.e} gross meine `Am`{.a} Liebe `F`{.f} ist  
-Und `C`{.c} bringe mich `G`{.g} für dich `C`{.c} um.
-
-## Verse 2
-
-So`C`{.c}bald deine Laune etwas `Am`{.a} schlechter ist  
-`F`{.f} Bild ich mir gleich ein, dass du mich `G`{.g} nicht mehr Willst.  
-Ich `C`{.c} sterbe beim Ge`Am`{.a}danken daran  
-Dass `F`{.f} ich dich nicht für immer `G`{.g} halten kann.
-                                                             
-Auf `Am`{.a} einmal brennt ein `F`{.f} Feuer in mir  
-Und der `G`{.g} Rest der Welt wird `E`{.e} schwarz.
-Ich `Am`{.a} spür wie unsere `F`{.f} Zeit verrinnt  
-Wir `G`{.g} nähern uns dem letzten Akt.
-
-## Chorus
-
-Und alles `C`{.c} nur, `E`{.e} weil ich dich `Am`{.a} liebe  
-`G`{.g} Und ich nicht `C`{.c} weiß wie ich's beweisen `G`{.g} soll.  
-Komm ich `C`{.c} zeig dir wie `E`{.e} gross meine `Am`{.a} Liebe `F`{.f} ist  
-Und `C`{.c} bringe mich `G`{.g} für dich `C`{.c} um.
-
-## Bridge
-
-_(Instrumental)_
-
-## Pre-Chorus
-
-Ich bin `Am`{.a} kurz davor, `F`{.f} durchzudrehen  
-Aus `G`{.g} Angst dich zu ver`E`{.e}lieren.
-Und `Am`{.a} dass uns jetzt kein `F`{.f} Unglück geschieht  
-Dafür `G`{.g} kann ich nicht garantieren.
-
-## Chorus
-
-Und alles `C`{.c} nur, `E`{.e} weil ich dich `Am`{.a} liebe  
-`G`{.g} Und ich nicht `C`{.c} weiß wie ich's beweisen `G`{.g} soll.  
-Komm ich `C`{.c} zeig dir wie `E`{.e} gross meine `Am`{.a} Liebe `F`{.f} ist  
-Und `C`{.c} bringe mich `G`{.g} für dich `C`{.c} um.
-
-_(x2)_
-
-Komm ich `C`{.c} zeig dir wie `E`{.e} gross meine `Am`{.a} Liebe `F`{.f} ist  
-Und `C`{.c} bringe uns `G`{.g} beide `C`{.c} um.
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=AxxhaqFBJj0)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/die-toten-hosen/alles-aus-liebe-chords-1126328)
 
 # Baby one more time (Britney Spears)
 
@@ -624,184 +478,79 @@ morto `E7`{.e} per la liber`Am`{.a}tà!" _(Repeat and fade)_
 - [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/bella-ciao-chords-1839756)
 - [Guitar interpretation](https://www.youtube.com/watch?v=2iCOH6GOmRA)
 
-# Buenas tardes amigo (Ween)
-
-## Instructions
-
-```
-100bpm (6/8)
-
->           >
-d   d u d u d   d u d u
-1 & a 2 & a 3 & a 4 & a
-
-      |E A D G B e|
-      |-----------|
-Dsus4 |x x 0 2 3 3| Just add pinky to Dm
-```
-
-- The chord sequence repeats throughout whole song
-- 🎸 Start softly, then intensify up to verse 5 and solo; then soft again
-- 🥁 Add percussion around verse 4
-
-## Intro
-
-_(🎸 One strum per bar)_
-
-`Am`{.a} Buenos `G`{.g} Tardes, A`Am`{.a}migo  
-`Am`{.a} Hola, `G`{.g} my good `Am`{.a} friend  
-`Am`{.a} Cinco de `G`{.g} Mayo's on `Dm`{.d} Tuesday `Dsus4`{.d} `Dm`{.d}  
-And I'd `Am`{.a} hope we'd `G`{.g} see each other a`Am`{.a}gain
-
-## Verse 1
-
-_(🎸 Start strumming pattern)_
-
-`Am`{.a} You killed my `G`{.g} brother last `Am`{.a} winter  
-You `Am`{.a} shot him `G`{.g} three times in the back `Am`{.a}  
-In the night `Am`{.a} I still `G`{.g} hear mama `Dm`{.d} weeping `Dsus4`{.d} `Dm`{.d}  
-Oh `Am`{.a} mama still `G`{.g} dresses in `Am`{.a} black
-
-## Verse 2
-
-I `Am`{.a} looked at `G`{.g} every fi`Am`{.a}esta  
-For `Am`{.a} you I `G`{.g} wanted to `Am`{.a} greet  
-`Am`{.a} Maybe I'd `G`{.g} sell you a `Dm`{.d} chicken `Dsus4`{.d} `Dm`{.d}  
-With `Am`{.a} poison inter`G`{.g}laced with the meat `Am`{.a}
-
-## Verse 3
-
-`Am`{.a} You - you `G`{.g} look like my `Am`{.a} brother  
-`Am`{.a} Mama `G`{.g} loved him the best `Am`{.a}  
-`Am`{.a} He was head `G`{.g} honcho with the `Dm`{.d} ladies `Dsus4`{.d} `Dm`{.d}  
-`Am`{.a} Mama always `G`{.g} said he was `Am`{.a} blessed
-
-## Verse 4
-
-_(Add 🥁)_
-
-The `Am`{.a} village all `G`{.g} gathered a`Am`{.a}round him  
-They `Am`{.a} could'nt be`G`{.g}lieve what they `Am`{.a} saw  
-I `Am`{.a} said it was `G`{.g} you that had `Dm`{.d} killed him `Dsus4`{.d} `Dm`{.d}  
-And then I'd `Am`{.a} find you and `G`{.g} upstand the `Am`{.a} law
-
-## Verse 5
-
-The `Am`{.a} people of the `G`{.g} village be`Am`{.a}lieved me  
-`Am`{.a} Mama she `G`{.g} wanted re`Am`{.a}venge  
-I `Am`{.a} told her that I `G`{.g} see that she was `Dm`{.d} honored `Dsus4`{.d} `Dm`{.d}  
-I'd `Am`{.a} find you and `G`{.g} put you to death! `Am`{.a}
-
-## Solo
-
-_(Intense 🎸 and 🥁)_
-
-`Am`{.a} `G`{.g} `Am`{.a}  
-`Am`{.a} `G`{.g} `Am`{.a}  
-`Am`{.a} `G`{.g} `Dm`{.d} `Dsus4`{.d} `Dm`{.d}    
-`Am`{.a} `G`{.g} `Am`{.a}
-
-_(x2)_
-
-## Verse 6
-
-_(Soft 🎸 and 🥁)_
-
-So `Am`{.a} now, `G`{.g} now that I `Am`{.a} found you  
-On `Am`{.a} this such a `G`{.g} joyous `Am`{.a} day  
-I `Am`{.a} tell you: it was `G`{.g} me who `Dm`{.d} killed him `Dsus4`{.d} `Dm`{.d}  
-But the `Am`{.a} truth I'll `G`{.g} never have to `Am`{.a} say
-
-## Outro
-
-_(Fading 🎸 and 🥁)_
-
-`Am`{.a} Buenos `G`{.g} Tardes, A`Am`{.a}migo  
-`Am`{.a} Hola, `G`{.g} my good `Am`{.a} friend  
-`Am`{.a} Cinco de `G`{.g} Mayo's on `Dm`{.d} Tuesday `Dsus4`{.d} `Dm`{.d}  
-And I'd `Am`{.a} hope we'd `G`{.g} see each other a`Am`{.a}gain
-
-Yes I `Am`{.a} hoped we'd `G`{.g} see each other  
-a`Am`{.a}gain _(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=uv-gT9lNa1g)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/ween/buenas-tardes-amigo-chords-230)
-
 # Don't worry be happy (Bobby McFerrin)
 
 ## Intro
 
 _(Instrumental)_
 
-`B`{.b} `C#m`{.c} `E`{.e} `B`{.b}
+`G`{.g} `Am`{.a} `C`{.c} `G`{.g}
 
 ## Verse 1
 
-`B`{.b} Here's a little song I wrote  
-You `C#m`{.c} might want to sing it note for note   
-Don't `E`{.e} worry, be `B`{.b} happy
+`G`{.g} Here's a little song I wrote  
+You `Am`{.a} might want to sing it note for note   
+Don't `C`{.c} worry, be `G`{.g} happy
 
-In `B`{.b} every life we have some trouble  
-`C#m`{.c} When you worry you make it double  
-Don't `E`{.e} worry, be `B`{.b} happy 
+In `G`{.g} every life we have some trouble  
+`Am`{.a} When you worry you make it double  
+Don't `C`{.c} worry, be `G`{.g} happy 
  
 ## Chorus
 
 (Whistle)
 
-`B`{.b} `C#m`{.c} `E`{.e} `B`{.b} (x2)
+`G`{.g} `Am`{.a} `C`{.c} `G`{.g} (x2)
 
 ## Verse 2
 
-`B`{.b} Ain't got no place to lay your head  
-`C#m`{.c} Somebody came and took your bed  
-Don't `E`{.e} worry, be `B`{.b} happy  
+`G`{.g} Ain't got no place to lay your head  
+`Am`{.a} Somebody came and took your bed  
+Don't `C`{.c} worry, be `G`{.g} happy  
 
-The `B`{.b} landlord say your rent is late  
-`C#m`{.c} He may have to litigate  
-Don't `E`{.e} worry, be `B`{.b} happy
+The `G`{.g} landlord say your rent is late  
+`Am`{.a} He may have to litigate  
+Don't `C`{.c} worry, be `G`{.g} happy
 
 ## Chorus
 
 (Whistle)
 
-`B`{.b} `C#m`{.c} `E`{.e} `B`{.b} (x2)
+`G`{.g} `Am`{.a} `C`{.c} `G`{.g} (x2)
 
 ## Verse 3
 
-`B`{.b} Ain't got no cash, ain't got no style  
-`C#m`{.c} Ain't got no girl to make you smile  
-**But** don't `E`{.e} worry, be `B`{.b} happy
+`G`{.g} Ain't got no cash, ain't got no style  
+`Am`{.a} Ain't got no girl to make you smile  
+**But** don't `C`{.c} worry, be `G`{.g} happy
 
-Cause `B`{.b} when you worry, your face will frown  
-`C#m`{.c} And that will bring everybody down  
-**So** don't `E`{.e} worry, be `B`{.b} happy
+Cause `G`{.g} when you worry, your face will frown  
+`Am`{.a} And that will bring everybody down  
+**So** don't `C`{.c} worry, be `G`{.g} happy
 
 ## Chorus
 
 (Whistle)
 
-`B`{.b} `C#m`{.c} `E`{.e} `B`{.b} (x2)
+`G`{.g} `Am`{.a} `C`{.c} `G`{.g} (x2)
 
 ## Verse 4
 
-`B`{.b} There is this little song I wrote  
-`C#m`{.c} I hope you learn it note for note  
-Don't `E`{.e} worry, be `B`{.b} happy
+`G`{.g} There is this little song I wrote  
+`Am`{.a} I hope you learn it note for note  
+Don't `C`{.c} worry, be `G`{.g} happy
 
 (Listen to what I say!)
 
-`B`{.b} In your life expect some trouble 
-`C#m`{.c} But when you worry, you make it double 
-Don't `E`{.e} worry, be `B`{.b} happy
+`G`{.g} In your life expect some trouble 
+`Am`{.a} But when you worry, you make it double 
+Don't `C`{.c} worry, be `G`{.g} happy
 
 ## Chorus
 
 (Whistle)
 
-`B`{.b} `C#m`{.c} `E`{.e} `B`{.b} (x2)
+`G`{.g} `Am`{.a} `C`{.c} `G`{.g} (x2)
 
 _(Repeat and fade)_
 
@@ -810,7 +559,6 @@ _(Repeat and fade)_
 - [Song](https://www.youtube.com/watch?v=d-diB65scQU)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/bobby-mcferrin/dont-worry-be-happy-chords-484289)
 - [Guitar tutorial](https://www.youtube.com/watch?v=vJfE-WNl_z8)
-
 # Dr Eskimo (Mani Matter)
 
 ## Verse 1
@@ -1506,6 +1254,78 @@ Oh Lord, to be `Am`{.a} near you, to be free. `G`{.g}
 - [Guitar tutorial](https://www.youtube.com/watch?v=m4KTNKZSFVs)
     - [Another guitar tutorial with additional inspirations](https://www.youtube.com/watch?v=JmiW9-kpGck)
 
+# As long as you love me (Backstreet Boys)
+
+## Intro
+
+`C`{.c} `G`{.g} `Em`{.e} `D`{.d}  
+As long as you love me
+
+_(Repeat)_
+
+## Verse 1
+
+Although `Em`{.e} loneliness has always been  
+a `C`{.c} friend of mine  
+I'm `D`{.d} leavin' my life in your hands `G`{.g} `D`{.d}  
+`Em`{.e} People say I'm crazy and that `C`{.c} I am blind  
+`D`{.d} Risking it all in a glance `G`{.g} `D`{.d}
+
+And `Em`{.e} how you got me blind is still a `C`{.c} mystery  
+I `D`{.d} can't get you out of my head `G`{.g} `D`{.d}  
+`Em`{.e} Don't care what is written in your `C`{.c} history  
+As `D`{.d} long as you're here with me `G`{.g}
+
+## Chorus
+
+I don't care who `C`{.c} you are  
+Where `G`{.g} you're from  
+What `Em`{.e} you did  
+As long `D`{.d} as you love me
+
+_(Repeat)_
+
+## Verse 2
+
+`Em`{.e} Every little thing that you have `C`{.c} said and done  
+Feels `D`{.d} like it's deep within me `G`{.g} `D`{.d}  
+`Em`{.e} Doesn't really matter if you're `C`{.c} on the run  
+It `D`{.d} seems like we're `G`{.g} meant to be `D`{.d}
+
+## Chorus
+
+I don't care who `C`{.c} you are  
+Where `G`{.g} you're from  
+What `Em`{.e} you did  
+As long `D`{.d} as you love me (yeah)
+
+_(Repeat)_
+
+`C`{.c} `G`{.g} `Em`{.e} `D`{.d} _(x2)_
+
+## Bridge
+
+`Em`{.e} I've tried to hide it so that `G`{.g} no one knows  
+But I `C`{.c} guess it shows  
+When you `C`{.c} look into my eyes `D`{.d}  
+
+`Em`{.e} What you did and where you're `G`{.g} comin from  
+I don't `D`{.d} care, `C`{.c} as long `D`{.d} as you `C`{.c} love me, baby  
+`G`{.g} `D`{.d} `Em`{.e} `C`{.c} `D`{.d}
+
+## Chorus
+
+I don't care who `C`{.c} you are  
+Where `G`{.g} you're from  
+What `Em`{.e} you did  
+As long `D`{.d} as you love me
+
+_(Repeat and fade)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=960wzRtcl-Y)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/backstreet-boys/as-long-as-you-love-me-chords-263108) (transposed +7)
 # ❤️ Jolene (Dolly Parton)
 
 ## Intro
@@ -1770,73 +1590,6 @@ _(Fade out_
 - [Guitar tutorial](https://www.youtube.com/watch?v=O2j6cZlT2LI)
 - [Interpretation by The Whites](https://www.youtube.com/watch?v=8joVnqleS9Q)
 
-# King of the road (Roger Miller)
- 
-## Chorus
-
-`B`{.b} Trailer for `E`{.e} sale or rent  
-`F#`{.f} rooms to let `B`{.b} fifty cents  
-`B`{.b} No phone, no pool, `E`{.e} no pets  
-`F#`{.f} I ain't got no cigarettes, ah but
-
-`B`{.b} Two hours of `E`{.e} pushing broom buys an  
-`F#`{.f} eight by twelve `B`{.b} fourbit room  
-I'm a `B`{.b} man of `E`{.e} means by no means
-
-`F#`{.f} King of the Road
- 
-## Verse 1
-
-`B`{.b} Third box car `E`{.e} midnight train  
-`F#`{.f} destination `B`{.b} Bangor, Maine  
-`B`{.b} Old worn out `E`{.e} suit and shoes  
-`F#`{.f} I don't pay no union dues
-
-I smoke `B`{.b} old stogies `E`{.e} I have found  
-`F#`{.f} short, but not too `B`{.b} big around  
-I'm a `B`{.b} man of `E`{.e} means by no means
-
-`F#`{.f} King of the Road
-
-## Verse 2
-
-I know `C`{.c} every engineer on `F`{.f} every train  
-`G`{.g} All of the children and `C`{.c} all of their names  
-And `C`{.c} every handout in `F`{.f} every town
-
-And every `G`{.g} lock that ain't locked when  
-No one's around
-
-I sing...
-
-## Chorus
-
-`C`{.c} Trailer for `F`{.f} sale or rent  
-`G`{.g} rooms to let `C`{.c} fifty cents  
-`C`{.c} No phone, no pool, `F`{.f} no pets  
-`G`{.g} I ain't got no cigarettes, ah but
-
-`C`{.c} Two hours of `F`{.f} pushing broom buys an  
-`G`{.g} eight by twelve `C`{.c} fourbit room  
-I'm a `C`{.c} man of `F`{.f} means by no means
-
-`G`{.g} King of the Road
-
----
-
-_(Fade out)_
-
-`C`{.c} Trailer for `F`{.f} sale or rent  
-`G`{.g} rooms to let `C`{.c} fifty cents  
-`C`{.c} No phone, no pool, `F`{.f} no pets  
-`G`{.g} I ain't got no cigarettes
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=oHtoayjVLAY)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/roger-miller/king-of-the-road-chords-76462)
-- [Guitar tutorial](https://www.youtube.com/watch?v=tWNBt4imVWE) and [Inspiration by Fretkillr](https://www.youtube.com/watch?v=2CYWdpVVtB8)
-
 # Lemon tree (Fool's Garden)
 
 
@@ -1958,6 +1711,101 @@ Is `Cadd9`{.c} just a yellow `G7`{.g} lemon tree `G`{.g}
 - [Source tab](https://tabs.ultimate-guitar.com/tab/fools-garden/lemon-tree-chords-145589)
 - [Guitar tutorial](https://www.youtube.com/watch?v=_hk3cZqEf30)
 
+# Morning has broken (Cat Stevens)
+
+## Instructions
+
+```
+       |E A D G B e|
+       |-----------|
+A7/D   |x x 0 0 1 0|
+D7sus4 |x x 0 2 1 3|
+F#     |2=4=4=3=2=2|
+F#m    |2=4=4=2=2=2|
+G7sus4 |x x 0 0 1 1|
+```
+
+## Intro
+
+`D`{.d} `G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
+`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
+
+## Verse 1
+
+Morning has `C`{.c}brok`Dm`{.d}en  
+`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
+`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
+`D7sus4`{.d} like the first `G`{.g} bird
+
+`C`{.c} Praise for the `F`{.f} singing  
+`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
+`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
+`G7`{.g} fresh from the `C`{.c} world
+
+## Instrumental
+
+`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
+`G7`{.g} `C`{.c} `G7sus4`{.g}
+
+## Verse 2
+
+Sweet the rain's `C`{.c} new `Dm`{.d} fall  
+`G`{.g} sunlit from `F`{.f} heav`C`{.c}en  
+`C`{.c} Like the first `Em`{.e} dew `Am`{.a} fall  
+`D7sus4`{.d} on the first `G`{.g} grass
+
+`C`{.c} Praise for the `F`{.f} sweetness  
+`C`{.c} of the wet `Am`{.a} gard`D`{.d}en  
+`G`{.g} Sprung in comp`C`{.c}lete`F`{.f}ness  
+`G7`{.g} where his feet `C`{.c} pass
+
+## Instrumental
+
+`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
+`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
+`A7/D`{.a} `D`{.d}
+
+## Verse 3
+
+Mine is the `D`{.d} sun`Em`{.e}light  
+`A`{.a} mine is the `G`{.g} morn`D`{.d}ing  
+Born of the `F#m`{.f} one `Bm`{.b} light  
+`E7`{.e} Eden saw `A`{.a} play `A7`{.a}
+
+`D`{.d} Praise with el`G`{.g}ation  
+`D`{.d} praise every `Bm`{.b} morn`E`{.e}ing  
+`A`{.a} God's recre`D`{.d}a`G`{.g}tion  
+`A7`{.a} of the new `D`{.d} day
+
+## Instrumental
+
+`G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
+`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
+
+## Verse 1
+
+Morning has `C`{.c}brok`Dm`{.d}en  
+`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
+`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
+`D7sus4`{.d} like the first `G`{.g} bird
+
+`C`{.c} Praise for the `F`{.f} singing  
+`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
+`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
+`G7`{.g} fresh from the `C`{.c} world
+
+## Outro
+
+`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
+`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
+`A7/D`{.a} `D`{.d}
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=uZAsfB1Np-8)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/morning-has-broken-chords-84520)
+- [Guitar tutorial](https://www.youtube.com/watch?v=eyRVPNenXlg)
+
 # Männer sind Schweine (Die Ärzte)
 
 ## Verse 1
@@ -2058,101 +1906,6 @@ Yeah, yeah, yeah, yeaääääää `Am`{.a}
 
 - [Song](https://www.youtube.com/watch?v=404oPn6tudE)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/568214)
-
-# Morning has broken (Cat Stevens)
-
-## Instructions
-
-```
-       |E A D G B e|
-       |-----------|
-A7/D   |x x 0 0 1 0|
-D7sus4 |x x 0 2 1 3|
-F#     |2=4=4=3=2=2|
-F#m    |2=4=4=2=2=2|
-G7sus4 |x x 0 0 1 1|
-```
-
-## Intro
-
-`D`{.d} `G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
-`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
-
-## Verse 1
-
-Morning has `C`{.c}brok`Dm`{.d}en  
-`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
-`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
-`D7sus4`{.d} like the first `G`{.g} bird
-
-`C`{.c} Praise for the `F`{.f} singing  
-`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
-`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
-`G7`{.g} fresh from the `C`{.c} world
-
-## Instrumental
-
-`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
-`G7`{.g} `C`{.c} `G7sus4`{.g}
-
-## Verse 2
-
-Sweet the rain's `C`{.c} new `Dm`{.d} fall  
-`G`{.g} sunlit from `F`{.f} heav`C`{.c}en  
-`C`{.c} Like the first `Em`{.e} dew `Am`{.a} fall  
-`D7sus4`{.d} on the first `G`{.g} grass
-
-`C`{.c} Praise for the `F`{.f} sweetness  
-`C`{.c} of the wet `Am`{.a} gard`D`{.d}en  
-`G`{.g} Sprung in comp`C`{.c}lete`F`{.f}ness  
-`G7`{.g} where his feet `C`{.c} pass
-
-## Instrumental
-
-`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
-`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
-`A7/D`{.a} `D`{.d}
-
-## Verse 3
-
-Mine is the `D`{.d} sun`Em`{.e}light  
-`A`{.a} mine is the `G`{.g} morn`D`{.d}ing  
-Born of the `F#m`{.f} one `Bm`{.b} light  
-`E7`{.e} Eden saw `A`{.a} play `A7`{.a}
-
-`D`{.d} Praise with el`G`{.g}ation  
-`D`{.d} praise every `Bm`{.b} morn`E`{.e}ing  
-`A`{.a} God's recre`D`{.d}a`G`{.g}tion  
-`A7`{.a} of the new `D`{.d} day
-
-## Instrumental
-
-`G`{.g} `A`{.a} `F#`{.f} `Bm`{.b}  
-`G7`{.g} `C`{.c} `F`{.f} `C`{.c}
-
-## Verse 1
-
-Morning has `C`{.c}brok`Dm`{.d}en  
-`G`{.g} like the first `F`{.f} morn`C`{.c}ing  
-`C`{.c} Blackbird has `Em`{.e} spok`Am`{.a}en  
-`D7sus4`{.d} like the first `G`{.g} bird
-
-`C`{.c} Praise for the `F`{.f} singing  
-`C`{.c} praise for the `Am`{.a} morn`D`{.d}ing  
-`G`{.g} Praise for them `C`{.c} spring`F`{.f}ing  
-`G7`{.g} fresh from the `C`{.c} world
-
-## Outro
-
-`F`{.f} `G`{.g} `E`{.e} `Am`{.a}  
-`F#`{.f} `Bm`{.b} `G`{.g} `D`{.d}  
-`A7/D`{.a} `D`{.d}
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=uZAsfB1Np-8)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/morning-has-broken-chords-84520)
-- [Guitar tutorial](https://www.youtube.com/watch?v=eyRVPNenXlg)
 
 # No woman no cry (Bob Marley)
 
@@ -2696,6 +2449,59 @@ Dass i's vom Teppich wider `C`{.c} furt ha gno
 - [Song](https://www.youtube.com/watch?v=PkGatIgXERI)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/1197401)
 
+# Sittin' on the dock of the bay (Otis Redding)
+ 
+## Verse 1
+
+`G`{.g} Sittin' in the mornin' sun `B7`{.b}  
+I'll be `C`{.c} sittin' when the evenin' comes `A`{.a}  
+`G`{.g} Watching the ships roll in `B7`{.b}  
+And then I `C`{.c} watch 'em roll away again `A`{.a} yeah
+
+## Chorus
+
+I'm `G`{.g} sittin' on the dock of the `E`{.e} bay  
+Watching the `G`{.g} tide roll `E`{.e}away, ooo  
+I'm just `G`{.g} sittin' on the dock of the `A`{.a} bay  
+Wastin' `G`{.g} time `E`{.e}
+
+## Verse 2
+
+I `G`{.g} left my home in `B7`{.b} Georgia  
+`C`{.c} Headed for the 'Frisco Bay `A`{.a}  
+`G`{.g} 'Cause I've had nothing to `B7`{.b} live for  
+And look like `C`{.c} nothin's gonna come my way `A`{.a}
+
+## Chorus
+
+~~I'm sittin'~~ **So I'm just gonna `G`{.g} sit** on the dock of the `E`{.e} bay  
+Watching the `G`{.g} tide roll `E`{.e}away, ooh  
+~~I'm just~~ **Ooo I'm** `G`{.g} sittin' on the dock of the `A`{.a} bay  
+Wastin' `G`{.g} time `E`{.e}
+
+## Bridge
+
+                         
+`G`{.g} Looks like `D`{.d} nothing's `C`{.c} gonna change `G`{.g}  
+`G`{.g} Everything `D`{.d} still remains `C`{.c} the same `G`{.g}  
+`G`{.g} I can't `D`{.d} do what `C`{.c} ten people `G`{.g} tell me to do  
+So I `F`{.f} guess I'll remain the `D`{.d} same, yes
+
+## Chorus
+
+**Now** I'm `G`{.g} sitting on the dock of the `E`{.e} bay  
+Watching the `G`{.g} tide roll `E`{.e}away, ooh  
+~~I'm just~~ **Ooo I'm** `G`{.g} sittin' on the dock of the `A`{.a} bay  
+Wastin' `G`{.g} time `E`{.e}
+
+_(Repeat and whistle, fade)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=wyPKRcBTsFQ)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/otis-redding/sittin-on-the-dock-of-the-bay-chords-1088518)
+- [Guitar tutorial](https://www.youtube.com/watch?v=WNvoNPbmREY)
+
 # Something stupid (Robbie Williams)
 
 ## Instructions
@@ -3167,90 +2973,89 @@ _(Repeat and fade)_
 - [Source tab](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929)
 - [Guitar cover](https://www.youtube.com/watch?v=GIlCtOrisx0)
 
-# ❤️ Whats up (4 Non Blondes)
+# Whats up (4 Non Blondes)
 
 ## Intro
 
-`A`{.a} `Bm`{.b} `D`{.d} `A`{.a} _(x2)_
+`D`{.d} `Em`{.e} `G`{.g} `D`{.d} _(x2)_
  
 ## Verse 1
 
-`A`{.a} Twenty-five years and my life is still  
-`Bm`{.b} Trying to get up that great big hill  
-Of `D`{.d} hope for a destina`A`{.a}tion
+`D`{.d} Twenty-five years and my life is still  
+`Em`{.e} Trying to get up that great big hill  
+Of `G`{.g} hope for a destina`D`{.d}tion
 
-I `A`{.a} realized quickly when I knew I should  
-That the world `Bm`{.b} was made of this brotherhood  
-Of man, `D`{.d} for whatever that means `A`{.a}
+I `D`{.d} realized quickly when I knew I should  
+That the world `Em`{.e} was made of this brotherhood  
+Of man, `G`{.g} for whatever that means `D`{.d}
  
-## Pre-Dhorus
+## Pre-Chorus
 
-And so I `A`{.a} cry sometimes when I'm lying in bed  
-Just to `Bm`{.b} get it all out, what's in my head  
-and I `D`{.d} - I am feeling a little pecu`A`{.a}liar
+And so I `D`{.d} cry sometimes when I'm lying in bed  
+Just to `Em`{.e} get it all out, what's in my head  
+and I `G`{.g} - I am feeling a little pecu`D`{.d}liar
 
-And so I `A`{.a} wake in the morning and I step outside  
-and I `Bm`{.b} take a deep breath and I get real high and  
-I `D`{.d} scream at the top of my lungs:
+And so I `D`{.d} wake in the morning and I step outside  
+and I `Em`{.e} take a deep breath and I get real high and  
+I `G`{.g} scream at the top of my lungs:
 
-"What's going `A`{.a} on?"
-
-## Dhorus
-
-And I said `A`{.a} "Heyeyeyeyey `Bm`{.b} Heyeyey"  
-I said "Hey, `D`{.d} what's going on?" `A`{.a}  
-And I said `A`{.a} "Heyeyeyeyey `Bm`{.b} Heyeyey"  
-I said "Hey, `D`{.d} what's going on?" `A`{.a}
-
-## Interlude
-
-`A`{.a} Ooh `Bm`{.b} Ooh `D`{.d} Ooh `A`{.a} _(x2)_
-
-## Verse
-                         
-And I try, `A`{.a} oh my Aod do I try `Bm`{.b}  
-I try all the time, `D`{.d} in this institu`A`{.a}tion  
-And I pray, `A`{.a} oh my god do I pray `Bm`{.b}
-I pray every single day `D`{.d}  
-For a revo`A`{.a}lution
-
-## Pre-Dhorus
-
-And so I `A`{.a} cry sometimes when I'm lying in bed  
-Just to `Bm`{.b} get it all out, what's in my head  
-and I `D`{.d} - I am feeling a little pecu`A`{.a}liar
-
-And so I `A`{.a} wake in the morning and I step outside  
-and I `Bm`{.b} take a deep breath and I get real high and  
-I `D`{.d} scream at the top of my lungs:
-
-"What's going `A`{.a} on?"
+"What's going `D`{.d} on?"
 
 ## Chorus
 
-And I said `A`{.a} "Heyeyeyeyey `Bm`{.b} Heyeyey"  
-I said "Hey, `D`{.d} what's going on?" `A`{.a}  
-And I said `A`{.a} "Heyeyeyeyey `Bm`{.b} Heyeyey"  
-I said "Hey, `D`{.d} what's going on?" `A`{.a}
+And I said `D`{.d} "Heyeyeyeyey `Em`{.e} Heyeyey"  
+I said "Hey, `G`{.g} what's going on?" `D`{.d}  
+And I said `D`{.d} "Heyeyeyeyey `Em`{.e} Heyeyey"  
+I said "Hey, `G`{.g} what's going on?" `D`{.d}
+
+## Interlude
+
+`D`{.d} Ooh `Em`{.e} Ooh `G`{.g} Ooh `D`{.d} _(x2)_
+
+## Verse
+                         
+And I try, `D`{.d} oh my Aod do I try `Em`{.e}  
+I try all the time, `G`{.g} in this institu`D`{.d}tion  
+And I pray, `D`{.d} oh my god do I pray `Em`{.e}
+I pray every single day `G`{.g}  
+For a revo`D`{.d}lution
+
+## Pre-Chorus
+
+And so I `D`{.d} cry sometimes when I'm lying in bed  
+Just to `Em`{.e} get it all out, what's in my head  
+and I `G`{.g} - I am feeling a little pecu`D`{.d}liar
+
+And so I `D`{.d} wake in the morning and I step outside  
+and I `Em`{.e} take a deep breath and I get real high and  
+I `G`{.g} scream at the top of my lungs:
+
+"What's going `D`{.d} on?"
+
+## Chorus
+
+And I said `D`{.d} "Heyeyeyeyey `Em`{.e} Heyeyey"  
+I said "Hey, `G`{.g} what's going on?" `D`{.d}  
+And I said `D`{.d} "Heyeyeyeyey `Em`{.e} Heyeyey"  
+I said "Hey, `G`{.g} what's going on?" `D`{.d}
 
 _(Repeat)_
 
 ## Interlude
 
-`A`{.a} Ooh `Bm`{.b} Ooh `D`{.d} Ooh `A`{.a}
+`D`{.d} Ooh `Em`{.e} Ooh `G`{.g} Ooh `D`{.d}
 
 ## Outro
 
-`A`{.a} Twenty-five years and my life is still  
-`Bm`{.b} Trying to get up that great big hill  
-Of `D`{.d} hope for a destina`A`{.a}tion
+`D`{.d} Twenty-five years and my life is still  
+`Em`{.e} Trying to get up that great big hill  
+Of `G`{.g} hope for a destina`D`{.d}tion
 
 ## Resources
 
 - [Song](https://www.youtube.com/watch?v=6NXnxTNIWkc)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/4-non-blondes/whats-up-chords-268676)
 - [Guitar tutorial]()
-
 # Wild world (Cat Stevens)
 
 ## Instructions
