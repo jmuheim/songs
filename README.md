@@ -26,7 +26,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 LANG=en_US.UTF-8 ./build           # HTML only (fast)
 LANG=en_US.UTF-8 ./build --pdf     # HTML + PDF (slow)
 LANG=en_US.UTF-8 ./build --deploy  # HTML + deploy to songs.josh.ch
-LANG=en_US.UTF-8 ./dev             # Watch, rebuild, deploy, and live-reload on every change
+LANG=en_US.UTF-8 ./dev             # Watch, rebuild, and live-reload on every change
 ```
 
 > `LANG=en_US.UTF-8` is required because song files contain non-ASCII characters.

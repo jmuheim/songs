@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Watch source files, rebuild, deploy, and reload the browser on every change.
+# Watch source files, rebuild, and reload the browser on every change.
 # Dependencies: fswatch (brew install fswatch), browser-sync (npm install -g browser-sync)
 set -uo pipefail
 
 trap 'kill $(jobs -p) 2>/dev/null; exit' INT TERM EXIT
 
-echo "🎸 Initial build & deploy..."
-./build --deploy
+echo "🎸 Initial build..."
+./build
 
 echo "🌐 Starting browser-sync on http://localhost:3000 ..."
 browser-sync start --server --files "index.html" --no-notify &
@@ -14,6 +14,6 @@ browser-sync start --server --files "index.html" --no-notify &
 echo "👀 Watching content/, style/, build for changes..."
 fswatch -o content/ style/ build | while read -r; do
   echo ""
-  echo "🔄 Change detected — rebuilding & deploying..."
-  ./build --deploy || true
+  echo "🔄 Change detected — rebuilding..."
+  ./build || true
 done
