@@ -10,24 +10,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="./style/revealjs/dist/reset.css">
   <link rel="stylesheet" href="./style/revealjs/dist/reveal.css">
-  <style>label[for="toggle-chords-visibility"] {
+  <style>#toggle-chords-visibility {
   position: absolute;
   bottom: 2.5em;
   left: 1em;
   z-index: 100;
   opacity: 0.75;
-}
-
-label[for="toggle-chords-visibility"]::before {
-  font-size: 2.5em;
-  content: '🎹'
-}
-
-label[for="toggle-chords-visibility"]:hover {
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
+  font-family: inherit;
+  line-height: 1;
 }
 
-#toggle-chords-visibility:checked + label[for="toggle-chords-visibility"]::after {
+#toggle-chords-visibility::before {
+  font-size: 2.5em;
+  content: '🎹';
+}
+
+body.chords-hidden #toggle-chords-visibility::after {
   font-size: 2.5em;
   content: '❌';
   position: absolute;
@@ -35,12 +37,7 @@ label[for="toggle-chords-visibility"]:hover {
   bottom: 0;
 }
 
-#toggle-chords-visibility {
-  opacity: 0;
-  position: absolute;
-}
-
-#toggle-chords-visibility:checked ~ .reveal code {
+body.chords-hidden .reveal code {
   display: none;
 }
 
@@ -187,7 +184,15 @@ a#toggle-theme::before {
   </style>
   <link rel="stylesheet" href="./style/revealjs/dist/theme/night.css" id="theme">
 </head>
-<body><input type="checkbox" id="toggle-chords-visibility" /><label for="toggle-chords-visibility"></label><a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/style/theme/serif.css'); return false;"></a><a href="#/1" id="go-to-toc"></a>
+<body><button id="toggle-chords-visibility"></button>
+<script>
+  document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
+    document.body.classList.toggle('chords-hidden');
+    this.blur();
+  });
+</script>
+<a href="#" id="toggle-theme" onclick="document.getElementById('theme').setAttribute('href','revealjs/style/theme/serif.css'); return false;"></a>
+<a href="#/1" id="go-to-toc"></a>
   <div class="reveal">
     <div class="slides">
 
