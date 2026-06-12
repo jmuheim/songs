@@ -5,6 +5,8 @@ require 'shellwords'
 require 'json'
 require 'net/http'
 
+ENV['LANG'] = 'en_US.UTF-8'
+
 Dir.chdir(__dir__)
 
 MULTIPLEX_URL     = 'https://multiplex.up.railway.app'

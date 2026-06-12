@@ -82,14 +82,6 @@ MASTER_PASSWORD=mypassword ./build
 
 The password is embedded in the generated HTML (visible in source). This is intentional — the goal is only to prevent accidental master takeover, not real security.
 
-### Build note
-
-The build script requires `LANG=en_US.UTF-8` (or any UTF-8 locale) because song files contain non-ASCII characters. Run as:
-
-```bash
-LANG=en_US.UTF-8 ./build
-```
-
 ## Legacy songs
 
 `content/legacy-songs/` holds songs removed from the active set. They are not included in the build.
