@@ -9,12 +9,11 @@ A guitar song book generator. Songs are written in Markdown with inline chord no
 ## Build command
 
 ```bash
-./song-book-builder.rb
+./song-book-builder.rb        # HTML only (fast)
+./song-book-builder.rb --pdf  # HTML + PDF (slow)
 ```
 
 Dependencies: Ruby 3.x, Pandoc (`brew install pandoc`), DeckTape (`npm install -g decktape`).
-
-PDF generation (via DeckTape) is slow — if you only need the HTML output, you can comment out the `decktape` line at the bottom of `song-book-builder.rb`.
 
 ## Song file format
 

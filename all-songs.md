@@ -1,6 +1,6 @@
 ---
-author: 😊 Josua and friends ❤️
-title:  Our Songs 🔥🎶🌛
+title:  Lieblings-Songs 🔥🎶🌛
+author: 😊 Josua & Monika ❤️
 ---
 
 # Introduction
