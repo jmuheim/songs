@@ -68,6 +68,12 @@ The presentation uses the [Reveal.js multiplex plugin](https://revealjs.com/mult
 - **Master** (🎤 button, bottom-right): click → enter the password → your slide changes are broadcast to all clients. The button turns 🎙️ when active.
 - **QR code** (📱 button, above 🎤): shows a QR code of the current URL so new people can join.
 
+### Known limitation
+
+New clients who join mid-session are not synced to the current slide — they only receive updates on the next master navigation event. The workaround is for the master to tap next then back to re-broadcast. A heartbeat was considered but rejected because it would snap clients back to the master slide every N seconds, breaking independent browsing.
+
+The proper fix is a self-hosted multiplex server that caches `lastState` and emits it to each new socket on `connection`. The public server at `multiplex.up.railway.app` is a pure relay (one event: `multiplex-statechanged`, no storage) and cannot be modified.
+
 ### Token (`multiplex-token.json`)
 
 The `socketId` / `secret` pair is fetched once from the server and cached in `multiplex-token.json` (committed). All viewers share this session. Delete the file and rebuild to start a fresh session.

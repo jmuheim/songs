@@ -51,3 +51,9 @@ Default password: `guitar`. Change it with:
 ```bash
 MASTER_PASSWORD=yourpassword LANG=en_US.UTF-8 ./build
 ```
+
+### Known limitation
+
+New clients who join mid-session are not automatically synced to the current slide — they only catch up when the presenter navigates to the next slide. As a workaround, the presenter can tap next then back to re-broadcast their position.
+
+The proper fix requires a self-hosted multiplex server that caches the last state and sends it to new connections on join. The public server at `multiplex.up.railway.app` is a pure relay and does not support this.
