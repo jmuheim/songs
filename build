@@ -55,6 +55,7 @@ step("✨", "Post-processing index.html") do
   html.sub!("<style>", "<style>" + File.read("style/night.css") + File.read("style/shared.css"))
   html.gsub!(%r{  <script src="./style/revealjs/plugin/(notes|search|zoom)/\1\.js"></script>\n}, "")
   html.sub!("plugins: [\n          RevealNotes,\n          RevealSearch,\n          RevealZoom\n        ]", "plugins: []")
+  html.sub!("keyboard: true,", "keyboard: { 83: null }, // 's' disabled (was: speaker notes)")
   File.write("index.html", html)
 end
 
