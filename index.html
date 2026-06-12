@@ -4780,9 +4780,6 @@ tutorial</a></li>
   <script src="./style/revealjs/dist/reveal.js"></script>
 
   <!-- reveal.js plugins -->
-  <script src="./style/revealjs/plugin/notes/notes.js"></script>
-  <script src="./style/revealjs/plugin/search/search.js"></script>
-  <script src="./style/revealjs/plugin/zoom/zoom.js"></script>
 
   <script>
 
@@ -4826,7 +4823,7 @@ tutorial</a></li>
         history: false,
 
         // Enable keyboard shortcuts for navigation
-        keyboard: true,
+        keyboard: { 83: null }, // 's' disabled (was: speaker notes)
 
         // Enable the slide overview mode
         overview: true,
@@ -4930,11 +4927,7 @@ tutorial</a></li>
         mobileViewDistance: 2,
 
         // reveal.js plugins
-        plugins: [
-          RevealNotes,
-          RevealSearch,
-          RevealZoom
-        ]
+        plugins: []
       });
     </script>
     </body>

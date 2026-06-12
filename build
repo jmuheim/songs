@@ -53,6 +53,9 @@ step("✨", "Post-processing index.html") do
   html = File.read("index.html")
   html.sub!("<body>", "<body>" + File.read("style/body-controls.html").strip)
   html.sub!("<style>", "<style>" + File.read("style/night.css") + File.read("style/shared.css"))
+  html.gsub!(%r{  <script src="./style/revealjs/plugin/(notes|search|zoom)/\1\.js"></script>\n}, "")
+  html.sub!("plugins: [\n          RevealNotes,\n          RevealSearch,\n          RevealZoom\n        ]", "plugins: []")
+  html.sub!("keyboard: true,", "keyboard: { 83: null }, // 's' disabled (was: speaker notes)")
   File.write("index.html", html)
 end
 
@@ -63,6 +66,8 @@ step("✨", "Post-processing print.html") do
   html.sub!("<style>", "<style>" + File.read("style/serif.css") + File.read("style/shared.css"))
   html.gsub!(/<section id="resources[-\d]*?" class="slide level2">.*?<\/section>/m, "")
   html.sub!('<section id="title-slide"', '<section id="title-slide" data-background-image="style/background.jpg"')
+  html.gsub!(%r{  <script src="./style/revealjs/plugin/(notes|search|zoom)/\1\.js"></script>\n}, "")
+  html.sub!("plugins: [\n          RevealNotes,\n          RevealSearch,\n          RevealZoom\n        ]", "plugins: []")
   File.write("print.html", html)
 end
 
