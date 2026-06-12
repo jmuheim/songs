@@ -168,7 +168,8 @@ a#toggle-theme::before {
   color: #fff;
   font-family: sans-serif;
   font-size: 2rem;
-  min-width: 18em;
+  width: min(36rem, 90vw);
+  box-sizing: border-box;
 }
 
 .modal-box p {
@@ -237,6 +238,12 @@ a#toggle-theme::before {
   display: flex;
   justify-content: center;
   margin-bottom: 1em;
+}
+
+#qr-canvas canvas,
+#qr-canvas img {
+  max-width: 100%;
+  height: auto;
 }
 .reveal section h1 {
   font-size: 3em;
@@ -320,9 +327,9 @@ a#toggle-theme::before {
 
 <div id="master-modal" class="overlay-modal">
   <div class="modal-box">
-    <p>Passwort benötigt</p>
+    <p>Navigation übernehmen?</p>
     <div id="master-info">
-      <p>Möchtest du das Navigieren übernehmen?</p><p>Alle anderen werden dir durch die Präsentation folgen.</p>
+      <p>Alle anderen werden dir folgen.</p>
     </div>
     <input type="password" id="master-pw" autocomplete="off">
     <div class="modal-buttons">
