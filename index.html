@@ -17,6 +17,7 @@
   z-index: 100;
   display: flex;
   align-items: center;
+  gap: 0.75em;
 }
 
 #toggle-chords-visibility,
@@ -33,12 +34,12 @@
 }
 
 #toggle-chords-visibility::before {
-  font-size: 2.5em;
+  font-size: 3em;
   content: '🎹';
 }
 
 body.chords-hidden #toggle-chords-visibility::after {
-  font-size: 2.5em;
+  font-size: 3em;
   content: '❌';
   position: absolute;
   right: 0;
@@ -100,12 +101,11 @@ a#go-to-toc {
 }
 
 a#go-to-toc::before {
-  font-size: 2.5em;
+  font-size: 3em;
   content: '📖'
 }
 
 a#toggle-theme {
-  display: none;
   position: fixed;
   top: 2.5em;
   right: 1em;
@@ -115,7 +115,7 @@ a#toggle-theme {
 }
 
 a#toggle-theme::before {
-  font-size: 2.5em;
+  font-size: 3em;
   content: '🌞';
 }
 
@@ -128,12 +128,12 @@ a#toggle-theme::before {
 }
 
 #master-mode::before {
-  font-size: 2.5em;
+  font-size: 3em;
   content: '🚀';
 }
 
 #master-mode.is-master::after {
-  font-size: 2.5em;
+  font-size: 3em;
   content: '❌';
   position: absolute;
   right: 0;
@@ -141,7 +141,7 @@ a#toggle-theme::before {
 }
 
 #show-qr::before {
-  font-size: 2.5em;
+  font-size: 3em;
   content: '🔗';
 }
 
