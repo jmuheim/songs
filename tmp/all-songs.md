@@ -1,5 +1,5 @@
 ---
-author: 😊 Joshua and friends ❤️
+author: 😊 Josua + Monika ❤️
 title:  Our Songs 🔥🎶🌛
 ---
 
@@ -16,7 +16,7 @@ This is a collection of my favourite guitar songs.
 
 Let's sing together and have some fun! 💫
 
-🙏 Cheers, Joshua 🌛
+🙏 Cheers, Josua 🌛
 
 ## Basic chords
 

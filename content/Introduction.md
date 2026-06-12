@@ -11,7 +11,7 @@ This is a collection of my favourite guitar songs.
 
 Let's sing together and have some fun! 💫
 
-🙏 Cheers, Joshua 🌛
+🙏 Cheers, Josua + Monika 🌛
 
 ## Basic chords
 
