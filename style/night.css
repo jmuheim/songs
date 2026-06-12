@@ -1,7 +1,7 @@
 #bottom-left-controls {
   position: fixed;
   bottom: 2.5em;
-  left: 1em;
+  left: 2em;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -81,8 +81,8 @@ section#TOC::-webkit-scrollbar-thumb {
 
 a#go-to-toc {
   position: fixed;
-  top: 2.5em;
-  left: 1em;
+  top: 2em;
+  left: 1.5em;
   z-index: 100;
   opacity: 0.75;
   text-decoration: none;
@@ -95,8 +95,8 @@ a#go-to-toc::before {
 
 a#toggle-theme {
   position: fixed;
-  top: 2.5em;
-  right: 1em;
+  top: 2em;
+  right: 1.5em;
   z-index: 100;
   opacity: 0.75;
   text-decoration: none;
@@ -104,7 +104,7 @@ a#toggle-theme {
 
 a#toggle-theme::before {
   font-size: 3em;
-  content: '🌞';
+  content: '🌙';
 }
 
 .reveal section strong {
@@ -232,4 +232,61 @@ a#toggle-theme::before {
 #qr-canvas img {
   max-width: 100%;
   height: auto;
+}
+
+/* Bright theme overrides */
+
+body.theme-bright a#toggle-theme::before {
+  content: '🌞';
+}
+
+body.theme-bright .reveal section h1,
+body.theme-bright h2,
+body.theme-bright em {
+  color: unset !important;
+}
+
+body.theme-bright .reveal section code.x {
+  border: 1px solid #999;
+  color: #777;
+}
+
+body.theme-bright .reveal section pre code {
+  background-color: #ffe29a;
+}
+
+body.theme-bright {
+  --thumbBG: #8b6914;
+  --r-background-color: #fffad5;
+  --r-background: #fffad5;
+  --r-main-color: #222;
+  --r-heading-color: #333;
+  --r-link-color: #9a6f00;
+  --r-link-color-hover: #7a5500;
+}
+
+body.theme-bright .reveal section strong {
+  color: #38920b;
+}
+
+body.theme-bright .modal-box {
+  background: #f4f4f4;
+  border-color: #ccc;
+  color: #333;
+}
+
+body.theme-bright .modal-box input[type="password"] {
+  background: #fff;
+  border-color: #bbb;
+  color: #333;
+}
+
+body.theme-bright .modal-box button {
+  background: #ddd;
+  border-color: #bbb;
+  color: #333;
+}
+
+body.theme-bright .modal-box button:hover {
+  background: #ccc;
 }
