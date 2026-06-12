@@ -117,16 +117,20 @@ a#toggle-theme::before {
 
 #master-mode::before {
   font-size: 2.5em;
-  content: '🎤';
+  content: '🚀';
 }
 
-#master-mode.is-master::before {
-  content: '🎙️';
+#master-mode.is-master::after {
+  font-size: 2.5em;
+  content: '❌';
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 #show-qr::before {
   font-size: 2.5em;
-  content: '📱';
+  content: '🔗';
 }
 
 .overlay-modal {
