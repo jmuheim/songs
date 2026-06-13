@@ -27,6 +27,8 @@ to see [C] if I [D] still feel [Am]
 I [C] focus [D] on the pain [Am]
 the [C] only thing [D] that's real [Am]
 
+---
+
 The [C] needle [D] tears a hole [Am]
 the [C] old fa[D]miliar sting [Am]
 Try to [C] kill it [D] all away [Am]
@@ -38,6 +40,8 @@ but I re[C]member [D] everything [G]
 [C/E] My sweetest friend [G]
 [Am7] Everyone I know [Fadd9]
 goes away [C/E] in the end [G]
+
+---
 
 And [Am7] you could have it all [Fadd9]
 [C/E] My empire of dirt [G]
@@ -56,6 +60,8 @@ u[C]pon my li[D]ar's chair [Am]
 [C] Full of bro[D]ken thoughts [Am]
 [C]I cannot [D] re[Am]pair
 
+---
+
 Be[C]neath the stains [D] of [Am] time
 the [C] feelings [D] disappear [Am]
 [C] You are some[D]one else [Am]
@@ -69,6 +75,8 @@ _(x2)_
 [C/E] My sweetest friend [G]
 [Am7] Everyone I know [Fadd9]
 goes away [C/E] in the end [G]
+
+---
 
 And [Am7] you could have it all [Fadd9]
 [C/E] My empire of dirt [G]

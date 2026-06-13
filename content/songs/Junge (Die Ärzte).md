@@ -13,6 +13,8 @@ nichts gelernt? [Am]
 Guck Dir den [F] Dieter an:
 [G] der hat sogar ein [Am] Auto! [Em]
 
+---
+
 Warum [F] gehst Du nicht zu
 Onkel Werner in die Werk[G]statt?
 Der gibt Dir ne [Am] Festanstellung
@@ -28,6 +30,8 @@ _(Strumming)_
 Löcher in der Ho[Dm]se
 und ständig dieser Lärm [Am]
 (Was soll'n die Nach[C]barn sagen?)
+
+---
 
 Und dann noch deine Ha[F]are
 da fehlen mir die Wor[Dm]te

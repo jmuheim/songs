@@ -37,7 +37,6 @@ So [Am] langsam fällt mir alles wieder ein:
 Ich wollt doch nur'n bisschen freier sein.
 Jetzt [G] bin ich's - oder [Am] nicht?
 
-
 Ich [Am] passte nicht in deine heile Welt
 doch die und du ist, was mir jetzt so fehlt
 ich [G] glaub das einfach [Am] nicht.
