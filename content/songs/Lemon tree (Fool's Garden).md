@@ -1,120 +1,109 @@
 # Lemon tree (Fool's Garden)
 
-
-
 ## Instructions
 
-```
-Use barre chords (except for chorus):
+Capo on 2nd fret
 
+```
     |E A D G B e|
     |-----------|
-Am  |5=7=7=5=5=5|
-B7  |7=9=7=8=7=7|
-Bbm |6=8=8=6=6=6|
-Bm  |7=9=9=7=7=7|
-G   |3=5=5=4=3=3|
-Em  |x 7=9=9=8=7|
-
-      |E A D G B e|
-      |-----------|
-Cadd9 |x 3 2 0 3 1|
+Bb  |x 1 3 3 3 1|
 ```
 
 ## Intro
 
 _(Barre chords)_
 
-[Em] [Bm] [Em] [Bm]
-[Bbm] [Am] [Bm] [Em]
+[Dm] [Am] [Dm] [Am]
+[Abm] [Gm] [Am] [Dm]
 
 ## Verse 1
 
 _(Barre chords)_
 
-I'm [Em] sitting here in a [Bm] boring room
-It's [Em] just another rainy sunday [Bm] afternoon
-I'm [Em] wasting my time I got [Bm] nothing to do
-I'm [Em] hanging around I'm [Bm] waiting for you
-[Bbm] But [Am] nothing ever happens [Bm] - and I won[Em]der
+I'm [Dm] sitting here in a [Am] boring room
+It's [Dm] just another rainy sunday [Am] afternoon
+I'm [Dm] wasting my time I got [Am] nothing to do
+I'm [Gm] hanging around I'm [Am] waiting for you
+But [Gm] nothing ever happens [Am] - and I won[Dm]der
 
 ## Verse 2
 
 _(Barre chords)_
 
-I'm [Em] driving around [Bm] in my car
-I'm [Em] driving too fast I'm [Bm] driving too far
-I'd [Em] like to change my [Bm] point of view
-I [Em] feel so lonely I'm [Bm] waiting for you
-[Bbm] But [Am] nothing ever happens [Bm] - and I won[Em]der
+I'm [Dm] driving around [Am] in my car
+I'm [Dm] driving too fast I'm [Am] driving too far
+I'd [Dm] like to change my [Am] point of view
+I [Gm] feel so lonely I'm [Am] waiting for you
+But [Gm] nothing ever happens [Am] - and I won[Dm]der
 
 ## Chorus
 
 _(Open chords)_
 
-I [G] wonder how I [D] wonder why
-[Em] Yesterday you told me 'bout the [Bm] blue blue sky
-And all [C/G] that I can see [D]
-Is just a yellow [G] lemon tree [D]
+I [F] wonder how I [C] wonder why
+[Dm] Yesterday you told me 'bout the [Am] blue blue sky
+And all [Bb] that I can see [C]
+Is just a yellow [F] lemon tree [C]
 
-I'm [G] turning my head [D] up and down
-I'm [Em] turning turning turning turning [Bm] turning around
-And [C/G] all that I can [A7] see is just a yellow [D] lemon tree
+I'm [F] turning my head [C] up and down
+I'm [Dm] turning turning turning turning [Am] turning around
+And [Bb] all that I can [G7] see is just a yellow [C] lemon tree
 
 ## Bridge 1
 
 _(Barre chords)_
 
-[Em] [Bm] [Em] [Bm]
-[Bbm] [Am] [Bm] [Em]
+[Dm] [Am] [Dm] [Am]
+[Gm] [Am] [Dm]
 Da da da...
 
 ## Verse 3
 
 _(Barre chords)_
 
-I'm [Em] sitting here I [Bm] miss the power
-I'd [Em] like to go out [Bm] taking a shower
-But [Em] there's a heavy cloud in[Bm]side my head
-I [Em] feel so tired put my[Bm]self into bed
-[Bbm] Where [Am] nothing ever happens [Bm] - and I won[Em]der
+I'm [Dm] sitting here I [Am] miss the power
+I'd [Dm] like to go out [Am] taking a shower
+But [Dm] there's a heavy cloud in[Am]side my head
+I [Gm] feel so tired put my[Am]self into bed
+Where [Gm] nothing ever happens [Am] - and I won[Dm]der
 
 ## Bridge 2
 
 _(Barre chords)_
 
-[B7] Isolation [Em] is not good for me
-[D7] Isolation - [G] I don't want to [B7] sit on a lemon tree
+[A7] Isolation [Dm] is not good for me
+[C7] Isolation - [F] I don't want to [A7] sit on a lemon tree
 
 ## Verse 4
 
-I'm [Em] steppin' around in a [Bm] desert of joy
-[Em] Baby anyhow I'll get an[Bm]other toy
-And [Am] everything will happen - [Bm] and you'll won[Em]der
+I'm [Dm] steppin' around in a [Am] desert of joy
+[Dm] Baby anyhow I'll get an[Am]other toy
+And [Gm] everything will happen - [Am] and you'll won[Dm]der
 
 ## Chorus
 
 _(Open chords)_
 
-I [G] wonder how I [D] wonder why
-[Em] Yesterday you told me 'bout the [Bm] blue blue sky
-And all [C/G] that I can see [D]
-Is just a yellow [G] lemon tree [D]
+I [F] wonder how I [C] wonder why
+[Dm] Yesterday you told me 'bout the [Am] blue blue sky
+And all [Bb] that I can see [C]
+Is just a yellow [F] lemon tree [C]
 
-I'm [G] turning my head [D] up and down
-I'm [Em] turning turning turning turning [Bm] turning around
-And [C/G] all that I can [A7] see is just a yellow [D] lemon tree
+I'm [F] turning my head [C] up and down
+I'm [Dm] turning turning turning turning [Am] turning around
+And [Bb] all that I can [G7] see is just a yellow [C] lemon tree
 And I wonder I wonder
 
 ---
 
-I [G] wonder how I [D] wonder why
-[Em] Yesterday you told me 'bout the [Bm] blue blue sky
-And all [C/G] that I can see [D] _(x3)_
-Is [Cadd9] just a yellow [G7] lemon tree [G]
+I [F] wonder how I [C] wonder why
+[Dm] Yesterday you told me 'bout the [Am] blue blue sky
+And all [Bb] that I can see [C] _(x3)_
+Is [Bb] just a yellow [F] lemon tree
 
 ## Resources
 
-- [Song](https://www.youtube.com/watch?v=bCDIt50hRDs)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/fools-garden/lemon-tree-chords-145589)
-- [Guitar tutorial](https://www.youtube.com/watch?v=_hk3cZqEf30)
+- [Song](https://www.youtube.com/watch?v=wCQfkEkePx8)
+- [Source tab](https://tabs.ultimate-guitar.com/user/tab/view?h=_5ECoKMMKHZmcTbZHfp9P2JQ&tab_id=27297698)
+- [Guitar tutorial](https://www.youtube.com/watch?v=Yv-AsMzWaV0)
