@@ -2,7 +2,7 @@
 
 ## Welcome
 
-This is a collection of my favourite guitar songs.  
+This is a collection of my favourite guitar songs.
 🎤😍🎸🔥 Find it on [songs.josh.ch](https://songs.josh.ch).
 
 - Use arrow keys or swipe gestures to navigate

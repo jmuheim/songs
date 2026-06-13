@@ -25,91 +25,91 @@ Cadd9 |x 3 2 0 3 1|
 
 _(Barre chords)_
 
-[Em] [Bm] [Em] [Bm]  
+[Em] [Bm] [Em] [Bm]
 [Bbm] [Am] [Bm] [Em]
- 
+
 ## Verse 1
 
 _(Barre chords)_
 
-I'm [Em] sitting here in a [Bm] boring room  
-It's [Em] just another rainy sunday [Bm] afternoon  
-I'm [Em] wasting my time I got [Bm] nothing to do  
-I'm [Em] hanging around I'm [Bm] waiting for you  
+I'm [Em] sitting here in a [Bm] boring room
+It's [Em] just another rainy sunday [Bm] afternoon
+I'm [Em] wasting my time I got [Bm] nothing to do
+I'm [Em] hanging around I'm [Bm] waiting for you
 [Bbm] But [Am] nothing ever happens [Bm] - and I won[Em]der
 
 ## Verse 2
 
 _(Barre chords)_
 
-I'm [Em] driving around [Bm] in my car  
-I'm [Em] driving too fast I'm [Bm] driving too far  
-I'd [Em] like to change my [Bm] point of view  
-I [Em] feel so lonely I'm [Bm] waiting for you  
+I'm [Em] driving around [Bm] in my car
+I'm [Em] driving too fast I'm [Bm] driving too far
+I'd [Em] like to change my [Bm] point of view
+I [Em] feel so lonely I'm [Bm] waiting for you
 [Bbm] But [Am] nothing ever happens [Bm] - and I won[Em]der
 
 ## Chorus
 
 _(Open chords)_
 
-I [G] wonder how I [D] wonder why  
-[Em] Yesterday you told me 'bout the [Bm] blue blue sky  
-And all [C/G] that I can see [D]  
+I [G] wonder how I [D] wonder why
+[Em] Yesterday you told me 'bout the [Bm] blue blue sky
+And all [C/G] that I can see [D]
 Is just a yellow [G] lemon tree [D]
-                   
-I'm [G] turning my head [D] up and down  
-I'm [Em] turning turning turning turning [Bm] turning around  
+
+I'm [G] turning my head [D] up and down
+I'm [Em] turning turning turning turning [Bm] turning around
 And [C/G] all that I can [A7] see is just a yellow [D] lemon tree
 
 ## Bridge 1
 
 _(Barre chords)_
 
-[Em] [Bm] [Em] [Bm]  
-[Bbm] [Am] [Bm] [Em]  
+[Em] [Bm] [Em] [Bm]
+[Bbm] [Am] [Bm] [Em]
 Da da da...
 
 ## Verse 3
 
 _(Barre chords)_
 
-I'm [Em] sitting here I [Bm] miss the power  
-I'd [Em] like to go out [Bm] taking a shower  
-But [Em] there's a heavy cloud in[Bm]side my head  
-I [Em] feel so tired put my[Bm]self into bed  
+I'm [Em] sitting here I [Bm] miss the power
+I'd [Em] like to go out [Bm] taking a shower
+But [Em] there's a heavy cloud in[Bm]side my head
+I [Em] feel so tired put my[Bm]self into bed
 [Bbm] Where [Am] nothing ever happens [Bm] - and I won[Em]der
 
 ## Bridge 2
 
 _(Barre chords)_
-           
-[B7] Isolation [Em] is not good for me  
+
+[B7] Isolation [Em] is not good for me
 [D7] Isolation - [G] I don't want to [B7] sit on a lemon tree
-                                                   
+
 ## Verse 4
 
-I'm [Em] steppin' around in a [Bm] desert of joy  
-[Em] Baby anyhow I'll get an[Bm]other toy  
+I'm [Em] steppin' around in a [Bm] desert of joy
+[Em] Baby anyhow I'll get an[Bm]other toy
 And [Am] everything will happen - [Bm] and you'll won[Em]der
 
 ## Chorus
 
 _(Open chords)_
 
-I [G] wonder how I [D] wonder why  
-[Em] Yesterday you told me 'bout the [Bm] blue blue sky  
-And all [C/G] that I can see [D]  
+I [G] wonder how I [D] wonder why
+[Em] Yesterday you told me 'bout the [Bm] blue blue sky
+And all [C/G] that I can see [D]
 Is just a yellow [G] lemon tree [D]
-                   
-I'm [G] turning my head [D] up and down  
-I'm [Em] turning turning turning turning [Bm] turning around  
+
+I'm [G] turning my head [D] up and down
+I'm [Em] turning turning turning turning [Bm] turning around
 And [C/G] all that I can [A7] see is just a yellow [D] lemon tree
 And I wonder I wonder
 
 ---
-              
-I [G] wonder how I [D] wonder why  
-[Em] Yesterday you told me 'bout the [Bm] blue blue sky  
+
+I [G] wonder how I [D] wonder why
+[Em] Yesterday you told me 'bout the [Bm] blue blue sky
 And all [C/G] that I can see [D] _(x3)_
 Is [Cadd9] just a yellow [G7] lemon tree [G]
 

@@ -16,74 +16,74 @@ Just keep pinky on 3rd fret of e string
 
 ## Intro
 
-[Am]  
-[C] [D] [Am]  
+[Am]
 [C] [D] [Am]
- 
+[C] [D] [Am]
+
 ## Verse 1
 
-I [C] hurt myself [D] today [Am]  
-to see [C] if I [D] still feel [Am]  
-I [C] focus [D] on the pain [Am]  
+I [C] hurt myself [D] today [Am]
+to see [C] if I [D] still feel [Am]
+I [C] focus [D] on the pain [Am]
 the [C] only thing [D] that's real [Am]
 
-The [C] needle [D] tears a hole [Am]  
-the [C] old fa[D]miliar sting [Am]  
-Try to [C] kill it [D] all away [Am]  
+The [C] needle [D] tears a hole [Am]
+the [C] old fa[D]miliar sting [Am]
+Try to [C] kill it [D] all away [Am]
 but I re[C]member [D] everything [G]
- 
+
 ## Chorus 1
 
-[Am7] What have I become? [Fadd9]  
-[C/E] My sweetest friend [G]  
-[Am7] Everyone I know [Fadd9]  
+[Am7] What have I become? [Fadd9]
+[C/E] My sweetest friend [G]
+[Am7] Everyone I know [Fadd9]
 goes away [C/E] in the end [G]
 
-And [Am7] you could have it all [Fadd9]  
-[C/E] My empire of dirt [G]  
-[Am7] I will let you down [Fadd9]  
+And [Am7] you could have it all [Fadd9]
+[C/E] My empire of dirt [G]
+[Am7] I will let you down [Fadd9]
 [G] I will make you hurt [Am]
 
 ## Transition
 
-[C] [D] [Am]  
+[C] [D] [Am]
 [C] [D] [Am]
 
 ## Verse 2
 
-I [C] wear this crown [D] of thorns [Am]  
-u[C]pon my li[D]ar's chair [Am]  
-[C] Full of bro[D]ken thoughts [Am]  
+I [C] wear this crown [D] of thorns [Am]
+u[C]pon my li[D]ar's chair [Am]
+[C] Full of bro[D]ken thoughts [Am]
 [C]I cannot [D] re[Am]pair
 
-Be[C]neath the stains [D] of [Am] time  
-the [C] feelings [D] disappear [Am]  
-[C] You are some[D]one else [Am]  
+Be[C]neath the stains [D] of [Am] time
+the [C] feelings [D] disappear [Am]
+[C] You are some[D]one else [Am]
 [C] I am still [D] right [G] here
 
 _(x2)_
 
 ## Chorus 2
 
-[Am7] What have I become? [Fadd9]  
-[C/E] My sweetest friend [G]  
-[Am7] Everyone I know [Fadd9]  
+[Am7] What have I become? [Fadd9]
+[C/E] My sweetest friend [G]
+[Am7] Everyone I know [Fadd9]
 goes away [C/E] in the end [G]
 
-And [Am7] you could have it all [Fadd9]  
-[C/E] My empire of dirt [G]  
-[Am7] I will let you down [Fadd9]  
+And [Am7] you could have it all [Fadd9]
+[C/E] My empire of dirt [G]
+[Am7] I will let you down [Fadd9]
 [G] I will make you hurt [G] _(remain on G)_
 
 ---
 
-If I [Am7] could start again [Fadd9]  
-a [C/E] million miles a[G]way  
-[Am7] I would keep myself [Fadd9]  
+If I [Am7] could start again [Fadd9]
+a [C/E] million miles a[G]way
+[Am7] I would keep myself [Fadd9]
 [G] I would find a way
 
-[Am]  
-[C] [D] [Am]  
+[Am]
+[C] [D] [Am]
 [C] [D] [Am]
 
 ## Resources
