@@ -18,26 +18,26 @@ G/B |x 2 0 0 x x|
 
 [C] [B] [Am]
 
-Du hast mich so oft angespuckt  
-geschlagen und getreten  [C] [B] [Am]  
-Das war nicht sehr nett von dir  
+Du hast mich so oft angespuckt
+geschlagen und getreten  [C] [B] [Am]
+Das war nicht sehr nett von dir
 ich hatte nie darum gebe[G]ten [C] [B] [Am]
 
-Deine Feunde haben [F] applaudiert  
-[C] sie fanden es ganz [G] toll  
-[Am] Wenn du mich ver[F]möbelt hast  
+Deine Feunde haben [F] applaudiert
+[C] sie fanden es ganz [G] toll
+[Am] Wenn du mich ver[F]möbelt hast
 doch [C] jetzt ist das Fass [G] voll
 
 ## Pre-Chorus
 
-[C] Gewalt erzeugt [G] Gegengewalt  
-hat man [F] dir das nicht erklärt? [G]  
-Oder [C] hast du da auch [G] wie so oft  
+[C] Gewalt erzeugt [G] Gegengewalt
+hat man [F] dir das nicht erklärt? [G]
+Oder [C] hast du da auch [G] wie so oft
 einfach [F] nicht genau zugehört? [G]
 
-[F] Jetzt stehst du vor mir  
-und [G] wir sind ganz allein  
-[F] Keiner kann dir helfen, [G] keiner steht dir bei  
+[F] Jetzt stehst du vor mir
+und [G] wir sind ganz allein
+[F] Keiner kann dir helfen, [G] keiner steht dir bei
 [F] Ich schlag nur noch auf dich ein [G]
 
 ## Chorus
@@ -47,27 +47,27 @@ Immer mitten in die [C] Fresse rein [G] [Dm] [F] _(x2)_
 ## Verse 2
 
 [C] [B] [Am]
-Ich bin nicht stark und ich bin kein Held  
-doch was zuviel ist ist zuviel [C] [B] [Am]  
-Für deine Agressionen  
+Ich bin nicht stark und ich bin kein Held
+doch was zuviel ist ist zuviel [C] [B] [Am]
+Für deine Agressionen
 war ich immer das Ven[G]til [C] [B] [Am]
 
-Deine Kumpels waren [F] immer dabei  
-doch jetzt [C] wendet sich das Blatt [G]  
-[Am] Auch wenn ich morgen besser [F] umzieh'  
+Deine Kumpels waren [F] immer dabei
+doch jetzt [C] wendet sich das Blatt [G]
+[Am] Auch wenn ich morgen besser [F] umzieh'
 irgend[C]wo in eine andere [G] Stadt
 
 ## Pre-Chorus
 
-[C] Gewalt erzeugt [G] Gegengewalt  
-hat man [F] dir das nicht ~~erklärt~~ **erzählt**? [G]  
-Oder [C] hast du da auch [G] wie so oft  
-~~einfach nicht genau zugehört~~  
+[C] Gewalt erzeugt [G] Gegengewalt
+hat man [F] dir das nicht ~~erklärt~~ **erzählt**? [G]
+Oder [C] hast du da auch [G] wie so oft
+~~einfach nicht genau zugehört~~
 **im [F] Unterricht gefehlt?** [G]
 
-[F] Jetzt ~~stehst~~ **liegst** du vor mir  
-und [G] wir sind ganz allein  
-[F] Und ich schlage [G] weiter auf dich ein  
+[F] Jetzt ~~stehst~~ **liegst** du vor mir
+und [G] wir sind ganz allein
+[F] Und ich schlage [G] weiter auf dich ein
 [F] Das tut gut, das musste [G] einfach mal sein
 
 ## Chorus

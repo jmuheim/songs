@@ -32,34 +32,34 @@ E |--------|  |-------|
 
 ## Intro
 
-[Em(2)] [D6] [CM7] [Cm6] [B7(2)]  
+[Em(2)] [D6] [CM7] [Cm6] [B7(2)]
 [Em] [Am] [Cdim7] [B7(3)] [B7(4)]
 
-[Em(3)] [D6] [CM7] [Cm6] [B7(2)]  
+[Em(3)] [D6] [CM7] [Cm6] [B7(2)]
 [Em] [Am] [Em]
 
 ## Verse 1
 
-[Em(2)] "The problem is [D6] all inside your head"  
-[CM7] she said to me [Cm6] [B7(2)]  
-[Em] "the answer is ea[Am]sy if you  
+[Em(2)] "The problem is [D6] all inside your head"
+[CM7] she said to me [Cm6] [B7(2)]
+[Em] "the answer is ea[Am]sy if you
 [Cdim7] take it logic'lly. [B7(3)] [B7(4)]
 
-[Em(3)] I'd like to help [D6] you in your  
-[CM7] struggle to be free [Cm6] [B7(2)]  
-there must be [Em] fifty ways [Am]  
+[Em(3)] I'd like to help [D6] you in your
+[CM7] struggle to be free [Cm6] [B7(2)]
+there must be [Em] fifty ways [Am]
 to leave your lov[Em]er."
 
 ---
 
-[Em(2)] She said, "It's [D6] really not my  
-[CM7] habit to intrude [Cm6] [B7(2)]  
-Further[Em]more I hope my mea[Am]ning won't be  
+[Em(2)] She said, "It's [D6] really not my
+[CM7] habit to intrude [Cm6] [B7(2)]
+Further[Em]more I hope my mea[Am]ning won't be
 lost [Cdim7] or misconstrued. [B7(3)] [B7(4)]
 
-But I'll re[Em(3)]peat myself [D6] at the  
-[CM7] risk of being crude [Cm6] there [B7(2)] must be  
-[Em] fifty ways [Am] to leave your lov[Em]er  
+But I'll re[Em(3)]peat myself [D6] at the
+[CM7] risk of being crude [Cm6] there [B7(2)] must be
+[Em] fifty ways [Am] to leave your lov[Em]er
 [Em] fifty ways [Am7] to leave your lov[Em]er
 
 _(Riff)_
@@ -82,29 +82,29 @@ _(x2)_
 
 ## Verse 2
 
-[Em(2)] She said, "It [D6] grieves me so to  
-[CM7] see you in such pain [Cm6] [B7(2)]  
-oh I wish [Em] there's somethin' [Am] I could do to  
+[Em(2)] She said, "It [D6] grieves me so to
+[CM7] see you in such pain [Cm6] [B7(2)]
+oh I wish [Em] there's somethin' [Am] I could do to
 [Cdim7] make you smile again." [B7(3)] And I said [B7(4)]
 
-"I a[Em(3)]ppreciate that, [D6] and  
-[CM7] could you please explain [Cm6] about [B7(2)]  
+"I a[Em(3)]ppreciate that, [D6] and
+[CM7] could you please explain [Cm6] about [B7(2)]
 the fifty wa[Em]ys?" [Am] [Em]
 
 ---
 
-[Em(2)] She said, "Why [D6] don't we both just  
-[CM7] sleep on it tonight [Cm6] [B7(2)]  
-I be[Em]lieve that in the mor[Am]ning  
+[Em(2)] She said, "Why [D6] don't we both just
+[CM7] sleep on it tonight [Cm6] [B7(2)]
+I be[Em]lieve that in the mor[Am]ning
 you'll be[Cdim7]gin to see the light. [B7(3)] And then [B7(4)]
 
-she [Em(3)] kissed me and I [D6] realized she  
-[CM7] probably was right [Cm6] there [B7(2)] must be  
-[Em] fifty ways [Am] to leave your lov[Em]er  
+she [Em(3)] kissed me and I [D6] realized she
+[CM7] probably was right [Cm6] there [B7(2)] must be
+[Em] fifty ways [Am] to leave your lov[Em]er
 [Em] fifty ways [Am7] to leave your lov[Em]er
 
 _(Riff)_
- 
+
 ## Chorus
 
 _(Rhythm guitar)_
