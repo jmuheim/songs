@@ -1,8 +1,6 @@
 # Summer wine (Nancy Sinatra & Lee Hazlewood)
 
-## Intro
-
-_(Female)_
+## Intro _(Frauen)_
 
 [Am] Strawberries, cherries and an
 [G] angel's kiss in spring
@@ -11,9 +9,7 @@ _(Female)_
 
 [Am] (x4)
 
-## Verse 1
-
-_(Male)_
+## Verse 1 _(Männer)_
 
 [Am] I walked in town on silver
 [G] spurs that jingled to
@@ -26,9 +22,7 @@ _(Male)_
 
 [G]Ohhh[Em]oh summer wine [Am]
 
-## Chorus
-
-_(Female)_
+## Chorus _(Frauen)_
 
 [Am] Strawberries, cherries and an
 [G] angel's kiss in spring
@@ -41,10 +35,7 @@ _(Female)_
 
 [G]Ohhh[Em]oh summer wine [Am]
 
-## Verse 2
-
-_(Male)_
-
+## Verse 2 _(Männer)_
 
 [Am] My eyes grew heavy and my
 [G] lips they could not speak
@@ -53,13 +44,12 @@ _(Male)_
 
 [Dm] She reassured me with an
 [Am] unfamiliar line
-[Dm] And then she gave to me [Am] more summer wine
+[Dm] And then she gave to me
+[Am] more summer wine
 
 [G]Ohhh[Em]oh summer wine [Am]
 
-## Chorus
-
-_(Female)_
+## Chorus _(Frauen)_
 
 [Am] Strawberries, cherries and an
 [G] angel's kiss in spring
@@ -72,9 +62,7 @@ _(Female)_
 
 [G]Ohhh[Em]oh summer wine [Am]
 
-## Verse 2
-
-_(Male)_
+## Verse 2 _(Männer)_
 
 [Am] When I woke up the sun was
 [G] shining in my eyes
@@ -87,9 +75,7 @@ a [Am] dollar and a dime
 
 [G]Ohhh[Em]oh summer wine [Am]
 
-## Chorus
-
-_(Female)_
+## Chorus _(Frauen)_
 
 [Am] Strawberries, cherries and an
 [G] angel's kiss in spring

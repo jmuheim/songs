@@ -43,9 +43,7 @@ thru the [C] dark night far a[G]way?
 I am [Am] dying, forever [Em] trying
 to be [Am] with you, who can [G] say? [D]
 
-_(x2)
-
-[Verse 3]
+## Verse 3
 
 We are [G] sailing, we are [Em] sailing
 home a[C]gain 'cross the [G] sea.

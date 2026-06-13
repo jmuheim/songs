@@ -8,8 +8,7 @@
 
 _(Picking)_
 
-[F] Junge, warum [G] hast Du
-nichts gelernt? [Am]
+[F] Junge, warum [G] hast Du nichts gelernt? [Am]
 Guck Dir den [F] Dieter an:
 [G] der hat sogar ein [Am] Auto! [Em]
 
@@ -17,7 +16,7 @@ Guck Dir den [F] Dieter an:
 
 Warum [F] gehst Du nicht zu
 Onkel Werner in die Werk[G]statt?
-Der gibt Dir ne [Am] Festanstellung
+Der gibt Dir 'ne [Am] Festanstellung
 wenn Du ihn darum bittest
 
 [F] Junge... [G]
@@ -45,14 +44,13 @@ wir wissen nicht mehr wei[Dm]ter
 
 _(Picking)_
 
-[F] Junge, [G] brich deiner
-Mutter nicht das Herz [Am]
-es ist noch [F] nicht zu spät
-[G] dich an der Uni einzu[Am]schreiben
+[F] Junge, [G] brich deiner Mutter nicht das Herz [Am]
+es ist noch [F] nicht zu spät [G]
+dich an der Uni einzu[Am]schreiben
 
-du hast dich doch [F] früher so für Tiere interessiert [G]
-wäre das nichts für [Am] dich:
-eine eigene Praxis
+du hast dich doch [F] früher so
+für Tiere interessiert [G]
+wäre das nichts für [Am] dich: eine eigene Praxis?
 
 [F] Junge... [G]
 
@@ -84,9 +82,9 @@ Wir machen uns doch Sor[Dm]gen
 
 _(Very fast strumming)_
 
-[F] und du warst [Dm] so ein süßes [Am] Kind
-und du warst [C] so ein süßes [F] Kind
-und du warst [Dm] so ein süßes [Am] Kind
+[F] und du warst [Dm] so ein süsses [Am] Kind
+und du warst [C] so ein süsses [F] Kind
+und du warst [Dm] so ein süsses [Am] Kind
 du warst so [C] süss
 
 ## Chorus

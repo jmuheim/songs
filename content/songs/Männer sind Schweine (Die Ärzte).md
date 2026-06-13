@@ -7,8 +7,6 @@ Du [Em] bist die einzige für mich.
 Die [C] andern find' ich alle doof,
 Des[D]wegen mach ich Dir den Hof.
 
----
-
 Du [G] bist so anders, ganz speziell,
 Ich [Em] merke sowas immer schnell.
 Jetzt [C] zieh Dich aus und leg Dich hin,
@@ -33,8 +31,6 @@ Wenn [Em] er es Dir besorgen kann.
 Er [C] lügt, dass sich die Balken biegen.
 [D] Nur, um Dich ins Bett zu kriegen.
 
----
-
 Und [G] dann am nächsten Morgen weiss er
 [Em] Nicht einmal mehr, wie Du heisst.
 [C] Rücksichtslos und ungehemmt,
@@ -50,14 +46,16 @@ Ge[D]fühle sind ihm völlig fremd.
 Männer sind [G] Schweine!
 Frage nicht nach [Em] Sonnenschein.
 Ausnahmen [Am] gibt's leider keine!
-In jedem [C] Mann steckt auch immer ein [D] Schwein!
+In jedem [C] Mann steckt auch
+immer ein [D] Schwein!
 
 ---
 
 Männer sind [G] Säue!
 Glaube ihnen [Em] nicht ein Wort!
 Sie schwör'n Dir [Am] ewige Treue
-Und dann am [C] nächsten Morgen sind sie fort. [D]
+Und dann am [C] nächsten Morgen
+sind sie fort. [D]
 
 ## Verse 3
 
@@ -78,7 +76,7 @@ Und [D] rülpst und furzt im Ehebett.
 [C] Dann hast du King Kong [Bm] zum Ehemann!
 Drum [C] sag' ich Dir - denk bitte stets daran: [D]
 
-## Chorus 3
+## Chorus 4
 
 Männer sind [G] Schweine!
 Traue ihnen [Em] nicht, mein Kind!

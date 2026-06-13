@@ -18,7 +18,8 @@ The [G] sunny side we also may [C] view
 
 ## Chorus
 
-[C] Keep on the sunny side [F] always on the [C] sunny side
+[C] Keep on the sunny side [F]
+always on the [C] sunny side
 Keep on the sunny side of [G] life
 [C] It will help us every day
 It will [F] brighten all the [C] way
@@ -33,7 +34,8 @@ The [G7] sun again will shine bright and [C] clear
 
 ## Chorus
 
-[C] Keep on the sunny side [F] always on the [C] sunny side
+[C] Keep on the sunny side
+[F] always on the [C] sunny side
 Keep on the sunny side of [G] life
 [C] It will help us every day
 It will [F] brighten all the [C] way
@@ -57,7 +59,8 @@ Who [G7] keepeth everyone in His [C] care
 
 ## Chorus
 
-[C] Keep on the sunny side [F] always on the [C] sunny side
+[C] Keep on the sunny side
+[F] always on the [C] sunny side
 Keep on the sunny side of [G] life
 [C] It will help us every day
 It will [F] brighten all the [C] way
@@ -65,11 +68,13 @@ If we'll [C] keep on the [G] sunny side of [C] life
 
 _(Repeat)_
 
+---
+
+_(Fade out_
+
 [C] It will help us every day
 It will [F] brighten all the [C] way
 If we'll [C] keep on the [G] sunny side of [C] life
-
-_(Fade out_
 
 ## Resources
 

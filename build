@@ -32,7 +32,7 @@ def step(emoji, label)
 end
 
 def pandoc(output:, theme:)
-  result = `pandoc -f markdown+hard_line_breaks -t revealjs -s -o #{output} all-songs.md --slide-level=2 --syntax-highlighting=none --toc --toc-depth=1 -V theme=#{theme} -V progress=false -V revealjs-url=./style/revealjs 2>&1`
+  result = `pandoc -f markdown+hard_line_breaks -t revealjs -s -o #{output} all-songs.md --slide-level=2 --syntax-highlighting=none --toc --toc-depth=1 -V theme=#{theme} -V progress=false -V revealjs-url=./style/revealjs -V width=960 -V height=640 2>&1`
   print result unless result.strip.empty?
 end
 

@@ -16,19 +16,19 @@ dass si [Am] Hemmige [E7] hei
 
 ## Verse 3
 
-I [Am] weis, das macht eim heiss, verschlat eim [Dm] d'Stimm
-Doch [G] dünkt eim mängisch o s'syg nüt so [C] schlimm
+I [Am] weis, das macht eim heiss, 
+erschlat eim [Dm] d'Stimm
+Doch [G] dünkt eim mängisch o
+s'syg nüt so [C] schlimm
 S'isch [C] glych es Glück, o we mirs gar nid [E7] wei
 Dass mir [Am] Hemmige [E7] hei
 
 ## Verse 4
 
 Was [Am] unterscheidet d'Mönsche vom schim[Dm]pans?
-S'isch [G] nid die glatti Huut, dr fählend [C] Schwanz^_(*)_^
+S'isch [G] nid die glatti Huut, dr fählend [C] Schwanz
 Nid [C] dass mir schlächter d'Böim ufchöme, [E7] nei
 Dass mir [Am] Hemmige [E7] hei
-
-_(^*^ Fun Fact: Schimpanse haben gar keinen Schwanz!)_
 
 ## Verse 5
 

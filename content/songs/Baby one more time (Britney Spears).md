@@ -18,7 +18,8 @@ And [Dm] now you're out of [E] sight, yeah
 
 [Am] Show me, how you want it [E] to be
 Tell me [C] baby
-'Cause I need to [Dm] know now what we've got [E]
+'Cause I need to [Dm] know now
+what we've got [E]
 
 ## Chorus
 
@@ -44,7 +45,8 @@ It's [Dm] not the way I [E] planned it
 
 [Am] Show me, how you want it [E] to be
 Tell me [C] baby
-'Cause I need to [Dm] know now what we've got [E]
+'Cause I need to [Dm] know now
+what we've got [E]
 
 ## Chorus
 

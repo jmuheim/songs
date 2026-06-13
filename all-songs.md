@@ -48,186 +48,6 @@ Feeling bored of major chords (A, D, E...)?
   => Try playing a seventh chord instead (A7, D7, E7...)!
 ```
 
-# A-N-N-A (Freundeskreis)
-
-## Chorus
-
-Immer wenn es `Em`{.e} regnet
-muss ich an Dich `D`{.d} denken
-Wie wir uns be`Am`{.a}gegneten
-kann mich nicht ablenken
-Nass bis auf die `Em`{.e} Haut
-so stand sie `D`{.d} da
-
-_(1st time:)_ Um uns war es `Am`{.a}
-laut und wir kamen uns nah
-_(2nd time:)_ A-N-N-`Am`{.a}A
-
-## Verse 1
-
-`C`{.c} Pitsch, patsch nass, floh ich unter das
-Vor`D`{.d}dach des Fachgeschäftes
-Vom Himmel goss ein Bach. `Em`{.e}
-Ich schätz' es war halb acht
-Doch ich war hellwach
-als mich Anna ansah, anlachte
-
----
-
-`C`{.c} Ich dachte: "Sprich sie an"
-denn sie sprach mich an
-Die `D`{.d} Kleidung ganz durchnässt
-klebte an ihr fest
-Die `Em`{.e} Tasche in der Hand
-stand sie an der Wand
-Die dunkeln Augen funkelten
-wie 'ne Nacht in Asien
-
----
-
-`C`{.c} Strähnen im Gesicht
-nehmen ihr die Sicht
-Mein `D`{.d} Herz das klopft
-die Nase tropft
-Ich schäme mich
-benehme mich `Em`{.e} dämlich
-Bin nämlich eher schüchtern
-"Mein Name ist Anna"
-sagte sie sehr nüchtern
-
----
-
-Ich fing an zu flüstern:
-`C`{.c} "Ich bin Max aus dem
-Schosse der Kolchose"
-Doch `D`{.d} so 'ne Katastrophe
-das ging mächtig in die Hose
-Mach' mich `Em`{.e} lächerlich
-Doch sie lächelte
-Ehrlich wahr man! Sieh da
-Anna war ein Hip Hop – Fan
-
-## Chorus
-
-Immer wenn es `Em`{.e} regnet
-muss ich an Dich `D`{.d} denken
-Wie wir uns be`Am`{.a}gegneten
-kann mich nicht ablenken
-Nass bis auf die `Em`{.e} Haut
-so stand sie `D`{.d} da
-
-_(1st time:)_ Um uns war es `Am`{.a}
-laut und wir kamen uns nah
-_(2nd time:)_ A-N-N-`Am`{.a}A
-
-## Verse 2
-
-`C`{.c} Plitsch, platsch fiel
-ein Regen wie die Sintflut
-Das `D`{.d} Vordach, die Insel
-Wir waren wie Strandgut
-Ich `Em`{.e} fand Mut
-Bin selber überrascht
-Über das Selbstverständnis
-meines Geständnis'
-
----
-
-"Anna, ich `C`{.c} fänd' es schön
-mit Dir auszugehn
-Könnt' mich `D`{.d} dran gewöhn'
-Dich öfters zu sehn"
-`Em`{.e} Anna zog mich an sich
-An sich mach' ich das nicht
-Spüre ihre süssen Küsse
-wie sie mein Gesicht lieb`C`{.c}kost
-
----
-
-Was geschieht bloss?
-Lass mich nicht los, Anna
-Ich `D`{.d} lieb bloss noch Dich
-andere sind lieblos
-Du bist wie `Em`{.e} Vinyl für meinen DJ
-die Dialektik für Hegel
-Pinsel für Picasso
-für Philip der Schlagzeugschlegel
-
----
-
-`C`{.c} Anna, wie war das da bei Dada?
-
-Du bist von `D`{.d} hinten
-wie von vorne: A-N-N-A
-
-Du bist von `Em`{.e} hinten
-wie von vorne: A-N-N-A _(x2)_
-
-## Chorus
-
-Immer wenn es `Em`{.e} regnet
-muss ich an Dich `D`{.d} denken
-Wie wir uns be`Am`{.a}gegneten
-kann mich nicht ablenken
-Nass bis auf die `Em`{.e} Haut
-so stand sie `D`{.d} da
-
-_(1st time:)_ Um uns war es `Am`{.a}
-laut und wir kamen uns nah
-_(2nd time:)_ A-N-N-`Am`{.a}A
-
-## Verse 3
-
-Sie `C`{.c} gab mir 'nen Abschiedskuss
-denn dann kam der Bus
-Sie sagte: `D`{.d} "Max, ich muss!"
-die Türe schloss
-Was ist jetzt Schluss?
-
-Es goss. Ich `Em`{.e} ging zu Fuss
-Bin konfus, fast gerannt
-Anna nahm mein' Verstand
-Ich fand an Anna allerhand
-
----
-
-Manchmal `C`{.c} lach' ich drüber
-doch dann merk' ich wieder
-wie 's mich trifft
-`D`{.d} Komik ist Tragik in Spiegelschrift:
-A-N-N-A
-`Em`{.e} Von hinten, wie von vorne
-Dein Name sei gesegnet
-Ich denk' an Dich, immer wenn es...
-
-## Chorus
-
-Immer wenn es `Em`{.e} regnet
-muss ich an Dich `D`{.d} denken
-Wie wir uns be`Am`{.a}gegneten
-kann mich nicht ablenken
-Nass bis auf die `Em`{.e} Haut
-so stand sie `D`{.d} da
-
-_(1st time:)_ Um uns war es `Am`{.a}
-laut und wir kamen uns nah
-_(2nd time:)_ A-N-N-`Am`{.a}A
-
-## Outro
-
-`Em`{.e} `D`{.d} `Am`{.a} `Em`{.e} `D`{.d}
-
-(Lass mich nicht im Regen stehn
-Ich will dich wiedersehn
-A-N-N-A...
-Yeah...)
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=qtVa-BwoZsU)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/freundeskreis/anna-chords-426527)
-- [Guitar tutorial](https://www.youtube.com/watch?v=jE2A4syC0AU)
-
 # Across the universe (Beatles)
 
 ## Instructions
@@ -403,7 +223,8 @@ And `Dm`{.d} now you're out of `E`{.e} sight, yeah
 
 `Am`{.a} Show me, how you want it `E`{.e} to be
 Tell me `C`{.c} baby
-'Cause I need to `Dm`{.d} know now what we've got `E`{.e}
+'Cause I need to `Dm`{.d} know now
+what we've got `E`{.e}
 
 ## Chorus
 
@@ -429,7 +250,8 @@ It's `Dm`{.d} not the way I `E`{.e} planned it
 
 `Am`{.a} Show me, how you want it `E`{.e} to be
 Tell me `C`{.c} baby
-'Cause I need to `Dm`{.d} know now what we've got `E`{.e}
+'Cause I need to `Dm`{.d} know now
+what we've got `E`{.e}
 
 ## Chorus
 
@@ -1400,19 +1222,19 @@ dass si `Am`{.a} Hemmige `E7`{.e} hei
 
 ## Verse 3
 
-I `Am`{.a} weis, das macht eim heiss, verschlat eim `Dm`{.d} d'Stimm
-Doch `G`{.g} dünkt eim mängisch o s'syg nüt so `C`{.c} schlimm
+I `Am`{.a} weis, das macht eim heiss, 
+erschlat eim `Dm`{.d} d'Stimm
+Doch `G`{.g} dünkt eim mängisch o
+s'syg nüt so `C`{.c} schlimm
 S'isch `C`{.c} glych es Glück, o we mirs gar nid `E7`{.e} wei
 Dass mir `Am`{.a} Hemmige `E7`{.e} hei
 
 ## Verse 4
 
 Was `Am`{.a} unterscheidet d'Mönsche vom schim`Dm`{.d}pans?
-S'isch `G`{.g} nid die glatti Huut, dr fählend `C`{.c} Schwanz^_(*)_^
+S'isch `G`{.g} nid die glatti Huut, dr fählend `C`{.c} Schwanz
 Nid `C`{.c} dass mir schlächter d'Böim ufchöme, `E7`{.e} nei
 Dass mir `Am`{.a} Hemmige `E7`{.e} hei
-
-_(^*^ Fun Fact: Schimpanse haben gar keinen Schwanz!)_
 
 ## Verse 5
 
@@ -1465,6 +1287,8 @@ to see `C`{.c} if I `D`{.d} still feel `Am`{.a}
 I `C`{.c} focus `D`{.d} on the pain `Am`{.a}
 the `C`{.c} only thing `D`{.d} that's real `Am`{.a}
 
+---
+
 The `C`{.c} needle `D`{.d} tears a hole `Am`{.a}
 the `C`{.c} old fa`D`{.d}miliar sting `Am`{.a}
 Try to `C`{.c} kill it `D`{.d} all away `Am`{.a}
@@ -1476,6 +1300,8 @@ but I re`C`{.c}member `D`{.d} everything `G`{.g}
 `C/E`{.c} My sweetest friend `G`{.g}
 `Am7`{.a} Everyone I know `Fadd9`{.f}
 goes away `C/E`{.c} in the end `G`{.g}
+
+---
 
 And `Am7`{.a} you could have it all `Fadd9`{.f}
 `C/E`{.c} My empire of dirt `G`{.g}
@@ -1494,6 +1320,8 @@ u`C`{.c}pon my li`D`{.d}ar's chair `Am`{.a}
 `C`{.c} Full of bro`D`{.d}ken thoughts `Am`{.a}
 `C`{.c}I cannot `D`{.d} re`Am`{.a}pair
 
+---
+
 Be`C`{.c}neath the stains `D`{.d} of `Am`{.a} time
 the `C`{.c} feelings `D`{.d} disappear `Am`{.a}
 `C`{.c} You are some`D`{.d}one else `Am`{.a}
@@ -1507,6 +1335,8 @@ _(x2)_
 `C/E`{.c} My sweetest friend `G`{.g}
 `Am7`{.a} Everyone I know `Fadd9`{.f}
 goes away `C/E`{.c} in the end `G`{.g}
+
+---
 
 And `Am7`{.a} you could have it all `Fadd9`{.f}
 `C/E`{.c} My empire of dirt `G`{.g}
@@ -1575,9 +1405,7 @@ thru the `C`{.c} dark night far a`G`{.g}way?
 I am `Am`{.a} dying, forever `Em`{.e} trying
 to be `Am`{.a} with you, who can `G`{.g} say? `D`{.d}
 
-_(x2)
-
-`Verse 3`{.v}
+## Verse 3
 
 We are `G`{.g} sailing, we are `Em`{.e} sailing
 home a`C`{.c}gain 'cross the `G`{.g} sea.
@@ -1686,14 +1514,15 @@ Jo`Am`{.a}lene, Jo`C`{.c}lene, Jo`G`{.g}lene, Jo`Am`{.a}lene
 
 _(Picking)_
 
-`F`{.f} Junge, warum `G`{.g} hast Du
-nichts gelernt? `Am`{.a}
+`F`{.f} Junge, warum `G`{.g} hast Du nichts gelernt? `Am`{.a}
 Guck Dir den `F`{.f} Dieter an:
 `G`{.g} der hat sogar ein `Am`{.a} Auto! `Em`{.e}
 
+---
+
 Warum `F`{.f} gehst Du nicht zu
 Onkel Werner in die Werk`G`{.g}statt?
-Der gibt Dir ne `Am`{.a} Festanstellung
+Der gibt Dir 'ne `Am`{.a} Festanstellung
 wenn Du ihn darum bittest
 
 `F`{.f} Junge... `G`{.g}
@@ -1707,6 +1536,8 @@ Löcher in der Ho`Dm`{.d}se
 und ständig dieser Lärm `Am`{.a}
 (Was soll'n die Nach`C`{.c}barn sagen?)
 
+---
+
 Und dann noch deine Ha`F`{.f}are
 da fehlen mir die Wor`Dm`{.d}te
 musst du die denn färb'n? `Am`{.a}
@@ -1719,14 +1550,13 @@ wir wissen nicht mehr wei`Dm`{.d}ter
 
 _(Picking)_
 
-`F`{.f} Junge, `G`{.g} brich deiner
-Mutter nicht das Herz `Am`{.a}
-es ist noch `F`{.f} nicht zu spät
-`G`{.g} dich an der Uni einzu`Am`{.a}schreiben
+`F`{.f} Junge, `G`{.g} brich deiner Mutter nicht das Herz `Am`{.a}
+es ist noch `F`{.f} nicht zu spät `G`{.g}
+dich an der Uni einzu`Am`{.a}schreiben
 
-du hast dich doch `F`{.f} früher so für Tiere interessiert `G`{.g}
-wäre das nichts für `Am`{.a} dich:
-eine eigene Praxis
+du hast dich doch `F`{.f} früher so
+für Tiere interessiert `G`{.g}
+wäre das nichts für `Am`{.a} dich: eine eigene Praxis?
 
 `F`{.f} Junge... `G`{.g}
 
@@ -1758,9 +1588,9 @@ Wir machen uns doch Sor`Dm`{.d}gen
 
 _(Very fast strumming)_
 
-`F`{.f} und du warst `Dm`{.d} so ein süßes `Am`{.a} Kind
-und du warst `C`{.c} so ein süßes `F`{.f} Kind
-und du warst `Dm`{.d} so ein süßes `Am`{.a} Kind
+`F`{.f} und du warst `Dm`{.d} so ein süsses `Am`{.a} Kind
+und du warst `C`{.c} so ein süsses `F`{.f} Kind
+und du warst `Dm`{.d} so ein süsses `Am`{.a} Kind
 du warst so `C`{.c} süss
 
 ## Chorus
@@ -1801,7 +1631,8 @@ The `G`{.g} sunny side we also may `C`{.c} view
 
 ## Chorus
 
-`C`{.c} Keep on the sunny side `F`{.f} always on the `C`{.c} sunny side
+`C`{.c} Keep on the sunny side `F`{.f}
+always on the `C`{.c} sunny side
 Keep on the sunny side of `G`{.g} life
 `C`{.c} It will help us every day
 It will `F`{.f} brighten all the `C`{.c} way
@@ -1816,7 +1647,8 @@ The `G7`{.g} sun again will shine bright and `C`{.c} clear
 
 ## Chorus
 
-`C`{.c} Keep on the sunny side `F`{.f} always on the `C`{.c} sunny side
+`C`{.c} Keep on the sunny side
+`F`{.f} always on the `C`{.c} sunny side
 Keep on the sunny side of `G`{.g} life
 `C`{.c} It will help us every day
 It will `F`{.f} brighten all the `C`{.c} way
@@ -1840,7 +1672,8 @@ Who `G7`{.g} keepeth everyone in His `C`{.c} care
 
 ## Chorus
 
-`C`{.c} Keep on the sunny side `F`{.f} always on the `C`{.c} sunny side
+`C`{.c} Keep on the sunny side
+`F`{.f} always on the `C`{.c} sunny side
 Keep on the sunny side of `G`{.g} life
 `C`{.c} It will help us every day
 It will `F`{.f} brighten all the `C`{.c} way
@@ -1848,11 +1681,13 @@ If we'll `C`{.c} keep on the `G`{.g} sunny side of `C`{.c} life
 
 _(Repeat)_
 
+---
+
+_(Fade out_
+
 `C`{.c} It will help us every day
 It will `F`{.f} brighten all the `C`{.c} way
 If we'll `C`{.c} keep on the `G`{.g} sunny side of `C`{.c} life
-
-_(Fade out_
 
 ## Resources
 
@@ -2142,12 +1977,16 @@ Ge`D`{.d}fühle sind ihm völlig fremd.
 Männer sind `G`{.g} Schweine!
 Frage nicht nach `Em`{.e} Sonnenschein.
 Ausnahmen `Am`{.a} gibt's leider keine!
-In jedem `C`{.c} Mann steckt auch immer ein `D`{.d} Schwein!
+In jedem `C`{.c} Mann steckt auch
+immer ein `D`{.d} Schwein!
+
+---
 
 Männer sind `G`{.g} Säue!
 Glaube ihnen `Em`{.e} nicht ein Wort!
 Sie schwör'n Dir `Am`{.a} ewige Treue
-Und dann am `C`{.c} nächsten Morgen sind sie fort. `D`{.d}
+Und dann am `C`{.c} nächsten Morgen
+sind sie fort. `D`{.d}
 
 ## Verse 3
 
@@ -2155,6 +1994,8 @@ Und `G`{.g} falls Du doch den Fehler machst
 Und `Em`{.e} Dir 'nen Ehemann anlachst.
 Mu`C`{.c}tiert dein Rosenkavalier
 Bald `D`{.d} nach der Hochzeit auch zum Tier.
+
+---
 
 Da `G`{.g} zeigt er dann sein wahres Ich,
 Ganz `Em`{.e} unrasiert und widerlich.
@@ -2166,12 +2007,14 @@ Und `D`{.d} rülpst und furzt im Ehebett.
 `C`{.c} Dann hast du King Kong `Bm`{.b} zum Ehemann!
 Drum `C`{.c} sag' ich Dir - denk bitte stets daran: `D`{.d}
 
-## Chorus 3
+## Chorus 4
 
 Männer sind `G`{.g} Schweine!
 Traue ihnen `Em`{.e} nicht, mein Kind!
 Sie wollen `Am`{.a} alle das eine!
 Für wahre `C`{.c} Liebe sind sie blind `D`{.d}.
+
+---
 
 Männer sind `G`{.g} Ratten
 Begegne ihnen `Em`{.e} nur mit List
@@ -2184,6 +2027,8 @@ Männer sind `G`{.g} Schweine!
 Frage nicht nach `Em`{.e} Sonnenschein.
 Ausnahmen `Am`{.a} gibt's leider keine!
 In jedem `C`{.c} Mann steckt auch immer ein `D`{.d} Schwein!
+
+---
 
 Männer sind `G`{.g} Autos
 Nur ohne Re`Em`{.e}serverad
@@ -3021,9 +2866,7 @@ you'll `F`{.f} find me
 
 # Summer wine (Nancy Sinatra & Lee Hazlewood)
 
-## Intro
-
-_(Female)_
+## Intro _(Frauen)_
 
 `Am`{.a} Strawberries, cherries and an
 `G`{.g} angel's kiss in spring
@@ -3032,9 +2875,7 @@ _(Female)_
 
 `Am`{.a} (x4)
 
-## Verse 1
-
-_(Male)_
+## Verse 1 _(Männer)_
 
 `Am`{.a} I walked in town on silver
 `G`{.g} spurs that jingled to
@@ -3047,9 +2888,7 @@ _(Male)_
 
 `G`{.g}Ohhh`Em`{.e}oh summer wine `Am`{.a}
 
-## Chorus
-
-_(Female)_
+## Chorus _(Frauen)_
 
 `Am`{.a} Strawberries, cherries and an
 `G`{.g} angel's kiss in spring
@@ -3062,10 +2901,7 @@ _(Female)_
 
 `G`{.g}Ohhh`Em`{.e}oh summer wine `Am`{.a}
 
-## Verse 2
-
-_(Male)_
-
+## Verse 2 _(Männer)_
 
 `Am`{.a} My eyes grew heavy and my
 `G`{.g} lips they could not speak
@@ -3074,13 +2910,12 @@ _(Male)_
 
 `Dm`{.d} She reassured me with an
 `Am`{.a} unfamiliar line
-`Dm`{.d} And then she gave to me `Am`{.a} more summer wine
+`Dm`{.d} And then she gave to me
+`Am`{.a} more summer wine
 
 `G`{.g}Ohhh`Em`{.e}oh summer wine `Am`{.a}
 
-## Chorus
-
-_(Female)_
+## Chorus _(Frauen)_
 
 `Am`{.a} Strawberries, cherries and an
 `G`{.g} angel's kiss in spring
@@ -3093,9 +2928,7 @@ _(Female)_
 
 `G`{.g}Ohhh`Em`{.e}oh summer wine `Am`{.a}
 
-## Verse 2
-
-_(Male)_
+## Verse 2 _(Männer)_
 
 `Am`{.a} When I woke up the sun was
 `G`{.g} shining in my eyes
@@ -3108,9 +2941,7 @@ a `Am`{.a} dollar and a dime
 
 `G`{.g}Ohhh`Em`{.e}oh summer wine `Am`{.a}
 
-## Chorus
-
-_(Female)_
+## Chorus _(Frauen)_
 
 `Am`{.a} Strawberries, cherries and an
 `G`{.g} angel's kiss in spring
@@ -3228,7 +3059,6 @@ Ich `F`{.f} will dich nicht verli`Am`{.a}er'n!
 So `Am`{.a} langsam fällt mir alles wieder ein:
 Ich wollt doch nur'n bisschen freier sein.
 Jetzt `G`{.g} bin ich's - oder `Am`{.a} nicht?
-
 
 Ich `Am`{.a} passte nicht in deine heile Welt
 doch die und du ist, was mir jetzt so fehlt
