@@ -6,6 +6,7 @@ require 'json'
 require 'net/http'
 
 ENV['LANG'] = 'en_US.UTF-8'
+Encoding.default_external = Encoding::UTF_8
 
 Dir.chdir(__dir__)
 
@@ -31,7 +32,7 @@ def step(emoji, label)
 end
 
 def pandoc(output:, theme:)
-  result = `pandoc -t revealjs -s -o #{output} all-songs.md --slide-level=2 --syntax-highlighting=none --toc --toc-depth=1 -V theme=#{theme} -V progress=false -V revealjs-url=./style/revealjs 2>&1`
+  result = `pandoc -f markdown+hard_line_breaks -t revealjs -s -o #{output} all-songs.md --slide-level=2 --syntax-highlighting=none --toc --toc-depth=1 -V theme=#{theme} -V progress=false -V revealjs-url=./style/revealjs 2>&1`
   print result unless result.strip.empty?
 end
 
@@ -42,6 +43,7 @@ song_files = Dir["content/songs/*.md"].sort
 puts "🎵 Songs (#{song_files.size}):"
 song_files.each { |f| puts "   🎶 #{File.basename(f, ".md")}" }
 puts
+
 
 songs_md = song_files.map do |file|
   File.read(file).gsub(/\[([A-Z][^\]]*)\]([^\(])/) { "`#{$1}`{.#{$1[0].downcase}}#{$2}" }
