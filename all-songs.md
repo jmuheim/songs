@@ -1868,20 +1868,9 @@ _(Fade out_
 Capo on 2nd fret
 
 ```
-Use barre chords (except for chorus):
-
     |E A D G B e|
     |-----------|
-Gm  |3=5=5=3=3=3|
-A7  |5=7=5=6=5=5|
-Abm |4=6=6=4=4=4|
-Am  |5=7=7=5=5=5|
-F   |1=3=3=2=1=1|
-Dm  |x 5=7=7=6=5|
-
-        |E A D G B e|
-        |-----------|
-Bbadd9  |x 1 3 3 3 1|
+Bb  |x 1 3 3 3 1|
 ```
 
 ## Intro
@@ -1889,7 +1878,7 @@ Bbadd9  |x 1 3 3 3 1|
 _(Barre chords)_
 
 `Dm`{.d} `Am`{.a} `Dm`{.d} `Am`{.a}
-`Abm`{.a} `Gm`{.g} `Am`{.a} `Dm`{.d}
+`Gm`{.g} `Am`{.a} `Dm`{.d}
 
 ## Verse 1
 
@@ -1899,7 +1888,9 @@ I'm `Dm`{.d} sitting here in a `Am`{.a} boring room
 It's `Dm`{.d} just another rainy sunday `Am`{.a} afternoon
 I'm `Dm`{.d} wasting my time I got `Am`{.a} nothing to do
 I'm `Gm`{.g} hanging around I'm `Am`{.a} waiting for you
-But `Gm`{.g} nothing ever happens `Am`{.a} - and I won`Dm`{.d}der
+
+But `Gm`{.g} nothing ever happens `Am`{.a}
+and I won`Dm`{.d}der
 
 ## Verse 2
 
@@ -1909,20 +1900,29 @@ I'm `Dm`{.d} driving around `Am`{.a} in my car
 I'm `Dm`{.d} driving too fast I'm `Am`{.a} driving too far
 I'd `Dm`{.d} like to change my `Am`{.a} point of view
 I `Gm`{.g} feel so lonely I'm `Am`{.a} waiting for you
-But `Gm`{.g} nothing ever happens `Am`{.a} - and I won`Dm`{.d}der
+
+But `Gm`{.g} nothing ever happens `Am`{.a}
+and I won`Dm`{.d}der
 
 ## Chorus
 
 _(Open chords)_
 
 I `F`{.f} wonder how I `C`{.c} wonder why
-`Dm`{.d} Yesterday you told me 'bout the `Am`{.a} blue blue sky
+`Dm`{.d} Yesterday you told me
+'bout the `Am`{.a} blue blue sky
+
 And all `Bb`{.b} that I can see `C`{.c}
 Is just a yellow `F`{.f} lemon tree `C`{.c}
 
+---
+
 I'm `F`{.f} turning my head `C`{.c} up and down
-I'm `Dm`{.d} turning turning turning turning `Am`{.a} turning around
-And `Bb`{.b} all that I can `G7`{.g} see is just a yellow `C`{.c} lemon tree
+I'm `Dm`{.d} turning turning turning
+turning `Am`{.a} turning around
+
+And `Bb`{.b} all that I can `G7`{.g}
+see is just a yellow `C`{.c} lemon tree
 
 ## Bridge 1
 
@@ -1940,41 +1940,58 @@ I'm `Dm`{.d} sitting here I `Am`{.a} miss the power
 I'd `Dm`{.d} like to go out `Am`{.a} taking a shower
 But `Dm`{.d} there's a heavy cloud in`Am`{.a}side my head
 I `Gm`{.g} feel so tired put my`Am`{.a}self into bed
-Where `Gm`{.g} nothing ever happens `Am`{.a} - and I won`Dm`{.d}der
+
+Where `Gm`{.g} nothing ever happens `Am`{.a}
+and I won`Dm`{.d}der
 
 ## Bridge 2
 
-_(Barre chords)_
+_(Open chords)_
 
 `A7`{.a} Isolation `Dm`{.d} is not good for me
-`C7`{.c} Isolation - `F`{.f} I don't want to `A7`{.a} sit on a lemon tree
+`C7`{.c} Isolation - `F`{.f} I don't want to
+`A7`{.a} sit on a lemon tree
 
 ## Verse 4
 
+_(Barre chords)_
+
 I'm `Dm`{.d} steppin' around in a `Am`{.a} desert of joy
 `Dm`{.d} Baby anyhow I'll get an`Am`{.a}other toy
-And `Gm`{.g} everything will happen - `Am`{.a} and you'll won`Dm`{.d}der
+
+And `Gm`{.g} everything will happen
+`Am`{.a} and you'll won`Dm`{.d}der
 
 ## Chorus
 
 _(Open chords)_
 
 I `F`{.f} wonder how I `C`{.c} wonder why
-`Dm`{.d} Yesterday you told me 'bout the `Am`{.a} blue blue sky
+`Dm`{.d} Yesterday you told me
+'bout the `Am`{.a} blue blue sky
+
 And all `Bb`{.b} that I can see `C`{.c}
 Is just a yellow `F`{.f} lemon tree `C`{.c}
 
+---
+
 I'm `F`{.f} turning my head `C`{.c} up and down
-I'm `Dm`{.d} turning turning turning turning `Am`{.a} turning around
-And `Bb`{.b} all that I can `G7`{.g} see is just a yellow `C`{.c} lemon tree
+I'm `Dm`{.d} turning turning turning
+turning `Am`{.a} turning around
+
+And `Bb`{.b} all that I can `G7`{.g}
+see is just a yellow `C`{.c} lemon tree
+
 And I wonder I wonder
 
 ---
 
 I `F`{.f} wonder how I `C`{.c} wonder why
-`Dm`{.d} Yesterday you told me 'bout the `Am`{.a} blue blue sky
-And all `Bb`{.b} that I can see `C`{.c} _(x3)_
-Is `Bbadd9`{.b} just a yellow `F7`{.f} lemon tree `F`{.f}
+`Dm`{.d} Yesterday you told me
+'bout the `Am`{.a} blue blue sky
+
+And all `Bb`{.b} that I can see `C`{.c} _(3x)_
+Is just a yellow `F`{.f} lemon tree
 
 ## Resources
 
