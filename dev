@@ -9,7 +9,7 @@ echo "🎸 Initial build..."
 ./build --deploy
 
 echo "🌐 Starting browser-sync on http://localhost:3000 ..."
-browser-sync start --server --files "index.html" --no-notify &
+browser-sync start --server --files "index.html" --no-notify --no-ghost-mode &
 
 echo "👀 Watching content/, style/, build for changes..."
 fswatch -o content/ style/ build | while read -r; do
