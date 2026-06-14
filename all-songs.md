@@ -48,6 +48,91 @@ Feeling bored of major chords (A, D, E...)?
   => Try playing a seventh chord instead (A7, D7, E7...)!
 ```
 
+# 74-75 (The Connells)
+
+## Intro
+
+`Am`{.a} `C`{.c} `G`{.g} `Am`{.a} _(x2)_
+
+## Verse 1
+
+`F`{.f} Got no `C`{.c} reason for `F`{.f} coming to me
+and the `C`{.c} rain `G`{.g} running `F`{.f} down
+There's no `C`{.c} reason `Am`{.a}
+
+`F`{.f} And the `C`{.c} same voice `F`{.f} coming to me
+like it's `C`{.c} all `G`{.g} slowing `F`{.f} down
+And be`C`{.c}lieve me `G`{.g}
+
+## Chorus
+
+I was the `Am`{.a} one who let you `C`{.c} know
+I was your `G`{.g} sorry ever `F`{.f} after
+seventy`Am`{.a}four, seventy`C`{.c}five `G`{.g}
+
+## Verse 2
+
+`F`{.f} It's not `C`{.c} easy, `F`{.f} nothing to say
+'cause it's `C`{.c} al`G`{.g}ready `F`{.f} said
+It's never `C`{.c} easy `Am`{.a}
+
+When I `F`{.f} look on your `C`{.c} eyes
+then I `Am`{.a} find that `G`{.g} I'll do `F`{.f} fine
+When I `Am`{.a} look on your `C`{.c} eyes
+then I do `G`{.g} better
+
+## Chorus 2
+
+I was the `Am`{.a} one who let you `C`{.c} know
+I was your `G`{.g} sorry ever `F`{.f} after
+seventy`Am`{.a}four, seventy`C`{.c}five `G`{.g}
+
+Givin' me `Am`{.a} more and I'll de`C`{.c}fy
+'cause you're `G`{.g} really only `F`{.f} after
+seventy`Am`{.a}four, seventy`C`{.c}five `G`{.g}
+
+## Interlude
+
+`Am`{.a} `C`{.c} `G`{.g} `Am`{.a} _(x2)_
+
+## Solo
+
+`C`{.c} `G`{.g} `Am`{.a}
+`C`{.c} `G`{.g} `Am`{.a}
+`C`{.c} `G`{.g} `Am`{.a} `F`{.f}
+`C`{.c} `G`{.g} `Am`{.a}
+
+## Verse 3
+
+`F`{.f} Got no `C`{.c} reason for `F`{.f} coming to me
+and the `C`{.c} rain `G`{.g} running `F`{.f} down
+There's no `C`{.c} reason `Am`{.a}
+
+When I `F`{.f} look on your `C`{.c} eyes
+then I `Am`{.a} find that `G`{.g} I'll do `F`{.f} fine
+When I `Am`{.a} look on your `C`{.c} eyes
+then I do `G`{.g} better
+
+## Chorus 3 _(2x)_
+
+I was the `Am`{.a} one who let you `C`{.c} know
+I was your `G`{.g} sorry ever `F`{.f} after
+seventy`Am`{.a}four, seventy`C`{.c}five `G`{.g}
+
+Givin' me `Am`{.a} more and I'll de`C`{.c}fy
+'cause you're `G`{.g} really only `F`{.f} after
+seventy`Am`{.a}four, seventy`C`{.c}five `G`{.g}
+
+## Outro
+
+`Am`{.a} `C`{.c} `G`{.g} `Am`{.a} _(2x, fade out)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=t590jjWEJ5s)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/the-connells/74-75-chords-15799)
+- [Guitar tutorial](https://www.youtube.com/watch?v=dS7u8SqW3Vo)
+
 # Across the universe (Beatles)
 
 ## Instructions
@@ -301,6 +386,62 @@ morto `E7`{.e} per la liber`Am`{.a}tà!" _(Repeat and fade)_
 - [Song](https://www.youtube.com/watch?v=4CI3lhyNKfo)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/bella-ciao-chords-1839756)
 - [Guitar interpretation](https://www.youtube.com/watch?v=2iCOH6GOmRA)
+
+# Can't Help Falling in Love (Elvis Presley)
+
+## Intro
+
+`C`{.c} `G`{.g} `C`{.c}
+
+## Verse 1
+
+`C`{.c} Wise `Em`{.e} men `Am`{.a} say
+only `F`{.f} fools `C`{.c} rush `G`{.g} in
+But `F`{.f} I `G`{.g} can't `Am`{.a} help
+`F`{.f} falling in `C`{.c} love `G`{.g} with `C`{.c} you
+
+`C`{.c} Shall `Em`{.e} I `Am`{.a} stay
+would it `F`{.f} be `C`{.c} a `G`{.g} sin?
+If `F`{.f} I `G`{.g} can't `Am`{.a} help
+`F`{.f} falling in `C`{.c} love `G`{.g} with `C`{.c} you
+
+## Bridge
+
+`Em`{.e} Like a river `B`{.b} flows
+`Em`{.e} surely to the `B`{.b} sea
+
+`Em`{.e} Darling so it `B`{.b} goes
+`Em`{.e} Some things `A`{.a} are meant `Dm`{.d} to `G`{.g} be
+
+## Chorus
+
+`C`{.c} Take `Em`{.e} my `Am`{.a} hand
+take my `F`{.f} whole `C`{.c} life `G`{.g} too
+For `F`{.f} I `G`{.g} can't `Am`{.a} help
+`F`{.f} falling in `C`{.c} love `G`{.g} with `C`{.c} you
+
+## Bridge
+
+`Em`{.e} Like a river `B`{.b} flows
+`Em`{.e} surely to the `B`{.b} sea
+
+`Em`{.e} Darling so it `B`{.b} goes
+`Em`{.e} Some things `A`{.a} are meant `Dm`{.d} to `G`{.g} be
+
+## Chorus
+
+`C`{.c} Take `Em`{.e} my `Am`{.a} hand
+take my `F`{.f} whole `C`{.c} life `G`{.g} too
+For `F`{.f} I `G`{.g} can't `Am`{.a} help
+`F`{.f} falling in `C`{.c} love `G`{.g} with `C`{.c} you _(pause)_
+
+For `F`{.f} I `G`{.g} can't `Am`{.a} help
+`F`{.f} falling in `C`{.c} love `G`{.g} with `C`{.c} you
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=vGJTaP6anOU)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/elvis-presley/cant-help-falling-in-love-chords-1086983)
 
 # Don't worry be happy (Bobby McFerrin)
 
@@ -1287,6 +1428,81 @@ a `C/E`{.c} million miles a`G`{.g}way
 - [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/hurt-chords-89849)
 - [Guitar tutorial](https://www.youtube.com/watch?v=hEKexrWq5RU)
 
+# I Have a Dream (ABBA)
+
+## Intro
+
+`A`{.a} `E`{.e}
+
+## Verse 1
+
+`A`{.a} I have a `E`{.e} dream, a song to `A`{.a} sing
+To help me `E`{.e} cope, with `A`{.a} anything
+
+If you see the `E`{.e} wonder
+of a fairy `A`{.a} tale
+You can take the `E`{.e} future
+even if you `A`{.a} fail
+
+## Chorus
+
+`E`{.e} I believe in angels
+Something good in, `D`{.d} everything I `A`{.a} see
+`E`{.e} I believe in angels
+
+When I know the `D`{.d} time, is right for `A`{.a} me
+`E`{.e} I'll cross the stream
+I have a `A`{.a} dream
+
+## Verse 2
+
+I have a `E`{.e} dream, a `A`{.a} fantasy
+To help me `E`{.e} through, `A`{.a} reality
+
+And my `E`{.e} destination
+makes it worth the `A`{.a} while
+Pushing through the `E`{.e} darkness
+still another `A`{.a} mile
+
+## Chorus 2
+
+`E`{.e} I believe in angels
+Something good in, `D`{.d} everything I `A`{.a} see
+`E`{.e} I believe in angels
+When I know the `D`{.d} time, is right for `A`{.a} me
+
+`E`{.e} I'll cross the stream
+I have a `A`{.a} dream _(2x)_
+
+## Interlude
+
+`A`{.a} `A`{.a} `E`{.e} `A`{.a} `A`{.a} `E`{.e} `E`{.e} `A`{.a} `A`{.a}
+
+## Verse 3
+
+`A`{.a} I have a `E`{.e} dream, a song to `A`{.a} sing
+To help me `E`{.e} cope, with `A`{.a} anything
+
+If you see the `E`{.e} wonder
+of a fairy `A`{.a} tale
+You can take the `E`{.e} future
+even if you `A`{.a} fail
+
+## Chorus 3
+
+`E`{.e} I believe in angels
+Something good in, `D`{.d} everything I `A`{.a} see
+`E`{.e} I believe in angels
+When I know the `D`{.d} time, is right for `A`{.a} me
+
+`E`{.e} I'll cross the stream
+I have a `A`{.a} dream _(2x)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=ER_3h03omdE)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/abba/i-have-a-dream-chords-897049)
+
 # I am sailing (Rod Stewart)
 
 ## Instructions
@@ -1351,6 +1567,69 @@ Oh Lord, to be `Am`{.a} near you, to be free. `G`{.g}
 - [Source tab](https://tabs.ultimate-guitar.com/tab/rod-stewart/sailing-chords-380559) (transpose by -5 to start with G instead of B)
 - [Guitar tutorial](https://www.youtube.com/watch?v=m4KTNKZSFVs)
     - [Another guitar tutorial with additional inspirations](https://www.youtube.com/watch?v=JmiW9-kpGck)
+
+# Imagine (John Lennon)
+
+## Intro
+
+`C`{.c} `F`{.f} _(x2)_
+
+## Verse 1
+
+`C`{.c} Imagine there's no `F`{.f} heaven
+`C`{.c} It's easy if you `F`{.f} try
+`C`{.c} No hell bel`F`{.f}ow us
+`C`{.c} Above us only `F`{.f} sky
+
+## Bridge
+
+`F`{.f} Imagine `Am`{.a} all the `Dm`{.d} peo`F`{.f}ple
+`G`{.g} Living for `G7`{.g} today
+
+## Verse 2
+
+`C`{.c} Imagine there's no `F`{.f} countries
+`C`{.c} It isn't hard to `F`{.f} do
+`C`{.c} Nothing to kill or `F`{.f} die for
+`C`{.c} And no religion `F`{.f} too
+
+## Bridge
+
+`F`{.f} Imagine `Am`{.a} all the `Dm`{.d} peo`F`{.f}ple
+`G`{.g} Living life in `G7`{.g} peace
+
+## Chorus
+
+`F`{.f} You may `G`{.g} say I'm a `C`{.c} dreamer `E`{.e}
+`F`{.f} But I'm `G`{.g} not the only `C`{.c} one `E`{.e}
+
+`F`{.f} I hope some `G`{.g} day you'll `C`{.c} join us `E`{.e}
+`F`{.f} And the `G`{.g} world will be as `C`{.c} one
+
+## Verse 3
+
+`C`{.c} Imagine no posses`F`{.f}sions
+`C`{.c} I wonder if you `F`{.f} can
+`C`{.c} No need for greed or hun`F`{.f}ger
+`C`{.c} A brotherhood of `F`{.f} man
+
+## Bridge
+
+`F`{.f} Imagine `Am`{.a} all the `Dm`{.d} peo`F`{.f}ple
+`G`{.g} Living life in `G7`{.g} peace
+
+## Chorus
+
+`F`{.f} You may `G`{.g} say I'm a `C`{.c} dreamer `E`{.e}
+`F`{.f} But I'm `G`{.g} not the only `C`{.c} one `E`{.e}
+
+`F`{.f} I hope some `G`{.g} day you'll `C`{.c} join us `E`{.e}
+`F`{.f} And the `G`{.g} world will be as `C`{.c} one
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=iOs9Osz3UFQ)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/john-lennon/imagine-chords-9306)
 
 # ❤️ Jolene (Dolly Parton)
 
