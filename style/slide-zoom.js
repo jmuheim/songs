@@ -1,6 +1,8 @@
 (function () {
   function fitSlide(section) {
-    if (!section || !section.classList.contains('level2')) return;
+    if (!section) return;
+    var isSlide = section.id === 'title-slide' || section.classList.contains('level1') || section.classList.contains('level2');
+    if (!isSlide) return;
     var content = section.querySelector('.slide-content');
     if (!content) return;
 
@@ -21,9 +23,8 @@
 
     Reveal.on('ready',        function (e) { fitSlide(e.currentSlide); });
     Reveal.on('slidechanged', function (e) { fitSlide(e.currentSlide); });
+    window.addEventListener('resize', function () { fitSlide(Reveal.getCurrentSlide()); });
 
-    window.addEventListener('resize', function () {
-      fitSlide(Reveal.getCurrentSlide());
-    });
+    if (Reveal.isReady()) fitSlide(Reveal.getCurrentSlide());
   });
 })();
