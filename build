@@ -83,6 +83,7 @@ step("✨", "Post-processing index.html") do
   html.gsub!(%r{  <script src="./style/revealjs/plugin/(notes|search|zoom)/\1\.js"></script>\n}, "")
   html.sub!("plugins: [\n          RevealNotes,\n          RevealSearch,\n          RevealZoom\n        ]", "plugins: []")
   html.sub!("keyboard: true,", "keyboard: { 83: null }, // 's' disabled (was: speaker notes)")
+  html.sub!("controls: true,", "controls: false,")
   html.sub!("display: 'block',", "display: 'flex',")
   html.sub!("</body>", "  <script src=\"#{MULTIPLEX_URL}/socket.io/socket.io.js\"></script>\n  <script src=\"https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js\"></script>\n  <script src=\"style/slide-zoom.js\"></script>\n</body>")
   html = wrap_slide_content(html)
