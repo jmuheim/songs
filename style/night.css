@@ -79,6 +79,12 @@ section#TOC::-webkit-scrollbar-thumb {
   border: 3px solid var(--scrollbarBG);
 }
 
+@media (max-width: 768px) {
+  section#TOC {
+    font-size: 0.75em;
+  }
+}
+
 #top-left-controls {
   top: 1em;
   left: 1em;
