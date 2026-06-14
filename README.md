@@ -31,6 +31,8 @@ LANG=en_US.UTF-8 ./dev             # Watch, rebuild, and live-reload on every ch
 
 > `LANG=en_US.UTF-8` is required because song files contain non-ASCII characters.
 
+> **Dev note:** `./dev` runs browser-sync with `--no-ghost-mode`. Ghost mode (enabled by default) syncs clicks across all open tabs, which interferes with the multiplex feature — every button press would appear to fire on all "clients" simultaneously during local testing.
+
 ## Adding songs
 
 Add a Markdown file to `content/songs/` following the naming convention `Title (Artist).md`. Chords go inline as `[Am]`, `[G7]`, etc.

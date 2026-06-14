@@ -17,6 +17,8 @@ A guitar song book generator. Songs are written in Markdown with inline chord no
 
 Dependencies: Ruby 3.x, Pandoc (`brew install pandoc`), DeckTape (`npm install -g decktape`), fswatch (`brew install fswatch`), browser-sync (`npm install -g browser-sync`).
 
+> **Dev gotcha:** `./dev` passes `--no-ghost-mode` to browser-sync. Ghost mode (on by default) syncs clicks across all open tabs and interferes with the multiplex feature — it makes button presses appear to fire on all "clients" simultaneously during local testing.
+
 ## Song file format
 
 Each song lives in `content/songs/<Title> (<Artist>).md`. Structure:
