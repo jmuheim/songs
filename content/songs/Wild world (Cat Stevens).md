@@ -37,15 +37,15 @@ But then a [Dm] lot of nice things turn
 
 ## Chorus
 
-[C] Oh [G] baby, baby it's a [F] wild world
-[C] _(Riff 1)_
-[G] It's hard to get by [F] just upon a [C] smile
-[G] _(Riff 2)_
+[C] Oh [G] baby, baby
+it's a [F] wild world [C] _(Riff 1)_
+[G] It's hard to get by
+[F] just upon a [C] smile [G] _(Riff 2)_
 
-[C] Oh [G] baby, baby it's a [F] wild world
-[C] _(Riff 1)_
-[G] I'll always remember you [F] like a [C] child girl
-[Dm] [E]
+[C] Oh [G] baby, baby
+it's a [F] wild world [C] _(Riff 1)_
+[G] I'll always remember you
+[F] like a [C] child girl [Dm] [E]
 
 ## Verse 2
 
@@ -62,15 +62,15 @@ But just re[Dm]member there's a lot of bad
 
 ## Chorus
 
-[C] Oh [G] baby, baby it's a [F] wild world
-[C] _(Riff 1)_
-[G] It's hard to get by [F] just upon a [C] smile
-[G] _(Riff 2)_
+[C] Oh [G] baby, baby
+it's a [F] wild world [C] _(Riff 1)_
+[G] It's hard to get by
+[F] just upon a [C] smile [G] _(Riff 2)_
 
-[C] Oh [G] baby, baby it's a [F] wild world
-[C] _(Riff 1)_
-[G] I'll always remember you [F] like a [C] child girl
-[Dm] [E]
+[C] Oh [G] baby, baby
+it's a [F] wild world [C] _(Riff 1)_
+[G] I'll always remember you
+[F] like a [C] child girl [Dm] [E]
 
 ## Verse 3
 
@@ -84,15 +84,15 @@ But just re[Dm]member there's a lot of bad
 
 ## Chorus
 
-[C] Oh [G] baby, baby it's a [F] wild world
-[C] _(Riff 1)_
-[G] It's hard to get by [F] just upon a [C] smile
-[G] _(Riff 2)_
+[C] Oh [G] baby, baby
+it's a [F] wild world [C] _(Riff 1)_
+[G] It's hard to get by
+[F] just upon a [C] smile [G] _(Riff 2)_
 
-[C] Oh [G] baby, baby it's a [F] wild world
-[C] _(Riff 1)_
-[G] I'll always remember you [F] like a [C] child girl
-[Dm] [E] _(1st time only)_
+[C] Oh [G] baby, baby
+it's a [F] wild world [C] _(Riff 1)_
+[G] I'll always remember you
+[F] like a [C] child girl [Dm] [E] _(1st time only)_
 
 _(Repeat)_
 

@@ -26,9 +26,14 @@ Und ich [F] denke schon wieder nur an [G] dich...
 
 _(x2: gently first time, then repeat intensively)_
 
-Verdammt, ich [C] lieb' dich, ich lieb' dich [G] nicht.
-Verdammt, ich [Dm] brauch' dich, brauch' dich [Am] nicht. [G]
-Verdammt, ich [C] will dich, ich will dich [G] nicht,
+Verdammt, ich [C] lieb' dich,
+ich lieb' dich [G] nicht.
+
+Verdammt, ich [Dm] brauch' dich,
+brauch' dich [Am] nicht. [G]
+
+Verdammt, ich [C] will dich,
+ich will dich [G] nicht,
 Ich [F] will dich nicht verli[Am]er'n!
 
 ## Verse 2
@@ -55,9 +60,14 @@ Und ich [F] denke schon wieder nur an [G] dich...
 
 ## Chorus
 
-Verdammt, ich [C] lieb' dich, ich lieb' dich [G] nicht.
-Verdammt, ich [Dm] brauch' dich, brauch' dich [Am] nicht. [G]
-Verdammt, ich [C] will dich, ich will dich [G] nicht,
+Verdammt, ich [C] lieb' dich,
+ich lieb' dich [G] nicht.
+
+Verdammt, ich [Dm] brauch' dich,
+brauch' dich [Am] nicht. [G]
+
+Verdammt, ich [C] will dich,
+ich will dich [G] nicht,
 Ich [F] will dich nicht verli[Am]er'n! - Ooooh!
 
 _(Repeat and fade)_

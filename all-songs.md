@@ -3049,9 +3049,14 @@ Und ich `F`{.f} denke schon wieder nur an `G`{.g} dich...
 
 _(x2: gently first time, then repeat intensively)_
 
-Verdammt, ich `C`{.c} lieb' dich, ich lieb' dich `G`{.g} nicht.
-Verdammt, ich `Dm`{.d} brauch' dich, brauch' dich `Am`{.a} nicht. `G`{.g}
-Verdammt, ich `C`{.c} will dich, ich will dich `G`{.g} nicht,
+Verdammt, ich `C`{.c} lieb' dich,
+ich lieb' dich `G`{.g} nicht.
+
+Verdammt, ich `Dm`{.d} brauch' dich,
+brauch' dich `Am`{.a} nicht. `G`{.g}
+
+Verdammt, ich `C`{.c} will dich,
+ich will dich `G`{.g} nicht,
 Ich `F`{.f} will dich nicht verli`Am`{.a}er'n!
 
 ## Verse 2
@@ -3078,9 +3083,14 @@ Und ich `F`{.f} denke schon wieder nur an `G`{.g} dich...
 
 ## Chorus
 
-Verdammt, ich `C`{.c} lieb' dich, ich lieb' dich `G`{.g} nicht.
-Verdammt, ich `Dm`{.d} brauch' dich, brauch' dich `Am`{.a} nicht. `G`{.g}
-Verdammt, ich `C`{.c} will dich, ich will dich `G`{.g} nicht,
+Verdammt, ich `C`{.c} lieb' dich,
+ich lieb' dich `G`{.g} nicht.
+
+Verdammt, ich `Dm`{.d} brauch' dich,
+brauch' dich `Am`{.a} nicht. `G`{.g}
+
+Verdammt, ich `C`{.c} will dich,
+ich will dich `G`{.g} nicht,
 Ich `F`{.f} will dich nicht verli`Am`{.a}er'n! - Ooooh!
 
 _(Repeat and fade)_
@@ -3214,15 +3224,15 @@ But then a `Dm`{.d} lot of nice things turn
 
 ## Chorus
 
-`C`{.c} Oh `G`{.g} baby, baby it's a `F`{.f} wild world
-`C`{.c} _(Riff 1)_
-`G`{.g} It's hard to get by `F`{.f} just upon a `C`{.c} smile
-`G`{.g} _(Riff 2)_
+`C`{.c} Oh `G`{.g} baby, baby
+it's a `F`{.f} wild world `C`{.c} _(Riff 1)_
+`G`{.g} It's hard to get by
+`F`{.f} just upon a `C`{.c} smile `G`{.g} _(Riff 2)_
 
-`C`{.c} Oh `G`{.g} baby, baby it's a `F`{.f} wild world
-`C`{.c} _(Riff 1)_
-`G`{.g} I'll always remember you `F`{.f} like a `C`{.c} child girl
-`Dm`{.d} `E`{.e}
+`C`{.c} Oh `G`{.g} baby, baby
+it's a `F`{.f} wild world `C`{.c} _(Riff 1)_
+`G`{.g} I'll always remember you
+`F`{.f} like a `C`{.c} child girl `Dm`{.d} `E`{.e}
 
 ## Verse 2
 
@@ -3239,15 +3249,15 @@ But just re`Dm`{.d}member there's a lot of bad
 
 ## Chorus
 
-`C`{.c} Oh `G`{.g} baby, baby it's a `F`{.f} wild world
-`C`{.c} _(Riff 1)_
-`G`{.g} It's hard to get by `F`{.f} just upon a `C`{.c} smile
-`G`{.g} _(Riff 2)_
+`C`{.c} Oh `G`{.g} baby, baby
+it's a `F`{.f} wild world `C`{.c} _(Riff 1)_
+`G`{.g} It's hard to get by
+`F`{.f} just upon a `C`{.c} smile `G`{.g} _(Riff 2)_
 
-`C`{.c} Oh `G`{.g} baby, baby it's a `F`{.f} wild world
-`C`{.c} _(Riff 1)_
-`G`{.g} I'll always remember you `F`{.f} like a `C`{.c} child girl
-`Dm`{.d} `E`{.e}
+`C`{.c} Oh `G`{.g} baby, baby
+it's a `F`{.f} wild world `C`{.c} _(Riff 1)_
+`G`{.g} I'll always remember you
+`F`{.f} like a `C`{.c} child girl `Dm`{.d} `E`{.e}
 
 ## Verse 3
 
@@ -3261,15 +3271,15 @@ But just re`Dm`{.d}member there's a lot of bad
 
 ## Chorus
 
-`C`{.c} Oh `G`{.g} baby, baby it's a `F`{.f} wild world
-`C`{.c} _(Riff 1)_
-`G`{.g} It's hard to get by `F`{.f} just upon a `C`{.c} smile
-`G`{.g} _(Riff 2)_
+`C`{.c} Oh `G`{.g} baby, baby
+it's a `F`{.f} wild world `C`{.c} _(Riff 1)_
+`G`{.g} It's hard to get by
+`F`{.f} just upon a `C`{.c} smile `G`{.g} _(Riff 2)_
 
-`C`{.c} Oh `G`{.g} baby, baby it's a `F`{.f} wild world
-`C`{.c} _(Riff 1)_
-`G`{.g} I'll always remember you `F`{.f} like a `C`{.c} child girl
-`Dm`{.d} `E`{.e} _(1st time only)_
+`C`{.c} Oh `G`{.g} baby, baby
+it's a `F`{.f} wild world `C`{.c} _(Riff 1)_
+`G`{.g} I'll always remember you
+`F`{.f} like a `C`{.c} child girl `Dm`{.d} `E`{.e} _(1st time only)_
 
 _(Repeat)_
 
