@@ -100,7 +100,7 @@ a#go-to-toc::before {
 }
 
 a#toggle-theme::before {
-  content: '🌙';
+  content: '🌛';
 }
 
 .reveal section strong {
