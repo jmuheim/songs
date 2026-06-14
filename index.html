@@ -11,19 +11,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="./style/revealjs/dist/reset.css">
   <link rel="stylesheet" href="./style/revealjs/dist/reveal.css">
-  <style>#bottom-left-controls {
+  <style>.controls-group {
   position: fixed;
-  bottom: 2.5em;
-  left: 2em;
   z-index: 100;
   display: flex;
   align-items: center;
   gap: 0.75em;
 }
 
-#toggle-chords-visibility,
-#master-mode,
-#show-qr {
+.ctrl {
   position: relative;
   opacity: 0.75;
   background: none;
@@ -32,10 +28,14 @@
   cursor: pointer;
   font-family: inherit;
   line-height: 1;
+  text-decoration: none;
+}
+
+.ctrl::before {
+  font-size: 3em;
 }
 
 #toggle-chords-visibility::before {
-  font-size: 3em;
   content: '🎹';
 }
 
@@ -92,31 +92,21 @@ section#TOC::-webkit-scrollbar-thumb {
   border: 3px solid var(--scrollbarBG);
 }
 
-a#go-to-toc {
-  position: fixed;
-  top: 2em;
-  left: 1.5em;
-  z-index: 100;
-  opacity: 0.75;
-  text-decoration: none;
+#top-left-controls {
+  top: 1em;
+  left: 1em;
+}
+
+#top-right-controls {
+  top: 1em;
+  right: 1em;
 }
 
 a#go-to-toc::before {
-  font-size: 3em;
   content: '📖'
 }
 
-a#toggle-theme {
-  position: fixed;
-  top: 2em;
-  right: 1.5em;
-  z-index: 100;
-  opacity: 0.75;
-  text-decoration: none;
-}
-
 a#toggle-theme::before {
-  font-size: 3em;
   content: '🌙';
 }
 
@@ -129,7 +119,6 @@ a#toggle-theme::before {
 }
 
 #master-mode::before {
-  font-size: 3em;
   content: '🚀';
 }
 
@@ -142,7 +131,6 @@ a#toggle-theme::before {
 }
 
 #show-qr::before {
-  font-size: 3em;
   content: '🔗';
 }
 
@@ -396,13 +384,15 @@ section.slide.level2 {
   <link rel="stylesheet" href="./style/revealjs/dist/theme/night.css" id="theme">
 </head>
 <body>
-<script>window.MULTIPLEX={"url":"https://multiplex.up.railway.app","socketId":"c16324e0117e6da00c62c91a5594b6fc1d196313432409c79366c93078ac1fe7","secret":"cc58ea930602b842d3aecf51f01acba1","password":"guitar"};</script><div id="bottom-left-controls">
-  <button id="toggle-chords-visibility"></button>
-  <button id="show-qr"></button>
-  <button id="master-mode"></button>
+<script>window.MULTIPLEX={"url":"https://multiplex.up.railway.app","socketId":"c16324e0117e6da00c62c91a5594b6fc1d196313432409c79366c93078ac1fe7","secret":"cc58ea930602b842d3aecf51f01acba1","password":"guitar"};</script><div id="top-left-controls" class="controls-group">
+  <a href="#/1" id="go-to-toc" class="ctrl"></a>
+  <button id="toggle-chords-visibility" class="ctrl"></button>
 </div>
-<a href="#" id="toggle-theme"></a>
-<a href="#/1" id="go-to-toc"></a>
+<div id="top-right-controls" class="controls-group">
+  <button id="show-qr" class="ctrl"></button>
+  <button id="master-mode" class="ctrl"></button>
+  <a href="#" id="toggle-theme" class="ctrl"></a>
+</div>
 <script>
   document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
     document.body.classList.toggle('chords-hidden');
@@ -4364,7 +4354,7 @@ tutorial</a></li>
       // https://revealjs.com/config/
       Reveal.initialize({
         // Display controls in the bottom right corner
-        controls: true,
+        controls: false,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide

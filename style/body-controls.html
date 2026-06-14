@@ -1,10 +1,12 @@
-<div id="bottom-left-controls">
-  <button id="toggle-chords-visibility"></button>
-  <button id="show-qr"></button>
-  <button id="master-mode"></button>
+<div id="top-left-controls" class="controls-group">
+  <a href="#/1" id="go-to-toc" class="ctrl"></a>
+  <button id="toggle-chords-visibility" class="ctrl"></button>
 </div>
-<a href="#" id="toggle-theme"></a>
-<a href="#/1" id="go-to-toc"></a>
+<div id="top-right-controls" class="controls-group">
+  <button id="show-qr" class="ctrl"></button>
+  <button id="master-mode" class="ctrl"></button>
+  <a href="#" id="toggle-theme" class="ctrl"></a>
+</div>
 <script>
   document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
     document.body.classList.toggle('chords-hidden');
