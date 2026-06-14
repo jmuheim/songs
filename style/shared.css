@@ -1,13 +1,17 @@
+.reveal section .slide-content {
+  padding: 10px;
+}
+
 .reveal section h1 {
   font-size: 2em;
 }
 
 .reveal section h2 {
-  font-size: 1.41em;
+  font-size: 1.5em;
 }
 
 .reveal section h3 {
-  font-size: 1.03em;
+  font-size: 1.25em;
 }
 
 .reveal section code {
