@@ -40,3 +40,17 @@
   max-height: initial;
   text-align: left;
 }
+
+.reveal section.slide.level2 .slide-content {
+  white-space: nowrap;
+}
+
+section.stack {
+  flex-direction: column;
+  justify-content: center;
+}
+
+section.slide.level2 {
+  display: flex;
+  justify-content: center;
+}
