@@ -54,6 +54,26 @@ RSpec.describe 'chord transformation' do
       expect(transform_chords("no chords here")).to eq("no chords here")
     end
 
+    it 'does not transform a chord that is the very last character(s) in a string with no trailing char' do
+      # Known limitation: the regex requires one character after ], so a bare
+      # [Am] at end of string without a trailing newline is silently skipped.
+      expect(transform_chords("[Am]")).to eq("[Am]")
+    end
+
+    it 'handles a chord immediately followed by end-of-line newline' do
+      # In real song files every line ends with \n, so this is the common case
+      expect(transform_chords("[Am]\n")).to eq("`Am`{.a}\n")
+    end
+
+    it 'handles back-to-back chords separated only by a space' do
+      # "[Am] [G] " — second chord must also be transformed
+      expect(transform_chords("[Am] [G] ")).to eq('`Am`{.a} `G`{.g} ')
+    end
+
+    it 'handles a chord whose name contains a slash (Am/E)' do
+      expect(transform_chords("[Am/E] x")).to include('`Am/E`{.a}')
+    end
+
     it 'preserves the character after the chord in the output' do
       expect(transform_chords("[G],next")).to eq('`G`{.g},next')
     end

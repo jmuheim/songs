@@ -18,6 +18,14 @@ RSpec.describe 'build output' do
       expect(index_html).to include('"url"')
     end
 
+    it 'embeds the master password in the multiplex config' do
+      expect(index_html).to match(/"password"\s*:\s*"[^"]+"/)
+    end
+
+    it 'embeds the multiplex server URL in the config' do
+      expect(index_html).to include('multiplex.up.railway.app')
+    end
+
     it 'has the song book title in a title slide' do
       title_slide = index_doc.at_css('#title-slide')
       expect(title_slide).not_to be_nil
@@ -28,6 +36,28 @@ RSpec.describe 'build output' do
       %w[a b c d e f g].each do |letter|
         expect(index_html).to include("code.#{letter}"), "Missing chord CSS for .#{letter}"
       end
+    end
+
+    it 'applies distinct background colors to each chord letter class' do
+      # Each chord letter must have a different background-color rule
+      colors = %w[a b c d e f g].map do |l|
+        index_html.match(/code\.#{l}\s*\{[^}]*background-color:\s*(#[0-9a-fA-F]+)/m)&.[](1)
+      end
+      expect(colors.compact.size).to eq(7), "Not all chord letters have a background-color"
+      expect(colors.compact.uniq.size).to eq(7), "Chord letter colors are not all distinct: #{colors.inspect}"
+    end
+
+    it 'includes the slide-zoom.js script for slide content scaling' do
+      expect(index_html).to include('slide-zoom.js')
+    end
+
+    it 'includes the TOC scroll CSS (overflow-y: scroll on #TOC)' do
+      expect(index_html).to include('overflow-y: scroll')
+    end
+
+    it 'includes the mobile media query reducing TOC font-size' do
+      expect(index_html).to include('@media')
+      expect(index_html).to match(/@media[^{]*max-width[^{]*768/)
     end
 
     it 'wraps slide sections in .slide-content divs' do
