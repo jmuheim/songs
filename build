@@ -5,6 +5,8 @@ require 'shellwords'
 require 'json'
 require 'net/http'
 require 'nokogiri'
+require_relative 'lib/build_helpers'
+include BuildHelpers
 
 ENV['LANG'] = 'en_US.UTF-8'
 Encoding.default_external = Encoding::UTF_8
@@ -32,17 +34,6 @@ def step(emoji, label)
   result
 end
 
-def wrap_slide_content(html)
-  doc = Nokogiri::HTML(html)
-  doc.css('section[id], section[class]').each do |section|
-    children = section.children.to_a
-    wrapper = Nokogiri::XML::Node.new('div', doc)
-    wrapper['class'] = 'slide-content'
-    section.add_child(wrapper)
-    children.each { |child| wrapper.add_child(child) }
-  end
-  doc.to_html
-end
 
 def pandoc(output:, theme:)
   result = `pandoc -f markdown+hard_line_breaks -t revealjs -s -o #{output} all-songs.md --slide-level=2 --syntax-highlighting=none --toc --toc-depth=1 -V theme=#{theme} -V progress=false -V revealjs-url=./style/revealjs -V disableLayout=true 2>&1`
