@@ -297,6 +297,15 @@ body.theme-bright .modal-box button {
 body.theme-bright .modal-box button:hover {
   background: #ccc;
 }
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .reveal section .slide-content {
   padding: 10px;
 }
@@ -391,13 +400,13 @@ section.slide.level2 {
 </head>
 <body>
 <script>window.MULTIPLEX={"url":"https://multiplex.up.railway.app","socketId":"c16324e0117e6da00c62c91a5594b6fc1d196313432409c79366c93078ac1fe7","secret":"cc58ea930602b842d3aecf51f01acba1","password":"guitar"};</script><div id="top-left-controls" class="controls-group">
-  <a href="#/1" id="go-to-toc" class="ctrl"></a>
-  <button id="toggle-chords-visibility" class="ctrl"></button>
+  <a href="#/1" id="go-to-toc" class="ctrl"><span class="visually-hidden">Table of contents</span></a>
+  <button id="toggle-chords-visibility" class="ctrl"><span class="visually-hidden">Toggle chord visibility</span></button>
 </div>
 <div id="top-right-controls" class="controls-group">
-  <button id="show-qr" class="ctrl"></button>
-  <button id="master-mode" class="ctrl"></button>
-  <a href="#" id="toggle-theme" class="ctrl"></a>
+  <button id="show-qr" class="ctrl"><span class="visually-hidden">Show QR code</span></button>
+  <button id="master-mode" class="ctrl"><span class="visually-hidden">Take over presentation control</span></button>
+  <a href="#" id="toggle-theme" class="ctrl"><span class="visually-hidden">Toggle theme</span></a>
 </div>
 <script>
   document.getElementById('toggle-chords-visibility').addEventListener('click', function() {

@@ -180,13 +180,13 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
 
     it 'clicking #go-to-toc navigates to horizontal slide 1 (the TOC)' do
-      find('#go-to-toc').click
+      click_link('Table of contents')
       sleep 0.5
       expect(page.evaluate_script("Reveal.getIndices().h")).to eq(1)
     end
 
     it 'TOC slide becomes the present slide after clicking #go-to-toc' do
-      find('#go-to-toc').click
+      click_link('Table of contents')
       sleep 0.5
       expect(page.evaluate_script("document.querySelector('.present')?.id || ''")).to eq('TOC')
     end
@@ -197,7 +197,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
 
     it 'clicking a TOC song link navigates to that song slide' do
-      find('#go-to-toc').click
+      click_link('Table of contents')
       sleep 0.5
       first('#TOC a', visible: :all).click
       sleep 0.5
@@ -234,23 +234,23 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
 
     it 'hides chord code elements after one click on the toggle button' do
-      find('#toggle-chords-visibility').click
+      click_button('Toggle chord visibility')
       sleep 0.2
       expect(page.evaluate_script("document.body.classList.contains('chords-hidden')")).to be true
       expect(chord_display).to eq('none')
     end
 
     it 'shows chords again after a second click (toggle back)' do
-      find('#toggle-chords-visibility').click
+      click_button('Toggle chord visibility')
       sleep 0.2
-      find('#toggle-chords-visibility').click
+      click_button('Toggle chord visibility')
       sleep 0.2
       expect(page.evaluate_script("document.body.classList.contains('chords-hidden')")).to be false
       expect(chord_display).not_to eq('none')
     end
 
     it 'toggle button blurs itself after click (does not steal keyboard focus)' do
-      find('#toggle-chords-visibility').click
+      click_button('Toggle chord visibility')
       sleep 0.2
       expect(page.evaluate_script("document.activeElement?.id || ''")).not_to eq('toggle-chords-visibility')
     end
@@ -281,36 +281,36 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
 
     it 'switches to bright theme after clicking #toggle-theme' do
-      find('#toggle-theme').click
+      click_link('Toggle theme')
       sleep 0.2
       expect(page.evaluate_script("document.body.classList.contains('theme-bright')")).to be true
       expect(bg_brightness).to be > 500
     end
 
     it 'switches back to dark theme on a second click' do
-      find('#toggle-theme').click
+      click_link('Toggle theme')
       sleep 0.2
-      find('#toggle-theme').click
+      click_link('Toggle theme')
       sleep 0.2
       expect(page.evaluate_script("document.body.classList.contains('theme-bright')")).to be false
     end
 
     it 'persists the bright theme preference in localStorage' do
-      find('#toggle-theme').click
+      click_link('Toggle theme')
       sleep 0.2
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('bright')
     end
 
     it 'persists the dark theme preference in localStorage after toggling back' do
-      find('#toggle-theme').click
+      click_link('Toggle theme')
       sleep 0.2
-      find('#toggle-theme').click
+      click_link('Toggle theme')
       sleep 0.2
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('dark')
     end
 
     it 'restores the bright theme on page reload when localStorage says bright' do
-      find('#toggle-theme').click
+      click_link('Toggle theme')
       sleep 0.2
       visit '/index.html'
       wait_for_reveal
@@ -353,68 +353,68 @@ RSpec.describe 'index.html', :js, type: :feature do
       before { skip 'socket.io not available' unless io_available? }
 
       it 'opens the master modal on #master-mode click' do
-        find('#master-mode').click
+        click_button('Take over presentation control')
         sleep 0.2
         expect(modal_visible?('master-modal')).to be true
       end
 
       it 'closes the master modal when Cancel is clicked' do
-        find('#master-mode').click
+        click_button('Take over presentation control')
         sleep 0.2
-        find('#master-cancel').click
+        click_button('Cancel')
         sleep 0.2
         expect(modal_visible?('master-modal')).to be false
       end
 
       it 'clears the password input on cancel' do
-        find('#master-mode').click
+        click_button('Take over presentation control')
         sleep 0.2
         find('#master-pw').set('something')
-        find('#master-cancel').click
+        click_button('Cancel')
         sleep 0.2
         expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
       end
 
       it 'adds the shake class briefly on wrong password' do
-        find('#master-mode').click
+        click_button('Take over presentation control')
         sleep 0.2
         find('#master-pw').set('wrongpassword')
-        find('#master-confirm').click
+        click_button('OK')
         sleep 0.1
         expect(page.evaluate_script("document.getElementById('master-pw').classList.contains('shake')")).to be true
       end
 
       it 'clears the input on wrong password' do
-        find('#master-mode').click
+        click_button('Take over presentation control')
         sleep 0.2
         find('#master-pw').set('wrongpassword')
-        find('#master-confirm').click
+        click_button('OK')
         sleep 0.6
         expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
       end
 
       it 'keeps the modal open after wrong password' do
-        find('#master-mode').click
+        click_button('Take over presentation control')
         sleep 0.2
         find('#master-pw').set('wrongpassword')
-        find('#master-confirm').click
+        click_button('OK')
         sleep 0.2
         expect(modal_visible?('master-modal')).to be true
       end
 
       it 'grants master mode and closes modal on correct password' do
         password = page.evaluate_script("window.MULTIPLEX.password")
-        find('#master-mode').click
+        click_button('Take over presentation control')
         sleep 0.2
         find('#master-pw').set(password)
-        find('#master-confirm').click
+        click_button('OK')
         sleep 0.3
         expect(modal_visible?('master-modal')).to be false
         expect(page.evaluate_script("document.getElementById('master-mode').classList.contains('is-master')")).to be true
       end
 
       it 'closes the master modal when clicking outside it' do
-        find('#master-mode').click
+        click_button('Take over presentation control')
         sleep 0.2
         page.execute_script("document.getElementById('master-modal').click()")
         sleep 0.2
@@ -422,21 +422,21 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
 
       it 'opens the QR modal on #show-qr click' do
-        find('#show-qr').click
+        click_button('Show QR code')
         sleep 0.3
         expect(modal_visible?('qr-modal')).to be true
       end
 
       it 'closes the QR modal on close button click' do
-        find('#show-qr').click
+        click_button('Show QR code')
         sleep 0.3
-        find('#qr-close').click
+        click_button('Schliessen')
         sleep 0.2
         expect(modal_visible?('qr-modal')).to be false
       end
 
       it 'closes the QR modal when clicking outside it' do
-        find('#show-qr').click
+        click_button('Show QR code')
         sleep 0.3
         page.execute_script("document.getElementById('qr-modal').click()")
         sleep 0.2
