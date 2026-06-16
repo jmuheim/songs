@@ -31,7 +31,7 @@ RSpec.describe 'print.html', :js, type: :feature do
   end
 
   it 'renders chord code elements in the DOM' do
-    chord_codes = all('section code', visible: :all).select { |el| el[:class]&.match?(/\A[a-g]\z/) }
+    chord_codes = all('section code.a, section code.b, section code.c, section code.d, section code.e, section code.f, section code.g', visible: :all)
     expect(chord_codes).not_to be_empty
   end
 

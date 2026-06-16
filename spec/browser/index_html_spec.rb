@@ -41,7 +41,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
 
     it 'has chord code elements in the DOM with color CSS classes' do
-      chord_codes = all('section code', visible: :all).select { |el| el[:class]&.match?(/\A[a-g]\z/) }
+      chord_codes = all('section code.a, section code.b, section code.c, section code.d, section code.e, section code.f, section code.g', visible: :all)
       expect(chord_codes).not_to be_empty
     end
 
@@ -89,15 +89,15 @@ RSpec.describe 'index.html', :js, type: :feature do
     it 'can navigate to the next horizontal slide via Reveal.js API' do
       initial_h = page.evaluate_script("Reveal.getIndices().h")
       page.evaluate_script("Reveal.right()")
-      sleep 0.3
+      wait_for_js("Reveal.getIndices().h > #{initial_h}")
       expect(page.evaluate_script("Reveal.getIndices().h")).to be > initial_h
     end
 
     it 'can navigate to a sub-slide (vertical) via Reveal.js API' do
       page.evaluate_script("Reveal.slide(2, 0)")
-      sleep 0.3
+      wait_for_js("Reveal.getIndices().h === 2")
       page.evaluate_script("Reveal.down()")
-      sleep 0.3
+      wait_for_js("Reveal.getIndices().v > 0")
       expect(page.evaluate_script("Reveal.getIndices().v")).to be > 0
     end
   end
@@ -118,7 +118,7 @@ RSpec.describe 'index.html', :js, type: :feature do
 
     it 'applies zoom via Reveal.getCurrentSlide() on active sub-slides' do
       page.evaluate_script("Reveal.slide(2, 1)")
-      sleep 0.4
+      wait_for_js("parseFloat(Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom || 0) > 0")
       zoom = page.evaluate_script(
         "Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom"
       )
@@ -128,7 +128,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     it 'keeps zoom positive after navigating between slides' do
       [0, 2, 3].each do |h|
         page.evaluate_script("Reveal.slide(#{h}, 0)")
-        sleep 0.2
+        wait_for_js("parseFloat(Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom || 0) > 0")
         zoom = page.evaluate_script(
           "Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom"
         )
@@ -141,9 +141,10 @@ RSpec.describe 'index.html', :js, type: :feature do
         "parseFloat(document.querySelector('#title-slide .slide-content')?.style?.zoom || '0')"
       )
       page.driver.browser.resize(width: 480, height: 600)
-      sleep 0.2
       page.evaluate_script("window.dispatchEvent(new Event('resize'))")
-      sleep 0.2
+      wait_for_js(
+        "parseFloat(document.querySelector('#title-slide .slide-content')?.style?.zoom || '0') !== #{zoom_before}"
+      )
       zoom_after = page.evaluate_script(
         "parseFloat(document.querySelector('#title-slide .slide-content')?.style?.zoom || '0')"
       )
@@ -181,14 +182,13 @@ RSpec.describe 'index.html', :js, type: :feature do
 
     it 'clicking #go-to-toc navigates to horizontal slide 1 (the TOC)' do
       click_link('Table of contents')
-      sleep 0.5
+      expect(page).to have_css('#TOC.present')
       expect(page.evaluate_script("Reveal.getIndices().h")).to eq(1)
     end
 
     it 'TOC slide becomes the present slide after clicking #go-to-toc' do
       click_link('Table of contents')
-      sleep 0.5
-      expect(page.evaluate_script("document.querySelector('.present')?.id || ''")).to eq('TOC')
+      expect(page).to have_css('#TOC.present')
     end
 
     it 'TOC contains a link for every active song plus the introduction' do
@@ -198,9 +198,9 @@ RSpec.describe 'index.html', :js, type: :feature do
 
     it 'clicking a TOC song link navigates to that song slide' do
       click_link('Table of contents')
-      sleep 0.5
+      expect(page).to have_css('#TOC.present')
       first('#TOC a', visible: :all).click
-      sleep 0.5
+      expect(page).to have_no_css('#TOC.present')
       expect(page.evaluate_script("Reveal.getIndices().h")).to be >= 2
     end
 
@@ -219,7 +219,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     before do
       load_presentation
       page.evaluate_script("Reveal.slide(2, 1)")
-      sleep 0.3
+      wait_for_js("Reveal.getIndices().h === 2 && Reveal.getIndices().v === 1")
     end
 
     def chord_display
@@ -235,23 +235,21 @@ RSpec.describe 'index.html', :js, type: :feature do
 
     it 'hides chord code elements after one click on the toggle button' do
       click_button('Toggle chord visibility')
-      sleep 0.2
-      expect(page.evaluate_script("document.body.classList.contains('chords-hidden')")).to be true
+      expect(page).to have_css('body.chords-hidden')
       expect(chord_display).to eq('none')
     end
 
     it 'shows chords again after a second click (toggle back)' do
       click_button('Toggle chord visibility')
-      sleep 0.2
+      expect(page).to have_css('body.chords-hidden')
       click_button('Toggle chord visibility')
-      sleep 0.2
-      expect(page.evaluate_script("document.body.classList.contains('chords-hidden')")).to be false
+      expect(page).to have_no_css('body.chords-hidden')
       expect(chord_display).not_to eq('none')
     end
 
     it 'toggle button blurs itself after click (does not steal keyboard focus)' do
       click_button('Toggle chord visibility')
-      sleep 0.2
+      expect(page).to have_css('body.chords-hidden')
       expect(page.evaluate_script("document.activeElement?.id || ''")).not_to eq('toggle-chords-visibility')
     end
   end
@@ -282,36 +280,34 @@ RSpec.describe 'index.html', :js, type: :feature do
 
     it 'switches to bright theme after clicking #toggle-theme' do
       click_link('Toggle theme')
-      sleep 0.2
-      expect(page.evaluate_script("document.body.classList.contains('theme-bright')")).to be true
+      expect(page).to have_css('body.theme-bright')
       expect(bg_brightness).to be > 500
     end
 
     it 'switches back to dark theme on a second click' do
       click_link('Toggle theme')
-      sleep 0.2
+      expect(page).to have_css('body.theme-bright')
       click_link('Toggle theme')
-      sleep 0.2
-      expect(page.evaluate_script("document.body.classList.contains('theme-bright')")).to be false
+      expect(page).to have_no_css('body.theme-bright')
     end
 
     it 'persists the bright theme preference in localStorage' do
       click_link('Toggle theme')
-      sleep 0.2
+      expect(page).to have_css('body.theme-bright')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('bright')
     end
 
     it 'persists the dark theme preference in localStorage after toggling back' do
       click_link('Toggle theme')
-      sleep 0.2
+      expect(page).to have_css('body.theme-bright')
       click_link('Toggle theme')
-      sleep 0.2
+      expect(page).to have_no_css('body.theme-bright')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('dark')
     end
 
     it 'restores the bright theme on page reload when localStorage says bright' do
       click_link('Toggle theme')
-      sleep 0.2
+      expect(page).to have_css('body.theme-bright')
       visit '/index.html'
       wait_for_reveal
       expect(page.evaluate_script("document.body.classList.contains('theme-bright')")).to be true
@@ -324,20 +320,16 @@ RSpec.describe 'index.html', :js, type: :feature do
   describe 'multiplex UI' do
     before { load_presentation }
 
-    def modal_visible?(id)
-      page.evaluate_script("document.getElementById('#{id}').classList.contains('visible')")
-    end
-
     def io_available?
       page.evaluate_script("typeof window.io === 'function'")
     end
 
     it 'master modal is hidden on load' do
-      expect(modal_visible?('master-modal')).to be false
+      expect(page).to have_no_css('#master-modal.visible')
     end
 
     it 'QR modal is hidden on load' do
-      expect(modal_visible?('qr-modal')).to be false
+      expect(page).to have_no_css('#qr-modal.visible')
     end
 
     it 'master modal has a password input field' do
@@ -354,93 +346,83 @@ RSpec.describe 'index.html', :js, type: :feature do
 
       it 'opens the master modal on #master-mode click' do
         click_button('Take over presentation control')
-        sleep 0.2
-        expect(modal_visible?('master-modal')).to be true
+        expect(page).to have_css('#master-modal.visible')
       end
 
       it 'closes the master modal when Cancel is clicked' do
         click_button('Take over presentation control')
-        sleep 0.2
+        expect(page).to have_css('#master-modal.visible')
         click_button('Cancel')
-        sleep 0.2
-        expect(modal_visible?('master-modal')).to be false
+        expect(page).to have_no_css('#master-modal.visible')
       end
 
       it 'clears the password input on cancel' do
         click_button('Take over presentation control')
-        sleep 0.2
+        expect(page).to have_css('#master-modal.visible')
         find('#master-pw').set('something')
         click_button('Cancel')
-        sleep 0.2
+        expect(page).to have_no_css('#master-modal.visible')
         expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
       end
 
       it 'adds the shake class briefly on wrong password' do
         click_button('Take over presentation control')
-        sleep 0.2
+        expect(page).to have_css('#master-modal.visible')
         find('#master-pw').set('wrongpassword')
         click_button('OK')
-        sleep 0.1
-        expect(page.evaluate_script("document.getElementById('master-pw').classList.contains('shake')")).to be true
+        expect(page).to have_css('#master-pw.shake')
       end
 
       it 'clears the input on wrong password' do
         click_button('Take over presentation control')
-        sleep 0.2
+        expect(page).to have_css('#master-modal.visible')
         find('#master-pw').set('wrongpassword')
         click_button('OK')
-        sleep 0.6
         expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
       end
 
       it 'keeps the modal open after wrong password' do
         click_button('Take over presentation control')
-        sleep 0.2
+        expect(page).to have_css('#master-modal.visible')
         find('#master-pw').set('wrongpassword')
         click_button('OK')
-        sleep 0.2
-        expect(modal_visible?('master-modal')).to be true
+        expect(page).to have_css('#master-modal.visible')
       end
 
       it 'grants master mode and closes modal on correct password' do
         password = page.evaluate_script("window.MULTIPLEX.password")
         click_button('Take over presentation control')
-        sleep 0.2
+        expect(page).to have_css('#master-modal.visible')
         find('#master-pw').set(password)
         click_button('OK')
-        sleep 0.3
-        expect(modal_visible?('master-modal')).to be false
-        expect(page.evaluate_script("document.getElementById('master-mode').classList.contains('is-master')")).to be true
+        expect(page).to have_no_css('#master-modal.visible')
+        expect(page).to have_css('#master-mode.is-master')
       end
 
       it 'closes the master modal when clicking outside it' do
         click_button('Take over presentation control')
-        sleep 0.2
+        expect(page).to have_css('#master-modal.visible')
         page.execute_script("document.getElementById('master-modal').click()")
-        sleep 0.2
-        expect(modal_visible?('master-modal')).to be false
+        expect(page).to have_no_css('#master-modal.visible')
       end
 
       it 'opens the QR modal on #show-qr click' do
         click_button('Show QR code')
-        sleep 0.3
-        expect(modal_visible?('qr-modal')).to be true
+        expect(page).to have_css('#qr-modal.visible')
       end
 
       it 'closes the QR modal on close button click' do
         click_button('Show QR code')
-        sleep 0.3
+        expect(page).to have_css('#qr-modal.visible')
         click_button('Schliessen')
-        sleep 0.2
-        expect(modal_visible?('qr-modal')).to be false
+        expect(page).to have_no_css('#qr-modal.visible')
       end
 
       it 'closes the QR modal when clicking outside it' do
         click_button('Show QR code')
-        sleep 0.3
+        expect(page).to have_css('#qr-modal.visible')
         page.execute_script("document.getElementById('qr-modal').click()")
-        sleep 0.2
-        expect(modal_visible?('qr-modal')).to be false
+        expect(page).to have_no_css('#qr-modal.visible')
       end
     end
   end

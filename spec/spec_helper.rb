@@ -44,6 +44,20 @@ module BrowserHelpers
                      Time.now > deadline
     raise "Reveal.js did not initialize within #{timeout}s" \
       unless page.evaluate_script("!!(window.Reveal && Reveal.isReady())")
+
+    # Without this, a slide can still be mid-transition (translating into
+    # place) right after its section gets the .present class, and clicking
+    # a link inside it raises Ferrum::NodeMovingError. Reveal.js's own
+    # 'none' transition makes slide changes apply instantly.
+    page.evaluate_script("Reveal.configure({ transition: 'none' })")
+  end
+
+  # Poll a JS expression instead of a fixed sleep, for state that Capybara's
+  # have_css/have_text matchers can't observe directly (Reveal.js indices,
+  # inline style values, etc).
+  def wait_for_js(condition, timeout: 2)
+    deadline = Time.now + timeout
+    sleep 0.02 until page.evaluate_script(condition) || Time.now > deadline
   end
 end
 
