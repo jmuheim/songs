@@ -8,7 +8,7 @@ RSpec.describe 'print.html', :js, type: :feature do
 
   before do
     visit '/print.html'
-    sleep 1.5
+    wait_for_reveal
   end
 
   it 'loads and shows a title' do
@@ -40,7 +40,6 @@ RSpec.describe 'print.html', :js, type: :feature do
   end
 
   it 'uses the serif (light) theme' do
-    # Reveal.js stores theme background in --r-background-color CSS variable
     hex = page.evaluate_script(
       "getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim()"
     ).gsub(/[^0-9a-fA-F]/, '')

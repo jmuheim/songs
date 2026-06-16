@@ -34,3 +34,19 @@ Capybara.default_driver    = :cuprite
 Capybara.javascript_driver = :cuprite
 Capybara.default_max_wait_time = 10
 Capybara.run_server = false
+
+module BrowserHelpers
+  # Poll until Reveal.js is ready instead of a fixed sleep.
+  # Typical init time is ~0.3 s; this avoids burning the remaining ~1.2 s.
+  def wait_for_reveal(timeout: 5)
+    deadline = Time.now + timeout
+    sleep 0.05 until page.evaluate_script("!!(window.Reveal && Reveal.isReady())") ||
+                     Time.now > deadline
+    raise "Reveal.js did not initialize within #{timeout}s" \
+      unless page.evaluate_script("!!(window.Reveal && Reveal.isReady())")
+  end
+end
+
+RSpec.configure do |config|
+  config.include BrowserHelpers, type: :feature
+end

@@ -12,7 +12,7 @@ RSpec.describe 'mobile layout', :js, type: :feature do
     it 'applies 0.75em font-size on narrow viewports (≤ 768px)' do
       page.driver.browser.resize(width: 375, height: 812)
       visit '/index.html'
-      sleep 1.0
+      wait_for_reveal
 
       mobile_px = page.evaluate_script(
         "parseFloat(getComputedStyle(document.querySelector('section#TOC')).fontSize)"
@@ -29,7 +29,7 @@ RSpec.describe 'mobile layout', :js, type: :feature do
     it 'does NOT reduce the TOC font-size on wide viewports (> 768px)' do
       page.driver.browser.resize(width: 1280, height: 800)
       visit '/index.html'
-      sleep 1.0
+      wait_for_reveal
 
       desktop_px = page.evaluate_script(
         "parseFloat(getComputedStyle(document.querySelector('section#TOC')).fontSize)"
@@ -46,14 +46,14 @@ RSpec.describe 'mobile layout', :js, type: :feature do
     it 'TOC is smaller on mobile than on desktop' do
       page.driver.browser.resize(width: 375, height: 812)
       visit '/index.html'
-      sleep 1.0
+      wait_for_reveal
       mobile_px = page.evaluate_script(
         "parseFloat(getComputedStyle(document.querySelector('section#TOC')).fontSize)"
       )
 
       page.driver.browser.resize(width: 1280, height: 800)
       visit '/index.html'
-      sleep 1.0
+      wait_for_reveal
       desktop_px = page.evaluate_script(
         "parseFloat(getComputedStyle(document.querySelector('section#TOC')).fontSize)"
       )
@@ -70,7 +70,7 @@ RSpec.describe 'mobile layout', :js, type: :feature do
     before do
       page.driver.browser.resize(width: 1280, height: 800)
       visit '/index.html'
-      sleep 1.5
+      wait_for_reveal
     end
 
     it 'has overflow-y: scroll on the TOC section' do
