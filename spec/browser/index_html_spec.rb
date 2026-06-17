@@ -18,63 +18,32 @@ RSpec.describe 'index.html', :js, type: :feature do
   describe 'structure' do
     before { load_presentation }
 
-    it 'renders the title slide as the initial visible slide' do
+    it 'has the correct DOM structure and initial state' do
       expect(page).to have_css('#title-slide.present')
-    end
-
-    it 'shows the song book title on the title slide' do
       expect(find('#title-slide')).to have_text('Lieblings-Songs')
-    end
-
-    it 'shows the authors on the title slide' do
       expect(find('#title-slide')).to have_text('Josua')
-    end
-
-    it 'has a TOC section in the DOM with links to all songs' do
+      expect(page).to have_css('#master-mode')
+      expect(page).to have_css('#show-qr')
+      expect(page).to have_css('#toggle-chords-visibility')
+      expect(page).to have_css('.slide-content', visible: :all)
+      chord_codes = all('section code.a, section code.b, section code.c, section code.d, section code.e, section code.f, section code.g', visible: :all)
+      expect(chord_codes).not_to be_empty
       toc = first('#TOC', visible: :all)
       expect(toc).not_to be_nil
       expect(toc.all('a', visible: :all).size).to be >= 5
+      expect(toc.text(:all)).to include('ABBA')
     end
 
-    it 'lists ABBA in the TOC' do
-      expect(first('#TOC', visible: :all).text(:all)).to include('ABBA')
-    end
-
-    it 'has chord code elements in the DOM with color CSS classes' do
-      chord_codes = all('section code.a, section code.b, section code.c, section code.d, section code.e, section code.f, section code.g', visible: :all)
-      expect(chord_codes).not_to be_empty
-    end
-
-    it 'has the master mode button (#master-mode)' do
-      expect(page).to have_css('#master-mode')
-    end
-
-    it 'has the QR code button (#show-qr)' do
-      expect(page).to have_css('#show-qr')
-    end
-
-    it 'has the chord visibility toggle button (#toggle-chords-visibility)' do
-      expect(page).to have_css('#toggle-chords-visibility')
-    end
-
-    it 'wraps slide content in .slide-content divs' do
-      expect(page).to have_css('.slide-content', visible: :all)
-    end
-
-    it 'uses the night theme (dark background)' do
+    it 'has the night theme, multiplex config, and correct slide count' do
       bg = page.evaluate_script(
         "getComputedStyle(document.querySelector('.reveal') || document.body).backgroundColor"
       )
       expect(bg.scan(/\d+/).map(&:to_i).sum).to be < 150
-    end
 
-    it 'has the multiplex config embedded as a window global' do
       socket_id = page.evaluate_script("window.MULTIPLEX && window.MULTIPLEX.socketId")
       expect(socket_id).not_to be_nil
       expect(socket_id).not_to be_empty
-    end
 
-    it 'Reveal.js reports total slide count' do
       song_count = Dir[File.join(PROJECT_ROOT, 'content', 'songs', '*.md')].size
       expect(page.evaluate_script("Reveal.getTotalSlides()")).to be > song_count
     end
@@ -86,14 +55,12 @@ RSpec.describe 'index.html', :js, type: :feature do
   describe 'slide navigation' do
     before { load_presentation }
 
-    it 'can navigate to the next horizontal slide via Reveal.js API' do
+    it 'can navigate horizontally and vertically via Reveal.js API' do
       initial_h = page.evaluate_script("Reveal.getIndices().h")
       page.evaluate_script("Reveal.right()")
       wait_for_js("Reveal.getIndices().h > #{initial_h}")
       expect(page.evaluate_script("Reveal.getIndices().h")).to be > initial_h
-    end
 
-    it 'can navigate to a sub-slide (vertical) via Reveal.js API' do
       page.evaluate_script("Reveal.slide(2, 0)")
       wait_for_js("Reveal.getIndices().h === 2")
       page.evaluate_script("Reveal.down()")
@@ -108,31 +75,32 @@ RSpec.describe 'index.html', :js, type: :feature do
   describe 'slide zoom' do
     before { load_presentation }
 
-    it 'sets a zoom value on the title slide .slide-content' do
+    it 'applies and maintains positive zoom across slides without exceeding the viewport' do
       zoom = page.evaluate_script(
         "document.querySelector('#title-slide .slide-content')?.style?.zoom"
       )
       expect(zoom.to_s).not_to be_empty
       expect(zoom.to_f).to be > 0
-    end
 
-    it 'applies zoom via Reveal.getCurrentSlide() on active sub-slides' do
       page.evaluate_script("Reveal.slide(2, 1)")
       wait_for_js("parseFloat(Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom || 0) > 0")
-      zoom = page.evaluate_script(
-        "Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom"
-      )
-      expect(zoom.to_f).to be > 0
-    end
+      expect(page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom").to_f).to be > 0
 
-    it 'keeps zoom positive after navigating between slides' do
       [0, 2, 3].each do |h|
         page.evaluate_script("Reveal.slide(#{h}, 0)")
         wait_for_js("parseFloat(Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom || 0) > 0")
-        zoom = page.evaluate_script(
-          "Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom"
-        )
+        zoom = page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom")
         expect(zoom.to_f).to be > 0, "Expected zoom > 0 at h=#{h}, got #{zoom.inspect}"
+      end
+
+      zoom = page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom").to_f
+      unless zoom.zero?
+        content_w = page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.scrollWidth").to_f
+        content_h = page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.scrollHeight").to_f
+        win_w     = page.evaluate_script("window.innerWidth").to_f
+        win_h     = page.evaluate_script("window.innerHeight").to_f
+        expect(content_w * zoom).to be <= win_w + 2
+        expect(content_h * zoom).to be <= win_h + 2
       end
     end
 
@@ -153,21 +121,6 @@ RSpec.describe 'index.html', :js, type: :feature do
     ensure
       page.driver.browser.resize(width: 1280, height: 800)
     end
-
-    it 'does not zoom beyond what fits the viewport' do
-      zoom = page.evaluate_script(
-        "Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom"
-      ).to_f
-      return if zoom.zero?
-
-      content_w = page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.scrollWidth").to_f
-      content_h = page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.scrollHeight").to_f
-      win_w     = page.evaluate_script("window.innerWidth").to_f
-      win_h     = page.evaluate_script("window.innerHeight").to_f
-
-      expect(content_w * zoom).to be <= win_w + 2
-      expect(content_h * zoom).to be <= win_h + 2
-    end
   end
 
   # -----------------------------------------------------------------------
@@ -176,39 +129,26 @@ RSpec.describe 'index.html', :js, type: :feature do
   describe 'TOC navigation' do
     before { load_presentation }
 
-    it '#go-to-toc link points to slide index 1 (#/1)' do
+    it 'has correct TOC structure' do
       expect(page.evaluate_script("document.getElementById('go-to-toc').getAttribute('href')")).to eq('#/1')
-    end
 
-    it 'clicking #go-to-toc navigates to horizontal slide 1 (the TOC)' do
-      click_link('Table of contents')
-      expect(page).to have_css('#TOC.present')
-      expect(page.evaluate_script("Reveal.getIndices().h")).to eq(1)
-    end
-
-    it 'TOC slide becomes the present slide after clicking #go-to-toc' do
-      click_link('Table of contents')
-      expect(page).to have_css('#TOC.present')
-    end
-
-    it 'TOC contains a link for every active song plus the introduction' do
       song_count = Dir[File.join(PROJECT_ROOT, 'content', 'songs', '*.md')].size
       expect(all('#TOC a', visible: :all).size).to eq(song_count + 1)
-    end
 
-    it 'clicking a TOC song link navigates to that song slide' do
-      click_link('Table of contents')
-      expect(page).to have_css('#TOC.present')
-      first('#TOC a', visible: :all).click
-      expect(page).to have_no_css('#TOC.present')
-      expect(page.evaluate_script("Reveal.getIndices().h")).to be >= 2
-    end
-
-    it 'the TOC lists all expected song titles' do
       toc_text = first('#TOC', visible: :all).text(:all)
       %w[ABBA Beatles Lennon].each do |artist|
         expect(toc_text).to include(artist)
       end
+    end
+
+    it 'clicking TOC links navigates correctly' do
+      click_link('Table of contents')
+      expect(page).to have_css('#TOC.present')
+      expect(page.evaluate_script("Reveal.getIndices().h")).to eq(1)
+
+      first('#TOC a', visible: :all).click
+      expect(page).to have_no_css('#TOC.present')
+      expect(page.evaluate_script("Reveal.getIndices().h")).to be >= 2
     end
   end
 
@@ -228,15 +168,14 @@ RSpec.describe 'index.html', :js, type: :feature do
       )
     end
 
-    it 'shows chords initially (display is not none)' do
+    it 'shows chords initially and hides them on toggle without stealing focus' do
       expect(page.evaluate_script("document.body.classList.contains('chords-hidden')")).to be false
       expect(chord_display).not_to eq('none')
-    end
 
-    it 'hides chord code elements after one click on the toggle button' do
       click_button('Toggle chord visibility')
       expect(page).to have_css('body.chords-hidden')
       expect(chord_display).to eq('none')
+      expect(page.evaluate_script("document.activeElement?.id || ''")).not_to eq('toggle-chords-visibility')
     end
 
     it 'shows chords again after a second click (toggle back)' do
@@ -245,12 +184,6 @@ RSpec.describe 'index.html', :js, type: :feature do
       click_button('Toggle chord visibility')
       expect(page).to have_no_css('body.chords-hidden')
       expect(chord_display).not_to eq('none')
-    end
-
-    it 'toggle button blurs itself after click (does not steal keyboard focus)' do
-      click_button('Toggle chord visibility')
-      expect(page).to have_css('body.chords-hidden')
-      expect(page.evaluate_script("document.activeElement?.id || ''")).not_to eq('toggle-chords-visibility')
     end
   end
 
@@ -273,31 +206,17 @@ RSpec.describe 'index.html', :js, type: :feature do
       wait_for_reveal
     end
 
-    it 'starts in dark (night) theme with no theme-bright class' do
+    it 'starts dark, switches to bright, and persists the preference' do
       expect(page.evaluate_script("document.body.classList.contains('theme-bright')")).to be false
       expect(bg_brightness).to be < 150
-    end
 
-    it 'switches to bright theme after clicking #toggle-theme' do
       click_link('Toggle theme')
       expect(page).to have_css('body.theme-bright')
       expect(bg_brightness).to be > 500
-    end
-
-    it 'switches back to dark theme on a second click' do
-      click_link('Toggle theme')
-      expect(page).to have_css('body.theme-bright')
-      click_link('Toggle theme')
-      expect(page).to have_no_css('body.theme-bright')
-    end
-
-    it 'persists the bright theme preference in localStorage' do
-      click_link('Toggle theme')
-      expect(page).to have_css('body.theme-bright')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('bright')
     end
 
-    it 'persists the dark theme preference in localStorage after toggling back' do
+    it 'switches back to dark on a second click and persists the preference' do
       click_link('Toggle theme')
       expect(page).to have_css('body.theme-bright')
       click_link('Toggle theme')
@@ -324,19 +243,10 @@ RSpec.describe 'index.html', :js, type: :feature do
       page.evaluate_script("typeof window.io === 'function'")
     end
 
-    it 'master modal is hidden on load' do
+    it 'has the correct initial modal structure' do
       expect(page).to have_no_css('#master-modal.visible')
-    end
-
-    it 'QR modal is hidden on load' do
       expect(page).to have_no_css('#qr-modal.visible')
-    end
-
-    it 'master modal has a password input field' do
       expect(page).to have_css('#master-pw[type="password"]', visible: :all)
-    end
-
-    it 'master modal has Cancel and OK buttons' do
       expect(page).to have_css('#master-cancel', visible: :all)
       expect(page).to have_css('#master-confirm', visible: :all)
     end
@@ -344,19 +254,14 @@ RSpec.describe 'index.html', :js, type: :feature do
     context 'when socket.io is loaded' do
       before { skip 'socket.io not available' unless io_available? }
 
-      it 'opens the master modal on #master-mode click' do
+      it 'opens and closes the master modal' do
         click_button('Take over presentation control')
         expect(page).to have_css('#master-modal.visible')
-      end
-
-      it 'closes the master modal when Cancel is clicked' do
-        click_button('Take over presentation control')
-        expect(page).to have_css('#master-modal.visible')
-        click_button('Cancel')
+        page.execute_script("document.getElementById('master-modal').click()")
         expect(page).to have_no_css('#master-modal.visible')
       end
 
-      it 'clears the password input on cancel' do
+      it 'Cancel clears the password input and closes the modal' do
         click_button('Take over presentation control')
         expect(page).to have_css('#master-modal.visible')
         find('#master-pw').set('something')
@@ -365,60 +270,28 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
       end
 
-      it 'adds the shake class briefly on wrong password' do
+      it 'rejects wrong password with shake, clears input, and keeps modal open' do
         click_button('Take over presentation control')
-        expect(page).to have_css('#master-modal.visible')
         find('#master-pw').set('wrongpassword')
         click_button('OK')
         expect(page).to have_css('#master-pw.shake')
-      end
-
-      it 'clears the input on wrong password' do
-        click_button('Take over presentation control')
-        expect(page).to have_css('#master-modal.visible')
-        find('#master-pw').set('wrongpassword')
-        click_button('OK')
         expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
-      end
-
-      it 'keeps the modal open after wrong password' do
-        click_button('Take over presentation control')
-        expect(page).to have_css('#master-modal.visible')
-        find('#master-pw').set('wrongpassword')
-        click_button('OK')
         expect(page).to have_css('#master-modal.visible')
       end
 
-      it 'grants master mode and closes modal on correct password' do
+      it 'grants master mode on correct password and manages the QR modal' do
         password = page.evaluate_script("window.MULTIPLEX.password")
         click_button('Take over presentation control')
-        expect(page).to have_css('#master-modal.visible')
         find('#master-pw').set(password)
         click_button('OK')
         expect(page).to have_no_css('#master-modal.visible')
         expect(page).to have_css('#master-mode.is-master')
-      end
 
-      it 'closes the master modal when clicking outside it' do
-        click_button('Take over presentation control')
-        expect(page).to have_css('#master-modal.visible')
-        page.execute_script("document.getElementById('master-modal').click()")
-        expect(page).to have_no_css('#master-modal.visible')
-      end
-
-      it 'opens the QR modal on #show-qr click' do
-        click_button('Show QR code')
-        expect(page).to have_css('#qr-modal.visible')
-      end
-
-      it 'closes the QR modal on close button click' do
         click_button('Show QR code')
         expect(page).to have_css('#qr-modal.visible')
         click_button('Schliessen')
         expect(page).to have_no_css('#qr-modal.visible')
-      end
 
-      it 'closes the QR modal when clicking outside it' do
         click_button('Show QR code')
         expect(page).to have_css('#qr-modal.visible')
         page.execute_script("document.getElementById('qr-modal').click()")
