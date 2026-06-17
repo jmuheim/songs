@@ -64,15 +64,13 @@ RSpec.describe 'index.html', :js, type: :feature do
   describe 'slide zoom' do
     before { load_presentation }
 
-    it 'applies and maintains positive zoom across slides' do
+    it 'sets zoom on slide change and recalculates on window resize' do
       expect(page).to have_css('#title-slide .slide-content[style="zoom: 1.41436;"]', visible: :all)
 
       page.evaluate_script("Reveal.slide(2, 1)")
       expect(page).to have_css('section.present.level2 .slide-content[style="zoom: 0.763268;"]', visible: :all)
-    end
 
-    it 'recalculates zoom on window resize' do
-      expect(page).to have_css('#title-slide .slide-content[style="zoom: 1.41436;"]', visible: :all)
+      page.evaluate_script("Reveal.slide(0, 0)")
       page.driver.browser.resize(width: 480, height: 600)
       page.evaluate_script("window.dispatchEvent(new Event('resize'))")
       expect(page).to have_css('#title-slide .slide-content[style="zoom: 1;"]', visible: :all)
