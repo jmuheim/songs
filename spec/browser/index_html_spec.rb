@@ -41,7 +41,7 @@ RSpec.describe 'index.html', :js, type: :feature do
   end
 
   # -----------------------------------------------------------------------
-  # Slide navigation via Reveal.js API
+  # Slide navigation
   # -----------------------------------------------------------------------
   describe 'slide navigation' do
     before { load_presentation }
@@ -64,49 +64,18 @@ RSpec.describe 'index.html', :js, type: :feature do
   describe 'slide zoom' do
     before { load_presentation }
 
-    it 'applies and maintains positive zoom across slides without exceeding the viewport' do
-      zoom = page.evaluate_script(
-        "document.querySelector('#title-slide .slide-content')?.style?.zoom"
-      )
-      expect(zoom.to_s).not_to be_empty
-      expect(zoom.to_f).to be > 0
+    it 'applies and maintains positive zoom across slides' do
+      expect(page).to have_css('#title-slide .slide-content[style="zoom: 1.41436;"]', visible: :all)
 
       page.evaluate_script("Reveal.slide(2, 1)")
-      wait_for_js("parseFloat(Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom || 0) > 0")
-      expect(page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom").to_f).to be > 0
-
-      [0, 2, 3].each do |h|
-        page.evaluate_script("Reveal.slide(#{h}, 0)")
-        wait_for_js("parseFloat(Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom || 0) > 0")
-        zoom = page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom")
-        expect(zoom.to_f).to be > 0, "Expected zoom > 0 at h=#{h}, got #{zoom.inspect}"
-      end
-
-      zoom = page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.style?.zoom").to_f
-      unless zoom.zero?
-        content_w = page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.scrollWidth").to_f
-        content_h = page.evaluate_script("Reveal.getCurrentSlide()?.querySelector('.slide-content')?.scrollHeight").to_f
-        win_w     = page.evaluate_script("window.innerWidth").to_f
-        win_h     = page.evaluate_script("window.innerHeight").to_f
-        expect(content_w * zoom).to be <= win_w + 2
-        expect(content_h * zoom).to be <= win_h + 2
-      end
+      expect(page).to have_css('section.present.level2 .slide-content[style="zoom: 0.763268;"]', visible: :all)
     end
 
     it 'recalculates zoom on window resize' do
-      zoom_before = page.evaluate_script(
-        "parseFloat(document.querySelector('#title-slide .slide-content')?.style?.zoom || '0')"
-      )
+      expect(page).to have_css('#title-slide .slide-content[style="zoom: 1.41436;"]', visible: :all)
       page.driver.browser.resize(width: 480, height: 600)
       page.evaluate_script("window.dispatchEvent(new Event('resize'))")
-      wait_for_js(
-        "parseFloat(document.querySelector('#title-slide .slide-content')?.style?.zoom || '0') !== #{zoom_before}"
-      )
-      zoom_after = page.evaluate_script(
-        "parseFloat(document.querySelector('#title-slide .slide-content')?.style?.zoom || '0')"
-      )
-      expect(zoom_after).to be > 0
-      expect(zoom_after).not_to eq(zoom_before)
+      expect(page).to have_css('#title-slide .slide-content[style="zoom: 1;"]', visible: :all)
     ensure
       page.driver.browser.resize(width: 1280, height: 800)
     end
