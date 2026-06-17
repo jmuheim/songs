@@ -24,6 +24,11 @@ RSpec.describe 'HTML golden files' do
     expect(section.to_html + "\n").to eq(golden('toc.html'))
   end
 
+  it 'master modal HTML matches golden' do
+    div = doc.at_css('div#master-modal')
+    expect(div.to_html + "\n").to eq(golden('master_modal.html'))
+  end
+
   it 'Imagine Verse 1 HTML matches golden' do
     imagine_title = doc.at_css('section#imagine-john-lennon')
     section = imagine_title
