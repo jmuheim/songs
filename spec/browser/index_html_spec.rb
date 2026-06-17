@@ -180,20 +180,20 @@ RSpec.describe 'index.html', :js, type: :feature do
     before { load_presentation }
 
     it 'master modal: dismisses on outside click, cancel clears input, wrong password shakes, correct password activates master' do
-      expect(page).to have_css('#master-modal', visible: :hidden)
+      expect(page).not_to have_visible('#master-modal')
       expect(page).to have_css('#master-mode[aria-pressed="false"]')
 
       click_button('Lead slide navigation')
-      expect(page).to have_css('#master-modal', visible: true)
-      page.execute_script("document.getElementById('master-modal').click()")
-      expect(page).to have_css('#master-modal', visible: :hidden)
+      expect(page).to have_visible('#master-modal')
+      page.execute_script("document.getElementById('master-modal').click()") # backdrop click: e.target must be the overlay, not a child
+      expect(page).not_to have_visible('#master-modal')
 
       click_button('Lead slide navigation')
       within(find('#master-modal', visible: :all)) do
         find('#master-pw').set('something')
         click_button('Cancel')
       end
-      expect(page).to have_css('#master-modal', visible: :hidden)
+      expect(page).not_to have_visible('#master-modal')
       expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
 
       click_button('Lead slide navigation')
@@ -203,33 +203,33 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_css('#master-pw.shake')
         expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
       end
-      expect(page).to have_css('#master-modal', visible: true)
+      expect(page).to have_visible('#master-modal')
 
       password = page.evaluate_script("window.MULTIPLEX.password")
       within(find('#master-modal', visible: :all)) do
         find('#master-pw').set(password)
         click_button('OK')
       end
-      expect(page).to have_css('#master-modal', visible: :hidden)
+      expect(page).not_to have_visible('#master-modal')
       expect(page).to have_css('#master-mode.is-master')
       expect(page).to have_css('#master-mode[aria-pressed="true"]')
     end
 
     it 'QR modal: dismisses on close button and outside click' do
-      expect(page).to have_css('#qr-modal', visible: :hidden)
+      expect(page).not_to have_visible('#qr-modal')
       expect(page).to have_css('#show-qr[aria-pressed="false"]')
 
       click_button('Show QR code')
-      expect(page).to have_css('#qr-modal', visible: true)
+      expect(page).to have_visible('#qr-modal')
       expect(page).to have_css('#show-qr[aria-pressed="true"]')
       within(find('#qr-modal', visible: :all)) { click_button('Schliessen') }
-      expect(page).to have_css('#qr-modal', visible: :hidden)
+      expect(page).not_to have_visible('#qr-modal')
       expect(page).to have_css('#show-qr[aria-pressed="false"]')
 
       click_button('Show QR code')
-      expect(page).to have_css('#qr-modal', visible: true)
-      page.execute_script("document.getElementById('qr-modal').click()")
-      expect(page).to have_css('#qr-modal', visible: :hidden)
+      expect(page).to have_visible('#qr-modal')
+      page.execute_script("document.getElementById('qr-modal').click()") # backdrop click: e.target must be the overlay, not a child
+      expect(page).not_to have_visible('#qr-modal')
       expect(page).to have_css('#show-qr[aria-pressed="false"]')
     end
   end

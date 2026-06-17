@@ -62,6 +62,14 @@ module BrowserHelpers
   end
 end
 
+RSpec::Matchers.define :have_visible do |selector|
+  match                        { |page| page.has_css?(selector, visible: true) }
+  match_when_negated           { |page| page.has_css?(selector, visible: :hidden) }
+  description                  { "have #{selector} visible" }
+  failure_message              { "expected #{selector} to be visible" }
+  failure_message_when_negated { "expected #{selector} to be hidden" }
+end
+
 RSpec.configure do |config|
   config.include BrowserHelpers, type: :feature
 end
