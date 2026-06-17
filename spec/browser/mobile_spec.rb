@@ -2,6 +2,7 @@ require 'capybara/rspec'
 
 RSpec.describe 'mobile layout', :js, type: :feature do
   before(:all) do
+    FixtureBuilder.build!
     FileServer.start
     Capybara.app_host = FileServer.url
   end
@@ -11,7 +12,7 @@ RSpec.describe 'mobile layout', :js, type: :feature do
   describe '#TOC font-size media query' do
     it 'is 0.75em on mobile, inherits on desktop, and is smaller on mobile than desktop' do
       page.driver.browser.resize(width: 375, height: 812)
-      visit '/index.html'
+      visit FixtureBuilder::URL_PATH
       wait_for_reveal
       mobile_px = page.evaluate_script(
         "parseFloat(getComputedStyle(document.querySelector('section#TOC')).fontSize)"
@@ -22,7 +23,7 @@ RSpec.describe 'mobile layout', :js, type: :feature do
       expect(mobile_px).to be_within(0.5).of(parent_px * 0.75)
 
       page.driver.browser.resize(width: 1280, height: 800)
-      visit '/index.html'
+      visit FixtureBuilder::URL_PATH
       wait_for_reveal
       desktop_px = page.evaluate_script(
         "parseFloat(getComputedStyle(document.querySelector('section#TOC')).fontSize)"
@@ -42,7 +43,7 @@ RSpec.describe 'mobile layout', :js, type: :feature do
   describe '#TOC scroll behaviour' do
     before do
       page.driver.browser.resize(width: 1280, height: 800)
-      visit '/index.html'
+      visit FixtureBuilder::URL_PATH
       wait_for_reveal
     end
 

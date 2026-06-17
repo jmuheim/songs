@@ -18,12 +18,8 @@
   text-decoration: none;
 }
 
-.ctrl::before {
+.ctrl [aria-hidden] {
   font-size: 3em;
-}
-
-#toggle-chords-visibility::before {
-  content: '🎹';
 }
 
 body.chords-hidden #toggle-chords-visibility::after {
@@ -95,14 +91,6 @@ section#TOC::-webkit-scrollbar-thumb {
   right: 1em;
 }
 
-a#go-to-toc::before {
-  content: '📖'
-}
-
-a#toggle-theme::before {
-  content: '🌛';
-}
-
 .reveal section strong {
   color: #5ad066;
 }
@@ -111,20 +99,12 @@ a#toggle-theme::before {
   color: #bb0000;
 }
 
-#master-mode::before {
-  content: '🚀';
-}
-
 #master-mode.is-master::after {
   font-size: 3em;
   content: '❌';
   position: absolute;
   right: 0;
   bottom: 0;
-}
-
-#show-qr::before {
-  content: '🔗';
 }
 
 .overlay-modal {
@@ -229,10 +209,6 @@ a#toggle-theme::before {
 }
 
 /* Bright theme overrides */
-
-body.theme-bright a#toggle-theme::before {
-  content: '🌞';
-}
 
 body.theme-bright .reveal section h1,
 body.theme-bright h2,

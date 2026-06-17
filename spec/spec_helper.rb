@@ -1,6 +1,7 @@
 require 'capybara/rspec'
 require 'capybara/cuprite'
 require_relative 'support/file_server'
+require_relative 'support/fixture_builder'
 
 PROJECT_ROOT = File.expand_path('..', __dir__)
 

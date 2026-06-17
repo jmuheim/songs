@@ -2,13 +2,14 @@ require 'capybara/rspec'
 
 RSpec.describe 'index.html', :js, type: :feature do
   before(:all) do
+    FixtureBuilder.build!
     FileServer.start
     Capybara.app_host = FileServer.url
   end
 
   # Standard setup shared by most groups
   def load_presentation
-    visit '/index.html'
+    visit FixtureBuilder::URL_PATH
     wait_for_reveal
   end
 
@@ -19,32 +20,27 @@ RSpec.describe 'index.html', :js, type: :feature do
     before { load_presentation }
 
     it 'has the correct DOM structure and initial state' do
-      expect(page).to have_css('#title-slide.present')
-      expect(find('#title-slide')).to have_text('Lieblings-Songs')
-      expect(find('#title-slide')).to have_text('Josua')
-      expect(page).to have_css('#master-mode')
-      expect(page).to have_css('#show-qr')
-      expect(page).to have_css('#toggle-chords-visibility')
-      expect(page).to have_css('.slide-content', visible: :all)
-      chord_codes = all('section code.a, section code.b, section code.c, section code.d, section code.e, section code.f, section code.g', visible: :all)
-      expect(chord_codes).not_to be_empty
-      toc = first('#TOC', visible: :all)
-      expect(toc).not_to be_nil
-      expect(toc.all('a', visible: :all).size).to be >= 5
-      expect(toc.text(:all)).to include('ABBA')
+      within('#title-slide.present') do
+        expect(page).to have_css('h1', text: 'Lieblings-Songs 🔥🎶🌛')
+        expect(page).to have_css('p.author', text: '😊 Josua & Monika ❤️')
+      end
+      within('#top-left-controls') do
+        expect(page).to have_link('📖 Table of contents')
+        expect(page).to have_button('🎹 Hide chords')
+      end
+      within('#top-right-controls') do
+        expect(page).to have_button('🔗 Show QR code')
+        expect(page).to have_button('🚀 Lead slide navigation')
+        expect(page).to have_button('🌞 Switch to bright mode')
+      end
     end
 
-    it 'has the night theme, multiplex config, and correct slide count' do
-      bg = page.evaluate_script(
-        "getComputedStyle(document.querySelector('.reveal') || document.body).backgroundColor"
-      )
-      expect(bg.scan(/\d+/).map(&:to_i).sum).to be < 150
-
+    it 'has the multiplex config and correct slide count' do
       socket_id = page.evaluate_script("window.MULTIPLEX && window.MULTIPLEX.socketId")
       expect(socket_id).not_to be_nil
       expect(socket_id).not_to be_empty
 
-      song_count = Dir[File.join(PROJECT_ROOT, 'content', 'songs', '*.md')].size
+      song_count = Dir[File.join(FixtureBuilder::SONGS_DIR, '*.md')].size
       expect(page.evaluate_script("Reveal.getTotalSlides()")).to be > song_count
     end
   end
@@ -132,7 +128,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     it 'has correct TOC structure' do
       expect(page.evaluate_script("document.getElementById('go-to-toc').getAttribute('href')")).to eq('#/1')
 
-      song_count = Dir[File.join(PROJECT_ROOT, 'content', 'songs', '*.md')].size
+      song_count = Dir[File.join(FixtureBuilder::SONGS_DIR, '*.md')].size
       expect(all('#TOC a', visible: :all).size).to eq(song_count + 1)
 
       toc_text = first('#TOC', visible: :all).text(:all)
@@ -171,18 +167,21 @@ RSpec.describe 'index.html', :js, type: :feature do
     it 'shows chords initially and hides them on toggle without stealing focus' do
       expect(page.evaluate_script("document.body.classList.contains('chords-hidden')")).to be false
       expect(chord_display).not_to eq('none')
+      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="false"]')
 
-      click_button('Toggle chord visibility')
+      click_button('Hide chords')
       expect(page).to have_css('body.chords-hidden')
       expect(chord_display).to eq('none')
+      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="true"]')
       expect(page.evaluate_script("document.activeElement?.id || ''")).not_to eq('toggle-chords-visibility')
     end
 
     it 'shows chords again after a second click (toggle back)' do
-      click_button('Toggle chord visibility')
+      click_button('Hide chords')
       expect(page).to have_css('body.chords-hidden')
-      click_button('Toggle chord visibility')
+      click_button('Hide chords')
       expect(page).to have_no_css('body.chords-hidden')
+      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="false"]')
       expect(chord_display).not_to eq('none')
     end
   end
@@ -209,23 +208,27 @@ RSpec.describe 'index.html', :js, type: :feature do
     it 'starts dark, switches to bright, and persists the preference' do
       expect(page.evaluate_script("document.body.classList.contains('theme-bright')")).to be false
       expect(bg_brightness).to be < 150
+      expect(page).to have_button('🌞 Switch to bright mode')
+      expect(page).to have_css('#toggle-theme[aria-pressed="false"]')
 
-      click_link('Toggle theme')
+      click_button('Switch to bright mode')
       expect(page).to have_css('body.theme-bright')
       expect(bg_brightness).to be > 500
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('bright')
+      expect(page).to have_button('🌛 Switch to dark mode')
+      expect(page).to have_css('#toggle-theme[aria-pressed="true"]')
     end
 
     it 'switches back to dark on a second click and persists the preference' do
-      click_link('Toggle theme')
+      click_button('Switch to bright mode')
       expect(page).to have_css('body.theme-bright')
-      click_link('Toggle theme')
+      click_button('Switch to dark mode')
       expect(page).to have_no_css('body.theme-bright')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('dark')
     end
 
     it 'restores the bright theme on page reload when localStorage says bright' do
-      click_link('Toggle theme')
+      click_button('Switch to bright mode')
       expect(page).to have_css('body.theme-bright')
       visit '/index.html'
       wait_for_reveal
@@ -246,6 +249,8 @@ RSpec.describe 'index.html', :js, type: :feature do
     it 'has the correct initial modal structure' do
       expect(page).to have_no_css('#master-modal.visible')
       expect(page).to have_no_css('#qr-modal.visible')
+      expect(page).to have_css('#master-mode[aria-pressed="false"]')
+      expect(page).to have_css('#show-qr[aria-pressed="false"]')
       expect(page).to have_css('#master-pw[type="password"]', visible: :all)
       expect(page).to have_css('#master-cancel', visible: :all)
       expect(page).to have_css('#master-confirm', visible: :all)
@@ -255,14 +260,14 @@ RSpec.describe 'index.html', :js, type: :feature do
       before { skip 'socket.io not available' unless io_available? }
 
       it 'opens and closes the master modal' do
-        click_button('Take over presentation control')
+        click_button('Lead slide navigation')
         expect(page).to have_css('#master-modal.visible')
         page.execute_script("document.getElementById('master-modal').click()")
         expect(page).to have_no_css('#master-modal.visible')
       end
 
       it 'Cancel clears the password input and closes the modal' do
-        click_button('Take over presentation control')
+        click_button('Lead slide navigation')
         expect(page).to have_css('#master-modal.visible')
         find('#master-pw').set('something')
         click_button('Cancel')
@@ -271,7 +276,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
 
       it 'rejects wrong password with shake, clears input, and keeps modal open' do
-        click_button('Take over presentation control')
+        click_button('Lead slide navigation')
         find('#master-pw').set('wrongpassword')
         click_button('OK')
         expect(page).to have_css('#master-pw.shake')
@@ -281,21 +286,25 @@ RSpec.describe 'index.html', :js, type: :feature do
 
       it 'grants master mode on correct password and manages the QR modal' do
         password = page.evaluate_script("window.MULTIPLEX.password")
-        click_button('Take over presentation control')
+        click_button('Lead slide navigation')
         find('#master-pw').set(password)
         click_button('OK')
         expect(page).to have_no_css('#master-modal.visible')
         expect(page).to have_css('#master-mode.is-master')
+        expect(page).to have_css('#master-mode[aria-pressed="true"]')
 
         click_button('Show QR code')
         expect(page).to have_css('#qr-modal.visible')
+        expect(page).to have_css('#show-qr[aria-pressed="true"]')
         click_button('Schliessen')
         expect(page).to have_no_css('#qr-modal.visible')
+        expect(page).to have_css('#show-qr[aria-pressed="false"]')
 
         click_button('Show QR code')
         expect(page).to have_css('#qr-modal.visible')
         page.execute_script("document.getElementById('qr-modal').click()")
         expect(page).to have_no_css('#qr-modal.visible')
+        expect(page).to have_css('#show-qr[aria-pressed="false"]')
       end
     end
   end
