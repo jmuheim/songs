@@ -46,17 +46,15 @@ RSpec.describe 'index.html', :js, type: :feature do
   describe 'slide navigation' do
     before { load_presentation }
 
-    it 'can navigate horizontally and vertically via Reveal.js API' do
-      initial_h = page.evaluate_script("Reveal.getIndices().h")
-      page.evaluate_script("Reveal.right()")
-      wait_for_js("Reveal.getIndices().h > #{initial_h}")
-      expect(page.evaluate_script("Reveal.getIndices().h")).to be > initial_h
+    it 'responds to keyboard navigation horizontally and vertically' do
+      find('body').send_keys(:right)
+      expect(page).to have_css('#TOC.present')
 
-      page.evaluate_script("Reveal.slide(2, 0)")
-      wait_for_js("Reveal.getIndices().h === 2")
-      page.evaluate_script("Reveal.down()")
-      wait_for_js("Reveal.getIndices().v > 0")
-      expect(page.evaluate_script("Reveal.getIndices().v")).to be > 0
+      find('body').send_keys(:right)
+      expect(page).to have_css('#introduction.present')
+
+      find('body').send_keys(:down)
+      expect(page).to have_css('section.present h2', text: 'Welcome')
     end
   end
 
@@ -189,10 +187,9 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
 
     before do
-      visit '/index.html'
+      visit FixtureBuilder::URL_PATH
       page.evaluate_script("localStorage.removeItem('theme')")
-      visit '/index.html'
-      wait_for_reveal
+      load_presentation
     end
 
     it 'starts dark, switches to bright, and persists the preference' do
@@ -220,8 +217,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     it 'restores the bright theme on page reload when localStorage says bright' do
       click_button('Switch to bright mode')
       expect(page).to have_css('body.theme-bright')
-      visit '/index.html'
-      wait_for_reveal
+      load_presentation
       expect(page.evaluate_script("document.body.classList.contains('theme-bright')")).to be true
     end
   end
