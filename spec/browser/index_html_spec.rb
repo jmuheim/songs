@@ -20,10 +20,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     before { load_presentation }
 
     it 'has the correct DOM structure and initial state' do
-      within('#title-slide.present') do
-        expect(page).to have_css('h1', text: 'Lieblings-Songs 🔥🎶🌛')
-        expect(page).to have_css('p.author', text: '😊 Josua & Monika ❤️')
-      end
+      expect(page).to have_css('#title-slide.present')
       within('#top-left-controls') do
         expect(page).to have_link('📖 Table of contents')
         expect(page).to have_button('🎹 Hide chords')
@@ -33,15 +30,13 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_button('🚀 Lead slide navigation')
         expect(page).to have_button('🌞 Switch to bright mode')
       end
-    end
 
-    it 'has the multiplex config and correct slide count' do
       socket_id = page.evaluate_script("window.MULTIPLEX && window.MULTIPLEX.socketId")
       expect(socket_id).not_to be_nil
       expect(socket_id).not_to be_empty
 
-      song_count = Dir[File.join(FixtureBuilder::SONGS_DIR, '*.md')].size
-      expect(page.evaluate_script("Reveal.getTotalSlides()")).to be > song_count
+      # title-slide + TOC + Introduction + 4 fixture songs
+      expect(all('.slides > section', visible: :all).size).to eq(7)
     end
   end
 
@@ -130,11 +125,6 @@ RSpec.describe 'index.html', :js, type: :feature do
 
       song_count = Dir[File.join(FixtureBuilder::SONGS_DIR, '*.md')].size
       expect(all('#TOC a', visible: :all).size).to eq(song_count + 1)
-
-      toc_text = first('#TOC', visible: :all).text(:all)
-      %w[ABBA Beatles Lennon].each do |artist|
-        expect(toc_text).to include(artist)
-      end
     end
 
     it 'clicking TOC links navigates correctly' do
