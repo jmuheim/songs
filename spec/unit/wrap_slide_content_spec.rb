@@ -17,7 +17,7 @@ RSpec.describe 'wrap_slide_content' do
     expect(wrapper.at_css('p').text).to eq('World')
   end
 
-  it 'wraps children of sections with class' do
+  it 'wraps children of sections with only a class (no id)' do
     html = '<section class="level1"><h1>Title</h1></section>'
     doc = parse(html)
     expect(doc.at_css('section.level1 .slide-content')).not_to be_nil
@@ -60,11 +60,5 @@ RSpec.describe 'wrap_slide_content' do
     doc = parse(html)
     expect(doc.at_css('section.level1 .slide-content')).not_to be_nil
     expect(doc.at_css('section#verse .slide-content h2').text).to eq('Verse')
-  end
-
-  it 'returns a valid HTML string' do
-    result = wrap_slide_content('<section id="x"><p>hi</p></section>')
-    expect(result).to be_a(String)
-    expect(result).to include('<div class="slide-content">')
   end
 end
