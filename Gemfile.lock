@@ -26,7 +26,9 @@ GEM
       websocket-driver (~> 0.7)
     matrix (0.4.3)
     mini_mime (1.1.5)
-    nokogiri (1.19.3-arm64-darwin)
+    nokogiri (1.19.4-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.19.4-x86_64-linux-gnu)
       racc (~> 1.4)
     public_suffix (7.0.5)
     racc (1.8.1)
@@ -57,6 +59,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-24
+  x86_64-linux
 
 DEPENDENCIES
   capybara (~> 3.40)
