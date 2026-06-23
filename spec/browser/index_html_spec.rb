@@ -72,6 +72,31 @@ RSpec.describe 'index.html', :js, type: :feature do
   end
 
   # -----------------------------------------------------------------------
+  # Keyboard shortcuts
+  # -----------------------------------------------------------------------
+  describe 'keyboard shortcuts' do
+    before { load_presentation }
+
+    it 's key does not open the speaker notes popup' do
+      page.execute_script("window._openCount = 0; window.open = function() { window._openCount++; }")
+      find('body').send_keys('s')
+      expect(page.evaluate_script("window._openCount")).to eq(0)
+    end
+
+    it 'has built-in controls disabled' do
+      expect(page.evaluate_script("Reveal.getConfig().controls")).to be false
+    end
+
+    it 'sets display to flex' do
+      expect(page.evaluate_script("Reveal.getConfig().display")).to eq('flex')
+    end
+
+    it 'loads no plugins' do
+      expect(page.evaluate_script("Reveal.getConfig().plugins")).to eq([])
+    end
+  end
+
+  # -----------------------------------------------------------------------
   # Slide zoom (style/slide-zoom.js)
   # -----------------------------------------------------------------------
   describe 'slide zoom' do

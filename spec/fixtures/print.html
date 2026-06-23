@@ -11,267 +11,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="/style/revealjs/dist/reset.css">
   <link rel="stylesheet" href="/style/revealjs/dist/reveal.css">
-  <style>.controls-group {
-  position: fixed;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  gap: 0.75em;
+  <style>#title-slide h1, #title-slide p.author {
+  color: black;
+  text-shadow: 1px 2px 4px #ffffff;
 }
 
-.ctrl {
-  position: relative;
-  opacity: 0.75;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  font-family: inherit;
-  line-height: 1;
-  text-decoration: none;
-}
-
-.ctrl [aria-hidden] {
-  font-size: 3em;
-}
-
-body.chords-hidden #toggle-chords-visibility::after {
-  font-size: 3em;
-  content: '❌';
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-body.chords-hidden .reveal code {
-  display: none;
-}
-
-.reveal section code.x {
-  border: 1px solid #eee;
-  color: #eee;
-}
-
-.reveal section h1, h2, em {
-  color: #e7ad52 !important;
-}
-
-.reveal section pre code {
-  background-color: #ffe4ba;
-}
-
-html {
-  --scrollbarBG: transparent;
-  --thumbBG: #be7e1b;
-}
-
-section#TOC {
-  overflow-y: scroll;
-  height: 100%;
-  padding: 0;
-}
-
-section#TOC::-webkit-scrollbar {
-  width: .3em;
-}
-section#TOC {
-  scrollbar-width: thin;
-  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-section#TOC::-webkit-scrollbar-track {
-  background: var(--scrollbarBG);
-}
-
-section#TOC::-webkit-scrollbar-thumb {
-  background-color: var(--thumbBG) ;
-  border-radius: 6px;
-  border: 3px solid var(--scrollbarBG);
-}
-
-@media (max-width: 768px) {
-  section#TOC {
-    font-size: 0.75em;
-  }
-}
-
-#top-left-controls {
-  top: 1em;
-  left: 1em;
-}
-
-#top-right-controls {
-  top: 1em;
-  right: 1em;
+body {
+  background-color: transparent !important;
 }
 
 .reveal section strong {
-  color: #5ad066;
-}
-
-.reveal section del {
-  color: #bb0000;
-}
-
-#master-mode.is-master::after {
-  font-size: 3em;
-  content: '❌';
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-.overlay-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: 10000;
-  align-items: center;
-  justify-content: center;
-}
-
-.overlay-modal.visible {
-  display: flex;
-}
-
-.modal-box {
-  background: #1c1c1c;
-  border: 1px solid #555;
-  border-radius: 0.5em;
-  padding: 1.5em 2em;
-  text-align: center;
-  color: #fff;
-  font-family: sans-serif;
-  font-size: 2rem;
-  width: min(36rem, 90vw);
-  box-sizing: border-box;
-}
-
-.modal-box p {
-  margin: 0 0 0.75em;
-}
-
-#master-info,
-#qr-info {
-  font-size: 0.8em;
-  opacity: 0.6;
-  margin-top: -0.4em;
-}
-
-.modal-box input[type="password"] {
-  display: block;
-  width: 100%;
-  padding: 0.4em 0.6em;
-  margin-bottom: 1em;
-  font-size: 1em;
-  background: #333;
-  border: 1px solid #666;
-  border-radius: 0.3em;
-  color: #fff;
-  box-sizing: border-box;
-  outline: none;
-}
-
-.modal-box input[type="password"]:focus {
-  border-color: #e7ad52;
-}
-
-.modal-box input.shake {
-  animation: modal-shake 0.4s;
-  border-color: #f55;
-}
-
-@keyframes modal-shake {
-  0%, 100% { transform: translateX(0); }
-  20%       { transform: translateX(-8px); }
-  40%       { transform: translateX(8px); }
-  60%       { transform: translateX(-8px); }
-  80%       { transform: translateX(8px); }
-}
-
-.modal-buttons {
-  display: flex;
-  gap: 0.5em;
-  justify-content: center;
-}
-
-.modal-box button {
-  padding: 0.4em 1.2em;
-  font-size: 1em;
-  border-radius: 0.3em;
-  border: 1px solid #888;
-  background: #444;
-  color: #fff;
-  cursor: pointer;
-}
-
-.modal-box button:hover {
-  background: #555;
-}
-
-#qr-canvas {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1em;
-}
-
-#qr-canvas canvas,
-#qr-canvas img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Bright theme overrides */
-
-body.theme-bright .reveal section h1,
-body.theme-bright h2,
-body.theme-bright em {
-  color: unset !important;
-}
-
-body.theme-bright .reveal section code.x {
-  border: 1px solid #999;
-  color: #777;
-}
-
-body.theme-bright .reveal section pre code {
-  background-color: #ffe29a;
-}
-
-body.theme-bright {
-  --thumbBG: #8b6914;
-  --r-background-color: #fffad5;
-  --r-background: #fffad5;
-  --r-main-color: #222;
-  --r-heading-color: #333;
-  --r-link-color: #9a6f00;
-  --r-link-color-hover: #7a5500;
-}
-
-body.theme-bright .reveal section strong {
   color: #38920b;
 }
 
-body.theme-bright .modal-box {
-  background: #f4f4f4;
-  border-color: #ccc;
-  color: #333;
+.reveal section del {
+  color: #ec3737;
 }
 
-body.theme-bright .modal-box input[type="password"] {
-  background: #fff;
-  border-color: #bbb;
-  color: #333;
+.reveal section pre code {
+  background-color: #e2e2e2;
 }
 
-body.theme-bright .modal-box button {
-  background: #ddd;
-  border-color: #bbb;
-  color: #333;
-}
-
-body.theme-bright .modal-box button:hover {
-  background: #ccc;
+#TOC ul {
+  font-size: 0.85em;
 }
 .visually-hidden {
   position: absolute;
@@ -372,171 +134,13 @@ section.slide.level2 {
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel="stylesheet" href="/style/revealjs/dist/theme/night.css" id="theme">
+  <link rel="stylesheet" href="/style/revealjs/dist/theme/serif.css" id="theme">
 </head>
 <body>
-<script>window.MULTIPLEX={"url":"https://multiplex.up.railway.app","socketId":"c16324e0117e6da00c62c91a5594b6fc1d196313432409c79366c93078ac1fe7","secret":"cc58ea930602b842d3aecf51f01acba1","password":"guitar"};</script><div id="top-left-controls" class="controls-group">
-  <a href="#/1" id="go-to-toc" class="ctrl"><span aria-hidden="true">📖</span> <span class="visually-hidden">Table of contents</span></a>
-  <button id="toggle-chords-visibility" class="ctrl" aria-pressed="false"><span aria-hidden="true">🎹</span> <span class="visually-hidden">Hide chords</span></button>
-</div>
-<div id="top-right-controls" class="controls-group">
-  <button id="show-qr" class="ctrl" aria-pressed="false"><span aria-hidden="true">🔗</span> <span class="visually-hidden">Show QR code</span></button>
-  <button id="master-mode" class="ctrl" aria-pressed="false"><span aria-hidden="true">🚀</span> <span class="visually-hidden">Lead slide navigation</span></button>
-  <button id="toggle-theme" class="ctrl" aria-pressed="false"><span aria-hidden="true" id="toggle-theme-icon">🌞</span> <span class="visually-hidden" id="toggle-theme-label">Switch to bright mode</span></button>
-</div>
-<script>
-  document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
-    document.body.classList.toggle('chords-hidden');
-    this.setAttribute('aria-pressed', document.body.classList.contains('chords-hidden'));
-    this.blur();
-  });
-
-  (function() {
-    function applyTheme(bright) {
-      document.body.classList.toggle('theme-bright', bright);
-      var icon  = document.getElementById('toggle-theme-icon');
-      var label = document.getElementById('toggle-theme-label');
-      var btn   = document.getElementById('toggle-theme');
-      if (icon)  icon.textContent  = bright ? '🌛' : '🌞';
-      if (label) label.textContent = bright ? 'Switch to dark mode' : 'Switch to bright mode';
-      if (btn)   btn.setAttribute('aria-pressed', bright ? 'true' : 'false');
-    }
-
-    applyTheme(localStorage.getItem('theme') === 'bright');
-
-    document.getElementById('toggle-theme').addEventListener('click', function() {
-      var bright = !document.body.classList.contains('theme-bright');
-      applyTheme(bright);
-      localStorage.setItem('theme', bright ? 'bright' : 'dark');
-    });
-  })();
-</script>
-
-<div id="master-modal" class="overlay-modal">
-  <div class="modal-box">
-    <p>Navigation übernehmen?</p>
-    <div id="master-info">
-      <p>Alle anderen werden dir folgen.</p>
-    </div>
-    <input type="password" id="master-pw" autocomplete="off">
-    <div class="modal-buttons">
-      <button id="master-cancel">Cancel</button>
-      <button id="master-confirm">OK</button>
-    </div>
-  </div>
-</div>
-
-<div id="qr-modal" class="overlay-modal">
-  <div class="modal-box">
-    <p>Song Book öffnen</p>
-    <p id="qr-info">Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.</p>
-    <div id="qr-canvas"></div>
-    <button id="qr-close">Schliessen</button>
-  </div>
-</div>
-
-<script>
-window.addEventListener('load', function() {
-  var cfg = window.MULTIPLEX;
-  if (!cfg || !window.io) return;
-
-  var isMaster = false;
-  var socket = io(cfg.url);
-
-  socket.on(cfg.socketId, function(data) {
-    if (!isMaster && data && data.state) Reveal.setState(data.state);
-  });
-
-  function broadcast() {
-    socket.emit('multiplex-statechanged', {
-      secret: cfg.secret,
-      socketId: cfg.socketId,
-      state: Reveal.getState()
-    });
-  }
-
-  var REVEAL_EVENTS = ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewshown', 'overviewhidden', 'paused', 'resumed'];
-
-  function becomeMaster() {
-    isMaster = true;
-    masterBtn.classList.add('is-master');
-    masterBtn.setAttribute('aria-pressed', 'true');
-    REVEAL_EVENTS.forEach(function(ev) { Reveal.on(ev, broadcast); });
-    broadcast();
-  }
-
-  function becomeClient() {
-    isMaster = false;
-    masterBtn.classList.remove('is-master');
-    masterBtn.setAttribute('aria-pressed', 'false');
-    REVEAL_EVENTS.forEach(function(ev) { Reveal.off(ev, broadcast); });
-  }
-
-  var masterBtn    = document.getElementById('master-mode');
-  var masterModal  = document.getElementById('master-modal');
-  var masterPw     = document.getElementById('master-pw');
-  var qrModal      = document.getElementById('qr-modal');
-
-  masterBtn.addEventListener('click', function() {
-    if (isMaster) { becomeClient(); return; }
-    masterModal.classList.add('visible');
-    masterPw.focus();
-  });
-
-  masterModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
-
-  document.getElementById('master-cancel').addEventListener('click', function() {
-    masterModal.classList.remove('visible');
-    masterPw.value = '';
-  });
-
-  document.getElementById('master-confirm').addEventListener('click', function() {
-    if (masterPw.value === cfg.password) {
-      masterModal.classList.remove('visible');
-      masterPw.value = '';
-      becomeMaster();
-    } else {
-      masterPw.classList.add('shake');
-      setTimeout(function() { masterPw.classList.remove('shake'); }, 500);
-      masterPw.value = '';
-      masterPw.focus();
-    }
-  });
-
-  masterPw.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter')  document.getElementById('master-confirm').click();
-    if (e.key === 'Escape') document.getElementById('master-cancel').click();
-  });
-
-  var showQrBtn = document.getElementById('show-qr');
-
-  showQrBtn.addEventListener('click', function() {
-    if (!window.QRCode) return;
-    var url = window.location.href.split('#')[0];
-    var container = document.getElementById('qr-canvas');
-    container.innerHTML = '';
-    new QRCode(container, { text: url, width: 400, height: 400, colorDark: '#000000', colorLight: '#ffffff' });
-    qrModal.classList.add('visible');
-    showQrBtn.setAttribute('aria-pressed', 'true');
-  });
-
-  qrModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
-
-  function closeQrModal() {
-    qrModal.classList.remove('visible');
-    showQrBtn.setAttribute('aria-pressed', 'false');
-  }
-
-  document.getElementById('qr-close').addEventListener('click', closeQrModal);
-
-  masterModal.addEventListener('click', function(e) { if (e.target === masterModal) masterModal.classList.remove('visible'); });
-  qrModal.addEventListener('click', function(e) { if (e.target === qrModal) closeQrModal(); });
-});
-</script>
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide"><div class="slide-content">
+<section id="title-slide" data-background-image="/style/background.jpg"><div class="slide-content">
   <h1 class="title">Lieblings-Songs 🔥🎶🌛</h1>
   <p class="author">😊 Josua &amp; Monika ❤️</p>
 </div></section>
@@ -696,16 +300,7 @@ seventy<code class="a">Am</code>four, seventy<code class="c">C</code>five <code 
 <h2>Outro</h2>
 <p><code class="a">Am</code> <code class="c">C</code> <code class="g">G</code> <code class="a">Am</code> <em>(2x, fade out)</em></p>
 </div></section>
-<section id="resources" class="slide level2"><div class="slide-content">
-<h2>Resources</h2>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=t590jjWEJ5s">Song</a></li>
-<li><a href="https://tabs.ultimate-guitar.com/tab/the-connells/74-75-chords-15799">Source
-tab</a></li>
-<li><a href="https://www.youtube.com/watch?v=dS7u8SqW3Vo">Guitar
-tutorial</a></li>
-</ul>
-</div></section></section>
+</section>
 <section>
 <section id="across-the-universe-beatles" class="title-slide slide level1"><div class="slide-content">
 <h1>Across the universe (Beatles)</h1>
@@ -782,18 +377,7 @@ a<code class="a">A</code>cross the universe <code class="a">A7</code></p>
 <h2>Outro</h2>
 <p><code class="d">D</code> Jai guru deva om <code class="a">A7sus4</code> <em>(Repeat and fade)</em></p>
 </div></section>
-<section id="resources-1" class="slide level2"><div class="slide-content">
-<h2>Resources</h2>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=90M60PzmxEE">Song</a></li>
-<li><a href="https://tabs.ultimate-guitar.com/tab/the-beatles/across-the-universe-chords-202167">Source
-tab</a></li>
-<li><a href="https://www.youtube.com/watch?v=CQ1P8IQc8AY">Guitar
-tutorial</a></li>
-<li><a href="https://www.youtube.com/watch?v=RhMEKiIb86I">Interpretation
-by Fiona Apple</a></li>
-</ul>
-</div></section></section>
+</section>
 <section>
 <section id="i-have-a-dream-abba" class="title-slide slide level1"><div class="slide-content">
 <h1>I Have a Dream (ABBA)</h1>
@@ -863,14 +447,7 @@ When I know the <code class="d">D</code> time, is right for <code class="a">A</c
 <p>I’ll cross the <code class="e">E</code> stream<br>
 I have a <code class="a">A</code> dream <em>(2x)</em></p>
 </div></section>
-<section id="resources-2" class="slide level2"><div class="slide-content">
-<h2>Resources</h2>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=ER_3h03omdE">Song</a></li>
-<li><a href="https://tabs.ultimate-guitar.com/tab/abba/i-have-a-dream-chords-897049">Source
-tab</a></li>
-</ul>
-</div></section></section>
+</section>
 <section>
 <section id="imagine-john-lennon" class="title-slide slide level1"><div class="slide-content">
 <h1>Imagine (John Lennon)</h1>
@@ -951,14 +528,7 @@ you’ll <code class="c">C</code> join us <code class="e">E</code><br>
 <code class="f">F</code> And the <code class="g">G</code> world will be
 as <code class="c">C</code> one</p>
 </div></section>
-<section id="resources-3" class="slide level2"><div class="slide-content">
-<h2>Resources</h2>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=iOs9Osz3UFQ">Song</a></li>
-<li><a href="https://tabs.ultimate-guitar.com/tab/john-lennon/imagine-chords-9306">Source
-tab</a></li>
-</ul>
-</div></section></section>
+</section>
     </div>
   </div>
 
@@ -975,7 +545,7 @@ tab</a></li>
       // https://revealjs.com/config/
       Reveal.initialize({
         // Display controls in the bottom right corner
-        controls: false,
+        controls: true,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
@@ -1011,7 +581,7 @@ tab</a></li>
         history: false,
 
         // Enable keyboard shortcuts for navigation
-        keyboard: { 83: null }, // 's' disabled (was: speaker notes)
+        keyboard: true,
 
         // Enable the slide overview mode
         overview: true,
@@ -1085,7 +655,7 @@ tab</a></li>
         mouseWheel: false,
 
         // The display mode that will be used to show slides
-        display: 'flex',
+        display: 'block',
 
         // Hide cursor if inactive
         hideInactiveCursor: true,
@@ -1118,8 +688,5 @@ tab</a></li>
         plugins: []
       });
     </script>
-      <script src="https://multiplex.up.railway.app/socket.io/socket.io.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-  <script src="/style/slide-zoom.js"></script>
-</body>
+    </body>
 </html>

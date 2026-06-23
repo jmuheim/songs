@@ -50,7 +50,9 @@ puts
 
 
 songs_md = song_files.map do |file|
-  File.read(file).gsub(/\[([A-Z][^\]]*)\]([^\(])/) { "`#{$1}`{.#{$1[0].downcase}}#{$2}" }
+  content = File.read(file, encoding: 'UTF-8')
+  validate_song!(file, content)
+  content.gsub(/\[([A-Z][^\]]*)\]([^\(])/) { "`#{$1}`{.#{$1[0].downcase}}#{$2}" }
 end
 
 step("📝", "Writing all-songs.md") do

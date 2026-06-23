@@ -11,6 +11,7 @@ RSpec.describe 'chord transformation' do
     it 'uses the lowercase first letter as the CSS class' do
       expect(transform_chords("[G] x")).to  include('{.g}')
       expect(transform_chords("[Am] x")).to include('{.a}')
+      expect(transform_chords("[A] x")).to include('{.a}')
       expect(transform_chords("[C] x")).to  include('{.c}')
       expect(transform_chords("[D7] x")).to include('{.d}')
       expect(transform_chords("[E] x")).to  include('{.e}')
@@ -54,10 +55,8 @@ RSpec.describe 'chord transformation' do
       expect(transform_chords("no chords here")).to eq("no chords here")
     end
 
-    it 'does not transform a chord that is the very last character(s) in a string with no trailing char' do
-      # Known limitation: the regex requires one character after ], so a bare
-      # [Am] at end of string without a trailing newline is silently skipped.
-      expect(transform_chords("[Am]")).to eq("[Am]")
+    it 'transforms a chord that is the very last character(s) in a string with no trailing char' do
+      expect(transform_chords("[Am]")).to eq('`Am`{.a}')
     end
 
     it 'handles a chord immediately followed by end-of-line newline' do
