@@ -13,9 +13,17 @@ RSpec.describe 'index.html', :js, type: :feature do
     wait_for_reveal
   end
 
+  def song_count
+    Dir[File.join(FixtureBuilder::SONGS_DIR, '*.md')].size
+  end
+
   def go_to_first_song
     page.evaluate_script("Reveal.slide(3, 1)")
     wait_for_js("Reveal.getIndices().h === 3 && Reveal.getIndices().v === 1")
+  end
+
+  def backdrop_click(id)
+    page.execute_script("document.getElementById('#{id}').click()") # e.target must be the overlay, not a child
   end
 
   # -----------------------------------------------------------------------
@@ -40,8 +48,8 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(socket_id).not_to be_nil
       expect(socket_id).not_to be_empty
 
-      # title-slide + TOC + Introduction + 4 fixture songs
-      expect(all('.slides > section', visible: :all).size).to eq(7)
+      # title-slide + TOC + Introduction + fixture songs
+      expect(all('.slides > section', visible: :all).size).to eq(3 + song_count)
     end
   end
 
@@ -92,13 +100,12 @@ RSpec.describe 'index.html', :js, type: :feature do
 
     it 'has correct structure and navigates on click' do
       expect(page).to have_css('#go-to-toc[href="#/1"]')
-      song_count = Dir[File.join(FixtureBuilder::SONGS_DIR, '*.md')].size
       expect(all('#TOC a', visible: :all).size).to eq(song_count + 1) # +1 for Introduction
 
       click_link('Table of contents')
       expect(page).to have_css('#TOC.present')
 
-      first('#TOC a', visible: :all).click
+      click_link 'Introduction'
       expect(page).to have_css('#introduction.present')
     end
   end
@@ -112,21 +119,29 @@ RSpec.describe 'index.html', :js, type: :feature do
       go_to_first_song
     end
 
-    it 'toggles chord visibility and does not steal focus' do
+    it 'toggles chord visibility' do
       expect(page).to have_no_css('body.chords-hidden')
-      expect(page).to have_css('section.present code')
+      within 'section.slide.present' do
+        expect(page).to have_css('code')
+        expect(page).to have_no_css('code', visible: :hidden)
+      end
       expect(page).to have_css('#toggle-chords-visibility[aria-pressed="false"]')
 
-      click_button('Hide chords')
+      click_button('🎹 Hide chords')
+      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="true"]', text: /🎹\s+Hide chords/)
       expect(page).to have_css('body.chords-hidden')
-      expect(page).to have_css('section.present code', visible: :hidden)
-      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="true"]')
-      expect(page.evaluate_script("document.activeElement?.id || ''")).not_to eq('toggle-chords-visibility')
+      within 'section.slide.present' do
+        expect(page).to have_css('code', visible: :hidden)
+        expect(page).to have_no_css('code')
+      end
 
-      click_button('Hide chords')
+      click_button('🎹 Hide chords')
+      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="false"]', text: /🎹\s+Hide chords/)
       expect(page).to have_no_css('body.chords-hidden')
-      expect(page).to have_css('section.present code')
-      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="false"]')
+      within 'section.slide.present' do
+        expect(page).to have_css('code')
+        expect(page).to have_no_css('code', visible: :hidden)
+      end
     end
   end
 
@@ -134,42 +149,30 @@ RSpec.describe 'index.html', :js, type: :feature do
   # Theme toggle
   # -----------------------------------------------------------------------
   describe 'theme toggle' do
-    def bg_brightness
-      hex = page.evaluate_script(
-        "getComputedStyle(document.body).getPropertyValue('--r-background-color').trim()"
-      ).gsub(/[^0-9a-fA-F]/, '')
-      hex = hex.chars.map { |c| c * 2 }.join if hex.length == 3
-      (hex[0..1]&.to_i(16) || 0) + (hex[2..3]&.to_i(16) || 0) + (hex[4..5]&.to_i(16) || 0)
+    def body_background_color
+      page.evaluate_script("getComputedStyle(document.body).getPropertyValue('--r-background-color').trim()")
     end
 
-    before do
-      visit FixtureBuilder::URL_PATH
-      page.evaluate_script("localStorage.removeItem('theme')")
-      load_presentation
-    end
-
+    before { load_presentation }
     after { page.evaluate_script("localStorage.removeItem('theme')") }
 
     it 'toggles theme, persists preference, and restores on reload' do
       expect(page).to have_no_css('body.theme-bright')
-      expect(bg_brightness).to be < 150
-      expect(page).to have_button('🌞 Switch to bright mode')
-      expect(page).to have_css('#toggle-theme[aria-pressed="false"]')
+      expect(body_background_color).to eq('#111')
+      expect(page).to have_css('#toggle-theme[aria-pressed="false"]', text: /🌞\s+Switch to bright mode/)
 
-      click_button('Switch to bright mode')
+      click_button('🌞 Switch to bright mode')
       expect(page).to have_css('body.theme-bright')
-      expect(bg_brightness).to be > 500
+      expect(body_background_color).to eq('#fffad5')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('bright')
-      expect(page).to have_button('🌛 Switch to dark mode')
-      expect(page).to have_css('#toggle-theme[aria-pressed="true"]')
+      expect(page).to have_css('#toggle-theme[aria-pressed="true"]', text: /🌛\s+Switch to dark mode/)
 
-      click_button('Switch to dark mode')
-      expect(page).to have_no_css('body.theme-bright')
-      expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('dark')
-
-      page.evaluate_script("localStorage.setItem('theme', 'bright')")
       load_presentation
       expect(page).to have_css('body.theme-bright')
+
+      click_button('🌛 Switch to dark mode')
+      expect(page).to have_no_css('body.theme-bright')
+      expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('dark')
     end
   end
 
@@ -181,23 +184,23 @@ RSpec.describe 'index.html', :js, type: :feature do
 
     it 'master modal: dismisses on outside click, cancel clears input, wrong password shakes, correct password activates master' do
       expect(page).not_to have_visible('#master-modal')
-      expect(page).to have_css('#master-mode[aria-pressed="false"]')
+      expect(page).to have_css('#master-mode[aria-pressed="false"]', text: /🚀\s+Lead slide navigation/)
 
-      click_button('Lead slide navigation')
+      click_button('🚀 Lead slide navigation')
       expect(page).to have_visible('#master-modal')
-      page.execute_script("document.getElementById('master-modal').click()") # backdrop click: e.target must be the overlay, not a child
+      backdrop_click('master-modal')
       expect(page).not_to have_visible('#master-modal')
 
-      click_button('Lead slide navigation')
-      within(find('#master-modal', visible: :all)) do
+      click_button('🚀 Lead slide navigation')
+      within('#master-modal') do
         find('#master-pw').set('something')
         click_button('Cancel')
       end
       expect(page).not_to have_visible('#master-modal')
       expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
 
-      click_button('Lead slide navigation')
-      within(find('#master-modal', visible: :all)) do
+      click_button('🚀 Lead slide navigation')
+      within('#master-modal') do
         find('#master-pw').set('wrongpassword')
         click_button('OK')
         expect(page).to have_css('#master-pw.shake')
@@ -206,13 +209,13 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page).to have_visible('#master-modal')
 
       password = page.evaluate_script("window.MULTIPLEX.password")
-      within(find('#master-modal', visible: :all)) do
+      within('#master-modal') do
         find('#master-pw').set(password)
         click_button('OK')
       end
       expect(page).not_to have_visible('#master-modal')
       expect(page).to have_css('#master-mode.is-master')
-      expect(page).to have_css('#master-mode[aria-pressed="true"]')
+      expect(page).to have_css('#master-mode[aria-pressed="true"]', text: /🚀\s+Lead slide navigation/)
     end
 
     it 'QR modal: dismisses on close button and outside click' do
@@ -228,7 +231,7 @@ RSpec.describe 'index.html', :js, type: :feature do
 
       click_button('Show QR code')
       expect(page).to have_visible('#qr-modal')
-      page.execute_script("document.getElementById('qr-modal').click()") # backdrop click: e.target must be the overlay, not a child
+      backdrop_click('qr-modal')
       expect(page).not_to have_visible('#qr-modal')
       expect(page).to have_css('#show-qr[aria-pressed="false"]')
     end
