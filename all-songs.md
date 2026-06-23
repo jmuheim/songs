@@ -1432,12 +1432,12 @@ a `C/E`{.c} million miles a`G`{.g}way
 
 ## Intro
 
-`A`{.a} `E`{.e} `A`{.a}
+`A`{.a} `E`{.e}
 
 ## Verse 1
 
 `A`{.a} I have a `E`{.e} dream, a song to `A`{.a} sing
-To help me `E`{.e} cope, with any`A`{.a}thing
+To help me `E`{.e} cope, with `A`{.a} anything
 
 If you see the `E`{.e} wonder
 of a fairy `A`{.a} tale
@@ -1446,42 +1446,42 @@ even if you `A`{.a} fail
 
 ## Chorus
 
-I believe in `E`{.e} angels
+`E`{.e} I believe in angels
 Something good in, `D`{.d} everything I `A`{.a} see
-I believe in `E`{.e} angels
+`E`{.e} I believe in angels
 
 When I know the `D`{.d} time, is right for `A`{.a} me
-I'll cross the `E`{.e} stream
+`E`{.e} I'll cross the stream
 I have a `A`{.a} dream
 
 ## Verse 2
 
-I have a `E`{.e} dream, a fanta`A`{.a}sy
-To help me `E`{.e} through, reali`A`{.a}ty
+I have a `E`{.e} dream, a `A`{.a} fantasy
+To help me `E`{.e} through, `A`{.a} reality
 
-And my desti`E`{.e}nation
+And my `E`{.e} destination
 makes it worth the `A`{.a} while
 Pushing through the `E`{.e} darkness
 still another `A`{.a} mile
 
 ## Chorus 2
 
-I believe _(Pause)_ in `E`{.e} angels
-Something good in `D`{.d} everything I `A`{.a} see
-I believe in `E`{.e} angels
+`E`{.e} I believe in angels
+Something good in, `D`{.d} everything I `A`{.a} see
+`E`{.e} I believe in angels
 When I know the `D`{.d} time, is right for `A`{.a} me
 
-I'll cross the `E`{.e} stream
+`E`{.e} I'll cross the stream
 I have a `A`{.a} dream _(2x)_
 
 ## Interlude
 
-`A`{.a} `E`{.e} _(2x)_
+`A`{.a} `A`{.a} `E`{.e} `A`{.a} `A`{.a} `E`{.e} `E`{.e} `A`{.a} `A`{.a}
 
 ## Verse 3
 
-I have a `E`{.e} dream, a song to `A`{.a} sing
-To help me `E`{.e} cope, with any`A`{.a}thing
+`A`{.a} I have a `E`{.e} dream, a song to `A`{.a} sing
+To help me `E`{.e} cope, with `A`{.a} anything
 
 If you see the `E`{.e} wonder
 of a fairy `A`{.a} tale
@@ -1490,12 +1490,12 @@ even if you `A`{.a} fail
 
 ## Chorus 3
 
-I believe _(Long pause)_ in `E`{.e} angels
-Something good in `D`{.d} everything I `A`{.a} see
-I believe in `E`{.e} angels
+`E`{.e} I believe in angels
+Something good in, `D`{.d} everything I `A`{.a} see
+`E`{.e} I believe in angels
 When I know the `D`{.d} time, is right for `A`{.a} me
 
-I'll cross the `E`{.e} stream
+`E`{.e} I'll cross the stream
 I have a `A`{.a} dream _(2x)_
 
 ## Resources
@@ -3389,6 +3389,7 @@ Of `G`{.g} hope for a destina`D`{.d}tion
 
 - [Song](https://www.youtube.com/watch?v=6NXnxTNIWkc)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/4-non-blondes/whats-up-chords-268676)
+- [Guitar tutorial]()
 
 # Wild world (Cat Stevens)
 

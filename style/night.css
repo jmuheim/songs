@@ -91,6 +91,15 @@ section#TOC::-webkit-scrollbar-thumb {
   right: 1em;
 }
 
+a#go-to-toc::before {
+  content: '📖'
+}
+
+a#toggle-theme::before {
+  content: '🌛';
+}
+
+
 .reveal section strong {
   color: #5ad066;
 }

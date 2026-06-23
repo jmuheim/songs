@@ -7,7 +7,7 @@
 ## Verse 1
 
 [A] I have a [E] dream, a song to [A] sing
-To help me [E] cope, with any[A]thing
+To help me [E] cope, with [A] anything
 
 If you see the [E] wonder
 of a fairy [A] tale
@@ -16,42 +16,42 @@ even if you [A] fail
 
 ## Chorus
 
-I believe in [E] angels
+[E] I believe in angels
 Something good in, [D] everything I [A] see
-I believe in [E] angels
+[E] I believe in angels
 
 When I know the [D] time, is right for [A] me
-I'll cross the [E] stream
+[E] I'll cross the stream
 I have a [A] dream
 
 ## Verse 2
 
-I have a [E] dream, a fanta[A]sy
-To help me [E] through, reali[A]ty
+I have a [E] dream, a [A] fantasy
+To help me [E] through, [A] reality
 
-And my desti[E]nation
+And my [E] destination
 makes it worth the [A] while
 Pushing through the [E] darkness
 still another [A] mile
 
 ## Chorus 2
 
-I believe _(Pause)_ in [E] angels
-Something good in [D] everything I [A] see
-I believe in [E] angels
+[E] I believe in angels
+Something good in, [D] everything I [A] see
+[E] I believe in angels
 When I know the [D] time, is right for [A] me
 
-I'll cross the [E] stream
+[E] I'll cross the stream
 I have a [A] dream _(2x)_
 
 ## Interlude
 
-[A] [E] _(2x)_
+[A] [A] [E] [A] [A] [E] [E] [A] [A]
 
 ## Verse 3
 
-I have a [E] dream, a song to [A] sing
-To help me [E] cope, with any[A]thing
+[A] I have a [E] dream, a song to [A] sing
+To help me [E] cope, with [A] anything
 
 If you see the [E] wonder
 of a fairy [A] tale
@@ -60,12 +60,12 @@ even if you [A] fail
 
 ## Chorus 3
 
-I believe _(Long pause)_ in [E] angels
-Something good in [D] everything I [A] see
-I believe in [E] angels
+[E] I believe in angels
+Something good in, [D] everything I [A] see
+[E] I believe in angels
 When I know the [D] time, is right for [A] me
 
-I'll cross the [E] stream
+[E] I'll cross the stream
 I have a [A] dream _(2x)_
 
 ## Resources
