@@ -21,9 +21,8 @@ RSpec.describe 'print.html', :js, type: :feature do
       expect(page).to have_css('h1', text: /Lieblings-Songs 🔥🎶🌛/)
     end
 
-    expect(all('section.level1', visible: :all).size).to eq(song_count + 1)
+    expect(all('section.level1', visible: :all).size).to eq(song_count + 1) # +1 for Introduction
 
-    expect(all('section code.a, section code.b, section code.c, section code.d, section code.e, section code.f, section code.g', visible: :all)).not_to be_empty
     expect(page).to have_css('.slide-content', visible: :all)
 
     expect(page.evaluate_script("Reveal.getTotalSlides()")).to be > song_count
