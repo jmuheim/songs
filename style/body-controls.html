@@ -1,27 +1,33 @@
 <div id="top-left-controls" class="controls-group">
-  <a href="#/1" id="go-to-toc" class="ctrl"></a>
-  <button id="toggle-chords-visibility" class="ctrl"></button>
+  <a href="#/1" id="go-to-toc" class="ctrl"><span aria-hidden="true">📖</span> <span class="visually-hidden">Table of contents</span></a>
+  <button id="toggle-chords-visibility" class="ctrl" aria-pressed="false"><span aria-hidden="true">🎹</span> <span class="visually-hidden">Hide chords</span></button>
 </div>
 <div id="top-right-controls" class="controls-group">
-  <button id="show-qr" class="ctrl"></button>
-  <button id="master-mode" class="ctrl"></button>
-  <a href="#" id="toggle-theme" class="ctrl"></a>
+  <button id="show-qr" class="ctrl" aria-pressed="false"><span aria-hidden="true">🔗</span> <span class="visually-hidden">Show QR code</span></button>
+  <button id="master-mode" class="ctrl" aria-pressed="false"><span aria-hidden="true">🚀</span> <span class="visually-hidden">Lead slide navigation</span></button>
+  <button id="toggle-theme" class="ctrl" aria-pressed="false"><span aria-hidden="true" id="toggle-theme-icon">🌞</span> <span class="visually-hidden" id="toggle-theme-label">Switch to bright mode</span></button>
 </div>
 <script>
   document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
     document.body.classList.toggle('chords-hidden');
+    this.setAttribute('aria-pressed', document.body.classList.contains('chords-hidden'));
     this.blur();
   });
 
   (function() {
     function applyTheme(bright) {
       document.body.classList.toggle('theme-bright', bright);
+      var icon  = document.getElementById('toggle-theme-icon');
+      var label = document.getElementById('toggle-theme-label');
+      var btn   = document.getElementById('toggle-theme');
+      if (icon)  icon.textContent  = bright ? '🌛' : '🌞';
+      if (label) label.textContent = bright ? 'Switch to dark mode' : 'Switch to bright mode';
+      if (btn)   btn.setAttribute('aria-pressed', bright ? 'true' : 'false');
     }
 
     applyTheme(localStorage.getItem('theme') === 'bright');
 
-    document.getElementById('toggle-theme').addEventListener('click', function(e) {
-      e.preventDefault();
+    document.getElementById('toggle-theme').addEventListener('click', function() {
       var bright = !document.body.classList.contains('theme-bright');
       applyTheme(bright);
       localStorage.setItem('theme', bright ? 'bright' : 'dark');
@@ -76,14 +82,16 @@ window.addEventListener('load', function() {
 
   function becomeMaster() {
     isMaster = true;
-    document.getElementById('master-mode').classList.add('is-master');
+    masterBtn.classList.add('is-master');
+    masterBtn.setAttribute('aria-pressed', 'true');
     REVEAL_EVENTS.forEach(function(ev) { Reveal.on(ev, broadcast); });
     broadcast();
   }
 
   function becomeClient() {
     isMaster = false;
-    document.getElementById('master-mode').classList.remove('is-master');
+    masterBtn.classList.remove('is-master');
+    masterBtn.setAttribute('aria-pressed', 'false');
     REVEAL_EVENTS.forEach(function(ev) { Reveal.off(ev, broadcast); });
   }
 
@@ -123,25 +131,28 @@ window.addEventListener('load', function() {
     if (e.key === 'Escape') document.getElementById('master-cancel').click();
   });
 
-  document.getElementById('show-qr').addEventListener('click', function() {
+  var showQrBtn = document.getElementById('show-qr');
+
+  showQrBtn.addEventListener('click', function() {
     if (!window.QRCode) return;
     var url = window.location.href.split('#')[0];
     var container = document.getElementById('qr-canvas');
     container.innerHTML = '';
     new QRCode(container, { text: url, width: 400, height: 400, colorDark: '#000000', colorLight: '#ffffff' });
     qrModal.classList.add('visible');
+    showQrBtn.setAttribute('aria-pressed', 'true');
   });
 
   qrModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
 
-  document.getElementById('qr-close').addEventListener('click', function() {
+  function closeQrModal() {
     qrModal.classList.remove('visible');
-  });
+    showQrBtn.setAttribute('aria-pressed', 'false');
+  }
 
-  [masterModal, qrModal].forEach(function(modal) {
-    modal.addEventListener('click', function(e) {
-      if (e.target === modal) modal.classList.remove('visible');
-    });
-  });
+  document.getElementById('qr-close').addEventListener('click', closeQrModal);
+
+  masterModal.addEventListener('click', function(e) { if (e.target === masterModal) masterModal.classList.remove('visible'); });
+  qrModal.addEventListener('click', function(e) { if (e.target === qrModal) closeQrModal(); });
 });
 </script>

@@ -1432,7 +1432,7 @@ a `C/E`{.c} million miles a`G`{.g}way
 
 ## Intro
 
-`A`{.a} `E`{.e}
+`A`{.a} `E`{.e} `A`{.a}
 
 ## Verse 1
 
@@ -3389,7 +3389,6 @@ Of `G`{.g} hope for a destina`D`{.d}tion
 
 - [Song](https://www.youtube.com/watch?v=6NXnxTNIWkc)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/4-non-blondes/whats-up-chords-268676)
-- [Guitar tutorial]()
 
 # Wild world (Cat Stevens)
 
