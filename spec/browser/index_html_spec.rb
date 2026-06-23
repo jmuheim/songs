@@ -13,10 +13,6 @@ RSpec.describe 'index.html', :js, type: :feature do
     wait_for_reveal
   end
 
-  def song_count
-    Dir[File.join(FixtureBuilder::SONGS_DIR, '*.md')].size
-  end
-
   def go_to_first_song
     page.evaluate_script("Reveal.slide(3, 1)")
     wait_for_js("Reveal.getIndices().h === 3 && Reveal.getIndices().v === 1")
