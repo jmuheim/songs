@@ -37,6 +37,10 @@ Capybara.default_max_wait_time = 10
 Capybara.run_server = false
 
 module BrowserHelpers
+  def song_count
+    Dir[File.join(FixtureBuilder::SONGS_DIR, '*.md')].size
+  end
+
   # Poll until Reveal.js is ready instead of a fixed sleep.
   # Typical init time is ~0.3 s; this avoids burning the remaining ~1.2 s.
   def wait_for_reveal(timeout: 5)

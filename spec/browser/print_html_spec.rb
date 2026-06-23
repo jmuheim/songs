@@ -2,12 +2,13 @@ require 'capybara/rspec'
 
 RSpec.describe 'print.html', :js, type: :feature do
   before(:all) do
+    FixtureBuilder.build!
     FileServer.start
     Capybara.app_host = FileServer.url
   end
 
   def load_presentation
-    visit '/print.html'
+    visit FixtureBuilder::PRINT_URL_PATH
     wait_for_reveal
   end
 
@@ -16,17 +17,16 @@ RSpec.describe 'print.html', :js, type: :feature do
   it 'has correct DOM structure and content' do
     expect(page.title).to eq('Lieblings-Songs 🔥🎶🌛')
 
-    expect(page).to have_css('#title-slide', visible: :all)
-    expect(first('#title-slide', visible: :all).text(:all)).to include('Lieblings-Songs')
-    expect(first('#title-slide', visible: :all)[:'data-background-image']).to include('background.jpg')
+    within(find('#title-slide[data-background-image*="background.jpg"]', visible: :all)) do
+      expect(page).to have_css('h1', text: /Lieblings-Songs 🔥🎶🌛/)
+    end
 
-    song_count = Dir[File.join(PROJECT_ROOT, 'content', 'songs', '*.md')].size
     expect(all('section.level1', visible: :all).size).to eq(song_count + 1)
 
     expect(all('section code.a, section code.b, section code.c, section code.d, section code.e, section code.f, section code.g', visible: :all)).not_to be_empty
     expect(page).to have_css('.slide-content', visible: :all)
 
-    expect(page.evaluate_script("Reveal.getTotalSlides()")).to be > 10
+    expect(page.evaluate_script("Reveal.getTotalSlides()")).to be > song_count
   end
 
   it 'strips Resources sections' do

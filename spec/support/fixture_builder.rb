@@ -9,7 +9,9 @@ module FixtureBuilder
   FIXTURE_DIR   = File.join(ROOT, 'spec', 'fixtures')
   SONGS_DIR     = File.join(FIXTURE_DIR, 'songs')
   OUTPUT        = File.join(FIXTURE_DIR, 'index.html')
+  PRINT_OUTPUT  = File.join(FIXTURE_DIR, 'print.html')
   URL_PATH      = '/spec/fixtures/index.html'
+  PRINT_URL_PATH = '/spec/fixtures/print.html'
 
   MULTIPLEX_URL = 'https://multiplex.up.railway.app'
 
@@ -32,25 +34,29 @@ module FixtureBuilder
     all_songs_md = parts.join("\n\n") + "\n"
 
     Dir.mktmpdir('fixture-build-') do |tmpdir|
-      md_path   = File.join(tmpdir, 'all-songs.md')
-      html_path = File.join(tmpdir, 'index.html')
+      md_path         = File.join(tmpdir, 'all-songs.md')
+      index_html_path = File.join(tmpdir, 'index.html')
+      print_html_path = File.join(tmpdir, 'print.html')
       File.write(md_path, all_songs_md, encoding: 'UTF-8')
 
+      pandoc_base = [
+        'pandoc', '-f', 'markdown+hard_line_breaks', '-t', 'revealjs', '-s',
+        md_path, '--slide-level=2', '--syntax-highlighting=none',
+        '--toc', '--toc-depth=1', '-V', 'progress=false',
+        '-V', 'revealjs-url=/style/revealjs', '-V', 'disableLayout=true'
+      ]
+
       # Use absolute revealjs-url so the HTML works when served from /spec/fixtures/
-      ok = system(
-        'pandoc',
-        '-f', 'markdown+hard_line_breaks', '-t', 'revealjs', '-s',
-        '-o', html_path, md_path,
-        '--slide-level=2', '--syntax-highlighting=none',
-        '--toc', '--toc-depth=1',
-        '-V', 'theme=night', '-V', 'progress=false',
-        '-V', 'revealjs-url=/style/revealjs',
-        '-V', 'disableLayout=true',
+      raise 'pandoc failed (index)' unless system(
+        *pandoc_base, '-o', index_html_path, '-V', 'theme=night',
         out: File::NULL, err: File::NULL
       )
-      raise 'pandoc failed' unless ok
+      raise 'pandoc failed (print)' unless system(
+        *pandoc_base, '-o', print_html_path, '-V', 'theme=serif',
+        out: File::NULL, err: File::NULL
+      )
 
-      html = File.read(html_path, encoding: 'UTF-8')
+      html = File.read(index_html_path, encoding: 'UTF-8')
 
       token           = JSON.parse(File.read(File.join(ROOT, 'multiplex-token.json')))
       multiplex_json  = { url: MULTIPLEX_URL, socketId: token['socketId'],
@@ -72,8 +78,17 @@ module FixtureBuilder
       )
       html = wrap_slide_content(html)
 
+      print_html = File.read(print_html_path, encoding: 'UTF-8')
+      print_html.sub!('<style>', "<style>#{File.read(File.join(ROOT, 'style', 'serif.css'), encoding: 'UTF-8')}#{File.read(File.join(ROOT, 'style', 'shared.css'), encoding: 'UTF-8')}")
+      print_html.gsub!(/<section id="resources[-\d]*?" class="slide level2">.*?<\/section>/m, '')
+      print_html.sub!('<section id="title-slide"', '<section id="title-slide" data-background-image="/style/background.jpg"')
+      print_html.gsub!(%r{  <script src="./style/revealjs/plugin/(notes|search|zoom)/\1\.js"></script>\n}, '')
+      print_html.sub!("plugins: [\n          RevealNotes,\n          RevealSearch,\n          RevealZoom\n        ]", 'plugins: []')
+      print_html = wrap_slide_content(print_html)
+
       FileUtils.mkdir_p(FIXTURE_DIR)
       File.write(OUTPUT, html, encoding: 'UTF-8')
+      File.write(PRINT_OUTPUT, print_html, encoding: 'UTF-8')
     end
 
     @built = true
