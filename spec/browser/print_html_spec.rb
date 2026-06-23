@@ -6,10 +6,12 @@ RSpec.describe 'print.html', :js, type: :feature do
     Capybara.app_host = FileServer.url
   end
 
-  before do
+  def load_presentation
     visit '/print.html'
     wait_for_reveal
   end
+
+  before { load_presentation }
 
   it 'loads and shows a title' do
     expect(page.title).not_to be_empty
