@@ -198,63 +198,101 @@ RSpec.describe 'index.html', :js, type: :feature do
   end
 
   # -----------------------------------------------------------------------
-  # Multiplex UI (master modal & QR modal)
+  # Multiplex
   # -----------------------------------------------------------------------
-  describe 'multiplex UI' do
-    before { load_presentation }
-
-    it 'master modal: dismisses on outside click, cancel clears input, wrong password shakes, correct password activates master' do
-      expect(page).not_to have_visible('#master-modal')
-      expect(page).to have_css('#master-mode[aria-pressed="false"]', text: /🚀\s+Lead slide navigation/)
-
-      click_button('🚀 Lead slide navigation')
-      expect(page).to have_visible('#master-modal')
-      backdrop_click('master-modal')
-      expect(page).not_to have_visible('#master-modal')
-
-      click_button('🚀 Lead slide navigation')
-      within('#master-modal') do
-        find('#master-pw').set('something')
-        click_button('Cancel')
-      end
-      expect(page).not_to have_visible('#master-modal')
-      expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
-
-      click_button('🚀 Lead slide navigation')
-      within('#master-modal') do
-        find('#master-pw').set('wrongpassword')
-        click_button('OK')
-        expect(page).to have_css('#master-pw.shake')
-        expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
-      end
-      expect(page).to have_visible('#master-modal')
-
+  describe 'multiplex' do
+    def activate_master
       password = page.evaluate_script("window.MULTIPLEX.password")
+      click_button('🚀 Lead slide navigation')
       within('#master-modal') do
         find('#master-pw').set(password)
         click_button('OK')
       end
-      expect(page).not_to have_visible('#master-modal')
       expect(page).to have_css('#master-mode.is-master')
-      expect(page).to have_css('#master-mode[aria-pressed="true"]', text: /🚀\s+Lead slide navigation/)
     end
 
-    it 'QR modal: dismisses on close button and outside click' do
-      expect(page).not_to have_visible('#qr-modal')
-      expect(page).to have_css('#show-qr[aria-pressed="false"]')
+    describe 'master modal' do
+      before { load_presentation }
 
-      click_button('Show QR code')
-      expect(page).to have_visible('#qr-modal')
-      expect(page).to have_css('#show-qr[aria-pressed="true"]')
-      within(find('#qr-modal', visible: :all)) { click_button('Schliessen') }
-      expect(page).not_to have_visible('#qr-modal')
-      expect(page).to have_css('#show-qr[aria-pressed="false"]')
+      it 'dismisses on outside click, cancel clears input, wrong password shakes, correct password activates master' do
+        expect(page).not_to have_visible('#master-modal')
+        expect(page).to have_css('#master-mode[aria-pressed="false"]', text: /🚀\s+Lead slide navigation/)
 
-      click_button('Show QR code')
-      expect(page).to have_visible('#qr-modal')
-      backdrop_click('qr-modal')
-      expect(page).not_to have_visible('#qr-modal')
-      expect(page).to have_css('#show-qr[aria-pressed="false"]')
+        click_button('🚀 Lead slide navigation')
+        expect(page).to have_visible('#master-modal')
+        backdrop_click('master-modal')
+        expect(page).not_to have_visible('#master-modal')
+
+        click_button('🚀 Lead slide navigation')
+        within('#master-modal') do
+          find('#master-pw').set('something')
+          click_button('Cancel')
+        end
+        expect(page).not_to have_visible('#master-modal')
+        expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
+
+        click_button('🚀 Lead slide navigation')
+        within('#master-modal') do
+          find('#master-pw').set('wrongpassword')
+          click_button('OK')
+          expect(page).to have_css('#master-pw.shake')
+          expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
+        end
+        expect(page).to have_visible('#master-modal')
+
+        within('#master-modal') do
+          find('#master-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
+          click_button('OK')
+        end
+        expect(page).not_to have_visible('#master-modal')
+        expect(page).to have_css('#master-mode.is-master')
+        expect(page).to have_css('#master-mode[aria-pressed="true"]', text: /🚀\s+Lead slide navigation/)
+      end
+    end
+
+    describe 'QR modal' do
+      before { load_presentation }
+
+      it 'dismisses on close button and outside click' do
+        expect(page).not_to have_visible('#qr-modal')
+        expect(page).to have_css('#show-qr[aria-pressed="false"]')
+
+        click_button('Show QR code')
+        expect(page).to have_visible('#qr-modal')
+        expect(page).to have_css('#show-qr[aria-pressed="true"]')
+        within(find('#qr-modal', visible: :all)) { click_button('Schliessen') }
+        expect(page).not_to have_visible('#qr-modal')
+        expect(page).to have_css('#show-qr[aria-pressed="false"]')
+
+        click_button('Show QR code')
+        expect(page).to have_visible('#qr-modal')
+        backdrop_click('qr-modal')
+        expect(page).not_to have_visible('#qr-modal')
+        expect(page).to have_css('#show-qr[aria-pressed="false"]')
+      end
+    end
+
+    describe 'live sync' do
+      after { Capybara.reset_sessions! }
+
+      it 'client follows slide changes broadcast by the master' do
+        using_session(:client) do
+          load_presentation
+          expect(page).to have_css('#title-slide.present')
+        end
+
+        using_session(:master) do
+          load_presentation
+          activate_master  # also broadcasts current state, giving the socket time to settle
+        end
+
+        using_session(:master) do
+          find('body').send_keys(:right)
+          expect(page).to have_css('#TOC.present')
+        end
+
+        using_session(:client) { expect(page).to have_css('#TOC.present') }
+      end
     end
   end
 end
