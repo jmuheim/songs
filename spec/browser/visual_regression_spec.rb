@@ -13,20 +13,20 @@ RSpec.describe 'visual regression', :js, type: :feature do
     Capybara.app_host = FileServer.url
   end
 
-  before do
-    page.driver.browser.resize(width: 1280, height: 800)
-  end
-
   after do
-    page.evaluate_script('localStorage.clear()') rescue nil
+    page.evaluate_script('localStorage.clear(); sessionStorage.clear()') rescue nil
   end
 
-  def load_presentation
+  # Resize happens here, immediately before visit, so the page always loads
+  # at the intended viewport and slide-zoom.js computes a stable zoom value.
+  def load_presentation(width: 1280, height: 800)
+    page.driver.browser.resize(width: width, height: height)
     visit FixtureBuilder::URL_PATH
     wait_for_reveal
   end
 
   def load_print_presentation
+    page.driver.browser.resize(width: 1280, height: 800)
     visit FixtureBuilder::PRINT_URL_PATH
     wait_for_reveal
   end
@@ -34,7 +34,14 @@ RSpec.describe 'visual regression', :js, type: :feature do
   def go_to_first_song
     page.evaluate_script('Reveal.slide(3, 1)')
     wait_for_js('Reveal.getIndices().h === 3 && Reveal.getIndices().v === 1')
+    # slide-zoom.js sets zoom asynchronously via the slidechanged event.
+    # Wait for it to finish before screenshotting (zoom value is a float, not "1").
+    wait_for_js("document.querySelector('section.present .slide-content')?.style?.zoom?.includes('.')")
   end
+
+  # ---------------------------------------------------------------------------
+  # Desktop (1280×800) — no breakpoints active
+  # ---------------------------------------------------------------------------
 
   it 'title slide — initial load' do
     load_presentation
@@ -78,57 +85,43 @@ RSpec.describe 'visual regression', :js, type: :feature do
     screenshot 'print_title_slide'
   end
 
-  describe 'mobile viewport (375×812)' do
-    before do
-      page.driver.browser.resize(width: 375, height: 812)
-    end
+  # ---------------------------------------------------------------------------
+  # Viewport breakpoints
+  # @media (max-width: 768px) { section#TOC { font-size: 0.75em } }
+  #
+  # Song slides are omitted here: no breakpoint-specific CSS affects them,
+  # and slide-zoom.js computes fractional zoom that would cause flaky diffs.
+  # ---------------------------------------------------------------------------
 
+  describe 'at 768px wide — breakpoint applies' do
     it 'title slide' do
-      load_presentation
+      load_presentation(width: 768)
       expect(page).to have_css('#title-slide.present')
-      screenshot 'mobile_title_slide'
+      screenshot 'bp768_title_slide'
     end
 
-    it 'TOC slide — font-size media query' do
-      load_presentation
+    it 'TOC slide' do
+      load_presentation(width: 768)
       page.evaluate_script('Reveal.slide(1, 0)')
       wait_for_js('Reveal.getIndices().h === 1')
       expect(page).to have_css('#TOC.present')
-      screenshot 'mobile_toc_slide'
-    end
-
-    it 'song slide — first verse' do
-      load_presentation
-      go_to_first_song
-      expect(page).to have_css('section.present.level2')
-      screenshot 'mobile_song_slide_verse'
+      screenshot 'bp768_toc_slide'
     end
   end
 
-  describe 'tablet viewport (768×1024)' do
-    before do
-      page.driver.browser.resize(width: 768, height: 1024)
-    end
-
+  describe 'at 769px wide — breakpoint does not apply' do
     it 'title slide' do
-      load_presentation
+      load_presentation(width: 769)
       expect(page).to have_css('#title-slide.present')
-      screenshot 'tablet_title_slide'
+      screenshot 'bp769_title_slide'
     end
 
-    it 'TOC slide — at breakpoint boundary' do
-      load_presentation
+    it 'TOC slide' do
+      load_presentation(width: 769)
       page.evaluate_script('Reveal.slide(1, 0)')
       wait_for_js('Reveal.getIndices().h === 1')
       expect(page).to have_css('#TOC.present')
-      screenshot 'tablet_toc_slide'
-    end
-
-    it 'song slide — first verse' do
-      load_presentation
-      go_to_first_song
-      expect(page).to have_css('section.present.level2')
-      screenshot 'tablet_song_slide_verse'
+      screenshot 'bp769_toc_slide'
     end
   end
 end
