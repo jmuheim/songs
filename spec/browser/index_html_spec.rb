@@ -201,16 +201,6 @@ RSpec.describe 'index.html', :js, type: :feature do
   # Multiplex
   # -----------------------------------------------------------------------
   describe 'multiplex' do
-    def activate_master
-      password = page.evaluate_script("window.MULTIPLEX.password")
-      click_button('🚀 Lead slide navigation')
-      within('#master-modal') do
-        find('#master-pw').set(password)
-        click_button('OK')
-      end
-      expect(page).to have_css('#master-mode.is-master')
-    end
-
     describe 'master modal' do
       before { load_presentation }
 
@@ -250,6 +240,31 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
     end
 
+    describe 'live sync' do
+      after { Capybara.reset_sessions! }
+
+      it 'client follows slide changes broadcast by the master' do
+        using_session(:client) do
+          load_presentation
+          expect(page).to have_css('#title-slide.present')
+        end
+
+        using_session(:master) do
+          load_presentation
+          click_button('🚀 Lead slide navigation')
+          within('#master-modal') do
+            find('#master-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
+            click_button('OK')
+          end
+          expect(page).to have_css('#master-mode.is-master')
+          find('body').send_keys(:right)
+          expect(page).to have_css('#TOC.present')
+        end
+
+        using_session(:client) { expect(page).to have_css('#TOC.present') }
+      end
+    end
+
     describe 'QR modal' do
       before { load_presentation }
 
@@ -272,27 +287,5 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
     end
 
-    describe 'live sync' do
-      after { Capybara.reset_sessions! }
-
-      it 'client follows slide changes broadcast by the master' do
-        using_session(:client) do
-          load_presentation
-          expect(page).to have_css('#title-slide.present')
-        end
-
-        using_session(:master) do
-          load_presentation
-          activate_master  # also broadcasts current state, giving the socket time to settle
-        end
-
-        using_session(:master) do
-          find('body').send_keys(:right)
-          expect(page).to have_css('#TOC.present')
-        end
-
-        using_session(:client) { expect(page).to have_css('#TOC.present') }
-      end
-    end
   end
 end
