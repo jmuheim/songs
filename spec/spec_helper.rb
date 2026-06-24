@@ -1,5 +1,6 @@
 require 'capybara/rspec'
 require 'capybara/cuprite'
+require 'capybara_screenshot_diff/rspec'
 require_relative 'support/file_server'
 require_relative 'support/fixture_builder'
 
@@ -35,6 +36,13 @@ Capybara.default_driver    = :cuprite
 Capybara.javascript_driver = :cuprite
 Capybara.default_max_wait_time = 10
 Capybara.run_server = false
+
+Capybara::Screenshot::Diff.configure do |screenshot, diff|
+  screenshot.save_path = 'spec/screenshots'
+  screenshot.window_size = [1280, 800]
+  diff.driver = :vips
+  diff.tolerance = 0.001
+end
 
 module BrowserHelpers
   def song_count
