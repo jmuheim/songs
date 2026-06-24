@@ -77,4 +77,58 @@ RSpec.describe 'visual regression', :js, type: :feature do
     expect(page).to have_css('#title-slide.present')
     screenshot 'print_title_slide'
   end
+
+  describe 'mobile viewport (375×812)' do
+    before do
+      page.driver.browser.resize(width: 375, height: 812)
+    end
+
+    it 'title slide' do
+      load_presentation
+      expect(page).to have_css('#title-slide.present')
+      screenshot 'mobile_title_slide'
+    end
+
+    it 'TOC slide — font-size media query' do
+      load_presentation
+      page.evaluate_script('Reveal.slide(1, 0)')
+      wait_for_js('Reveal.getIndices().h === 1')
+      expect(page).to have_css('#TOC.present')
+      screenshot 'mobile_toc_slide'
+    end
+
+    it 'song slide — first verse' do
+      load_presentation
+      go_to_first_song
+      expect(page).to have_css('section.present.level2')
+      screenshot 'mobile_song_slide_verse'
+    end
+  end
+
+  describe 'tablet viewport (768×1024)' do
+    before do
+      page.driver.browser.resize(width: 768, height: 1024)
+    end
+
+    it 'title slide' do
+      load_presentation
+      expect(page).to have_css('#title-slide.present')
+      screenshot 'tablet_title_slide'
+    end
+
+    it 'TOC slide — at breakpoint boundary' do
+      load_presentation
+      page.evaluate_script('Reveal.slide(1, 0)')
+      wait_for_js('Reveal.getIndices().h === 1')
+      expect(page).to have_css('#TOC.present')
+      screenshot 'tablet_toc_slide'
+    end
+
+    it 'song slide — first verse' do
+      load_presentation
+      go_to_first_song
+      expect(page).to have_css('section.present.level2')
+      screenshot 'tablet_song_slide_verse'
+    end
+  end
 end
