@@ -12,6 +12,7 @@ A guitar song book generator. Songs are written in Markdown with inline chord no
 
 These are not descriptions of how things happen to work — they are commitments to keep. Follow them without being asked.
 
+- **Ask where new work lands before starting.** Confirm two things up front: which branch its commits go on — a fresh branch off `master` (the default) or the current one — and whether to work in the current checkout or a separate git worktree. Never append unrelated commits to a branch that has already been merged; that mixes two efforts under one PR's history. When in doubt, branch off `master`.
 - **Behaviour changes come with tests.** If you change the build pipeline, the chord regex, the multiplex logic, or anything in `style/*.js`, add or update the spec that pins that behaviour before considering the change done — and run `bundle exec rspec`. New behaviour with no covering spec is unfinished work.
 - **Keep the fixtures in sync.** The committed `all-songs.md`, `index.html`, `print.html`, and everything under `spec/fixtures/` are build outputs. When you change source or the generator, regenerate them (`./build`, and `rake golden:update` for the golden HTML) in the same change — the golden specs exist to catch exactly the drift you'd otherwise leave behind.
 - **One source of truth.** Don't copy logic that already lives in `lib/build_helpers.rb` (or anywhere else) into a second place. If the build and a spec both need a transformation, both call the same helper, so the spec tests what ships.
