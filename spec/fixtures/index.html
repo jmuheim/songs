@@ -67,12 +67,6 @@ body.theme-bright .ctrl > .visually-hidden {
   color: #333;
 }
 
-/* A chord is a button (chords.js); its focus needs to show on every colour */
-.reveal section code[role="button"]:focus-visible {
-  outline: 3px solid currentColor;
-  outline-offset: 2px;
-}
-
 body.chords-hidden #toggle-chords-visibility::after,
 body.multiplex-free #toggle-follow::after {
   font-size: 3em;
@@ -388,8 +382,13 @@ body.chords-clickable .reveal section code[class] {
   cursor: pointer;
 }
 
+/* A chord is a button (chords.js): pointed at, focused from the keyboard or
+   open, it looks the same. The ring takes the theme's text colour — the chord's
+   own text colour is black and would vanish on the night background. */
+body.chords-clickable .reveal section code[class]:hover,
+.reveal section code[role="button"]:focus-visible,
 .reveal section code.chord-active {
-  outline: 2px solid #fff;
+  outline: 3px solid var(--r-main-color);
   outline-offset: 2px;
 }
 

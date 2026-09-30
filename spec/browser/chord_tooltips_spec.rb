@@ -91,6 +91,13 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
       chord_focused = "document.activeElement.matches('code[role=\"button\"]')"
       30.times { break if page.evaluate_script(chord_focused); press(:tab) }
       expect(page.evaluate_script(chord_focused)).to be true
+      # Its ring is the theme's white, not the chord's black text colour, and a
+      # chord under the mouse wears the same one.
+      ring = "(function (el) { var s = getComputedStyle(el); return s.outlineStyle + ' ' + s.outlineColor; })"
+      focus_ring = page.evaluate_script("#{ring}(document.activeElement)")
+      expect(focus_ring).to eq('solid rgb(255, 255, 255)')
+      all("##{VERSE_ID} code[role=\"button\"]").last.hover
+      expect(page.evaluate_script("#{ring}(document.querySelector('##{VERSE_ID} code[role=\"button\"]:hover'))")).to eq(focus_ring)
       press(:enter)
       expect(page).to have_visible('#chord-tooltip')
       expect(page.evaluate_script("document.activeElement.getAttribute('aria-expanded')")).to eq('true')
