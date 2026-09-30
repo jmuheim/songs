@@ -24,6 +24,7 @@ namespace :golden do
     sections = {
       'title_slide.html'   => doc.at_css('section#title-slide'),
       'toc.html'           => doc.at_css('section#TOC'),
+      'master_modal.html'  => doc.at_css('dialog#master-modal'),
       'imagine_verse1.html' => imagine_title
                                 .xpath('following-sibling::section[.//h2[normalize-space()="Verse 1"]][1]')
                                 .first

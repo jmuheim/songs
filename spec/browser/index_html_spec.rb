@@ -33,6 +33,20 @@ RSpec.describe 'index.html', :js, type: :feature do
     expect(page).to have_css('#master-mode.is-master')
   end
 
+  # Types into whatever has the focus, as a person would: send_keys on a node
+  # would focus that node first
+  def press(*keys)
+    page.driver.browser.keyboard.type(*keys)
+  end
+
+  def active_element_id
+    page.evaluate_script("document.activeElement && document.activeElement.id")
+  end
+
+  def slide_indices
+    page.evaluate_script("[Reveal.getIndices().h, Reveal.getIndices().v]")
+  end
+
   def master?(session)
     using_session(session) { page.has_css?('#master-mode.is-master', wait: 0) }
   end
@@ -179,6 +193,22 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_css('code')
         expect(page).to have_no_css('code', visible: :hidden)
       end
+
+      # Clicked with the mouse, 🎹 keeps a focus nobody sees: Space turns the page instead
+      click_button('🎹 Hide chords')
+      before = slide_indices
+      press(:space)
+      wait_for_js("Reveal.getIndices().v !== #{before[1]}")
+      expect(slide_indices).not_to eq(before)
+      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="true"]')
+
+      # Reached with the keyboard, its focus shows: Space presses it, and the slide stays
+      20.times { break if active_element_id == 'toggle-chords-visibility'; press(:tab) }
+      expect(active_element_id).to eq('toggle-chords-visibility')
+      before = slide_indices
+      press(:space)
+      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="false"]')
+      expect(slide_indices).to eq(before)
     end
   end
 
@@ -226,6 +256,7 @@ RSpec.describe 'index.html', :js, type: :feature do
 
         click_button('🚀 Lead slide navigation')
         expect(page).to have_visible('#master-modal')
+        expect(active_element_id).to eq('master-pw')
         backdrop_click('master-modal')
         expect(page).not_to have_visible('#master-modal')
 
@@ -357,22 +388,32 @@ RSpec.describe 'index.html', :js, type: :feature do
     describe 'QR modal' do
       before { load_presentation }
 
-      it 'dismisses on close button and outside click' do
+      it 'keeps the keys to itself, and closes on Esc, close button and outside click' do
         expect(page).not_to have_visible('#qr-modal')
-        expect(page).to have_css('#show-qr[aria-pressed="false"]')
+        expect(page).to have_css('#show-qr[aria-haspopup="dialog"]')
 
         click_button('Show QR code')
         expect(page).to have_visible('#qr-modal')
-        expect(page).to have_css('#show-qr[aria-pressed="true"]')
+        expect(active_element_id).to eq('qr-title')
+        expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"]', visible: :all)
+
+        # Reveal listens on the document: nothing pressed inside the dialog reaches it
+        before = slide_indices
+        press(:right)
+        expect(slide_indices).to eq(before)
+        press(:escape)
+        expect(page).not_to have_visible('#qr-modal')
+        expect(page.evaluate_script("Reveal.isOverview()")).to be false
+        expect(active_element_id).to eq('show-qr')
+
+        click_button('Show QR code')
         within(find('#qr-modal', visible: :all)) { click_button('Schliessen') }
         expect(page).not_to have_visible('#qr-modal')
-        expect(page).to have_css('#show-qr[aria-pressed="false"]')
 
         click_button('Show QR code')
         expect(page).to have_visible('#qr-modal')
         backdrop_click('qr-modal')
         expect(page).not_to have_visible('#qr-modal')
-        expect(page).to have_css('#show-qr[aria-pressed="false"]')
       end
     end
 
