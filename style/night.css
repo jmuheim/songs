@@ -92,6 +92,18 @@ section#TOC::-webkit-scrollbar-thumb {
   right: 1em;
 }
 
+#multiplex-status {
+  position: fixed;
+  top: 4.5rem;
+  right: 1em;
+  z-index: 100;
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 1rem;
+  opacity: 0.75;
+  color: var(--r-main-color);
+}
+
 
 .reveal section strong {
   color: #5ad066;

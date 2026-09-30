@@ -8,6 +8,7 @@
   <button id="master-mode" class="ctrl" aria-pressed="false"><span aria-hidden="true">🚀</span> <span class="visually-hidden">Lead slide navigation</span></button>
   <button id="toggle-theme" class="ctrl" aria-pressed="false"><span aria-hidden="true" id="toggle-theme-icon">🌞</span> <span class="visually-hidden" id="toggle-theme-label">Switch to bright mode</span></button>
 </div>
+<p id="multiplex-status" role="status"></p>
 <script>
   document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
     document.body.classList.toggle('chords-hidden');
@@ -24,6 +25,18 @@
   });
 
   window.addEventListener('load', function() {
+    // Reveal writes the slide into the URL at most once a second, and iOS
+    // stops that timer when the page goes to the background: a phone switched
+    // to another app right after a slide change, and discarded there, reloaded
+    // a slide early. So the URL is written the moment the page is hidden.
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState !== 'hidden') return;
+      var path = Reveal.getSlidePath();
+      try {
+        history.replaceState(null, '', path === '/' ? location.pathname + location.search : '#' + path);
+      } catch (e) {} // Safari's replaceState limit: Reveal's own write remains
+    });
+
     Reveal.configure({
       keyboardCondition: function(event) {
         var el = document.activeElement;
@@ -110,9 +123,38 @@ window.addEventListener('load', function() {
   followBtn.hidden = false;
 
   function sameState(a, b) {
-    return a.indexh === b.indexh && a.indexv === b.indexv && a.indexf === b.indexf &&
-      !!a.overview === !!b.overview && !!a.paused === !!b.paused;
+    return a.indexh === b.indexh && a.indexv === b.indexv && a.indexf === b.indexf;
   }
+
+  // Clients get where the presenter is, not how they get there: browsing the
+  // overview for the next song, or pausing (B), stays on the presenter's
+  // screen. While the overview is open, the slide it was opened on is repeated.
+  var presented = null;
+  Reveal.on('overviewshown', function() { presented = Reveal.getState(); });
+  Reveal.on('overviewhidden', function() { presented = null; });
+
+  function stateToSend() {
+    var s = presented || Reveal.getState();
+    return { indexh: s.indexh, indexv: s.indexv, indexf: s.indexf };
+  }
+
+  // Who leads, and whether this tab follows, in words: a phone that stopped
+  // moving otherwise gives no clue whether the presenter left, the connection
+  // dropped, or it is browsing freely. Nothing to say to someone who never
+  // heard a presenter.
+  var statusEl = document.getElementById('multiplex-status');
+  var everConnected = false; // „no connection" means a lost one, not the first second of a page load
+  function updateStatus() {
+    var silentFor = Date.now() - leader.heardAt;
+    var text = '';
+    if (!socket.connected) text = everConnected && (isMaster || leader.heardAt) ? 'Keine Verbindung' : '';
+    else if (isMaster) text = 'Du präsentierst';
+    else if (!leader.heardAt) text = '';
+    else if (silentFor > 3 * (cfg.heartbeat || HEARTBEAT_MS)) text = 'Niemand präsentiert';
+    else text = following ? 'Folgt' : 'Frei';
+    if (statusEl.textContent !== text) statusEl.textContent = text;
+  }
+  setInterval(updateStatus, 500);
 
   function follow(state) {
     if (sameState(state, Reveal.getState())) return; // a repeat changes nothing
@@ -131,6 +173,7 @@ window.addEventListener('load', function() {
     followBtn.setAttribute('aria-pressed', on ? 'false' : 'true');
     try { sessionStorage.setItem('multiplex-free', on ? '0' : '1'); } catch (e) {}
     if (on && lastState) follow(lastState);
+    updateStatus();
   }
   setFollowing(following);
 
@@ -164,6 +207,7 @@ window.addEventListener('load', function() {
 
     lastState = data.state;
     if (following) follow(lastState);
+    updateStatus();
   });
 
   function broadcast() {
@@ -173,15 +217,16 @@ window.addEventListener('load', function() {
     socket.emit('multiplex-statechanged', {
       secret: cfg.secret,
       socketId: cfg.socketId,
-      state: Reveal.getState(),
+      state: stateToSend(),
       claim: claim,
       from: senderId
     });
   }
 
-  socket.on('connect', function() { if (isMaster) broadcast(); });
+  socket.on('connect', function() { everConnected = true; if (isMaster) broadcast(); updateStatus(); });
+  socket.on('disconnect', updateStatus);
 
-  var REVEAL_EVENTS = ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewshown', 'overviewhidden', 'paused', 'resumed'];
+  var REVEAL_EVENTS = ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewhidden'];
 
   // The role is kept per tab, with its claim, so that a master that reloads
   // (or whose tab iOS discarded) leads again without the password.
@@ -196,6 +241,7 @@ window.addEventListener('load', function() {
     broadcast();
     heartbeat = setInterval(broadcast, cfg.heartbeat || HEARTBEAT_MS);
     followBtn.hidden = true;
+    updateStatus();
   }
 
   function becomeClient() {
@@ -206,6 +252,7 @@ window.addEventListener('load', function() {
     REVEAL_EVENTS.forEach(function(ev) { Reveal.off(ev, broadcast); });
     clearInterval(heartbeat);
     followBtn.hidden = false;
+    updateStatus();
   }
 
   var masterBtn    = document.getElementById('master-mode');
