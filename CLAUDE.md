@@ -4,18 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-A guitar song book generator. Songs are written in Markdown with inline chord notation. A Ruby script compiles them into an interactive Reveal.js HTML slideshow (`index.html`) and a printable PDF-ready version (`print.html` / `print.pdf`).
+A guitar song book generator. Songs are written in Markdown with inline chord notation. A Ruby script compiles them into an interactive Reveal.js HTML slideshow (`index.html`) and a print-friendly version (`print.html`).
 
 ## Build command
 
 ```bash
-./build           # HTML only (fast)
-./build --pdf     # HTML + PDF (slow)
+./build           # Build index.html and print.html
 ./build --deploy  # HTML + deploy to songs.josh.ch
 ./dev             # Watch, rebuild, deploy, and live-reload on every change
 ```
 
-Dependencies: Ruby 3.x, Pandoc (`brew install pandoc`), DeckTape (`npm install -g decktape`), fswatch (`brew install fswatch`), browser-sync (`npm install -g browser-sync`).
+Dependencies: Ruby 3.x, Pandoc (`brew install pandoc`), fswatch (`brew install fswatch`), browser-sync (`npm install -g browser-sync`).
 
 > **Dev gotcha:** `./dev` passes `--no-ghost-mode` to browser-sync. Ghost mode (on by default) syncs clicks across all open tabs and interferes with the multiplex feature — it makes button presses appear to fire on all "clients" simultaneously during local testing.
 
@@ -59,8 +58,7 @@ The regex only matches `[Word]` not followed by `(` — so standard Markdown lin
 
 - `all-songs.md` — intermediate concatenated Markdown (committed, regenerated on each build)
 - `index.html` — interactive night-themed Reveal.js presentation (committed)
-- `print.html` — serif-themed version for PDF printing (committed)
-- `print.pdf` — generated PDF (committed)
+- `print.html` — serif-themed version for printing (committed). Open it as `print.html?print-pdf` in Chrome and print: reveal.js then lays out every slide as a page of its own
 
 ## Vendored reveal.js
 
