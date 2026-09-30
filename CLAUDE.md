@@ -104,6 +104,12 @@ To upgrade, copy those five files from `dist/` at the release's tag in the Git r
 
 **Space on a focused button presses that button, and only that** (`keyboardCondition`, set with `Reveal.configure` on load): Reveal used to turn the page as well, so Space after 🌞 switched the theme back and moved on. The exception is a focus nobody can see: a mouse click leaves the button focused without a ring, and there Space blurs it and turns the page, as the one clicking expects. Whether the ring shows is read on `focusin`, because Chrome turns `:focus-visible` on as soon as any key is pressed.
 
+**The buttons' labels are their tooltips.** Each control's `.visually-hidden` text is shown as a tooltip on hover (only where there is hover, `(hover: hover)`, so a tap on a phone shows nothing) and on keyboard focus. Esc hides it without opening Reveal's overview, any other key hides it too, and it stays hidden until the pointer leaves or the focus moves.
+
+**Chords are buttons** (`style/chords.js`): `role="button"`, `tabindex="0"`, `aria-expanded`; Enter or Space opens the fingering, the tooltip is read out as it appears (`aria-live`). The key handler sits on `window`, so it runs after Reveal's and skips a key Reveal acted on — Space on a chord focused by a mouse click turns the page, like on any button (see above).
+
+**Storage is optional:** with site data blocked, touching `localStorage` or `sessionStorage` throws, so every access is wrapped; the theme then switches without being remembered.
+
 ## Multiplex (live sync)
 
 The presentation uses the [Reveal.js multiplex plugin](https://revealjs.com/multiplex/) via `multiplex.up.railway.app` so that audience members can follow the presenter's slides in real time on their own devices.

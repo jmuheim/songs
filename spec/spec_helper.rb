@@ -58,6 +58,16 @@ module BrowserHelpers
     page.evaluate_script("Reveal.configure({ transition: 'none' })")
   end
 
+  # Types into whatever has the focus, as a person would: send_keys on a node
+  # would focus that node first
+  def press(*keys)
+    page.driver.browser.keyboard.type(*keys)
+  end
+
+  def active_element_id
+    page.evaluate_script("document.activeElement && document.activeElement.id")
+  end
+
   # Poll a JS expression instead of a fixed sleep, for state that Capybara's
   # have_css/have_text matchers can't observe directly (Reveal.js indices,
   # inline style values, etc).

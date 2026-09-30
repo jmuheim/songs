@@ -129,6 +129,8 @@
     tooltip.id = 'chord-tooltip';
     tooltip.setAttribute('role', 'tooltip');
     var tooltipInner = el('div', 'chord-tooltip-inner');
+    // Read out when it appears: the focus stays on the chord.
+    tooltipInner.setAttribute('aria-live', 'polite');
     tooltip.appendChild(tooltipInner);
     document.body.appendChild(tooltip);
     document.body.classList.add('chords-clickable');
@@ -136,9 +138,37 @@
     var MARGIN = 12;
     var activeChord = null;
 
+    function isChord(node) {
+      return node && node.matches && node.matches('.reveal section code[class]') && /^[a-gx]$/.test(node.className.split(' ')[0]);
+    }
+
+    // Each chord is a button, reachable with Tab and opened with Enter or
+    // Space like one. Space is Reveal's page turn: keyboardCondition in
+    // body-controls.html leaves it to a chord focused from the keyboard.
+    Array.prototype.forEach.call(document.querySelectorAll('.reveal section code[class]'), function (chordEl) {
+      if (!isChord(chordEl)) return;
+      chordEl.setAttribute('role', 'button');
+      chordEl.setAttribute('tabindex', '0');
+      chordEl.setAttribute('aria-expanded', 'false');
+      chordEl.setAttribute('aria-controls', 'chord-tooltip');
+    });
+
+    // On window, so it runs after Reveal's handler on the document: a key
+    // Reveal acted on (defaultPrevented), or one after which Reveal moved the
+    // focus away, is not the chord's.
+    window.addEventListener('keydown', function (e) {
+      var chordEl = document.activeElement;
+      if (e.defaultPrevented || (e.key !== 'Enter' && e.key !== ' ') || !isChord(chordEl) || e.target !== chordEl) return;
+      e.preventDefault();
+      chordEl.click();
+    });
+
     function hideTooltip() {
       tooltip.classList.remove('visible');
-      if (activeChord) activeChord.classList.remove('chord-active');
+      if (activeChord) {
+        activeChord.classList.remove('chord-active');
+        activeChord.setAttribute('aria-expanded', 'false');
+      }
       activeChord = null;
     }
 
@@ -208,13 +238,17 @@
 
     document.addEventListener('click', function (e) {
       var chordEl = e.target.closest && e.target.closest('.reveal section code[class]');
-      if (chordEl && /^[a-gx]$/.test(chordEl.className)) {
+      if (isChord(chordEl)) {
         e.preventDefault();
         e.stopPropagation();
         if (activeChord === chordEl) { hideTooltip(); return; }
-        if (activeChord) activeChord.classList.remove('chord-active');
+        if (activeChord) {
+          activeChord.classList.remove('chord-active');
+          activeChord.setAttribute('aria-expanded', 'false');
+        }
         activeChord = chordEl;
         chordEl.classList.add('chord-active');
+        chordEl.setAttribute('aria-expanded', 'true');
         showTooltip(chordEl);
         return;
       }

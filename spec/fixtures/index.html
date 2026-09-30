@@ -35,6 +35,44 @@
   font-size: 3em;
 }
 
+/* The label, shown as a tooltip (body-controls.html says when). A transparent
+   top border bridges the gap to the button, so the pointer can move onto it. */
+.ctrl.tooltip-hover:not(.tooltip-dismissed) > .visually-hidden,
+.ctrl:focus-visible:not(.tooltip-dismissed) > .visually-hidden {
+  top: 100%;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  z-index: 101;
+  padding: 0.25em 0.6em;
+  border-top: 0.4rem solid transparent;
+  background: #222 padding-box;
+  color: #fff;
+  border-radius: 0.3em;
+  font-family: sans-serif;
+  font-size: 1rem;
+}
+
+#top-left-controls .ctrl > .visually-hidden {
+  left: 0;
+}
+
+#top-right-controls .ctrl > .visually-hidden {
+  right: 0;
+}
+
+body.theme-bright .ctrl > .visually-hidden {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* A chord is a button (chords.js); its focus needs to show on every colour */
+.reveal section code[role="button"]:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
 body.chords-hidden #toggle-chords-visibility::after,
 body.multiplex-free #toggle-follow::after {
   font-size: 3em;
@@ -466,7 +504,7 @@ section.slide.level2 {
     this.setAttribute('aria-pressed', document.body.classList.contains('chords-hidden'));
   });
 
-  // Space on a focused button presses it, and Reveal must not turn the page
+  // Space on a focused button (or chord, see chords.js) presses it, and Reveal must not turn the page
   // as well. Except where a mouse click put the focus there: nobody sees it
   // (no focus ring), so Space turns the page. Read when the focus arrives,
   // because Chrome shows the ring as soon as any key is pressed.
@@ -491,7 +529,7 @@ section.slide.level2 {
     Reveal.configure({
       keyboardCondition: function(event) {
         var el = document.activeElement;
-        if (event.key !== ' ' || !el || !el.matches('button')) return true;
+        if (event.key !== ' ' || !el || !el.matches('button, [role="button"]')) return true;
         if (el !== unseenFocus) return false;
         el.blur();
         return true;
@@ -510,13 +548,37 @@ section.slide.level2 {
       if (btn)   btn.setAttribute('aria-pressed', bright ? 'true' : 'false');
     }
 
-    applyTheme(localStorage.getItem('theme') === 'bright');
+    // With site data blocked, merely touching localStorage throws: the theme
+    // then switches without being remembered.
+    var stored = null;
+    try { stored = localStorage.getItem('theme'); } catch (e) {}
+    applyTheme(stored === 'bright');
 
     document.getElementById('toggle-theme').addEventListener('click', function() {
       var bright = !document.body.classList.contains('theme-bright');
       applyTheme(bright);
-      localStorage.setItem('theme', bright ? 'bright' : 'dark');
+      try { localStorage.setItem('theme', bright ? 'bright' : 'dark'); } catch (e) {}
     });
+  })();
+
+  // The buttons' labels double as tooltips, on hover (where there is one) and
+  // on keyboard focus. Esc dismisses a tooltip without opening Reveal's
+  // overview, and any other key dismisses it too, so a focused button does not
+  // caption the screen for a whole song. Capture phase: before Reveal hears
+  // the key, and after Chrome has decided the focus is now visible.
+  (function() {
+    var hoverable = window.matchMedia('(hover: hover)');
+    Array.prototype.forEach.call(document.querySelectorAll('.ctrl'), function(ctrl) {
+      ctrl.addEventListener('mouseenter', function() { if (hoverable.matches) ctrl.classList.add('tooltip-hover'); });
+      ctrl.addEventListener('mouseleave', function() { ctrl.classList.remove('tooltip-hover', 'tooltip-dismissed'); });
+      ctrl.addEventListener('blur', function() { ctrl.classList.remove('tooltip-dismissed'); });
+    });
+    document.addEventListener('keydown', function(e) {
+      var shown = document.querySelector('.ctrl.tooltip-hover:not(.tooltip-dismissed), .ctrl:focus-visible:not(.tooltip-dismissed)');
+      if (!shown) return;
+      shown.classList.add('tooltip-dismissed');
+      if (e.key === 'Escape') { e.stopPropagation(); e.preventDefault(); }
+    }, true);
   })();
 </script>
 

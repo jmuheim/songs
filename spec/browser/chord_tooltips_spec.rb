@@ -83,6 +83,20 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
       expect(page).to have_css('code.d.chord-active', text: 'D')
       expect(page).to have_no_css('code.f.chord-active')
       expect(tooltip_tab).to include('D |x x 0 2 3 2|')
+
+      # From the keyboard a chord is a button: Tab reaches it, Enter opens it,
+      # Space closes it again — and does not turn the page
+      find("##{VERSE_ID} h2").click
+      expect(page).not_to have_visible('#chord-tooltip')
+      chord_focused = "document.activeElement.matches('code[role=\"button\"]')"
+      30.times { break if page.evaluate_script(chord_focused); press(:tab) }
+      expect(page.evaluate_script(chord_focused)).to be true
+      press(:enter)
+      expect(page).to have_visible('#chord-tooltip')
+      expect(page.evaluate_script("document.activeElement.getAttribute('aria-expanded')")).to eq('true')
+      press(:space)
+      expect(page).not_to have_visible('#chord-tooltip')
+      expect(page).to have_css('section.present#' + VERSE_ID)
     end
 
     it 'closes on re-click, outside click, Escape (without toggling Reveal overview), and slide change' do

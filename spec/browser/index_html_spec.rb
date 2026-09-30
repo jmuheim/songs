@@ -33,14 +33,8 @@ RSpec.describe 'index.html', :js, type: :feature do
     expect(page).to have_css('#master-mode.is-master')
   end
 
-  # Types into whatever has the focus, as a person would: send_keys on a node
-  # would focus that node first
-  def press(*keys)
-    page.driver.browser.keyboard.type(*keys)
-  end
-
-  def active_element_id
-    page.evaluate_script("document.activeElement && document.activeElement.id")
+  def tooltip_shown?(id)
+    page.evaluate_script("getComputedStyle(document.querySelector('##{id} > .visually-hidden')).clipPath") == 'none'
   end
 
   def slide_indices
@@ -214,9 +208,18 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(slide_indices).not_to eq(before)
       expect(page).to have_css('#toggle-chords-visibility[aria-pressed="true"]')
 
-      # Reached with the keyboard, its focus shows: Space presses it, and the slide stays
+      # Reached with the keyboard, its focus shows: Space presses it, and the slide stays.
+      # The mouse leaves first: keys pressed while it rested on 🎹 dismissed its tooltip.
+      page.driver.browser.mouse.move(x: 640, y: 500)
       20.times { break if active_element_id == 'toggle-chords-visibility'; press(:tab) }
       expect(active_element_id).to eq('toggle-chords-visibility')
+
+      # The keyboard focus shows the label as a tooltip; Esc hides it without opening the overview
+      expect(tooltip_shown?('toggle-chords-visibility')).to be true
+      press(:escape)
+      expect(tooltip_shown?('toggle-chords-visibility')).to be false
+      expect(page.evaluate_script("Reveal.isOverview()")).to be false
+
       before = slide_indices
       press(:space)
       expect(page).to have_css('#toggle-chords-visibility[aria-pressed="false"]')
@@ -252,6 +255,19 @@ RSpec.describe 'index.html', :js, type: :feature do
       click_button('🌛 Switch to dark mode')
       expect(page).to have_no_css('body.theme-bright')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('dark')
+
+      # With site data blocked, touching storage throws: the theme switches all the same
+      using_session(:no_storage) do
+        page.driver.browser.page.command('Page.addScriptToEvaluateOnNewDocument', source: <<~JS)
+          ['localStorage', 'sessionStorage'].forEach(function (name) {
+            Object.defineProperty(window, name, { get: function () { throw new DOMException('blocked', 'SecurityError'); } });
+          });
+        JS
+        load_presentation
+        expect { page.evaluate_script('localStorage') }.to raise_error(Ferrum::JavaScriptError)
+        click_button('🌞 Switch to bright mode')
+        expect(page).to have_css('body.theme-bright')
+      end
     end
   end
 
@@ -437,6 +453,9 @@ RSpec.describe 'index.html', :js, type: :feature do
       it 'keeps the keys to itself, and closes on Esc, close button and outside click' do
         expect(page).not_to have_visible('#qr-modal')
         expect(page).to have_css('#show-qr[aria-haspopup="dialog"]')
+        expect(tooltip_shown?('show-qr')).to be false
+        find('#show-qr').hover
+        expect(tooltip_shown?('show-qr')).to be true
 
         click_button('Show QR code')
         expect(page).to have_visible('#qr-modal')

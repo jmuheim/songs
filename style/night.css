@@ -22,6 +22,44 @@
   font-size: 3em;
 }
 
+/* The label, shown as a tooltip (body-controls.html says when). A transparent
+   top border bridges the gap to the button, so the pointer can move onto it. */
+.ctrl.tooltip-hover:not(.tooltip-dismissed) > .visually-hidden,
+.ctrl:focus-visible:not(.tooltip-dismissed) > .visually-hidden {
+  top: 100%;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip-path: none;
+  z-index: 101;
+  padding: 0.25em 0.6em;
+  border-top: 0.4rem solid transparent;
+  background: #222 padding-box;
+  color: #fff;
+  border-radius: 0.3em;
+  font-family: sans-serif;
+  font-size: 1rem;
+}
+
+#top-left-controls .ctrl > .visually-hidden {
+  left: 0;
+}
+
+#top-right-controls .ctrl > .visually-hidden {
+  right: 0;
+}
+
+body.theme-bright .ctrl > .visually-hidden {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+/* A chord is a button (chords.js); its focus needs to show on every colour */
+.reveal section code[role="button"]:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
 body.chords-hidden #toggle-chords-visibility::after,
 body.multiplex-free #toggle-follow::after {
   font-size: 3em;
