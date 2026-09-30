@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
-require 'shellwords'
 require 'json'
 require 'net/http'
 require 'nokogiri'
@@ -19,10 +18,9 @@ MULTIPLEX_TOKEN   = File.exist?('multiplex-token.json') \
   ? JSON.parse(File.read('multiplex-token.json')) \
   : JSON.parse(Net::HTTP.get(URI("#{MULTIPLEX_URL}/token"))).tap { |t| File.write('multiplex-token.json', JSON.generate(t)) }
 
-options = { pdf: false, deploy: false }
+options = { deploy: false }
 OptionParser.new do |opts|
   opts.banner = "Usage: build [options]"
-  opts.on("--pdf",    "Generate PDF (slow)")               { options[:pdf]    = true }
   opts.on("--deploy", "Deploy to songs.josh.ch via rsync") { options[:deploy] = true }
 end.parse!
 
@@ -78,7 +76,7 @@ step("✨", "Post-processing index.html") do
   html.sub!("keyboard: true,", "keyboard: { 83: null }, // 's' disabled (was: speaker notes)")
   html.sub!("controls: true,", "controls: false,")
   html.sub!("display: 'block',", "display: 'flex',")
-  html.sub!("</body>", "  <script src=\"#{MULTIPLEX_URL}/socket.io/socket.io.js\"></script>\n  <script src=\"https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js\"></script>\n  <script src=\"style/slide-zoom.js\"></script>\n  <script src=\"style/chords.js\"></script>\n</body>")
+  html.sub!("</body>", "  <script src=\"#{MULTIPLEX_URL}/socket.io/socket.io.js\"></script>\n  <script src=\"style/qrcodejs/qrcode.min.js\"></script>\n  <script src=\"style/slide-zoom.js\"></script>\n  <script src=\"style/chords.js\"></script>\n</body>")
   html = wrap_slide_content(html)
   File.write("index.html", html)
 end
@@ -94,14 +92,6 @@ step("✨", "Post-processing print.html") do
   html.sub!("plugins: [\n          RevealNotes,\n          RevealSearch,\n          RevealZoom\n        ]", "plugins: []")
   html = wrap_slide_content(html)
   File.write("print.html", html)
-end
-
-if options[:pdf]
-  step("📄", "Generating print.pdf (DeckTape)") do
-    url = Shellwords.shellescape("file://#{File.expand_path('print.html')}")
-    output = `decktape -s 1600x1200 #{url} print.pdf 2>&1`
-    print "\n#{output}" unless output.strip.empty?
-  end
 end
 
 if options[:deploy]

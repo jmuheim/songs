@@ -1,6 +1,6 @@
 # My Songs
 
-A collection of songs I perform on guitar. Written in Markdown with inline chord notation, compiled into an interactive Reveal.js slideshow and a printable PDF.
+A collection of songs I perform on guitar. Written in Markdown with inline chord notation, compiled into an interactive Reveal.js slideshow and a print-friendly version.
 
 A live version is at [songs.josh.ch](https://songs.josh.ch).
 
@@ -10,21 +10,20 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - Colour-coded chords (each root letter gets its own colour)
 - Toggle chord visibility (🎹 button)
 - **Live sync** — open the song book on your phone and follow along as the presenter advances slides (see below)
-- Printable PDF version
+- Print-friendly version: open `print.html?print-pdf` in Chrome and print
 
 ## Installation
 
 - [Ruby](https://www.ruby-lang.org/) 3.x
 - [Pandoc](https://pandoc.org/): `brew install pandoc`
-- [DeckTape](https://github.com/astefanutti/decktape) (PDF only): `npm install -g decktape`
 - [fswatch](https://github.com/emcrisostomo/fswatch) (dev watch only): `brew install fswatch`
 - [browser-sync](https://browsersync.io/) (dev watch only): `npm install -g browser-sync`
+- [Node.js](https://nodejs.org/) 18+ (tests only)
 
 ## Build
 
 ```bash
-LANG=en_US.UTF-8 ./build           # HTML only (fast)
-LANG=en_US.UTF-8 ./build --pdf     # HTML + PDF (slow)
+LANG=en_US.UTF-8 ./build           # Build index.html and print.html
 LANG=en_US.UTF-8 ./build --deploy  # HTML + deploy to songs.josh.ch
 LANG=en_US.UTF-8 ./dev             # Watch, rebuild, and live-reload on every change
 ```
@@ -32,6 +31,15 @@ LANG=en_US.UTF-8 ./dev             # Watch, rebuild, and live-reload on every ch
 > `LANG=en_US.UTF-8` is required because song files contain non-ASCII characters.
 
 > **Dev note:** `./dev` runs browser-sync with `--no-ghost-mode`. Ghost mode (enabled by default) syncs clicks across all open tabs, which interferes with the multiplex feature — every button press would appear to fire on all "clients" simultaneously during local testing.
+
+## Tests
+
+```bash
+npm install --prefix multiplex-server   # once
+bundle exec rspec
+```
+
+The browser specs run their own multiplex server on `127.0.0.1:18889`, so a spec that becomes presenter never moves anyone who has songs.josh.ch open.
 
 ## Adding songs
 

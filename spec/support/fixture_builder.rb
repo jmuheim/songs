@@ -1,6 +1,7 @@
 require 'json'
 require 'fileutils'
 require_relative '../../lib/build_helpers'
+require_relative 'multiplex_server'
 
 module FixtureBuilder
   extend BuildHelpers
@@ -12,8 +13,6 @@ module FixtureBuilder
   PRINT_OUTPUT  = File.join(FIXTURE_DIR, 'print.html')
   URL_PATH      = '/spec/fixtures/index.html'
   PRINT_URL_PATH = '/spec/fixtures/print.html'
-
-  MULTIPLEX_URL = 'https://multiplex.up.railway.app'
 
   def self.build!
     return if @built
@@ -58,9 +57,8 @@ module FixtureBuilder
 
       html = File.read(index_html_path, encoding: 'UTF-8')
 
-      token           = JSON.parse(File.read(File.join(ROOT, 'multiplex-token.json')))
-      multiplex_json  = { url: MULTIPLEX_URL, socketId: token['socketId'],
-                          secret: token['secret'], password: 'guitar' }.to_json
+      multiplex_json  = { url: MultiplexServer.url, socketId: MultiplexServer::SOCKET_ID,
+                          secret: MultiplexServer::SECRET, password: 'guitar' }.to_json
       body_controls   = File.read(File.join(ROOT, 'style', 'body-controls.html'), encoding: 'UTF-8').strip
 
       html.sub!('<body>', "<body><script>window.MULTIPLEX=#{multiplex_json};</script>#{body_controls}")
@@ -72,8 +70,8 @@ module FixtureBuilder
       html.sub!("display: 'block',", "display: 'flex',")
       html.sub!(
         '</body>',
-        "  <script src=\"#{MULTIPLEX_URL}/socket.io/socket.io.js\"></script>\n" \
-        "  <script src=\"https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js\"></script>\n" \
+        "  <script src=\"#{MultiplexServer.url}/socket.io/socket.io.js\"></script>\n" \
+        "  <script src=\"/style/qrcodejs/qrcode.min.js\"></script>\n" \
         "  <script src=\"/style/slide-zoom.js\"></script>\n" \
         "  <script src=\"/style/chords.js\"></script>\n</body>"
       )

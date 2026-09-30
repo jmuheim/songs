@@ -4,18 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-A guitar song book generator. Songs are written in Markdown with inline chord notation. A Ruby script compiles them into an interactive Reveal.js HTML slideshow (`index.html`) and a printable PDF-ready version (`print.html` / `print.pdf`).
+A guitar song book generator. Songs are written in Markdown with inline chord notation. A Ruby script compiles them into an interactive Reveal.js HTML slideshow (`index.html`) and a print-friendly version (`print.html`).
 
 ## Build command
 
 ```bash
-./build           # HTML only (fast)
-./build --pdf     # HTML + PDF (slow)
+./build           # Build index.html and print.html
 ./build --deploy  # HTML + deploy to songs.josh.ch
 ./dev             # Watch, rebuild, deploy, and live-reload on every change
 ```
 
-Dependencies: Ruby 3.x, Pandoc (`brew install pandoc`), DeckTape (`npm install -g decktape`), fswatch (`brew install fswatch`), browser-sync (`npm install -g browser-sync`).
+Dependencies: Ruby 3.x, Pandoc (`brew install pandoc`), fswatch (`brew install fswatch`), browser-sync (`npm install -g browser-sync`).
 
 > **Dev gotcha:** `./dev` passes `--no-ghost-mode` to browser-sync. Ghost mode (on by default) syncs clicks across all open tabs and interferes with the multiplex feature — it makes button presses appear to fire on all "clients" simultaneously during local testing.
 
@@ -59,8 +58,30 @@ The regex only matches `[Word]` not followed by `(` — so standard Markdown lin
 
 - `all-songs.md` — intermediate concatenated Markdown (committed, regenerated on each build)
 - `index.html` — interactive night-themed Reveal.js presentation (committed)
-- `print.html` — serif-themed version for PDF printing (committed)
-- `print.pdf` — generated PDF (committed)
+- `print.html` — serif-themed version for printing (committed). Open it as `print.html?print-pdf` in Chrome and print: reveal.js then lays out every slide as a page of its own
+
+## Tests
+
+```bash
+npm install --prefix multiplex-server   # once; needs Node.js >= 18
+bundle exec rspec
+```
+
+`spec/support/fixture_builder.rb` builds `spec/fixtures/index.html` and `print.html` from the songs in `spec/fixtures/songs/`; both are committed. The browser specs serve them with WEBrick on port 18888 (`spec/support/file_server.rb`).
+
+**The specs never touch the live multiplex channel.** `spec/support/multiplex_server.rb` runs `multiplex-server/` — the official reveal-multiplex package, the same software the public Railway server runs, pinned by commit — on `127.0.0.1:18889` (`localhost.js` keeps it off the LAN) for the whole run. The fixture points at it with a fixed test pair (`sha256(secret) == socketId`, which is all the server checks). Before, the fixture carried `multiplex-token.json`, so the „live sync" spec became master on the channel songs.josh.ch listens to, and moved anyone who had it open at the time. Port and token are fixed rather than fresh per run so that the committed fixture stays the same from run to run.
+
+The only request that still leaves the machine is the night theme's Google Fonts `@import`; the slide-zoom expectations are measured with those fonts.
+
+## Vendored reveal.js
+
+`style/revealjs/` holds reveal.js **6.0.2** — only the five files the pages load (`dist/reveal.js`, `reveal.css`, `reset.css`, `theme/night.css`, `theme/serif.css`) plus its `LICENSE`. Everything under `style/` is deployed, so the rest of the release (tests, demo, other themes, `package-lock.json`) stays out. The paths match Pandoc's `revealjs-url`, which is why the `dist/` folder is kept.
+
+To upgrade, copy those five files from `dist/` at the release's tag in the Git repository (`https://raw.githubusercontent.com/hakimel/reveal.js/<tag>/dist/…`), rebuild and run the specs. Pandoc's template also loads the notes, search and zoom plugins from their reveal.js 5 paths; the song book uses none of them, and `build` removes those script tags.
+
+6.0.2 is the minimum: it makes every slide but the current one `inert` ([hakimel/reveal.js#1587](https://github.com/hakimel/reveal.js/issues/1587)). With 6.0.1, `Tab` on the Introduction reached the table of contents' links, which reveal.js keeps rendered next door but invisible — 35 of 40 presses landed there.
+
+`style/qrcodejs/` holds qrcodejs 1.0.0 (the 🔗 dialog's QR code) with its `LICENSE`, served from the song book itself rather than jsDelivr.
 
 ## Multiplex (live sync)
 

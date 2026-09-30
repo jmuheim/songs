@@ -1,10 +1,5 @@
 # Stets in Truure (Traditionell 🇨🇭)
 
-## Intro
-
-[D] [D] [D] [G] [G] _(x2)_
-[D] [D] [D]
-
 ## Verse 1
 
 Stets i [D] Truure [A7] mues i [D] läbe,

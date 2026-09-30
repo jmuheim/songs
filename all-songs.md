@@ -3123,11 +3123,6 @@ you'll `F`{.f} find me
 
 # Stets in Truure (Traditionell 🇨🇭)
 
-## Intro
-
-`D`{.d} `D`{.d} `D`{.d} `G`{.g} `G`{.g} _(x2)_
-`D`{.d} `D`{.d} `D`{.d}
-
 ## Verse 1
 
 Stets i `D`{.d} Truure `A7`{.a} mues i `D`{.d} läbe,
