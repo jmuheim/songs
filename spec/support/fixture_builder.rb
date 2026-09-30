@@ -72,7 +72,8 @@ module FixtureBuilder
         '</body>',
         "  <script src=\"#{MultiplexServer.url}/socket.io/socket.io.js\"></script>\n" \
         "  <script src=\"/style/qrcodejs/qrcode.min.js\"></script>\n" \
-        "  <script src=\"/style/slide-zoom.js\"></script>\n</body>"
+        "  <script src=\"/style/slide-zoom.js\"></script>\n" \
+        "  <script src=\"/style/chords.js\"></script>\n</body>"
       )
       html = wrap_slide_content(html)
 
