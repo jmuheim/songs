@@ -53,6 +53,7 @@ RSpec.describe 'index.html', :js, type: :feature do
 
     it 'has the correct DOM structure and initial state' do
       expect(page).to have_css('#title-slide.present')
+      expect(page.evaluate_script("document.documentElement.lang")).to eq('de-CH')
       within('#top-left-controls') do
         expect(page).to have_link('📖 Table of contents')
         expect(page).to have_button('🎹 Hide chords')
