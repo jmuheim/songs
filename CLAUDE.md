@@ -97,6 +97,9 @@ To upgrade, copy those five files from `dist/` at the release's tag in the Git r
 
 ## Keyboard and dialogs
 
+**The URL is written the moment the page is hidden** (`visibilitychange`): Reveal writes it at most once a second, and iOS stops that timer in the background, so a phone that switched apps right after a slide change and was discarded there reloaded a slide early.
+
+
 **The two overlays are native `<dialog>`s** (🚀's password prompt and 🔗's QR code, in `style/body-controls.html`), opened with `showModal()`: the page behind is inert, Esc closes, and focus returns to the button that opened them. The QR dialog focuses its title (`tabindex="-1"`, no ring), so a screenreader starts there and a phone shows no keyboard; the password dialog focuses its field. Two things `showModal()` leaves to us: Reveal listens for keys on the document, where they still arrive from inside a dialog — so each dialog stops `keydown`/`keypress` from propagating, or the arrow keys would page the deck behind it and Esc would open Reveal's overview — and a click on the backdrop lands on the `<dialog>` itself, which closes it.
 
 **Space on a focused button presses that button, and only that** (`keyboardCondition`, set with `Reveal.configure` on load): Reveal used to turn the page as well, so Space after 🌞 switched the theme back and moved on. The exception is a focus nobody can see: a mouse click leaves the button focused without a ring, and there Space blurs it and turns the page, as the one clicking expects. Whether the ring shows is read on `focusin`, because Chrome turns `:focus-visible` on as soon as any key is pressed.
@@ -112,6 +115,8 @@ The code is the second `<script>` in `style/body-controls.html`; the server is a
 - **Heartbeat:** the master repeats its state every 2 s (`HEARTBEAT_MS`; the specs shorten it through `window.MULTIPLEX.heartbeat`) and again right after a reconnect. That is how a client that opens the page mid-session, or comes back from a dead spot or a locked screen, catches up — the relay cannot hand out a last state. Repeats are only sent while connected (socket.io would queue them all and replay them at once), and a client drops a repeat that matches where it already is.
 - **Client** (default): follows the master. **Following is the client's own choice**, per tab (`sessionStorage`, so a reload or iOS discarding the tab keeps it): 👣 „Browse freely" switches it off and on, and switching it back on jumps to the master's last state straight away.
 - **Paging on one's own device switches to browsing freely.** Otherwise the next repeat would snap the page back within two seconds — the reason a heartbeat was once rejected here. Reveal events the master caused (`applyingRemote`, set around `Reveal.setState`) don't count.
+- **Only the slide is sent** (`stateToSend`): indices, never `overview` or `paused`. While the presenter browses the overview for the next song, the slide it was opened on is repeated, and the chosen one goes out when the overview closes; B pauses the presenter's screen only.
+- **Status line** (`#multiplex-status`, `role="status"`, under the top-right buttons): „Du präsentierst", „Folgt", „Frei", „Niemand präsentiert" (no word from the presenter for three repeats) or „Keine Verbindung" (a connection that was there and dropped). Empty for someone who never heard a presenter, which is everyone browsing on their own.
 - **QR code** (🔗, top right): shows a QR code of the current URL so new people can join.
 
 ### Token (`multiplex-token.json`)

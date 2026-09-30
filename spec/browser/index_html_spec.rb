@@ -94,6 +94,18 @@ RSpec.describe 'index.html', :js, type: :feature do
 
       find('body').send_keys(:down)
       expect(page).to have_css('section.present h2', text: 'Welcome')
+
+      # Reveal writes the URL at most once a second; hiding the page (a phone
+      # switching apps) writes it at once
+      page.evaluate_script("Reveal.slide(3)")
+      page.evaluate_script("Reveal.slide(4)")
+      current = page.evaluate_script("'#' + Reveal.getSlidePath()")
+      expect(page.evaluate_script("location.hash")).not_to eq(current) # else this proves nothing
+      page.execute_script(<<~JS)
+        Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true });
+        document.dispatchEvent(new Event('visibilitychange'));
+      JS
+      expect(page.evaluate_script("location.hash")).to eq(current)
     end
   end
 
@@ -309,7 +321,11 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).to have_css('#TOC.present')
         end
 
-        using_session(:client) { expect(page).to have_css('#TOC.present') }
+        using_session(:client) do
+          expect(page).to have_css('#TOC.present')
+          expect(page).to have_css('#multiplex-status', text: 'Folgt')
+        end
+        using_session(:master) { expect(page).to have_css('#multiplex-status', text: 'Du präsentierst') }
 
         # Opened after the master's last slide change: only the repeat brings it there
         using_session(:late) do
@@ -322,6 +338,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           find('body').send_keys(:right)
           expect(page).to have_css('#introduction.present')
           expect(page).to have_css('#toggle-follow[aria-pressed="true"]')
+          expect(page).to have_css('#multiplex-status', text: 'Frei')
         end
 
         using_session(:master) do
@@ -342,20 +359,42 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
         end
 
+        # The overview and a pause stay on the presenter's screen: clients keep
+        # the slide the overview was opened on until another one is chosen
+        using_session(:master) do
+          page.evaluate_script("Reveal.toggleOverview(true)")
+          page.evaluate_script("Reveal.right()")
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
+        end
+        using_session(:client) do
+          sleep 0.6 # three repeats
+          expect(page.evaluate_script("[Reveal.getIndices().h, Reveal.isOverview()]")).to eq([3, false])
+        end
+        using_session(:master) do
+          page.evaluate_script("Reveal.toggleOverview(false)")
+          page.evaluate_script("Reveal.togglePause(true)")
+        end
+        using_session(:client) do
+          wait_for_js("Reveal.getIndices().h === 4")
+          sleep 0.6 # three repeats of the paused master
+          expect(page.evaluate_script("[Reveal.getIndices().h, Reveal.isPaused()]")).to eq([4, false])
+        end
+        using_session(:master) { page.evaluate_script("Reveal.togglePause(false)") }
+
         # The late client takes over: the master steps down and follows along with everyone else
         using_session(:late) do
           become_master
-          page.evaluate_script("Reveal.slide(4)")
+          page.evaluate_script("Reveal.slide(5)")
         end
         using_session(:master) do
           expect(page).to have_no_css('#master-mode.is-master')
           expect(page.evaluate_script("sessionStorage.getItem('multiplex-master')")).to be_nil
-          wait_for_js("Reveal.getIndices().h === 4")
-          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
+          wait_for_js("Reveal.getIndices().h === 5")
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(5)
         end
         using_session(:client) do
-          wait_for_js("Reveal.getIndices().h === 4")
-          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
+          wait_for_js("Reveal.getIndices().h === 5")
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(5)
         end
 
         # Reloaded, the new master leads again without the password, and the
@@ -364,11 +403,11 @@ RSpec.describe 'index.html', :js, type: :feature do
           page.refresh
           wait_for_reveal
           expect(page).to have_css('#master-mode.is-master')
-          page.evaluate_script("Reveal.slide(5)")
+          page.evaluate_script("Reveal.slide(6)")
         end
         using_session(:client) do
-          wait_for_js("Reveal.getIndices().h === 5", timeout: 5) # a reloaded master repeats every 2 s
-          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(5)
+          wait_for_js("Reveal.getIndices().h === 6", timeout: 5) # a reloaded master repeats every 2 s
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(6)
         end
 
         # A duplicated tab inherits role and claim: of the two, exactly one stays master
@@ -382,6 +421,13 @@ RSpec.describe 'index.html', :js, type: :feature do
         deadline = Time.now + 5
         sleep 0.1 until masters.call == 1 || Time.now > deadline
         expect(masters.call).to eq(1)
+
+        # The last master stops: the client says nobody is presenting
+        [:master, :late].each { |s| using_session(s) { click_button('🚀 Lead slide navigation') if master?(s) } }
+        using_session(:client) do
+          page.execute_script("window.MULTIPLEX.heartbeat = 200") # three repeats missed: 0.6 s
+          expect(page).to have_css('#multiplex-status', text: 'Niemand präsentiert')
+        end
       end
     end
 

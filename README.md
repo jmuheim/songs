@@ -57,6 +57,8 @@ The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multipl
 
 Once you enter the password and become presenter (❌ on 🚀), your slide navigation is broadcast live to everyone who has the page open. The presenter also repeats the current slide every two seconds, so whoever opens the song book later, or comes back from a dead spot, catches up by itself.
 
+A short line under the buttons says what is going on: whether you follow, browse freely, present yourself, or whether nobody is presenting right now. Browsing the overview (Esc) or pausing (B) as presenter stays on your own screen.
+
 Paging on your own device switches you to browsing freely, so that the next repeat does not snap you back — 👣 brings you back to the presenter.
 
 The presenter's tab stays presenter when it reloads. If someone else enters the password, they take over and the previous presenter becomes a listener.
