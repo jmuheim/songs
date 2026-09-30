@@ -66,6 +66,10 @@ Pandoc renders these as `<code class="a">Am</code>` etc. CSS in `style/shared.cs
 
 The regex only matches `[Word]` not followed by `(` — so standard Markdown links `[text](url)` are left untouched.
 
+## Shared pipeline
+
+`build` and `spec/support/fixture_builder.rb` run the same code, in `lib/build_helpers.rb`: `songbook_markdown` (front matter with `lang: de-CH`, the introduction, the songs with their chords marked up), `pandoc!`, `post_process_index` and `post_process_print`. What differs is a parameter — `assets:` (`style/` beside `index.html`, `/style/` for the fixtures served from `spec/fixtures/`) and the multiplex config. Change the pipeline there, not in one of its callers.
+
 ## Output files
 
 - `all-songs.md` — intermediate concatenated Markdown (committed, regenerated on each build)
@@ -83,15 +87,19 @@ bundle exec rspec
 
 **The specs never touch the live multiplex channel.** `spec/support/multiplex_server.rb` runs `multiplex-server/` — the official reveal-multiplex package, the same software the public Railway server runs, pinned by commit — on `127.0.0.1:18889` (`localhost.js` keeps it off the LAN) for the whole run. The fixture points at it with a fixed test pair (`sha256(secret) == socketId`, which is all the server checks). Before, the fixture carried `multiplex-token.json`, so the „live sync" spec became master on the channel songs.josh.ch listens to, and moved anyone who had it open at the time. Port and token are fixed rather than fresh per run so that the committed fixture stays the same from run to run. They refuse to start while port 18889 is taken (a multiplex server left over from a manual test, say): their own would die on `EADDRINUSE` while the other one answered the readiness check, and the specs would broadcast into it.
 
-The only request that still leaves the machine is the night theme's Google Fonts `@import`; the slide-zoom expectations are measured with those fonts.
+Nothing leaves the machine during a run: the fonts are local too (see below). The slide-zoom expectations are exact values measured with those fonts, so they also catch a font that renders differently.
+
+`bundle exec rake golden:update` regenerates the golden snapshots in `spec/fixtures/golden/` after an intended markup change.
 
 ## Vendored reveal.js
 
 `style/revealjs/` holds reveal.js **6.0.2** — only the five files the pages load (`dist/reveal.js`, `reveal.css`, `reset.css`, `theme/night.css`, `theme/serif.css`) plus its `LICENSE`. Everything under `style/` is deployed, so the rest of the release (tests, demo, other themes, `package-lock.json`) stays out. The paths match Pandoc's `revealjs-url`, which is why the `dist/` folder is kept.
 
-To upgrade, copy those five files from `dist/` at the release's tag in the Git repository (`https://raw.githubusercontent.com/hakimel/reveal.js/<tag>/dist/…`), rebuild and run the specs. Pandoc's template also loads the notes, search and zoom plugins from their reveal.js 5 paths; the song book uses none of them, and `build` removes those script tags.
+To upgrade, copy those five files from `dist/` at the release's tag in the Git repository (`https://raw.githubusercontent.com/hakimel/reveal.js/<tag>/dist/…`), remove the two Google Fonts `@import`s from the start of `theme/night.css` again, rebuild and run the specs. Pandoc's template also loads the notes, search and zoom plugins from their reveal.js 5 paths; the song book uses none of them, and `build` removes those script tags.
 
 6.0.2 is the minimum: it makes every slide but the current one `inert` ([hakimel/reveal.js#1587](https://github.com/hakimel/reveal.js/issues/1587)). With 6.0.1, `Tab` on the Introduction reached the table of contents' links, which reveal.js keeps rendered next door but invisible — 35 of 40 presses landed there.
+
+**Fonts:** `style/fonts/` holds Montserrat 700 and Open Sans (400/700, with italics) as Google Fonts serves them — 25 woff2 files, every subset, with their OFL licenses — and `fonts.css` with Google's `@font-face` rules pointing at them. `post_process_index` links it; the night theme's own `@import`s from fonts.googleapis.com are removed, so no visitor's browser asks Google for anything.
 
 `style/qrcodejs/` holds qrcodejs 1.0.0 (the 🔗 dialog's QR code) with its `LICENSE`, served from the song book itself rather than jsDelivr.
 

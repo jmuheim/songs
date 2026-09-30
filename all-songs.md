@@ -1,6 +1,7 @@
 ---
 title:  Lieblings-Songs 🔥🎶🌛
 author: 😊 Josua & Monika ❤️
+lang:   de-CH
 ---
 
 # Introduction

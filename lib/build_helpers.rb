@@ -1,9 +1,20 @@
 require 'nokogiri'
+require 'json'
+require 'open3'
 
 module BuildHelpers
   module_function
 
   CHORD_REGEX = /\[([A-Z][^\]]*)\](?!\()/
+  STYLE_DIR   = File.expand_path('../style', __dir__)
+
+  FRONTMATTER = <<~MD
+    ---
+    title:  Lieblings-Songs 🔥🎶🌛
+    author: 😊 Josua & Monika ❤️
+    lang:   de-CH
+    ---
+  MD
 
   def validate_song!(path, content)
     name = File.basename(path)
@@ -43,5 +54,56 @@ module BuildHelpers
       children.each { |child| wrapper.add_child(child) }
     end
     doc.to_html
+  end
+
+  # Everything below is shared by `build` and spec/support/fixture_builder.rb,
+  # so the specs exercise the pipeline that builds the song book, not a copy.
+  # `assets` is how the pages reach style/: "style/" beside index.html,
+  # "/style/" for the fixtures served from spec/fixtures/.
+
+  def songbook_markdown(song_files, introduction_path)
+    songs = song_files.map { |file| transform_chords(File.read(file, encoding: 'UTF-8')) }
+    [FRONTMATTER, File.read(introduction_path, encoding: 'UTF-8'), *songs].map(&:rstrip).join("\n\n") + "\n"
+  end
+
+  # Returns what Pandoc printed (warnings); raises if it failed.
+  def pandoc!(markdown_path, output_path, theme:, revealjs_url:)
+    output, status = Open3.capture2e(
+      'pandoc', '-f', 'markdown+hard_line_breaks', '-t', 'revealjs', '-s', markdown_path, '-o', output_path,
+      '--slide-level=2', '--syntax-highlighting=none', '--toc', '--toc-depth=1',
+      '-V', "theme=#{theme}", '-V', 'progress=false', '-V', "revealjs-url=#{revealjs_url}", '-V', 'disableLayout=true'
+    )
+    raise "pandoc failed for #{output_path}:\n#{output}" unless status.success?
+    output
+  end
+
+  def post_process_index(html, assets:, multiplex:)
+    html = html.sub('<body>', "<body><script>window.MULTIPLEX=#{multiplex.to_json};</script>" + style_file('body-controls.html').strip)
+    html = html.sub('<style>', %(<link rel="stylesheet" href="#{assets}fonts/fonts.css">\n  <style>) + style_file('night.css') + style_file('shared.css'))
+    html = without_pandoc_plugins(html)
+    html = html.sub('keyboard: true,', "keyboard: { 83: null }, // 's' disabled (was: speaker notes)")
+               .sub('controls: true,', 'controls: false,')
+               .sub("display: 'block',", "display: 'flex',")
+    scripts = ["#{multiplex[:url]}/socket.io/socket.io.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}slide-zoom.js", "#{assets}chords.js"]
+    html = html.sub('</body>', scripts.map { |src| %(  <script src="#{src}"></script>\n) }.join + '</body>')
+    wrap_slide_content(html)
+  end
+
+  def post_process_print(html, assets:)
+    html = html.sub('<style>', '<style>' + style_file('serif.css') + style_file('shared.css'))
+    html = html.gsub(/<section id="resources[-\d]*?" class="slide level2">.*?<\/section>/m, '')
+    html = html.sub('<section id="title-slide"', %(<section id="title-slide" data-background-image="#{assets}background.jpg"))
+    wrap_slide_content(without_pandoc_plugins(html))
+  end
+
+  def style_file(name)
+    File.read(File.join(STYLE_DIR, name), encoding: 'UTF-8')
+  end
+
+  # Pandoc's template loads the notes, search and zoom plugins from their
+  # reveal.js 5 paths; the song book uses none of them.
+  def without_pandoc_plugins(html)
+    html.gsub(%r{  <script src="[^"]*/plugin/(notes|search|zoom)/\1\.js"></script>\n}, '')
+        .sub("plugins: [\n          RevealNotes,\n          RevealSearch,\n          RevealZoom\n        ]", 'plugins: []')
   end
 end

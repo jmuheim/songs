@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="de-CH">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="utf-8">
@@ -11,6 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="./style/revealjs/dist/reset.css">
   <link rel="stylesheet" href="./style/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="style/fonts/fonts.css">
   <style>.controls-group {
   position: fixed;
   z-index: 100;
@@ -85,7 +86,9 @@ body.chords-hidden .reveal code {
   color: #eee;
 }
 
-.reveal section h1, h2, em {
+.reveal section h1,
+.reveal section h2,
+.reveal section em {
   color: #e7ad52 !important;
 }
 
@@ -285,8 +288,8 @@ dialog.overlay-modal::backdrop {
 /* Bright theme overrides */
 
 body.theme-bright .reveal section h1,
-body.theme-bright h2,
-body.theme-bright em {
+body.theme-bright .reveal section h2,
+body.theme-bright .reveal section em {
   color: unset !important;
 }
 
