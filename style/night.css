@@ -109,18 +109,15 @@ section#TOC::-webkit-scrollbar-thumb {
   bottom: 0;
 }
 
-.overlay-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: 10000;
-  align-items: center;
-  justify-content: center;
+/* showModal() puts the dialog in the top layer, centred; .modal-box is its face */
+dialog.overlay-modal {
+  padding: 0;
+  border: none;
+  background: transparent;
 }
 
-.overlay-modal.visible {
-  display: flex;
+dialog.overlay-modal::backdrop {
+  background: rgba(0, 0, 0, 0.75);
 }
 
 .modal-box {
@@ -136,8 +133,26 @@ section#TOC::-webkit-scrollbar-thumb {
   box-sizing: border-box;
 }
 
-.modal-box p {
+.modal-box p,
+.modal-box h2 {
   margin: 0 0 0.75em;
+}
+
+.modal-box h2 {
+  font-size: 1em;
+  font-weight: normal;
+}
+
+/* Focused on opening, so a screenreader starts reading there; not a control */
+.modal-box h2:focus {
+  outline: none;
+}
+
+.modal-box label {
+  display: block;
+  font-size: 0.8em;
+  text-align: left;
+  margin-bottom: 0.3em;
 }
 
 #master-info,

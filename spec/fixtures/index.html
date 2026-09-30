@@ -122,18 +122,15 @@ section#TOC::-webkit-scrollbar-thumb {
   bottom: 0;
 }
 
-.overlay-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: 10000;
-  align-items: center;
-  justify-content: center;
+/* showModal() puts the dialog in the top layer, centred; .modal-box is its face */
+dialog.overlay-modal {
+  padding: 0;
+  border: none;
+  background: transparent;
 }
 
-.overlay-modal.visible {
-  display: flex;
+dialog.overlay-modal::backdrop {
+  background: rgba(0, 0, 0, 0.75);
 }
 
 .modal-box {
@@ -149,8 +146,26 @@ section#TOC::-webkit-scrollbar-thumb {
   box-sizing: border-box;
 }
 
-.modal-box p {
+.modal-box p,
+.modal-box h2 {
   margin: 0 0 0.75em;
+}
+
+.modal-box h2 {
+  font-size: 1em;
+  font-weight: normal;
+}
+
+/* Focused on opening, so a screenreader starts reading there; not a control */
+.modal-box h2:focus {
+  outline: none;
+}
+
+.modal-box label {
+  display: block;
+  font-size: 0.8em;
+  text-align: left;
+  margin-bottom: 0.3em;
 }
 
 #master-info,
@@ -427,7 +442,7 @@ section.slide.level2 {
   <button id="toggle-chords-visibility" class="ctrl" aria-pressed="false"><span aria-hidden="true">🎹</span> <span class="visually-hidden">Hide chords</span></button>
 </div>
 <div id="top-right-controls" class="controls-group">
-  <button id="show-qr" class="ctrl" aria-pressed="false"><span aria-hidden="true">🔗</span> <span class="visually-hidden">Show QR code</span></button>
+  <button id="show-qr" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">🔗</span> <span class="visually-hidden">Show QR code</span></button>
   <button id="toggle-follow" class="ctrl" aria-pressed="false" hidden><span aria-hidden="true">👣</span> <span class="visually-hidden">Browse freely</span></button>
   <button id="master-mode" class="ctrl" aria-pressed="false"><span aria-hidden="true">🚀</span> <span class="visually-hidden">Lead slide navigation</span></button>
   <button id="toggle-theme" class="ctrl" aria-pressed="false"><span aria-hidden="true" id="toggle-theme-icon">🌞</span> <span class="visually-hidden" id="toggle-theme-label">Switch to bright mode</span></button>
@@ -436,7 +451,27 @@ section.slide.level2 {
   document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
     document.body.classList.toggle('chords-hidden');
     this.setAttribute('aria-pressed', document.body.classList.contains('chords-hidden'));
-    this.blur();
+  });
+
+  // Space on a focused button presses it, and Reveal must not turn the page
+  // as well. Except where a mouse click put the focus there: nobody sees it
+  // (no focus ring), so Space turns the page. Read when the focus arrives,
+  // because Chrome shows the ring as soon as any key is pressed.
+  var unseenFocus = null;
+  document.addEventListener('focusin', function(e) {
+    unseenFocus = e.target.matches(':focus-visible') ? null : e.target;
+  });
+
+  window.addEventListener('load', function() {
+    Reveal.configure({
+      keyboardCondition: function(event) {
+        var el = document.activeElement;
+        if (event.key !== ' ' || !el || !el.matches('button')) return true;
+        if (el !== unseenFocus) return false;
+        el.blur();
+        return true;
+      }
+    });
   });
 
   (function() {
@@ -460,28 +495,29 @@ section.slide.level2 {
   })();
 </script>
 
-<div id="master-modal" class="overlay-modal">
-  <div class="modal-box">
-    <p>Navigation übernehmen?</p>
+<dialog id="master-modal" class="overlay-modal" aria-labelledby="master-title">
+  <form class="modal-box" method="dialog">
+    <h2 id="master-title">Navigation übernehmen?</h2>
     <div id="master-info">
       <p>Alle anderen werden dir folgen.</p>
     </div>
-    <input type="password" id="master-pw" autocomplete="off">
+    <label for="master-pw">Passwort</label>
+    <input type="password" id="master-pw" autocomplete="off" autofocus>
     <div class="modal-buttons">
-      <button id="master-cancel">Cancel</button>
+      <button type="button" id="master-cancel">Cancel</button>
       <button id="master-confirm">OK</button>
     </div>
-  </div>
-</div>
+  </form>
+</dialog>
 
-<div id="qr-modal" class="overlay-modal">
+<dialog id="qr-modal" class="overlay-modal" aria-labelledby="qr-title">
   <div class="modal-box">
-    <p>Song Book öffnen</p>
+    <h2 id="qr-title" tabindex="-1" autofocus>Song Book öffnen</h2>
     <p id="qr-info">Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.</p>
     <div id="qr-canvas"></div>
     <button id="qr-close">Schliessen</button>
   </div>
-</div>
+</dialog>
 
 <script>
 window.addEventListener('load', function() {
@@ -539,7 +575,6 @@ window.addEventListener('load', function() {
 
   followBtn.addEventListener('click', function() {
     setFollowing(!following);
-    this.blur();
   });
 
   // Paging on one's own device means browsing freely from then on: otherwise
@@ -619,34 +654,24 @@ window.addEventListener('load', function() {
 
   masterBtn.addEventListener('click', function() {
     if (isMaster) { becomeClient(); return; }
-    masterModal.classList.add('visible');
+    masterModal.showModal();
+  });
+
+  document.getElementById('master-cancel').addEventListener('click', function() {
+    masterModal.close();
+  });
+
+  // OK and Enter submit; method="dialog" closes the dialog unless we stop it
+  masterModal.querySelector('form').addEventListener('submit', function(e) {
+    if (masterPw.value === cfg.password) { becomeMaster(); return; }
+    e.preventDefault();
+    masterPw.classList.add('shake');
+    setTimeout(function() { masterPw.classList.remove('shake'); }, 500);
+    masterPw.value = '';
     masterPw.focus();
   });
 
-  masterModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
-
-  document.getElementById('master-cancel').addEventListener('click', function() {
-    masterModal.classList.remove('visible');
-    masterPw.value = '';
-  });
-
-  document.getElementById('master-confirm').addEventListener('click', function() {
-    if (masterPw.value === cfg.password) {
-      masterModal.classList.remove('visible');
-      masterPw.value = '';
-      becomeMaster();
-    } else {
-      masterPw.classList.add('shake');
-      setTimeout(function() { masterPw.classList.remove('shake'); }, 500);
-      masterPw.value = '';
-      masterPw.focus();
-    }
-  });
-
-  masterPw.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter')  document.getElementById('master-confirm').click();
-    if (e.key === 'Escape') document.getElementById('master-cancel').click();
-  });
+  masterModal.addEventListener('close', function() { masterPw.value = ''; });
 
   var storedClaim = 0;
   try { storedClaim = Number(sessionStorage.getItem('multiplex-master')) || 0; } catch (e) {}
@@ -660,21 +685,24 @@ window.addEventListener('load', function() {
     var container = document.getElementById('qr-canvas');
     container.innerHTML = '';
     new QRCode(container, { text: url, width: 400, height: 400, colorDark: '#000000', colorLight: '#ffffff' });
-    qrModal.classList.add('visible');
-    showQrBtn.setAttribute('aria-pressed', 'true');
+    // qrcodejs draws a canvas and an image of it (a table where there is no
+    // canvas), and names neither
+    var img = container.querySelector('img'), canvas = container.querySelector('canvas');
+    if (img) img.alt = 'QR-Code für ' + url;
+    if (canvas) canvas.setAttribute('aria-hidden', 'true');
+    qrModal.showModal();
   });
 
-  qrModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
+  document.getElementById('qr-close').addEventListener('click', function() { qrModal.close(); });
 
-  function closeQrModal() {
-    qrModal.classList.remove('visible');
-    showQrBtn.setAttribute('aria-pressed', 'false');
-  }
-
-  document.getElementById('qr-close').addEventListener('click', closeQrModal);
-
-  masterModal.addEventListener('click', function(e) { if (e.target === masterModal) masterModal.classList.remove('visible'); });
-  qrModal.addEventListener('click', function(e) { if (e.target === qrModal) closeQrModal(); });
+  // showModal() makes the page behind inert and Esc closes natively. What is
+  // left: Reveal listens for keys on the document, where they still arrive from
+  // inside the dialog, and a click on the backdrop lands on the dialog itself.
+  [masterModal, qrModal].forEach(function(dialog) {
+    dialog.addEventListener('keydown', function(e) { e.stopPropagation(); });
+    dialog.addEventListener('keypress', function(e) { e.stopPropagation(); });
+    dialog.addEventListener('click', function(e) { if (e.target === dialog) dialog.close(); });
+  });
 });
 </script>
   <div class="reveal">
