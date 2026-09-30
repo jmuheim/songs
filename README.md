@@ -51,19 +51,16 @@ The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multipl
 
 | Button | Position | Function |
 |--------|----------|----------|
-| 📱 | Bottom-right | Show QR code — scan to open the song book |
-| 🎤 | Bottom-right (below 📱) | Become the presenter (asks for password) |
+| 🔗 | Top right | Show QR code — scan to open the song book |
+| 👣 | Top right | Browse freely instead of following the presenter (❌ while browsing freely); tap again to jump back to the presenter's slide |
+| 🚀 | Top right | Become the presenter (asks for password); tap again to stop |
 
-Once you enter the password and become master (🎙️), your slide navigation is broadcast live to everyone who has the page open.
+Once you enter the password and become presenter (❌ on 🚀), your slide navigation is broadcast live to everyone who has the page open. The presenter also repeats the current slide every two seconds, so whoever opens the song book later, or comes back from a dead spot, catches up by itself.
+
+Paging on your own device switches you to browsing freely, so that the next repeat does not snap you back — 👣 brings you back to the presenter.
 
 Default password: `guitar`. Change it with:
 
 ```bash
 MASTER_PASSWORD=yourpassword LANG=en_US.UTF-8 ./build
 ```
-
-### Known limitation
-
-New clients who join mid-session are not automatically synced to the current slide — they only catch up when the presenter navigates to the next slide. As a workaround, the presenter can tap next then back to re-broadcast their position.
-
-The proper fix requires a self-hosted multiplex server that caches the last state and sends it to new connections on join. The public server at `multiplex.up.railway.app` is a pure relay and does not support this.

@@ -37,6 +37,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
       within('#top-right-controls') do
         expect(page).to have_button('🔗 Show QR code')
+        expect(page).to have_css('#toggle-follow[aria-pressed="false"]', text: /👣\s+Browse freely/)
         expect(page).to have_button('🚀 Lead slide navigation')
         expect(page).to have_button('🌞 Switch to bright mode')
       end
@@ -244,7 +245,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     describe 'live sync' do
       after { Capybara.reset_sessions! }
 
-      it 'client follows slide changes broadcast by the master' do
+      it 'client follows the master, a late one catches up, paging frees it and 👣 brings it back' do
         using_session(:client) do
           load_presentation
           expect(page).to have_css('#title-slide.present')
@@ -252,17 +253,46 @@ RSpec.describe 'index.html', :js, type: :feature do
 
         using_session(:master) do
           load_presentation
+          page.execute_script("window.MULTIPLEX.heartbeat = 200") # repeat every 200 ms instead of 2 s
           click_button('🚀 Lead slide navigation')
           within('#master-modal') do
             find('#master-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
             click_button('OK')
           end
           expect(page).to have_css('#master-mode.is-master')
+          expect(page).to have_no_button('👣 Browse freely')
           find('body').send_keys(:right)
           expect(page).to have_css('#TOC.present')
         end
 
         using_session(:client) { expect(page).to have_css('#TOC.present') }
+
+        # Opened after the master's last slide change: only the repeat brings it there
+        using_session(:late_client) do
+          load_presentation
+          expect(page).to have_css('#TOC.present')
+        end
+
+        using_session(:client) do
+          find('body').send_keys(:right)
+          expect(page).to have_css('#introduction.present')
+          expect(page).to have_css('#toggle-follow[aria-pressed="true"]')
+        end
+
+        using_session(:master) do
+          find('body').send_keys(:right, :right)
+          wait_for_js("Reveal.getIndices().h === 3")
+        end
+
+        using_session(:client) do
+          sleep 0.6 # three repeats of the master's state, none of which may move it
+          expect(page).to have_css('#introduction.present')
+
+          click_button('👣 Browse freely')
+          expect(page).to have_css('#toggle-follow[aria-pressed="false"]')
+          wait_for_js("Reveal.getIndices().h === 3")
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
+        end
       end
     end
 

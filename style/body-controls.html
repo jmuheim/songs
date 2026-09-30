@@ -4,6 +4,7 @@
 </div>
 <div id="top-right-controls" class="controls-group">
   <button id="show-qr" class="ctrl" aria-pressed="false"><span aria-hidden="true">🔗</span> <span class="visually-hidden">Show QR code</span></button>
+  <button id="toggle-follow" class="ctrl" aria-pressed="false" hidden><span aria-hidden="true">👣</span> <span class="visually-hidden">Browse freely</span></button>
   <button id="master-mode" class="ctrl" aria-pressed="false"><span aria-hidden="true">🚀</span> <span class="visually-hidden">Lead slide navigation</span></button>
   <button id="toggle-theme" class="ctrl" aria-pressed="false"><span aria-hidden="true" id="toggle-theme-icon">🌞</span> <span class="visually-hidden" id="toggle-theme-label">Switch to bright mode</span></button>
 </div>
@@ -63,20 +64,76 @@ window.addEventListener('load', function() {
   var cfg = window.MULTIPLEX;
   if (!cfg || !window.io) return;
 
+  // The master repeats its state this often, so whoever joins late or comes
+  // back from a dead spot catches up without waiting for the next slide change.
+  // cfg.heartbeat lets the specs shorten it.
+  var HEARTBEAT_MS = 2000;
+
   var isMaster = false;
+  var heartbeat = null;
+  var lastState = null;       // the master's, as last received
+  var applyingRemote = false; // set while Reveal moves because the master did
   var socket = io(cfg.url);
 
+  var followBtn = document.getElementById('toggle-follow');
+  followBtn.hidden = false;
+
+  function sameState(a, b) {
+    return a.indexh === b.indexh && a.indexv === b.indexv && a.indexf === b.indexf &&
+      !!a.overview === !!b.overview && !!a.paused === !!b.paused;
+  }
+
+  function follow(state) {
+    if (sameState(state, Reveal.getState())) return; // a repeat changes nothing
+    applyingRemote = true;
+    try { Reveal.setState(state); } finally { applyingRemote = false; }
+  }
+
+  // Following is each client's own choice, remembered per tab so that a
+  // reload (or iOS discarding the tab) keeps it.
+  var following = true;
+  try { following = sessionStorage.getItem('multiplex-free') !== '1'; } catch (e) {}
+
+  function setFollowing(on) {
+    following = on;
+    document.body.classList.toggle('multiplex-free', !on);
+    followBtn.setAttribute('aria-pressed', on ? 'false' : 'true');
+    try { sessionStorage.setItem('multiplex-free', on ? '0' : '1'); } catch (e) {}
+    if (on && lastState) follow(lastState);
+  }
+  setFollowing(following);
+
+  followBtn.addEventListener('click', function() {
+    setFollowing(!following);
+    this.blur();
+  });
+
+  // Paging on one's own device means browsing freely from then on: otherwise
+  // the next repeat would snap the page back. 👣 brings it back to the master.
+  ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewshown', 'overviewhidden'].forEach(function(ev) {
+    Reveal.on(ev, function() {
+      if (!isMaster && following && !applyingRemote) setFollowing(false);
+    });
+  });
+
   socket.on(cfg.socketId, function(data) {
-    if (!isMaster && data && data.state) Reveal.setState(data.state);
+    if (isMaster || !data || !data.state) return;
+    lastState = data.state;
+    if (following) follow(lastState);
   });
 
   function broadcast() {
+    // Not while disconnected: socket.io would queue every repeat and replay
+    // them all at once. 'connect' sends the current state instead.
+    if (!socket.connected) return;
     socket.emit('multiplex-statechanged', {
       secret: cfg.secret,
       socketId: cfg.socketId,
       state: Reveal.getState()
     });
   }
+
+  socket.on('connect', function() { if (isMaster) broadcast(); });
 
   var REVEAL_EVENTS = ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewshown', 'overviewhidden', 'paused', 'resumed'];
 
@@ -86,6 +143,8 @@ window.addEventListener('load', function() {
     masterBtn.setAttribute('aria-pressed', 'true');
     REVEAL_EVENTS.forEach(function(ev) { Reveal.on(ev, broadcast); });
     broadcast();
+    heartbeat = setInterval(broadcast, cfg.heartbeat || HEARTBEAT_MS);
+    followBtn.hidden = true;
   }
 
   function becomeClient() {
@@ -93,6 +152,8 @@ window.addEventListener('load', function() {
     masterBtn.classList.remove('is-master');
     masterBtn.setAttribute('aria-pressed', 'false');
     REVEAL_EVENTS.forEach(function(ev) { Reveal.off(ev, broadcast); });
+    clearInterval(heartbeat);
+    followBtn.hidden = false;
   }
 
   var masterBtn    = document.getElementById('master-mode');

@@ -22,7 +22,8 @@
   font-size: 3em;
 }
 
-body.chords-hidden #toggle-chords-visibility::after {
+body.chords-hidden #toggle-chords-visibility::after,
+body.multiplex-free #toggle-follow::after {
   font-size: 3em;
   content: '❌';
   position: absolute;

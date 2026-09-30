@@ -87,15 +87,13 @@ To upgrade, copy those five files from `dist/` at the release's tag in the Git r
 
 The presentation uses the [Reveal.js multiplex plugin](https://revealjs.com/multiplex/) via `multiplex.up.railway.app` so that audience members can follow the presenter's slides in real time on their own devices.
 
-- **Client** (default): anyone who opens the URL receives slide updates automatically.
-- **Master** (🎤 button, bottom-right): click → enter the password → your slide changes are broadcast to all clients. The button turns 🎙️ when active.
-- **QR code** (📱 button, above 🎤): shows a QR code of the current URL so new people can join.
+The code is the second `<script>` in `style/body-controls.html`; the server is a pure relay (one event, `multiplex-statechanged`, forwarded to everyone but the sender when `sha256(secret) == socketId`, no storage).
 
-### Known limitation
-
-New clients who join mid-session are not synced to the current slide — they only receive updates on the next master navigation event. The workaround is for the master to tap next then back to re-broadcast. A heartbeat was considered but rejected because it would snap clients back to the master slide every N seconds, breaking independent browsing.
-
-The proper fix is a self-hosted multiplex server that caches `lastState` and emits it to each new socket on `connection`. The public server at `multiplex.up.railway.app` is a pure relay (one event: `multiplex-statechanged`, no storage) and cannot be modified.
+- **Master** (🚀, top right): click → enter the password → your slide changes are broadcast to all clients; ❌ on 🚀 while active, click again to stop.
+- **Heartbeat:** the master repeats its state every 2 s (`HEARTBEAT_MS`; the specs shorten it through `window.MULTIPLEX.heartbeat`) and again right after a reconnect. That is how a client that opens the page mid-session, or comes back from a dead spot or a locked screen, catches up — the relay cannot hand out a last state. Repeats are only sent while connected (socket.io would queue them all and replay them at once), and a client drops a repeat that matches where it already is.
+- **Client** (default): follows the master. **Following is the client's own choice**, per tab (`sessionStorage`, so a reload or iOS discarding the tab keeps it): 👣 „Browse freely" switches it off and on, and switching it back on jumps to the master's last state straight away.
+- **Paging on one's own device switches to browsing freely.** Otherwise the next repeat would snap the page back within two seconds — the reason a heartbeat was once rejected here. Reveal events the master caused (`applyingRemote`, set around `Reveal.setState`) don't count.
+- **QR code** (🔗, top right): shows a QR code of the current URL so new people can join.
 
 ### Token (`multiplex-token.json`)
 
