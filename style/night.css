@@ -277,3 +277,7 @@ body.theme-bright .modal-box button {
 body.theme-bright .modal-box button:hover {
   background: #ccc;
 }
+
+body.theme-bright .chord-tooltip-inner {
+  background-color: #ffe29a;
+}

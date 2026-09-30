@@ -2040,6 +2040,57 @@ Is just a yellow `F`{.f} lemon tree
 - [Source tab](https://tabs.ultimate-guitar.com/user/tab/view?h=_5ECoKMMKHZmcTbZHfp9P2JQ&tab_id=27297698)
 - [Guitar tutorial](https://www.youtube.com/watch?v=Yv-AsMzWaV0)
 
+# Lueget Vo Bärg Und Tal (Traditionell 🇨🇭)
+
+## Strophe 1
+
+`C`{.c} Lueget, vo `G`{.g} Bärg und `C`{.c} Tal.
+`C`{.c} flieht scho de Sunne`G`{.g}strahl. `G7`{.g}
+`C`{.c} Lueget, uf `F`{.f} Aue und `C`{.c} Matte.
+`C`{.c} Wachse die `F`{.f} dunkele `C`{.c} Schatte.
+
+`Am`{.a} D'Sunn uf de `G`{.g} Bärge no `C`{.c} stoht.
+`C`{.c} Oh, wie si `F`{.f} d'Gletscher `G`{.g} so `C`{.c} rot!
+`Am`{.a} Oh, wie si `Dm`{.d} d'Gletscher `G7`{.g} so `C`{.c} rot!
+
+## Strophe 2
+
+`C`{.c} Lueget do `G`{.g} aben a `C`{.c} See!
+`C`{.c} Heimezue wändet sich s'`G`{.g}Veh. `G7`{.g}
+`C`{.c} Loset, wie d'`F`{.f}Glogge, die `C`{.c} schöne,
+`C`{.c} Fründli `C`{.c} vom `F`{.f} Moos us er`C`{.c}töne.
+
+`Am`{.a} Chüehjerglüt, `G`{.g} üseri `C`{.c} Lust,
+`C`{.c} Tuet is so `F`{.f} wohl `G`{.g} i der `C`{.c} Brust.
+`Am`{.a} Tuet is so `Dm`{.d} wohl `G7`{.g} i der `C`{.c} Brust.
+
+## Strophe 3
+
+`C`{.c} Still a de `G`{.g} Bärge wird's `C`{.c} Nacht,
+`C`{.c} Aber der Herrgott, da `G`{.g} wacht. `G7`{.g}
+`C`{.c} Gseht der säb `F`{.f} Stärnli dört `C`{.c} schyne?
+`C`{.c} Stärnli, wie `F`{.f} bisch du so `C`{.c} fryne!
+
+`Am`{.a} Gseht ehr, am `G`{.g} Himmel do `C`{.c} stoht's:
+Stärnli, Gott `F`{.f} grüess di, `G`{.g} wie `C`{.c} goht's?
+`Am`{.a} Stärnli, Gott `Dm`{.d} grüess di, `G7`{.g} wie `C`{.c} goht's?
+
+## Strophe 4
+
+`C`{.c} Loset, es `G`{.g} seit is: Gar `C`{.c} guet!
+`C`{.c} Het mi nit Gott i der `G`{.g} Huet? `G7`{.g}
+`C`{.c} Fryli, der `F`{.f} Vater vo `C`{.c} alle
+`C`{.c} Lot mi gwüss `F`{.f} währli nit `C`{.c} falle.
+
+`Am`{.a} Vater im `G`{.g} Himmel, dä `C`{.c} wacht
+`C`{.c} Stärnli, liebs `F`{.f} Stärnli, `G`{.g} guet `C`{.c} Nacht!
+`Am`{.a} Stärnli, liebs `Dm`{.d} Stärnli, `G7`{.g} guet `C`{.c} Nacht!
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=Hdshwr1hDX8)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/rumpelstilz/stets-in-truure-chords-4407716)
+
 # Morning has broken (Cat Stevens)
 
 ## Instructions
@@ -3069,6 +3120,68 @@ you'll `F`{.f} find me
 
 - [Song](https://www.youtube.com/watch?v=Z26BvHOD_sg)
 - [Source tab](https://ukutabs.com/i/israel-kamakawiwoole/somewhere-over-the-rainbow-what-a-wonderful-world/)
+
+# Stets in Truure (Traditionell 🇨🇭)
+
+## Verse 1
+
+Stets i `D`{.d} Truure `A7`{.a} mues i `D`{.d} läbe,
+säg, mit `G`{.g} was `Em`{.e} han i's `A`{.a} verschuldt? `A7`{.a}
+Wül my `Bm`{.b} Schatz isch untröi `Em`{.e} worde,
+mues i's `D`{.d} ly`A7`{.a}de mit `D`{.d} Geduld
+
+## Verse 2
+
+Bisch mer `D`{.d} zwar us mynen `D`{.d} Ouge, `G`{.g} `D`{.d}
+aber `G`{.g} nid us mynem `A`{.a} Sinn.
+Hättisch `Bm`{.b} mir wohl dörfe `Em`{.e} gloube,
+dass i `D`{.d} treu, `A`{.a} gewese `D`{.d} bin `G`{.g} `D`{.d}
+
+## Verse 3
+
+Rächti `D`{.d} Liebi chunnt vo `D`{.d} Härze, `G`{.g} `D`{.d}
+rächti `G`{.g} Liebi, die brönnet `A`{.a} heiss
+Oh, wie `Bm`{.b} wohl isch's einem `Em`{.e} Mönsche,
+wo nid `D`{.d} `A`{.a} weiss, was Liebi `D`{.d} heisst `G`{.g} `D`{.d}
+
+## Verse 4
+
+Spilet `D`{.d} uuf, ihr `D`{.d} Musikante, `G`{.g} `D`{.d}
+spilet `G`{.g} uuf, das `A`{.a} Saitespiel
+mynem `Bm`{.b} Schätzli zu `Em`{.e} Gefalle,
+mögs `D`{.d} `A`{.a} verdriesse, wän es `D`{.d} will `G`{.g} `D`{.d}
+
+## Instrumental
+
+`Bm`{.b} `Em`{.e} `D`{.d} `A`{.a}
+`D`{.d} `D`{.d} `D`{.d} `D`{.d}
+
+## Verse 5
+
+Bis die `D`{.d} Bärge tüe sich `D`{.d} biege, `G`{.g} `D`{.d}
+u die `G`{.g} Hügel sänke `A`{.a} sich
+bis die `Bm`{.b} Dischtle trage `Em`{.e} Fyge,
+solang `D`{.d} will `A`{.a} i liebe di `D`{.d} `G`{.g} `D`{.d}
+
+## Verse 6
+
+Bis dr `D`{.d} Mühlistei treit `D`{.d} Räbe, `G`{.g} `D`{.d}
+u druus `G`{.g} fliesst so süesse `A`{.a} Wy
+Bis dr `Bm`{.b} Tod mir nimmt das `Em`{.e} Läbe,
+solang `D`{.d} `A`{.a} söllsch du blybe `D`{.d} mir `G`{.g} `D`{.d}
+
+Bis dr `Bm`{.b} Tod mir nimmt das `Em`{.e} Läbe,
+solang `D`{.d} `A`{.a} söllsch du blybe `D`{.d} mir
+
+## Outro
+
+`D`{.d} `D`{.d} `D`{.d} `G`{.g} `G`{.g} _(x4)_
+`D`{.d}
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=eaPzAxvE-eY)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/rumpelstilz/stets-in-truure-chords-4407716)
 
 # Summer wine (Nancy Sinatra & Lee Hazlewood)
 
