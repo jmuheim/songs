@@ -142,17 +142,31 @@
       activeChord = null;
     }
 
+    // Mobile Safari's address/tab bar means `window.innerWidth/innerHeight`
+    // (the layout viewport) can be bigger than what's actually visible on
+    // screen (the visual viewport) — `getBoundingClientRect()` coordinates
+    // are layout-viewport-relative, same as our `position: fixed` tooltip,
+    // so no offset translation is needed there, but clamping against
+    // `window.innerHeight` alone can place the tooltip in a region that's
+    // technically in the DOM layout but currently hidden behind Safari's
+    // chrome. `visualViewport` reports the truly-visible area.
+    function viewportSize() {
+      var vv = window.visualViewport;
+      return vv ? { width: vv.width, height: vv.height } : { width: window.innerWidth, height: window.innerHeight };
+    }
+
     function positionTooltip(anchor) {
       var rect = anchor.getBoundingClientRect();
+      var vp = viewportSize();
       var tw = tooltip.offsetWidth;
       var th = tooltip.offsetHeight;
 
       var left = rect.left;
-      if (left + tw > window.innerWidth - MARGIN) left = window.innerWidth - tw - MARGIN;
+      if (left + tw > vp.width - MARGIN) left = vp.width - tw - MARGIN;
       if (left < MARGIN) left = MARGIN;
 
       var top = rect.bottom + MARGIN;
-      if (top + th > window.innerHeight - MARGIN) top = rect.top - th - MARGIN;
+      if (top + th > vp.height - MARGIN) top = rect.top - th - MARGIN;
       if (top < MARGIN) top = MARGIN;
 
       tooltip.style.left = left + 'px';
@@ -163,14 +177,18 @@
     // auto-fit zoom (see slide-zoom.js), which is calibrated to fill the
     // screen with THAT slide's content — on a sparse slide (few lines, small
     // viewport) that zoom factor can be huge. Matching it 1:1 is a good
-    // starting point but can make the (much longer) tooltip text overflow
-    // the viewport, so shrink it back down until it actually fits.
+    // starting point but can make the (much longer, ~18-character-wide) tab
+    // text overflow, especially on a narrow phone. Shrink it back down to a
+    // fraction of the viewport — not just barely-fits-full-screen — so it
+    // reads as a compact tooltip next to the chord rather than a full-screen
+    // panel, and so there's still room to position it near the chord.
     function fitFontSize(chordEl) {
       var desired = parseFloat(getComputedStyle(chordEl).fontSize);
       tooltipInner.style.fontSize = desired + 'px';
 
-      var maxW = window.innerWidth - MARGIN * 2;
-      var maxH = window.innerHeight - MARGIN * 2;
+      var vp = viewportSize();
+      var maxW = vp.width * 0.7 - MARGIN * 2;
+      var maxH = vp.height * 0.45 - MARGIN * 2;
       var scale = Math.min(1, maxW / tooltip.offsetWidth, maxH / tooltip.offsetHeight);
       if (scale < 1) tooltipInner.style.fontSize = (desired * scale) + 'px';
     }
@@ -214,5 +232,13 @@
     }, true);
 
     if (window.Reveal) Reveal.on('slidechanged', hideTooltip);
+
+    // Close on any viewport change (orientation flip, Safari's toolbar
+    // show/hide, browser resize) rather than trying to reposition/rescale a
+    // stale tooltip — its position and font size were computed for the old
+    // viewport and slide-zoom.js will itself recompute the slide's zoom.
+    window.addEventListener('resize', hideTooltip);
+    window.addEventListener('orientationchange', hideTooltip);
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', hideTooltip);
   });
 })();

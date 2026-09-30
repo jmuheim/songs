@@ -274,6 +274,10 @@ body.theme-bright .modal-box button {
 body.theme-bright .modal-box button:hover {
   background: #ccc;
 }
+
+body.theme-bright .chord-tooltip-inner {
+  background-color: #ffe29a;
+}
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -313,6 +317,47 @@ body.theme-bright .modal-box button:hover {
 .reveal section code.e { background-color: #ffe149; } /* Yellow */
 .reveal section code.f { background-color: #fb63f6; } /* Violet */
 .reveal section code.g { background-color: #c78430; } /* Brown */
+
+body.chords-clickable .reveal section code[class] {
+  cursor: pointer;
+}
+
+.reveal section code.chord-active {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+#chord-tooltip {
+  position: fixed;
+  z-index: 500;
+  display: none;
+}
+
+#chord-tooltip.visible {
+  display: block;
+}
+
+.chord-tooltip-inner {
+  background-color: #ffe4ba;
+  border: 2px solid #000;
+  border-radius: 0.5em;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.chord-tooltip-inner pre {
+  margin: 0;
+  box-shadow: none;
+}
+
+.chord-tooltip-inner code {
+  display: block;
+  color: #000;
+  font-family: monospace;
+  white-space: pre;
+  padding: .75em 1em;
+  border-radius: 0.5em;
+  line-height: 1.3;
+}
 
 .reveal section em {
   opacity: .5;
@@ -1122,5 +1167,6 @@ tab</a></li>
       <script src="https://multiplex.up.railway.app/socket.io/socket.io.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <script src="/style/slide-zoom.js"></script>
+  <script src="/style/chords.js"></script>
 </body>
 </html>
