@@ -7,8 +7,9 @@ require 'timeout'
 
 # The browser specs' own reveal-multiplex (multiplex-server/, the package the
 # public Railway server runs), so a spec that becomes master never broadcasts
-# on the channel songs.josh.ch listens to. Port and token are fixed, like
-# FileServer's port, so the committed fixture HTML stays the same run to run.
+# on the channel songs.josh.ch listens to. Port and token are fixed because
+# the fixture carries them, and the committed fixture must stay the same run
+# to run.
 module MultiplexServer
   PORT            = 18_889
   DIR             = File.expand_path('../../multiplex-server', __dir__)
