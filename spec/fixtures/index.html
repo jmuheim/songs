@@ -448,7 +448,17 @@ window.addEventListener('load', function() {
   // cfg.heartbeat lets the specs shorten it.
   var HEARTBEAT_MS = 2000;
 
+  // One master leads: whoever took over last. Every message carries the time
+  // its sender took over (its claim). A master that hears a higher claim steps
+  // down; a client ignores a lower one while the leader is still sending. This
+  // long without a word, the leader counts as gone: a tab that has been in the
+  // background for a while is woken only once a minute.
+  var LEADER_SILENCE_MS = 65000;
+
   var isMaster = false;
+  var claim = 0;                                         // this tab's, while it is master
+  var senderId = Math.random().toString(36).slice(2, 8); // per page load: settles a tie between duplicated tabs
+  var leader = { claim: 0, heardAt: 0 };                 // the master this client listens to
   var heartbeat = null;
   var lastState = null;       // the master's, as last received
   var applyingRemote = false; // set while Reveal moves because the master did
@@ -496,7 +506,21 @@ window.addEventListener('load', function() {
   });
 
   socket.on(cfg.socketId, function(data) {
-    if (isMaster || !data || !data.state) return;
+    if (!data || !data.state) return;
+    var theirClaim = data.claim || 0;
+
+    if (isMaster) {
+      // The same claim is a duplicated tab: the higher sender id stays.
+      var outranked = theirClaim > claim || (theirClaim === claim && data.from > senderId);
+      if (!outranked) return;
+      becomeClient(); // someone took over after this tab
+    }
+
+    // An equal claim is the leader itself, reloaded under a new sender id.
+    var leaderGone = Date.now() - leader.heardAt > LEADER_SILENCE_MS;
+    if (theirClaim < leader.claim && !leaderGone) return; // an older master, about to step down
+    leader = { claim: theirClaim, heardAt: Date.now() };
+
     lastState = data.state;
     if (following) follow(lastState);
   });
@@ -508,7 +532,9 @@ window.addEventListener('load', function() {
     socket.emit('multiplex-statechanged', {
       secret: cfg.secret,
       socketId: cfg.socketId,
-      state: Reveal.getState()
+      state: Reveal.getState(),
+      claim: claim,
+      from: senderId
     });
   }
 
@@ -516,7 +542,12 @@ window.addEventListener('load', function() {
 
   var REVEAL_EVENTS = ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewshown', 'overviewhidden', 'paused', 'resumed'];
 
-  function becomeMaster() {
+  // The role is kept per tab, with its claim, so that a master that reloads
+  // (or whose tab iOS discarded) leads again without the password.
+  function becomeMaster(restoredClaim) {
+    // Above every claim heard, even one from a device whose clock runs ahead.
+    claim = restoredClaim || Math.max(Date.now(), leader.claim + 1);
+    try { sessionStorage.setItem('multiplex-master', String(claim)); } catch (e) {}
     isMaster = true;
     masterBtn.classList.add('is-master');
     masterBtn.setAttribute('aria-pressed', 'true');
@@ -527,6 +558,7 @@ window.addEventListener('load', function() {
   }
 
   function becomeClient() {
+    try { sessionStorage.removeItem('multiplex-master'); } catch (e) {}
     isMaster = false;
     masterBtn.classList.remove('is-master');
     masterBtn.setAttribute('aria-pressed', 'false');
@@ -570,6 +602,10 @@ window.addEventListener('load', function() {
     if (e.key === 'Enter')  document.getElementById('master-confirm').click();
     if (e.key === 'Escape') document.getElementById('master-cancel').click();
   });
+
+  var storedClaim = 0;
+  try { storedClaim = Number(sessionStorage.getItem('multiplex-master')) || 0; } catch (e) {}
+  if (storedClaim) becomeMaster(storedClaim);
 
   var showQrBtn = document.getElementById('show-qr');
 

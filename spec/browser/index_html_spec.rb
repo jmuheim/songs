@@ -23,6 +23,20 @@ RSpec.describe 'index.html', :js, type: :feature do
     page.execute_script("document.getElementById('#{id}').click()") # e.target must be the overlay, not a child
   end
 
+  def become_master(heartbeat: 200) # repeat every 200 ms instead of 2 s
+    page.execute_script("window.MULTIPLEX.heartbeat = #{heartbeat}")
+    click_button('🚀 Lead slide navigation')
+    within('#master-modal') do
+      find('#master-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
+      click_button('OK')
+    end
+    expect(page).to have_css('#master-mode.is-master')
+  end
+
+  def master?(session)
+    using_session(session) { page.has_css?('#master-mode.is-master', wait: 0) }
+  end
+
   # -----------------------------------------------------------------------
   # Structure & initial state
   # -----------------------------------------------------------------------
@@ -253,13 +267,7 @@ RSpec.describe 'index.html', :js, type: :feature do
 
         using_session(:master) do
           load_presentation
-          page.execute_script("window.MULTIPLEX.heartbeat = 200") # repeat every 200 ms instead of 2 s
-          click_button('🚀 Lead slide navigation')
-          within('#master-modal') do
-            find('#master-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
-            click_button('OK')
-          end
-          expect(page).to have_css('#master-mode.is-master')
+          become_master
           expect(page).to have_no_button('👣 Browse freely')
           find('body').send_keys(:right)
           expect(page).to have_css('#TOC.present')
@@ -293,6 +301,57 @@ RSpec.describe 'index.html', :js, type: :feature do
           wait_for_js("Reveal.getIndices().h === 3")
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
         end
+      end
+
+      it 'lets whoever took over last lead, and keeps the role through a reload' do
+        using_session(:first) do
+          load_presentation
+          become_master
+          find('body').send_keys(:right)
+          expect(page).to have_css('#TOC.present')
+        end
+
+        using_session(:client) do
+          load_presentation
+          expect(page).to have_css('#TOC.present')
+        end
+
+        using_session(:second) do
+          load_presentation
+          become_master
+          find('body').send_keys(:right)
+          expect(page).to have_css('#introduction.present')
+        end
+
+        using_session(:first) { expect(page).to have_no_css('#master-mode.is-master') }
+        using_session(:client) { expect(page).to have_css('#introduction.present') }
+
+        # Reloaded, the tab leads again without the password, and the client
+        # accepts it under its new sender id
+        using_session(:second) do
+          page.refresh # a real reload: visiting the same URL with its #/… would only jump within the page
+          wait_for_reveal
+          expect(page).to have_css('#master-mode.is-master')
+          page.evaluate_script("Reveal.slide(3)")
+        end
+        using_session(:client) do
+          wait_for_js("Reveal.getIndices().h === 3", timeout: 5)
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
+        end
+
+        # A duplicated tab inherits the role and the claim: exactly one of the two stays master
+        claim = using_session(:second) { page.evaluate_script("sessionStorage.getItem('multiplex-master')") }
+        using_session(:duplicate) do
+          load_presentation
+          page.execute_script("sessionStorage.setItem('multiplex-master', '#{claim}')")
+          page.refresh # a real reload: visiting the same URL with its #/… would only jump within the page
+          wait_for_reveal
+        end
+        masters = -> { [master?(:second), master?(:duplicate)].count(true) }
+        deadline = Time.now + 8 # restored masters repeat every 2 s
+        sleep 0.1 until masters.call == 1 || Time.now > deadline
+        sleep 2.5 # one more repeat each: both have heard the other, and still one leads
+        expect(masters.call).to eq(1)
       end
     end
 

@@ -59,6 +59,8 @@ Once you enter the password and become presenter (❌ on 🚀), your slide navig
 
 Paging on your own device switches you to browsing freely, so that the next repeat does not snap you back — 👣 brings you back to the presenter.
 
+The presenter's tab stays presenter when it reloads. If someone else enters the password, they take over and the previous presenter becomes a listener.
+
 Default password: `guitar`. Change it with:
 
 ```bash

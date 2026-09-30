@@ -1,6 +1,7 @@
 require 'digest'
 require 'json'
 require 'net/http'
+require 'socket'
 require 'tempfile'
 require 'timeout'
 
@@ -29,6 +30,9 @@ module MultiplexServer
         unless system('node', '--version', out: File::NULL, err: File::NULL)
       raise 'multiplex-server dependencies missing — run: npm install --prefix multiplex-server' \
         unless File.exist?(File.join(DIR, 'node_modules', 'reveal-multiplex', 'index.js'))
+      # Otherwise ours dies on EADDRINUSE while the other one answers the
+      # readiness check, and the specs quietly broadcast into whatever that is.
+      raise "port #{PORT} is taken — is a multiplex server from a manual test still running?" if port_taken?
 
       # A file, not a pipe: the server logs every relayed event, and an
       # undrained pipe would block it once the buffer fills.
@@ -51,6 +55,14 @@ module MultiplexServer
   ensure
     @pid = nil
   end
+
+  def self.port_taken?
+    TCPSocket.new('127.0.0.1', PORT).close
+    true
+  rescue Errno::ECONNREFUSED
+    false
+  end
+  private_class_method :port_taken?
 
   def self.await_ready
     Timeout.timeout(STARTUP_TIMEOUT) do
