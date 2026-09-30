@@ -1,0 +1,7 @@
+## 2026-09-30 — The specs run their own multiplex server, on a fixed port with a fixed token
+
+**Context:** The spec fixture carried the production token from `multiplex-token.json`, so the „live sync" spec became master on the channel songs.josh.ch listens to and moved anyone who had the song book open at the time; a real presenter could equally make the spec flaky.
+
+**Decision:** `multiplex-server/` pins the official reveal-multiplex package (the software the public Railway server runs), and `spec/support/multiplex_server.rb` starts it on `127.0.0.1:18889` for the run, with a fixed test pair (`sha256(secret) == socketId` is all the server checks). The specs refuse to start while that port is taken. The fixture file server, whose port appears nowhere in the fixtures, takes a free port instead.
+
+**Reasoning:** Axipedia gives its spec server a free port and a fresh token per run. Here the fixture HTML is committed, and a per-run port and token would rewrite it on every run. The price of the fixed port is that two checkouts cannot run the multiplex specs at the same moment — hence the refusal: before it, a server left over from a manual test answered the readiness check while the spec's own died on `EADDRINUSE`, and the specs quietly broadcast into the stranger. The fixture server had the same fixed-port collision with nothing to justify it, and it collided in practice with a second checkout's runs.
