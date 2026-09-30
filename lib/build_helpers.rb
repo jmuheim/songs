@@ -79,7 +79,7 @@ module BuildHelpers
 
   def post_process_index(html, assets:, multiplex:)
     html = html.sub('<body>', "<body><script>window.MULTIPLEX=#{multiplex.to_json};</script>" + style_file('body-controls.html').strip)
-    html = html.sub('<style>', '<style>' + style_file('night.css') + style_file('shared.css'))
+    html = html.sub('<style>', %(<link rel="stylesheet" href="#{assets}fonts/fonts.css">\n  <style>) + style_file('night.css') + style_file('shared.css'))
     html = without_pandoc_plugins(html)
     html = html.sub('keyboard: true,', "keyboard: { 83: null }, // 's' disabled (was: speaker notes)")
                .sub('controls: true,', 'controls: false,')
