@@ -45,13 +45,6 @@ seventy[Am]four, seventy[C]five [G]
 
 [Am] [C] [G] [Am] _(x2)_
 
-## Solo
-
-[C] [G] [Am]
-[C] [G] [Am]
-[C] [G] [Am] [F]
-[C] [G] [Am]
-
 ## Verse 3
 
 [F] Got no [C] reason for [F] coming to me

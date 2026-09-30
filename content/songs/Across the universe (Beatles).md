@@ -11,14 +11,14 @@ F#m    |2=4=4=2=2=2|
 
 ## Intro
 
-
+_(Riff)_
 
 ## Verse 1
 
 [D] Words are flowing out [Bm]
 like endless [F#m] rain into a paper cup
 They [Em7] slither wildly as they slip away
-a[A]cross the [A7] universe
+a[A]cross the uni[A7]verse
 
 [D] Pools of sorrow, [Bm] waves of joy
 are [F#m] drifting through my opened mind
@@ -36,13 +36,13 @@ Poss[Em7]essing and car[Gm]essing me
 [D] Images of [Bm] broken light which
 [F#m] dance before me like a million [Em7] eyes
 They call me on and on
-a[A]cross the [A7] universe
+a[A]cross the uni[A7]verse
 
 [D] Thoughts meander [Bm] like a restless
 [F#m] wind inside a letterbox
 They [Em7] tumble blindly
 as they make their [A] way
-across the [A7] universe
+across the uni[A7]verse
 
 ## Chorus
 
@@ -58,9 +58,9 @@ are [F#m] ringing through my opened ears
 In[Em7]citing and in[Gm]viting me
 
 [D] Limitless, un[Bm]dying love
-which [F#m]shines around me like
+which [F#m] shines around me like
 a million [Em7] suns and calls me on and on
-a[A]cross the universe [A7]
+a[A]cross the uni[A7]verse
 
 ## Chorus
 
@@ -71,7 +71,7 @@ a[A]cross the universe [A7]
 
 ## Outro
 
-[D] Jai guru deva om [A7sus4] _(Repeat and fade)_
+[D] Jai guru deva om _(Repeat and fade)_
 
 ## Resources
 
