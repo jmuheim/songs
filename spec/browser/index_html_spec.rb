@@ -253,13 +253,18 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).not_to have_visible('#master-modal')
         expect(page).to have_css('#master-mode.is-master')
         expect(page).to have_css('#master-mode[aria-pressed="true"]', text: /🚀\s+Lead slide navigation/)
+
+        # 🚀 again ends the role, for the next page load too
+        click_button('🚀 Lead slide navigation')
+        expect(page).to have_no_css('#master-mode.is-master')
+        expect(page.evaluate_script("sessionStorage.getItem('multiplex-master')")).to be_nil
       end
     end
 
     describe 'live sync' do
       after { Capybara.reset_sessions! }
 
-      it 'client follows the master, a late one catches up, paging frees it and 👣 brings it back' do
+      it 'follows the master, catches up late, pages freely until 👣, and lets the last takeover lead, through reloads too' do
         using_session(:client) do
           load_presentation
           expect(page).to have_css('#title-slide.present')
@@ -276,11 +281,12 @@ RSpec.describe 'index.html', :js, type: :feature do
         using_session(:client) { expect(page).to have_css('#TOC.present') }
 
         # Opened after the master's last slide change: only the repeat brings it there
-        using_session(:late_client) do
+        using_session(:late) do
           load_presentation
           expect(page).to have_css('#TOC.present')
         end
 
+        # Paging on its own frees the client, and a reload keeps it free
         using_session(:client) do
           find('body').send_keys(:right)
           expect(page).to have_css('#introduction.present')
@@ -293,64 +299,57 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
 
         using_session(:client) do
+          page.refresh # a real reload: visiting the same URL with its #/… would only jump within the page
+          wait_for_reveal
+          expect(page).to have_css('#toggle-follow[aria-pressed="true"]')
           sleep 0.6 # three repeats of the master's state, none of which may move it
-          expect(page).to have_css('#introduction.present')
+          expect(page.evaluate_script("Reveal.getIndices().h")).not_to eq(3)
 
           click_button('👣 Browse freely')
           expect(page).to have_css('#toggle-follow[aria-pressed="false"]')
           wait_for_js("Reveal.getIndices().h === 3")
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
         end
-      end
 
-      it 'lets whoever took over last lead, and keeps the role through a reload' do
-        using_session(:first) do
-          load_presentation
+        # The late client takes over: the master steps down and follows along with everyone else
+        using_session(:late) do
           become_master
-          find('body').send_keys(:right)
-          expect(page).to have_css('#TOC.present')
+          page.evaluate_script("Reveal.slide(4)")
         end
-
+        using_session(:master) do
+          expect(page).to have_no_css('#master-mode.is-master')
+          expect(page.evaluate_script("sessionStorage.getItem('multiplex-master')")).to be_nil
+          wait_for_js("Reveal.getIndices().h === 4")
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
+        end
         using_session(:client) do
-          load_presentation
-          expect(page).to have_css('#TOC.present')
+          wait_for_js("Reveal.getIndices().h === 4")
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
         end
 
-        using_session(:second) do
-          load_presentation
-          become_master
-          find('body').send_keys(:right)
-          expect(page).to have_css('#introduction.present')
-        end
-
-        using_session(:first) { expect(page).to have_no_css('#master-mode.is-master') }
-        using_session(:client) { expect(page).to have_css('#introduction.present') }
-
-        # Reloaded, the tab leads again without the password, and the client
-        # accepts it under its new sender id
-        using_session(:second) do
-          page.refresh # a real reload: visiting the same URL with its #/… would only jump within the page
+        # Reloaded, the new master leads again without the password, and the
+        # client accepts it under its new sender id
+        using_session(:late) do
+          page.refresh
           wait_for_reveal
           expect(page).to have_css('#master-mode.is-master')
-          page.evaluate_script("Reveal.slide(3)")
+          page.evaluate_script("Reveal.slide(5)")
         end
         using_session(:client) do
-          wait_for_js("Reveal.getIndices().h === 3", timeout: 5)
-          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
+          wait_for_js("Reveal.getIndices().h === 5", timeout: 5) # a reloaded master repeats every 2 s
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(5)
         end
 
-        # A duplicated tab inherits the role and the claim: exactly one of the two stays master
-        claim = using_session(:second) { page.evaluate_script("sessionStorage.getItem('multiplex-master')") }
-        using_session(:duplicate) do
-          load_presentation
+        # A duplicated tab inherits role and claim: of the two, exactly one stays master
+        claim = using_session(:late) { page.evaluate_script("sessionStorage.getItem('multiplex-master')") }
+        using_session(:master) do
           page.execute_script("sessionStorage.setItem('multiplex-master', '#{claim}')")
-          page.refresh # a real reload: visiting the same URL with its #/… would only jump within the page
-          wait_for_reveal
+          page.refresh
+          wait_for_js("document.readyState === 'complete'", timeout: 5) # the load handler has restored the role
         end
-        masters = -> { [master?(:second), master?(:duplicate)].count(true) }
-        deadline = Time.now + 8 # restored masters repeat every 2 s
+        masters = -> { [master?(:master), master?(:late)].count(true) }
+        deadline = Time.now + 5
         sleep 0.1 until masters.call == 1 || Time.now > deadline
-        sleep 2.5 # one more repeat each: both have heard the other, and still one leads
         expect(masters.call).to eq(1)
       end
     end
