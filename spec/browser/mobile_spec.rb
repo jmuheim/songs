@@ -4,6 +4,7 @@ RSpec.describe 'mobile layout', :js, type: :feature do
   before(:all) do
     FixtureBuilder.build!
     FileServer.start
+    MultiplexServer.start
     Capybara.app_host = FileServer.url
   end
 
