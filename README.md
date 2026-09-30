@@ -23,12 +23,12 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 ## Build
 
 ```bash
-LANG=en_US.UTF-8 ./build           # Build index.html and print.html
-LANG=en_US.UTF-8 ./build --deploy  # HTML + deploy to songs.josh.ch
-LANG=en_US.UTF-8 ./dev             # Watch, rebuild, and live-reload on every change
+./build           # Build index.html and print.html
+./build --deploy  # HTML + deploy to songs.josh.ch
+./dev             # Watch, rebuild, and live-reload on every change
 ```
 
-> `LANG=en_US.UTF-8` is required because song files contain non-ASCII characters.
+> Song files contain non-ASCII characters; `build` sets `LANG` and the UTF-8 encoding itself, so no `LANG=…` prefix is needed.
 
 > **Dev note:** `./dev` runs browser-sync with `--no-ghost-mode`. Ghost mode (enabled by default) syncs clicks across all open tabs, which interferes with the multiplex feature — every button press would appear to fire on all "clients" simultaneously during local testing.
 
@@ -64,5 +64,5 @@ The presenter's tab stays presenter when it reloads. If someone else enters the 
 Default password: `guitar`. Change it with:
 
 ```bash
-MASTER_PASSWORD=yourpassword LANG=en_US.UTF-8 ./build
+MASTER_PASSWORD=yourpassword ./build
 ```

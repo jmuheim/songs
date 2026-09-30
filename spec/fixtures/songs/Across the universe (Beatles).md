@@ -7,11 +7,12 @@
        |-----------|
 A7sus4 |x 0 2 0 3 0|
 F#m    |2=4=4=2=2=2|
+(barré)|2 4 4 2 2 2| open-position shape
 ```
 
 ## Intro
 
-
+[F#m(barré)] [X] [Baug] [A7sus4]
 
 ## Verse 1
 
