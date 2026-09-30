@@ -1,0 +1,14 @@
+{
+  "name": "songs-multiplex-server",
+  "private": true,
+  "description": "Local multiplex server for the browser specs: the official reveal-multiplex package, which the public Railway server runs too.",
+  "scripts": {
+    "start": "node --require ./localhost.js node_modules/reveal-multiplex/index.js"
+  },
+  "dependencies": {
+    "reveal-multiplex": "github:reveal/multiplex#b64f351673cc4f261d68a9b4dce10417110e76c7"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
