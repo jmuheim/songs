@@ -26,5 +26,17 @@
     window.addEventListener('resize', function () { fitSlide(Reveal.getCurrentSlide()); });
 
     if (Reveal.isReady()) fitSlide(Reveal.getCurrentSlide());
+
+    // Web fonts (the text fonts and the bundled emoji font) load
+    // asynchronously; a slide fitted before they arrive is measured against the
+    // fallback font and, on a slow connection, would keep that wrong zoom.
+    // Re-fit once the fonts are ready, so the zoom matches the real glyphs on
+    // every machine — which is also what makes the exact slide-zoom specs
+    // reproducible on the CI runner, where the emoji font loads after Reveal.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        if (window.Reveal && Reveal.isReady()) fitSlide(Reveal.getCurrentSlide());
+      });
+    }
   });
 })();
