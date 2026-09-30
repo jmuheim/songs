@@ -92,6 +92,8 @@ Nothing leaves the machine during a run: the fonts are local too (see below). Th
 
 `bundle exec rake golden:update` regenerates the golden snapshots in `spec/fixtures/golden/` after an intended markup change.
 
+**CI runs the whole suite on every push and every pull request** (`.github/workflows/test.yml`): Ruby 3.2, Pandoc pinned to the same 3.9.0.2 the golden fixtures were built with, the `multiplex-server/` dependencies via `npm ci`, then `bundle exec rspec`. `Gemfile.lock` carries `x86_64-linux` alongside `arm64-darwin` so the Linux runner resolves nokogiri's native gem — regenerate both platforms with `bundle lock --add-platform x86_64-linux` if you ever relock.
+
 ## Vendored reveal.js
 
 `style/revealjs/` holds reveal.js **6.0.2** — only the five files the pages load (`dist/reveal.js`, `reveal.css`, `reset.css`, `theme/night.css`, `theme/serif.css`) plus its `LICENSE`. Everything under `style/` is deployed, so the rest of the release (tests, demo, other themes, `package-lock.json`) stays out. The paths match Pandoc's `revealjs-url`, which is why the `dist/` folder is kept.

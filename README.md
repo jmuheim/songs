@@ -41,6 +41,8 @@ bundle exec rspec
 
 The browser specs run their own multiplex server on `127.0.0.1:18889`, so a spec that becomes presenter never moves anyone who has songs.josh.ch open.
 
+GitHub Actions runs the whole suite on every push and pull request (`.github/workflows/test.yml`).
+
 ## Adding songs
 
 Add a Markdown file to `content/songs/` following the naming convention `Title (Artist).md`. Chords go inline as `[Am]`, `[G7]`, etc.
