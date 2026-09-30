@@ -1,13 +1,15 @@
 require 'digest'
 require 'json'
 require 'net/http'
+require 'socket'
 require 'tempfile'
 require 'timeout'
 
 # The browser specs' own reveal-multiplex (multiplex-server/, the package the
 # public Railway server runs), so a spec that becomes master never broadcasts
-# on the channel songs.josh.ch listens to. Port and token are fixed, like
-# FileServer's port, so the committed fixture HTML stays the same run to run.
+# on the channel songs.josh.ch listens to. Port and token are fixed because
+# the fixture carries them, and the committed fixture must stay the same run
+# to run.
 module MultiplexServer
   PORT            = 18_889
   DIR             = File.expand_path('../../multiplex-server', __dir__)
@@ -29,6 +31,9 @@ module MultiplexServer
         unless system('node', '--version', out: File::NULL, err: File::NULL)
       raise 'multiplex-server dependencies missing — run: npm install --prefix multiplex-server' \
         unless File.exist?(File.join(DIR, 'node_modules', 'reveal-multiplex', 'index.js'))
+      # Otherwise ours dies on EADDRINUSE while the other one answers the
+      # readiness check, and the specs quietly broadcast into whatever that is.
+      raise "port #{PORT} is taken — is a multiplex server from a manual test still running?" if port_taken?
 
       # A file, not a pipe: the server logs every relayed event, and an
       # undrained pipe would block it once the buffer fills.
@@ -51,6 +56,14 @@ module MultiplexServer
   ensure
     @pid = nil
   end
+
+  def self.port_taken?
+    TCPSocket.new('127.0.0.1', PORT).close
+    true
+  rescue Errno::ECONNREFUSED
+    false
+  end
+  private_class_method :port_taken?
 
   def self.await_ready
     Timeout.timeout(STARTUP_TIMEOUT) do
