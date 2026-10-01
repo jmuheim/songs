@@ -563,6 +563,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           wait_for_js("Reveal.getIndices().h === 5 && Reveal.getIndices().v === 1", timeout: 5)
           expect(slide_indices).to eq([5, 1])
           expect(page).not_to have_visible('#guest-invite-modal')
+          expect(page).not_to have_visible('#self-announce-modal') # joined mid-session: no „Es geht gleich los!"
           expect(page).to have_css('#multiplex-status', text: 'Folgt')
         end
       end

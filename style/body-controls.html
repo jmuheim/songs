@@ -302,9 +302,13 @@ window.addEventListener('load', function() {
     socket.emit('multiplex-statechanged', payload);
   }
 
-  function broadcastSession() {
+  // `fresh` marks the session's opening broadcast (set only by startSession);
+  // the 2 s heartbeats that follow leave it off. That is how a client tells "the
+  // session just opened" from "it has been running" — a latecomer only ever
+  // hears heartbeats, so it follows without the self-scroll announcement.
+  function broadcastSession(fresh) {
     if (!isPresenter || !session) return;
-    emit({ type: 'session', claim: presenterClaim, session: {
+    emit({ type: 'session', claim: presenterClaim, fresh: !!fresh, session: {
       id: session.id, active: true, song: session.song, songTitle: session.songTitle,
       mode: session.mode, scrollerId: session.scrollerId
     }});
@@ -348,10 +352,10 @@ window.addEventListener('load', function() {
     sessionClaim = data.claim;
     lastSessionAt = Date.now();
     if (!data.session.active) { concludeSession(); return; }
-    reconcileSession(data.session);
+    reconcileSession(data.session, data.fresh);
   }
 
-  function reconcileSession(s) {
+  function reconcileSession(s, fresh) {
     session = { id: s.id, song: s.song, songTitle: s.songTitle, mode: s.mode, scrollerId: s.scrollerId };
     if (s.mode === 'guest' && !s.scrollerId) {
       // Awaiting a volunteer: offer it once per session.
@@ -364,8 +368,9 @@ window.addEventListener('load', function() {
       inviteModal.close(); // a scroller was chosen, or this is a self session
     }
     // Self-scroll: the presenter drives, so there is nothing to volunteer for —
-    // just tell the room which song is coming, once per session.
-    if (s.mode === 'self' && !amScroller() && announcedFor !== s.id) {
+    // tell the room which song is coming, but only those here as it opens
+    // (`fresh`): a latecomer that catches up on a heartbeat just follows.
+    if (fresh && s.mode === 'self' && !amScroller() && announcedFor !== s.id) {
       announcedFor = s.id;
       announceSong.textContent = s.songTitle;
       if (!announceModal.open) announceModal.showModal();
@@ -505,7 +510,7 @@ window.addEventListener('load', function() {
     };
     persistPresenter();
     applyNavMode();      // 'self' locks the presenter to the song; 'guest' waits
-    broadcastSession();
+    broadcastSession(true); // fresh: whoever is here now gets the self-scroll announcement
     updateButton();
     updateStatus();
     restartHeartbeat();
