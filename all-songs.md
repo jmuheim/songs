@@ -939,6 +939,163 @@ vergangenen Tag gekommen ist. ([Quelle](https://www.msn.com/de-ch/nachrichten/ot
 - [Song](https://www.youtube.com/watch?v=qaeVSV0fRDo)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/mani-matter/dynamit-chords-2553321)
 
+# Family Portrait (P!nk)
+
+_Capo 3rd fret_
+
+## Intro
+
+`Am`{.a} `Dm`{.d} `C`{.c} `B7`{.b} `E`{.e}
+
+## Verse 1
+
+`Am`{.a} Mama please stop cryin'
+`Dm`{.d} I can't stand the sound
+`C`{.c} Your pain is painful and it's
+`B7`{.b} Tearing me `E`{.e} down
+
+`Am`{.a} I hear glasses breakin'
+`Dm`{.d} As I sit up in my bed
+`C`{.c} I told dad you didn't mean
+`B7`{.b} Those nasty things you `E`{.e} said
+
+## Verse 2
+
+`Am`{.a} You fight about money
+`Dm`{.d} 'Bout me and my brother
+`C`{.c} And this I come home to
+`B7`{.b} This is `E`{.e} my shelter
+
+`Am`{.a} It ain't easy, growin' up in world war 3
+`Dm`{.d} Never known what love could be
+You'll see,
+`C`{.c} I don't want love to destroy me
+`B7`{.b} Like it has done my `E`{.e} family
+
+## Pre-Chorus
+
+`Am`{.a} Can we work it out (Can we)
+`Dm`{.d} Can we be a family (Can we)
+`C`{.c} I promise I'll be better (I promise)
+`B7`{.b} Mommy I'll do anything `E`{.e} (I'll do anything)
+`Am`{.a} Can we work it out?
+`Dm`{.d} Can we be a family?
+`C`{.c} I promise I'll be better
+`B7`{.b} Daddy please don't `E`{.e} leave
+
+## Interlude
+
+`Am`{.a} Daddy please stop yelling (stop)
+`Dm`{.d} I can't stand the sound (can't stand the sound)
+`C`{.c} Make mama stop cryin'
+`B7`{.b} 'Cause I need you around `E`{.e} (yeah yeah yeah)
+`Am`{.a} My mama she loves you (I know it)
+`Dm`{.d} No matter what she says it's true
+`C`{.c} I know that she hurts you
+`B7`{.b} But remember I love `E`{.e} you too!
+
+## Verse 4
+
+`Am`{.a} I ran away today, `Dm`{.d} ran from the noise, ran away (ran away)
+`C`{.c} Don't wanna go back to that place
+`B7`{.b} But don't have no choice, `E`{.e} no way (no choice, no way)
+`Am`{.a} It ain't easy, growin' up in world war 3
+`Dm`{.d} Never knowin' what love could be
+But I've seen, `C`{.c} I don't want love to destroy me
+`B7`{.b} Like it did my `E`{.e} family
+
+## Pre-Chorus
+
+`Am`{.a} Can we work it out (Can we work it out ohhhhhh!)
+`Dm`{.d} Can we be a family
+`C`{.c} I promise I'll be better (I promise)
+`B7`{.b} Mommy I'll do anything `E`{.e} (Anything to keep you here!!!!)
+`Am`{.a} Can we work it out
+`Dm`{.d} Can we be a family
+`C`{.c} I promise I'll be better (I promise, I promise)
+`B7`{.b} Daddy please don't `E`{.e} leave
+
+## Interlude
+
+`Am`{.a} In our family portrait (In our family portrait)
+`Dm`{.d} We look pretty happy (We look pretty happy)
+`C`{.c} Let's play pretend, let's act like it (let's act let's act let's act like it comes)
+`B7`{.b} Comes `E`{.e} naturally
+I don't wanna `Am`{.a} have to split the holidays (no no)
+I don't want `Dm`{.d} two addresses (no no no no nooo)
+I don't want a `C`{.c} stepbrother anyways
+And I don't want `B7`{.b} my mom to have to change `E`{.e} her last name!!!!
+
+## Chorus
+
+(Little kidz chorus)
+`Am`{.a} In our family portrait
+`Dm`{.d} We look pretty happy
+`C`{.c} We look pretty normal
+`B7`{.b} Lets go back to `E`{.e} that
+`Am`{.a} In our family portrait
+`Dm`{.d} We look pretty happy
+`C`{.c} Lets play pretend, act like it
+`B7`{.b} Goes naturally `E`{.e}
+
+## Verse 5
+
+`Am`{.a} In our family portrait (Can we work it out)
+`Dm`{.d} We look pretty happy (Can we be a family)
+`C`{.c} We look pretty normal (I promise I'll be better)
+`B7`{.b} Lets go back to that `E`{.e} (Mommy I'll do anything)
+`Am`{.a} In our family portait (Can we work it out)
+`Dm`{.d} We look pretty happy (Can we be a family)
+`C`{.c} Lets play pretend (I promise I'll be better)
+`B7`{.b} Act like it goes naturally,(Daddy `E`{.e} please don't leave)
+
+Oh lets go back Oh lets go back that
+Remember the days, remember the days
+
+## Chorus
+
+`Am`{.a} In our family portrait (Can we work it out)
+`Dm`{.d} We look pretty happy (Can we be a family)
+`C`{.c} We look pretty normal (I promise I'll be better)
+`B7`{.b} Lets go back to that `E`{.e} (Mommy I'll do anything)
+`Am`{.a} In our family portait (Can we work it out)
+`Dm`{.d} We look pretty happy (Can we be a family)
+`C`{.c} We look pretty normal (I promise I'll be better)
+`B7`{.b} Please go back to that `E`{.e} (Daddy please don't leave)
+That!!! ohhhhhhhhhhh!!!!!!!!
+
+## Bridge
+
+`Am`{.a} Don't leave... don't leave... Daddy don't leave...
+`Dm`{.d} Don't leave... Daddy don't leave...
+`C`{.c} Daddy don't leave.. Daddy don't leave... Daddy dont leave...
+`B7`{.b} Don't leave... don't leave...
+`E`{.e} Turn around please... He's so mad
+`Am`{.a} Remember `Dm`{.d} that the night you left
+`C`{.c} You `B7`{.b} took my shining `E`{.e} star
+`Am`{.a} Daddy don't leave...
+`Dm`{.d} Daddy don't leave...
+`C`{.c} Daddy don't leave...
+`B7`{.b} Don't leave us here `E`{.e} alone
+
+## Verse 6
+
+`Am`{.a} Mama'll be nicer
+`Dm`{.d} I'll be so much better
+`C`{.c} I'll tell my brother
+`B7`{.b} Oh I won't spill the milk at `E`{.e} dinner
+`Am`{.a} I'll be so much better
+`Dm`{.d} I'll do everything right
+`C`{.c} I'll be your little girl forever
+`B7`{.b} I'll go to sleep at `E`{.e} night
+
+Ooh no Ooh no
+Ooh no Ooh
+
+## Resources
+
+- [Source tab](https://tabs.ultimate-guitar.com/tab/pnk/family-portrait-chords-753196)
+
 # Father and son (Cat Stevens)
 
 ## Instructions
@@ -1662,6 +1819,62 @@ I have a `A`{.a} dream _(2x)_
 - [Song](https://www.youtube.com/watch?v=ER_3h03omdE)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/abba/i-have-a-dream-chords-897049)
 
+# I Shall Be Released (Bob Dylan)
+
+## Instructions
+
+_Capo 3rd_
+
+## Verse
+
+`C`{.c} They say everything `Dm`{.d} can be replaced
+`Em`{.e} Yet every `F`{.f} distance is `G`{.g} not `C`{.c} near
+`C`{.c} So I remember `Dm`{.d} every face
+`Em`{.e} Of every `F`{.f} man who `G`{.g} put me `C`{.c} here.
+
+## Chorus
+
+`C`{.c} I see my light come `Dm`{.d} shining
+`Em`{.e} From the `F`{.f} west unto `G`{.g} the `C`{.c} east.
+`C`{.c} Any day now,
+`Dm`{.d} Any day now,
+`Em`{.e} I `F`{.f} shall be `G`{.g} re`C`{.c}leased
+
+## Verse
+
+`C`{.c} They say every man `Dm`{.d} needs protection.
+`Em`{.e} They say that `F`{.f} every man `G`{.g} must `C`{.c} fall.
+`C`{.c} Yet I swear I see `Dm`{.d} my reflection,
+`Em`{.e} Someplace so `F`{.f} high above `G`{.g} this `C`{.c} wall.
+
+## Chorus
+
+`C`{.c} I see my light come `Dm`{.d} shining
+`Em`{.e} From the `F`{.f} west unto `G`{.g} the `C`{.c} east.
+`C`{.c} Any day now,
+`Dm`{.d} Any day now,
+`Em`{.e} I `F`{.f} shall be `G`{.g} re`C`{.c}leased
+
+## Verse
+
+`C`{.c} Down here next to me `Dm`{.d} in this lonely crowd
+`Em`{.e} Is a man who `F`{.f} swears he's not `G`{.g} to `C`{.c} blame.
+`C`{.c} All day long I hear him `Dm`{.d} cry out so loud,
+`Em`{.e} Calling `F`{.f} out that he's `G`{.g} been `C`{.c} framed.
+
+## Chorus
+
+`C`{.c} I see my light come `Dm`{.d} shining
+`Em`{.e} From the `F`{.f} west unto `G`{.g} the `C`{.c} east.
+`C`{.c} Any day now,
+`Dm`{.d} Any day now,
+`Em`{.e} I `F`{.f} shall be `G`{.g} re`C`{.c}leased
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=In7MChGC2Wo)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-dylan/i-shall-be-released-chords-14873)
+
 # I am sailing (Rod Stewart)
 
 ## Instructions
@@ -2060,6 +2273,197 @@ If we'll `C`{.c} keep on the `G`{.g} sunny side of `C`{.c} life
 - [Source tab](https://tabs.ultimate-guitar.com/tab/the-carter-family/keep-on-the-sunny-side-chords-1431252)
 - [Guitar tutorial](https://www.youtube.com/watch?v=O2j6cZlT2LI)
 - [Interpretation by The Whites](https://www.youtube.com/watch?v=8joVnqleS9Q)
+
+# Killing Me Softly (Fugees)
+
+## Chorus
+
+`Em`{.e} Strumming my pain with his `Am`{.a} fingers.
+`D7`{.d} Singing my life with his `G`{.g} words.
+`Em`{.e} Killing me softly with `Am`{.a} his song.
+
+Killing me softly `D`{.d} with `C`{.c} his song.
+Telling my `G`{.g} whole life with `C`{.c} his words.
+Killing me `F`{.f} softly, with his `E`{.e} song.
+
+## Verse 1
+
+`Am`{.a} I heard he `D`{.d} sang a good song.
+`G`{.g} I heard he `C`{.c} had a style.
+`Am`{.a} And so I `D`{.d} came to see him,
+and `Em`{.e} listen for a while.
+
+`Am`{.a} And there he `D7`{.d} was this young boy,
+`G`{.g} a stranger `B7`{.b} to my eyes.
+
+## Chorus
+
+`Em`{.e} Strumming my pain with his `Am`{.a} fingers.
+`D7`{.d} Singing my life with his `G`{.g} words.
+`Em`{.e} Killing me softly with `Am`{.a} his song.
+
+Killing me softly `D`{.d} with `C`{.c} his song.
+Telling my `G`{.g} whole life with `C`{.c} his words.
+Killing me `F`{.f} softly, with his `E`{.e} song.
+
+## Verse 2
+
+`Am`{.a} I felt all `D`{.d} flushed with fever,
+`G`{.g} embarrassed `C`{.c} by the crowd.
+`Am`{.a} I felt he `D`{.d} found my letters
+and `Em`{.e} read each one out loud.
+`Am`{.a} I prayed that `D7`{.d} he would finish,
+`G`{.g} but he just `B7`{.b} kept right on.
+
+## Chorus
+
+`Em`{.e} Strumming my pain with his `Am`{.a} fingers.
+`D7`{.d} Singing my life with his `G`{.g} words.
+`Em`{.e} Killing me softly with `Am`{.a} his song.
+
+Killing me softly `D`{.d} with `C`{.c} his song.
+Telling my `G`{.g} whole life with `C`{.c} his words.
+Killing me `F`{.f} softly, with his `E`{.e} song.
+
+## Interlude
+
+_(scat: woah-ah-ah… la-la-la…)_
+
+`Em`{.e} `Am`{.a} `D7`{.d} `G`{.g}
+`Em`{.e} `Am`{.a} `D`{.d} `C`{.c}
+`G`{.g} `C`{.c} `F`{.f} `E`{.e}
+
+## Chorus
+
+`Em`{.e} Strumming my pain with his `Am`{.a} fingers.
+`D7`{.d} Singing my life with his `G`{.g} words.
+`Em`{.e} Killing me softly with `Am`{.a} his song.
+
+Killing me softly `D`{.d} with `C`{.c} his song.
+Telling my `G`{.g} whole life with `C`{.c} his words.
+Killing me `F`{.f} softly, with his `E`{.e} song.
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=oKOtzIo-uYw)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/fugees/killing-me-softly-chords-50470)
+
+# Knockin' on Heaven's Door (Bob Dylan)
+
+## Intro
+
+`G`{.g} `D`{.d} `Am`{.a}
+`G`{.g} Oo `D`{.d} oo-oo `C`{.c} oo _(2x)_
+
+## Verse 1
+
+`G`{.g} Mama `D`{.d} take this badge off of me `Am`{.a}
+`G`{.g} I can't `D`{.d} use it anymore `C`{.c}
+`G`{.g} It's getting `D`{.d} dark, too dark to see `Am`{.a}
+`G`{.g} I feel I'm `D`{.d} knockin on heaven's `C`{.c} door
+
+## Chorus
+
+`G`{.g} Knock, knock, `D`{.d} knockin' on heaven's `Am`{.a} door
+`G`{.g} Knock, knock, `D`{.d} knockin' on heaven's `C`{.c} door _(2x)_
+
+## Verse 2
+
+`G`{.g} Mama `D`{.d} put my guns in the ground `Am`{.a}
+`G`{.g} I can't `D`{.d} shoot them anymore `C`{.c}
+`G`{.g} That long black `D`{.d} cloud is comin' down `Am`{.a}
+`G`{.g} I feel I'm `D`{.d} knockin' on heaven's `C`{.c} door
+
+## Chorus
+
+`G`{.g} Knock, knock, `D`{.d} knockin' on heaven's `Am`{.a} door
+`G`{.g} Knock, knock, `D`{.d} knockin' on heaven's `C`{.c} door _(2x)_
+
+## Outro
+
+`G`{.g} Oo `D`{.d} oo-oo `Am`{.a} oo `G`{.g} (fade)
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=rm9coqlk8fY)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-dylan/knockin-on-heavens-door-chords-66559)
+
+# Lean on Me (Bill Withers)
+
+## Intro
+
+`C`{.c} `F`{.f} `F`{.f} `C`{.c} `C`{.c} `Em`{.e} `Em`{.e} `G9`{.g}
+`C`{.c} `F`{.f} `F`{.f} `C`{.c} `C`{.c} `G7`{.g} `G7`{.g} `C`{.c}
+
+## Verse 1
+
+`C`{.c} Sometimes in our `F`{.f} lives
+We all have `C`{.c} pain
+We all have `Em`{.e} sor`G`{.g}row
+`C`{.c} But if we are `F`{.f} wise
+We know that `C`{.c} there's always `G7`{.g} tomor`C`{.c}row
+
+## Chorus
+
+Lean on `C`{.c} me, when you're not `F`{.f} strong
+And I'll be your `C`{.c} friend
+I'll help you `Em`{.e} carry `G`{.g} on
+
+`C`{.c} For it won't be `F`{.f} long
+'Til I'm gonna `C`{.c} need
+Somebody to `G7`{.g} lean `C`{.c} on
+
+## Verse 2
+
+`C`{.c} Please swallow your `F`{.f} pride
+If I have `C`{.c} things
+You need to `Em`{.e} bor`G`{.g}row
+`C`{.c} For no one can `F`{.f} fill
+Those of your `C`{.c} needs
+That you won't `G7`{.g} let `C`{.c} show
+
+## Bridge
+
+So just `C`{.c} call on me brother, when you need a hand
+We all `C`{.c} need somebody to `G7`{.g} lean `C`{.c} on
+
+I just `C`{.c} might have a problem that you'd understand
+We all `C`{.c} need somebody to `G7`{.g} lean `C`{.c} on
+
+## Chorus
+
+Lean on `C`{.c} me, when you're not `F`{.f} strong
+And I'll be your `C`{.c} friend
+I'll help you `Em`{.e} carry `G`{.g} on
+
+`C`{.c} For it won't be `F`{.f} long
+'Til I'm gonna `C`{.c} need
+Somebody to `G7`{.g} lean `C`{.c} on
+
+## Bridge
+
+So just `C`{.c} call on me brother, when you need a hand
+We all `C`{.c} need somebody to `G7`{.g} lean `C`{.c} on
+
+I just `C`{.c} might have a problem that you'd understand
+We all `C`{.c} need somebody to `G7`{.g} lean `C`{.c} on
+
+## Verse 3
+
+`C`{.c} If there is a `F`{.f} load
+you have to `C`{.c} bear
+That you can't `Em`{.e} car`G`{.g}ry
+
+`C`{.c} I'm right up the `F`{.f} road
+I'll share your `C`{.c} load
+If you just `G7`{.g} call `C`{.c} me
+
+`G7`{.g} Call `C`{.c} me _(repeat and fade)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=fOZ-MySzAac)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/bill-withers/lean-on-me-chords-150987)
 
 # Lemon tree (Fool's Garden)
 
@@ -3495,6 +3899,67 @@ a `Am`{.a} dollar and a dime
 - [Song](https://www.youtube.com/watch?v=Ib_eW9VSUwM)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/ville-valo/summer-wine-chords-590088)
 
+# The Sound of Silence (Simon & Garfunkel)
+
+## Verse 1
+
+`Am`{.a} Hello darkness, my old `G`{.g} friend,
+I've come to talk with you a`Am`{.a}gain,
+Because a vision softly `F`{.f} cree`C`{.c}ping,
+Left its seeds while I `F`{.f} was slee`C`{.c}ping,
+
+And the `F`{.f} vision that was planted in my `C`{.c} brain
+Still remains `Am`{.a} `C`{.c}
+Within the `G`{.g} sound of `Am`{.a} silence.
+
+## Verse 2
+
+In restless dreams I walked `G`{.g} alone
+Narrow streets of cobble`Am`{.a}stone,
+'neath the halo of `F`{.f} a street `C`{.c} lamp,
+I turned my collar to the `F`{.f} cold and `C`{.c} damp
+
+When my `F`{.f} eyes were stabbed by the flash of a neon `C`{.c} light
+That split the night `Am`{.a} `C`{.c}
+And touched the `G`{.g} sound of `Am`{.a} silence.
+
+## Verse 3
+
+And in the naked light I `G`{.g} saw
+Ten thousand people, maybe `Am`{.a} more.
+People talking without `F`{.f} spea`C`{.c}king,
+People hearing without `F`{.f} lis`C`{.c}tening,
+
+People writing `F`{.f} songs that voices never `C`{.c} share
+And no one dare `Am`{.a} `C`{.c}
+Disturb the `G`{.g} sound of `Am`{.a} silence.
+
+## Verse 4
+
+Fools said I, you do not `G`{.g} know
+Silence like a cancer `Am`{.a} grows.
+Hear my words that I `F`{.f} might teach `C`{.c} you,
+Take my arms that I `F`{.f} might reach `C`{.c} you.
+
+But my `F`{.f} words like silent raindrops `C`{.c} fell, `Am`{.a}
+`C`{.c} And echoed in the `G`{.g} wells of `Am`{.a} silence
+
+## Verse 5
+
+And the people bowed and `G`{.g} prayed
+To the neon god they `Am`{.a} made.
+And the sign flashed out `F`{.f} its war`C`{.c}ning,
+In the words that it `F`{.f} was for`C`{.c}ming.
+And `F`{.f} words of the prophets
+Are written on the subway `C`{.c} walls
+And tenement halls `Am`{.a}
+`C`{.c} And whisper'd in the `G`{.g} sounds of `Am`{.a} silence.
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=6ukmjBSQY-c)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/simon-garfunkel/the-sound-of-silence-chords-159157)
+
 # ❤️ The river is flowing (Indian Summer)
 
 ## Verse 1
@@ -3551,6 +4016,37 @@ until we are pure
 
 - [Song](https://www.youtube.com/watch?v=sB2AaVVjF-0)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196)
+
+# Three Little Birds (Bob Marley)
+
+## Intro
+
+`A`{.a}
+
+## Chorus
+
+Don't `A`{.a} worry, about a thing
+'Cause `D`{.d} every little thing, gonna be al`A`{.a}right
+
+Singin' don't `A`{.a} worry, about a thing
+'Cause `D`{.d} every little thing, gonna be al`A`{.a}right
+
+## Verse
+
+Rise up this `A`{.a} mornin'
+Smile with the `E`{.e} rising sun
+Three little `A`{.a} birds sit by my `D`{.d} doorstep
+
+Singin' `A`{.a} sweet songs
+Of melodies `E`{.e} pure and true
+Singin', `D`{.d} this is my message to `A`{.a} you-ou-ou
+
+_(Start over)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=LanCLS_hIo4)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-marley/three-little-birds-chords-166605)
 
 # Verdammt ich lieb dich (Matthias Reim)
 
@@ -3947,6 +4443,213 @@ _(Fade out slowly)_
 - [Song](https://www.youtube.com/watch?v=IXdNnw99-Ic)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/pink-floyd/wish-you-were-here-chords-1088963)
 - [Guitar tutorial](https://www.youtube.com/watch?v=N2dQRYyaglk)
+
+# Wonderful Life (Black)
+
+## Intro
+
+`Em`{.e} `G`{.g} `Em`{.e} `Em`{.e} `Am`{.a} `Am`{.a} `D`{.d}
+`Em`{.e} `Em`{.e} `Em`{.e} `Em`{.e} `D`{.d} `G`{.g} `G`{.g} `G`{.g} `G`{.g} `D`{.d}
+
+## Verse
+
+`Em`{.e} Here I go, `D`{.d} out to `G`{.g} sea again
+The sunshine `D`{.d} fills my `Em`{.e} hair
+And dreams hang `D`{.d} in the `G`{.g} air `D`{.d}
+
+`Em`{.e} Gulls in the sky `D`{.d} and in my `G`{.g} blue eye
+You know it `D`{.d} feels `Em`{.e} unfair
+There's magic `D`{.d} every`G`{.g}where `D`{.d}
+
+## Pre-chorus
+
+`Em`{.e} Look at me `B7`{.b} standing
+`G`{.g} Here on my `Am`{.a} own again
+`Em`{.e} Up straight in the `B7`{.b} sunshine `G`{.g} `Am`{.a}
+
+## Chorus
+
+No need to `Em`{.e} run and `G`{.g} hide
+It's a `Em`{.e} wonderful, `Am`{.a} wonderful `D`{.d} life
+No need to `Em`{.e} laugh and `G`{.g} cry
+It's a `Em`{.e} wonderful, `Am`{.a} wonderful `D`{.d} life
+
+## Verse
+
+`Em`{.e} The sun's in your eyes, the `D`{.d} heat is `G`{.g} in your hair
+They seem to `D`{.d} hate you `Em`{.e}
+`D`{.d} Because you're `G`{.g} there `D`{.d}
+`Em`{.e} And I need a friend, `D`{.d} oh I `G`{.g} need a friend
+To make me `D`{.d} happy `Em`{.e}
+Not stand `D`{.d} here on my `G`{.g} own `D`{.d}
+
+## Pre-chorus
+
+`Em`{.e} Look at me `B7`{.b} standing
+`G`{.g} Here on my `Am`{.a} own again
+`Em`{.e} Up straight in the `B7`{.b} sunshine `G`{.g} `Am`{.a}
+
+## Chorus
+
+No need to `Em`{.e} run and `G`{.g} hide
+It's a `Em`{.e} wonderful, `Am`{.a} wonderful `D`{.d} life
+No need to `Em`{.e} laugh and `G`{.g} cry
+It's a `Em`{.e} wonderful, `Am`{.a} wonderful `D`{.d} life
+
+## Instrumental
+
+`Em`{.e} `D`{.d} `G`{.g}
+`D`{.d} `Em`{.e}
+`D`{.d} `G`{.g} `D`{.d}
+
+## Pre-chorus
+
+`Em`{.e} Look at me `B7`{.b} standing
+`G`{.g} Here on my `Am`{.a} own again
+`Em`{.e} Up straight in the `B7`{.b} sunshine `G`{.g} `Am`{.a}
+
+## Chorus
+
+No need to `Em`{.e} run and `G`{.g} hide
+It's a `Em`{.e} wonderful, `Am`{.a} wonderful `D`{.d} life
+No need to `Em`{.e} laugh and `G`{.g} cry
+It's a `Em`{.e} wonderful, `Am`{.a} wonderful `D`{.d} life _(2x)_
+
+`Em`{.e} `Am`{.a} Wonderful `Em`{.e} life, `Am`{.a} wonderful `Em`{.e} life
+`Em`{.e} `Am`{.a} Wonderful `Em`{.e} life _(fade)_
+
+## Resources
+
+- [Source tab](https://tabs.ultimate-guitar.com/tab/black-uk/wonderful-life-chords-830823)
+
+# You Are My Sunshine (Johnny Cash)
+
+## Intro
+
+`A`{.a} `A`{.a} `D`{.d} `A`{.a}
+`D`{.d} `A`{.a} `A`{.a} `E`{.e} `A`{.a}
+
+## Verse 1
+
+The other `A`{.a} night dear as I lay sleeping
+I dreamed I `D`{.d} held you in my `A`{.a} arms
+When I a`D`{.d}woke dear I was mis`A`{.a}taken
+So I `A`{.a} bowed my `E`{.e} head and I `A`{.a} cried
+
+## Chorus
+
+You are my `A`{.a} sunshine, my only sunshine
+You make me `D`{.d} happy when skies are `A`{.a} gray
+You'll never `D`{.d} know dear, how much I `A`{.a} love you
+Please don't `A`{.a} take my `E`{.e} sunshine `A`{.a} away
+
+## Verse 2
+
+I've always `A`{.a} loved you and made you happy
+If you will `D`{.d} only say the `A`{.a} same
+But if you `D`{.d} leave me and love an`A`{.a}other
+You'll re`A`{.a}gret it `D`{.d} all some `A`{.a} day
+
+## Chorus
+
+You are my `A`{.a} sunshine, my only sunshine
+You make me `D`{.d} happy when skies are `A`{.a} gray
+You'll never `D`{.d} know dear, how much I `A`{.a} love you
+Please don't `A`{.a} take my `E`{.e} sunshine `A`{.a} away
+
+## Instrumental
+
+`A`{.a} `D`{.d} `A`{.a}
+`D`{.d} `A`{.a}
+`A`{.a} `E`{.e} `A`{.a}
+
+## Verse 3
+
+You told me `A`{.a} once, dear, you really loved me
+And no one `D`{.d} else could come bet`A`{.a}ween
+But now you've `D`{.d} left me and love an`A`{.a}other
+You have `A`{.a} shattered `D`{.d} all of my `A`{.a} dreams
+
+## Chorus
+
+You are my `A`{.a} sunshine, my only sunshine
+You make me `D`{.d} happy when skies are `A`{.a} gray
+You'll never `D`{.d} know dear, how much I `A`{.a} love you
+Please don't `A`{.a} take my `E`{.e} sunshine `A`{.a} away
+
+_(repeat and fade)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=cGa3zFRqDn4)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/you-are-my-sunshine-chords-834069)
+
+# Zombie (The Cranberries)
+
+## Intro
+
+`Em`{.e} `C`{.c} `G`{.g} `D`{.d} _(x2)_
+
+## Verse 1
+
+`Em`{.e} Another `C`{.c} head hangs lowly,
+`G`{.g} child is slowly `D`{.d} taken
+`Em`{.e} And the violence `C`{.c} caused such silence,
+`G`{.g} who are we `D`{.d} mistaken
+
+---
+
+But you `Em`{.e} see it's not me, it's not `C`{.c} my family
+In your `G`{.g} head, in your head, they are `D`{.d} fighting
+With their `Em`{.e} tanks and their bombs
+and their `C`{.c} bombs and their guns
+
+in your `G`{.g} head, in your head, they are `D`{.d} crying
+
+## Chorus
+
+In your `Em`{.e} head, in your `C`{.c} head
+zombie, `G`{.g} zombie, zombie `D`{.d} _(2x)_
+
+## Instrumental
+
+`Em`{.e} `C`{.c} `G`{.g} `D`{.d} _(x2)_
+
+## Verse 2
+
+`Em`{.e} Another `C`{.c} mother's breaking
+`G`{.g} heart is taking `D`{.d} over
+`Em`{.e} When the violence `C`{.c} causes silence,
+`G`{.g} we must be `D`{.d} mistaken
+
+---
+
+It's the `Em`{.e} same old theme since `C`{.c} 1916
+In your `G`{.g} head, in your head, they're still `D`{.d} fighting
+With their `Em`{.e} tanks and their bombs
+and their `C`{.c} bombs and their guns
+
+In your `G`{.g} head, in your head, they are `D`{.d} dying
+
+## Chorus
+
+In your `Em`{.e} head, in your `C`{.c} head
+zombie, `G`{.g} zombie, zombie `D`{.d} _(2x)_
+
+## Instrumental
+
+`Em`{.e} `C`{.c} `G`{.g} `D`{.d} _(x2)_
+`Em`{.e} `C`{.c} `Em`{.e} `C`{.c} _(x2)_
+
+## Chorus
+
+In your `Em`{.e} head, in your `C`{.c} head
+zombie, `G`{.g} zombie, zombie `D`{.d} _(2x)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=6Ejga4kJUts)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/the-cranberries/zombie-chords-844902)
 
 # Über den Wolken (Reinhard Mey)
 
