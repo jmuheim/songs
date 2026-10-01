@@ -96,13 +96,6 @@ seventy`Am`{.a}four, seventy`C`{.c}five `G`{.g}
 
 `Am`{.a} `C`{.c} `G`{.g} `Am`{.a} _(x2)_
 
-## Solo
-
-`C`{.c} `G`{.g} `Am`{.a}
-`C`{.c} `G`{.g} `Am`{.a}
-`C`{.c} `G`{.g} `Am`{.a} `F`{.f}
-`C`{.c} `G`{.g} `Am`{.a}
-
 ## Verse 3
 
 `F`{.f} Got no `C`{.c} reason for `F`{.f} coming to me
@@ -147,14 +140,14 @@ F#m    |2=4=4=2=2=2|
 
 ## Intro
 
-
+_(Riff)_
 
 ## Verse 1
 
 `D`{.d} Words are flowing out `Bm`{.b}
 like endless `F#m`{.f} rain into a paper cup
 They `Em7`{.e} slither wildly as they slip away
-a`A`{.a}cross the `A7`{.a} universe
+a`A`{.a}cross the uni`A7`{.a}verse
 
 `D`{.d} Pools of sorrow, `Bm`{.b} waves of joy
 are `F#m`{.f} drifting through my opened mind
@@ -172,13 +165,13 @@ Poss`Em7`{.e}essing and car`Gm`{.g}essing me
 `D`{.d} Images of `Bm`{.b} broken light which
 `F#m`{.f} dance before me like a million `Em7`{.e} eyes
 They call me on and on
-a`A`{.a}cross the `A7`{.a} universe
+a`A`{.a}cross the uni`A7`{.a}verse
 
 `D`{.d} Thoughts meander `Bm`{.b} like a restless
 `F#m`{.f} wind inside a letterbox
 They `Em7`{.e} tumble blindly
 as they make their `A`{.a} way
-across the `A7`{.a} universe
+across the uni`A7`{.a}verse
 
 ## Chorus
 
@@ -194,9 +187,9 @@ are `F#m`{.f} ringing through my opened ears
 In`Em7`{.e}citing and in`Gm`{.g}viting me
 
 `D`{.d} Limitless, un`Bm`{.b}dying love
-which `F#m`{.f}shines around me like
+which `F#m`{.f} shines around me like
 a million `Em7`{.e} suns and calls me on and on
-a`A`{.a}cross the universe `A7`{.a}
+a`A`{.a}cross the uni`A7`{.a}verse
 
 ## Chorus
 
@@ -207,7 +200,7 @@ a`A`{.a}cross the universe `A7`{.a}
 
 ## Outro
 
-`D`{.d} Jai guru deva om `A7sus4`{.a} _(Repeat and fade)_
+`D`{.d} Jai guru deva om _(Repeat and fade)_
 
 ## Resources
 
@@ -443,6 +436,122 @@ For `F`{.f} I `G`{.g} can't `Am`{.a} help
 
 - [Song](https://www.youtube.com/watch?v=vGJTaP6anOU)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/elvis-presley/cant-help-falling-in-love-chords-1086983)
+
+# Der Mond ist aufgegangen (Traditionell)
+
+## Verse 1
+
+Der `G7`{.g} Mond ist `F`{.f} aufge`G`{.g}gan`C`{.c}gen.
+Die `Am`{.a} goldnen `F`{.f} Sternlein `G7`{.g} pran`C`{.c}gen
+am `C`{.c} Himmel `F`{.f} hell und `G`{.g} klar.
+
+Der `G7`{.g} Wald steht `F`{.f} schwarz und `G`{.g} schwei`C`{.c}get.
+Und `Am`{.a} aus den `F`{.f} Wiesen `G7`{.g} stei`C`{.c}get
+der `C`{.c} weiße `F`{.f} Nebel `G`{.g} wunder`C`{.c}bar.
+
+## Verse 2
+
+Wie `G7`{.g} ist die `F`{.f} Welt so `G`{.g} stil`C`{.c}le.
+Und `Am`{.a} aus der `F`{.f} Dämm'rung `G7`{.g} Hül`C`{.c}le
+so `C`{.c} traulich `F`{.f} und so `G`{.g} hold.
+
+Als `G7`{.g} eine `F`{.f} stille `G`{.g} Kam`C`{.c}mer,
+wo `Am`{.a} ihr des `F`{.f} Tages `G7`{.g} Jam`C`{.c}mer
+ver`C`{.c}schlafen `F`{.f} und ver`G`{.g}gessen `C`{.c} sollt.
+
+## Verse 3
+
+Seht `G7`{.g} ihr den `F`{.f} Mond dort `G`{.g} ste`C`{.c}hen.
+Er `Am`{.a} ist nur `F`{.f} halb zu `G7`{.g} se`C`{.c}hen
+und `C`{.c} ist doch `F`{.f} rund und `G`{.g} schön.
+
+So `G7`{.g} sind wohl `F`{.f} manche `G`{.g} Sa`C`{.c}chen,
+die `Am`{.a} wir ge`F`{.f}trost ver`G7`{.g}la`C`{.c}chen,
+weil `C`{.c} unsre `F`{.f} Augen `G`{.g} sie nicht `C`{.c} sehn.
+
+## Verse 4
+
+Wir `G7`{.g} stolzen `F`{.f} Menschen`G`{.g}kin`C`{.c}der  
+sind `Am`{.a} eitel `F`{.f} arme `G7`{.g} Sün`C`{.c}der  
+und `C`{.c} wissen `F`{.f} gar nicht `G`{.g} viel.
+
+Wir `G7`{.g} spinnen `F`{.f} Luftge`G`{.g}spins`C`{.c}te  
+und `Am`{.a} suchen `F`{.f} viele `G7`{.g} Küns`C`{.c}te  
+und `C`{.c} kommen `F`{.f} weiter `G`{.g} von dem `C`{.c} Ziel.
+
+## Verse 5
+
+Gott, `G7`{.g} lass uns `F`{.f} dein Heil `G`{.g} schau`C`{.c}en  
+auf `Am`{.a} nichts Ver`F`{.f}gänglichs `G7`{.g} trau`C`{.c}en  
+nicht `C`{.c} Eitel`F`{.f}keit uns `G`{.g} freun!
+
+Lass `G7`{.g} uns ein`F`{.f}fältig `G`{.g} wer`C`{.c}den  
+und `Am`{.a} vor dir `F`{.f} hier auf `G7`{.g} Er`C`{.c}den  
+wie `C`{.c} Kinder `F`{.f} fromm und `G`{.g} fröhlich `C`{.c} sein!
+
+## Verse 6
+
+Wollst `G7`{.g} endlich `F`{.f} sonder `G`{.g} Grä`C`{.c}men  
+aus `Am`{.a} dieser `F`{.f} Welt uns `G7`{.g} neh`C`{.c}men  
+durch `C`{.c} einen `F`{.f} sanften `G`{.g} Tod!
+
+Und `G7`{.g} wenn du `F`{.f} uns ge`G`{.g}nom`C`{.c}men  
+lass `Am`{.a} uns in `F`{.f} Himmel `G7`{.g} kom`C`{.c}men  
+du `C`{.c} unser `F`{.f} Herr und `G`{.g} unser `C`{.c} Gott!
+
+## Verse 7
+
+So `G7`{.g} legt euch `F`{.f} denn, ihr `G`{.g} Brü`C`{.c}der  
+in `Am`{.a} Gottes `F`{.f} Namen `G7`{.g} nie`C`{.c}der  
+kalt `C`{.c} ist der `F`{.f} Abend`G`{.g}hauch.
+
+Ver`G7`{.g}schon uns, `F`{.f} Gott, mit `G`{.g} Stra`C`{.c}fen  
+und `Am`{.a} lass uns `F`{.f} ruhig `G7`{.g} schla`C`{.c}fen  
+und `C`{.c} unsern `F`{.f} kranken `G`{.g} Nachbar `C`{.c} auch!
+
+## Resources
+
+- [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/der-mond-ist-aufgegangen-chords-1896814)
+
+# Die Rose (Peter Alexander)
+
+## Verse 1
+
+Liebe `C`{.c} ist, wie wildes `G`{.g} Wasser,
+das `F`{.f} sich `G`{.g} durch Felsen `C`{.c} zwängt.
+Liebe `C`{.c} ist, so wie ein `G`{.g} Messer,
+das `F`{.f} dir `G`{.g} im Herzen `C`{.c} brennt.
+Sie ist `Em`{.e} süss und sie ist `Am`{.a} bitter,
+ein `F`{.f} Sturmwind und ein `G`{.g} Hauch.
+Für mich `C`{.c} ist sie eine `G`{.g} Rose,
+für `F`{.f} dich `G`{.g} ein Dornen`C`{.c}strauch.
+
+## Verse 2
+
+Wer nie `C`{.c} weint und niemals `G`{.g} trauert,
+der `F`{.f} weiss `G`{.g} auch nichts vom `C`{.c} Glück.
+Wer nur `C`{.c} sucht, was ewig `G`{.g} dauert,
+ver`F`{.f}säumt `G`{.g} den Augen`C`{.c}blick.
+Wer nie `Em`{.e} nimmt kann auch nicht `Am`{.a} geben
+und `F`{.f} wer sein Leben `G`{.g} lang
+immer `C`{.c} Angst hat vor dem `G`{.g} Sterben –
+fängt `F`{.f} nie `G`{.g} zu leben `C`{.c} an.
+
+## Verse 3
+
+Wenn du `C`{.c} denkst du bist ver`G`{.g}lassen
+und kein `F`{.f} Weg `G`{.g} führt aus der `C`{.c} Nacht.
+Fängst du `C`{.c} an die Welt zu `G`{.g} hassen,
+die nur `F`{.f} an`G`{.g}dre glücklich `C`{.c} macht.
+Doch ver`Em`{.e}giss nicht – an dem `Am`{.a} Zweig dort,
+der im `F`{.f} Schnee beinah er`G`{.g}fror.
+Blüht im `C`{.c} Frühjahr eine `G`{.g} Rose,
+so `F`{.f} schön `G`{.g} wie nie zu`C`{.c}vor.
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=tTJ990zzDFI)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/peter-alexander/die-rose-chords-2328527)
 
 # Don't worry be happy (Bobby McFerrin)
 
@@ -714,6 +823,55 @@ Wenn sy `G7`{.g} dä Wäg z'gwinne `C`{.c} wär _(x2)_
 
 - [Song](https://www.youtube.com/watch?v=-Qtp0EC2P4M)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/1911563)
+
+# Drei Zigeuner (Traditionell)
+
+## Verse 1
+
+`C`{.c} Drei Zigeuner `G`{.g} fand ich ein`C`{.c}mal
+`Am`{.a} liegen an einer `Dm`{.d} Weide,
+`C`{.c} als mein Fuhrwerk mit `F`{.f} müder `C`{.c} Qual
+schlich durch die sandige `G7`{.g} `C`{.c} Heide.
+
+## Verse 2
+
+`C`{.c} Hielt der eine `G`{.g} für sich `C`{.c} allein
+`Am`{.a} in den Händen die `Dm`{.d} Fiedel,
+`C`{.c} spielte, umglüht vom `F`{.f} Abend`C`{.c}schein,
+sich ein gar feuriges `G7`{.g} Lie`C`{.c}del.
+
+## Verse 3
+
+`C`{.c} Hielt der zweite die `G`{.g} Pfeife im `C`{.c} Mund,
+`Am`{.a} blickte nach seinem `Dm`{.d} Rauche,
+`C`{.c} froh, als ob er vom `F`{.f} Erden`C`{.c}rund
+nichts für sein Glück mehr  noch `G7`{.g}bra`C`{.c}uche.
+
+## Verse 4
+
+`C`{.c} Und der dritte be`G`{.g}haglich `C`{.c} schlief,
+`Am`{.a} und sein' Zimbal am `Dm`{.d} Baum hing,
+`C`{.c} über die Saiten ein `F`{.f} Windhauch `C`{.c} lief,
+über sein Herze ein `G7`{.g} Traum `C`{.c} ging.
+
+## Verse 5
+
+`C`{.c} An den Kleidern `G`{.g} trugen die `C`{.c} drei
+`Am`{.a} Löcher und bunte `Dm`{.d} Flicken,
+`C`{.c} aber sie boten `F`{.f} trotzig und `C`{.c} frei
+Spott den Erdenge`G7`{.g}schic`C`{.c}ken.
+
+## Verse 7
+
+`C`{.c} Nach den Zigeunern `G`{.g} lange noch `C`{.c} schau'n
+`Am`{.a} musst' ich im Weiter`Dm`{.d}fahren,
+`C`{.c} nach den Gesichtern `F`{.f} dunkel`C`{.c}braun,
+nach den schwarzlockigen `G7`{.g} Haa`C`{.c}ren.
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=RTcrVGNL5Us)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/drei-zigeuner-chords-3500390)
 
 # Dynamit (Mani Matter)
 
@@ -2840,6 +2998,65 @@ Dass i's vom Teppich wider `C`{.c} furt ha gno
 - [Song](https://www.youtube.com/watch?v=PkGatIgXERI)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/1197401)
 
+# Sing (Travis)
+
+## Verse 1
+
+`Em`{.e} Baby, you've been going so `Am7`{.a} crazy
+`Am7`{.a} Lately nothing seems to be `Em`{.e} going right
+`Em`{.e} So low, why'd you have to get `Am7`{.a} so low?
+`Am7`{.a} You're so, you've been waiting in the `Em`{.e} sun too long
+
+## Chorus
+
+If you `G`{.g} sing, `D`{.d} `Am`{.a} sing,
+`Am`{.a} sing, sing, sing, `G`{.g} sing
+For the love you `G`{.g} bring `D`{.d} won't mean a `Am`{.a} thing
+Unless you `Am`{.a} sing, sing, sing, `G`{.g} sing
+
+## Verse 2
+
+`Em`{.e} Colder, crying over your `Am7`{.a} shoulder
+`Am7`{.a} Hold her, and tell her everything's `Em`{.e} gonna be fine
+`Em`{.e} Surely, you've been going too `Am7`{.a} early
+`Am7`{.a} Hurry, 'cause no one's gonna be `Em`{.e} stopped
+Now, now, now, now, now
+
+## Chorus
+
+If you `G`{.g} sing, `D`{.d} `Am`{.a} sing,
+`Am`{.a} sing, sing, sing, `G`{.g} sing
+For the love you `G`{.g} bring `D`{.d} won't mean a `Am`{.a} thing
+Unless you `Am`{.a} sing, sing, sing, `G`{.g} sing
+
+## Instrumental
+
+`G`{.g} `D`{.d} `Am`{.a} `Am`{.a} `G`{.g}
+`G`{.g} `D`{.d} `Am`{.a} `Am`{.a} `G`{.g}
+
+## Verse 3
+
+`Em`{.e} Baby, there's something going on `Am7`{.a} today
+But I say `Em`{.e} nothing, nothing, nothing, `Am7`{.a} nothing
+`Em`{.e} So, now, now, now, now, now
+
+## Chorus
+
+If you `G`{.g} sing, `D`{.d} `Am`{.a} sing,
+`Am`{.a} sing, sing, sing, `G`{.g} sing
+For the love you `G`{.g} bring `D`{.d} won't mean a `Am`{.a} thing
+Unless you `Am`{.a} sing, sing, sing, `G`{.g} sing
+
+Oh baby, `G`{.g} sing, `D`{.d} `Am`{.a} sing,
+`Am`{.a} sing, sing, sing, `G`{.g} sing
+For the love you `G`{.g} bring `D`{.d} won't mean a `Am`{.a} thing
+Unless you `Am`{.a} sing, sing sing `G`{.g} sing
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=eYO1-gGWJyo)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/travis/sing-chords-1334)
+
 # Sittin' on the dock of the bay (Otis Redding)
 
 ## Verse 1
@@ -3126,62 +3343,56 @@ you'll `F`{.f} find me
 
 ## Verse 1
 
-Stets i `D`{.d} Truure `A7`{.a} mues i `D`{.d} läbe,
+Stets i `D`{.d} Truu`A7`{.a}re mues i `D`{.d} läbe,
 säg, mit `G`{.g} was `Em`{.e} han i's `A`{.a} verschuldt? `A7`{.a}
 Wül my `Bm`{.b} Schatz isch untröi `Em`{.e} worde,
 mues i's `D`{.d} ly`A7`{.a}de mit `D`{.d} Geduld
 
 ## Verse 2
 
-Bisch mer `D`{.d} zwar us mynen `D`{.d} Ouge, `G`{.g} `D`{.d}
-aber `G`{.g} nid us mynem `A`{.a} Sinn.
+Bisch mer `D`{.d} zwar `A7`{.a} us mynen `D`{.d} Ouge,
+aber `G`{.g} nid `Em`{.e} us mynem `A`{.a} Sinn. `A7`{.a}
 Hättisch `Bm`{.b} mir wohl dörfe `Em`{.e} gloube,
-dass i `D`{.d} treu, `A`{.a} gewese `D`{.d} bin `G`{.g} `D`{.d}
+dass i `D`{.d} treu, `A7`{.a} gewese `D`{.d} bin
 
 ## Verse 3
 
-Rächti `D`{.d} Liebi chunnt vo `D`{.d} Härze, `G`{.g} `D`{.d}
-rächti `G`{.g} Liebi, die brönnet `A`{.a} heiss
+Rächti `D`{.d} Liebi `A7`{.a} chunnt vo `D`{.d} Härze,
+rächti `G`{.g} Lie`Em`{.e}bi, die brönnet `A`{.a} heiss `A7`{.a}
 Oh, wie `Bm`{.b} wohl isch's einem `Em`{.e} Mönsche,
-wo nid `D`{.d} `A`{.a} weiss, was Liebi `D`{.d} heisst `G`{.g} `D`{.d}
+wo nid `D`{.d} weiss, `A7`{.a} was Liebi `D`{.d} heisst
 
 ## Verse 4
 
-Spilet `D`{.d} uuf, ihr `D`{.d} Musikante, `G`{.g} `D`{.d}
-spilet `G`{.g} uuf, das `A`{.a} Saitespiel
+Spilet `D`{.d} uuf, `A7`{.a} ihr Musi`D`{.d}kante,
+spilet `G`{.g} uuf, `Em`{.e} das Saite`A`{.a}spiel `A7`{.a}
 mynem `Bm`{.b} Schätzli zu `Em`{.e} Gefalle,
-mögs `D`{.d} `A`{.a} verdriesse, wän es `D`{.d} will `G`{.g} `D`{.d}
+mögs ver`D`{.d}dries`A7`{.a}se, wän es `D`{.d} will
 
 ## Instrumental
 
-`Bm`{.b} `Em`{.e} `D`{.d} `A`{.a}
-`D`{.d} `D`{.d} `D`{.d} `D`{.d}
+`Bm`{.b} `Em`{.e} `D`{.d} `A`{.a} `D`{.d}
 
 ## Verse 5
 
-Bis die `D`{.d} Bärge tüe sich `D`{.d} biege, `G`{.g} `D`{.d}
-u die `G`{.g} Hügel sänke `A`{.a} sich
+Bis die `D`{.d} Bär`A7`{.a}ge tüe sich `D`{.d} biege,
+u die `G`{.g} Hü`Em`{.e}gel sänke `A`{.a} sich `A7`{.a}
 bis die `Bm`{.b} Dischtle trage `Em`{.e} Fyge,
-solang `D`{.d} will `A`{.a} i liebe di `D`{.d} `G`{.g} `D`{.d}
+solang `D`{.d} will `A7`{.a} i liebe di `D`{.d}
 
 ## Verse 6
 
-Bis dr `D`{.d} Mühlistei treit `D`{.d} Räbe, `G`{.g} `D`{.d}
-u druus `G`{.g} fliesst so süesse `A`{.a} Wy
+Bis dr `D`{.d} Müh`A7`{.a}listei treit `D`{.d} Räbe,
+u druus `G`{.g} fliesst `Em`{.e} so süesse `A`{.a} Wy `A7`{.a}
 Bis dr `Bm`{.b} Tod mir nimmt das `Em`{.e} Läbe,
-solang `D`{.d} `A`{.a} söllsch du blybe `D`{.d} mir `G`{.g} `D`{.d}
+solang `D`{.d} söllsch `A7`{.a} du blybe `D`{.d} mir
 
 Bis dr `Bm`{.b} Tod mir nimmt das `Em`{.e} Läbe,
-solang `D`{.d} `A`{.a} söllsch du blybe `D`{.d} mir
-
-## Outro
-
-`D`{.d} `D`{.d} `D`{.d} `G`{.g} `G`{.g} _(x4)_
-`D`{.d}
+solang `D`{.d} söllsch `A7`{.a} du blybe `G`{.g} mir `D`{.d}
 
 ## Resources
 
-- [Song](https://www.youtube.com/watch?v=eaPzAxvE-eY)
+- [Song](https://www.youtube.com/watch?v=PU-Xn55joiE)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/rumpelstilz/stets-in-truure-chords-4407716)
 
 # Summer wine (Nancy Sinatra & Lee Hazlewood)
@@ -3420,6 +3631,61 @@ _(Repeat and fade)_
 - [Song](https://www.youtube.com/watch?v=x6q0ciiqyG0)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929)
 - [Guitar cover](https://www.youtube.com/watch?v=GIlCtOrisx0)
+
+# Verlieben verloren vergessen verzeihn (Wolfgang Petry)
+
+## Intro
+
+`G`{.g} `G`{.g} `G`{.g} `D`{.d} `Am`{.a} `C`{.c} `D`{.d} `G`{.g}
+
+## Verse 1
+
+Du gingst von mir in einer Stunde, `D`{.d}
+Es `C`{.c} war die Stunde Null. `G`{.g}
+Ich hatte meinen Tiefpunkt, `D`{.d}
+Du `C`{.c} nahmst mir vieles krumm. `D`{.d}
+
+Auf `C`{.c} einmal da war keiner mehr da
+Und `D`{.d} half mir, auch nicht Du.
+Jetzt `C`{.c} liebst Du halt 'nen anderen
+Und mein Herz `G`{.g} schaut traurig zu. `D`{.d}
+
+## Chorus
+
+Verlieben, verlor'n, `G`{.g} vergessen, verzeih'n,
+Verdammt war ich glücklich,
+Verdammt bin ich frei. `D`{.d}
+
+Ich hatte doch alles, `Am`{.a} alles was zählt, `C`{.c}
+Ohne Dich leben, `D`{.d} jetzt ist es zu spät. `G`{.g}
+
+## Verse 2
+
+Jetzt sitz' ich auf meinem Bett 'rum, `D`{.d}
+Hab' die Kneipe `C`{.c} hinter mir. `G`{.g}
+In meinem Kopf geht gar nichts mehr, `D`{.d}
+Mein `C`{.c} Herz, es braucht Dich sehr. `D`{.d}
+
+Auf `C`{.c} einmal da war keiner mehr da
+Und `D`{.d} half mir, auch nicht Du.
+Jetzt `C`{.c} liebst Du halt 'nen anderen
+Und mein Herz `G`{.g} schaut traurig zu. `D`{.d}
+
+## Chorus
+
+Verlieben, verlor'n, `G`{.g} vergessen, verzeih'n,
+Verdammt war ich glücklich,
+Verdammt bin ich frei. `D`{.d}
+
+Ich hatte doch alles, `Am`{.a} alles was zählt, `C`{.c}
+Ohne Dich leben, `D`{.d} jetzt ist es zu spät. `G`{.g}
+
+_(Repeat and fade)_
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=Mlt2xg_j5AY)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/wolfgang-petry/verlieben-verloren-vergessen-verzeihn-chords-1041842)
 
 # Whats up (4 Non Blondes)
 
@@ -3681,3 +3947,76 @@ _(Fade out slowly)_
 - [Song](https://www.youtube.com/watch?v=IXdNnw99-Ic)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/pink-floyd/wish-you-were-here-chords-1088963)
 - [Guitar tutorial](https://www.youtube.com/watch?v=N2dQRYyaglk)
+
+# Über den Wolken (Reinhard Mey)
+
+## Verse 1
+
+Wind Nord-Ost Startbahn `Am`{.a} null-drei,
+`D`{.d} bis hier hör' ich die `G`{.g} Motoren.
+`G`{.g} Wie ein Pfeil zieht sie `Am`{.a} vorbei,
+`D`{.d} und es dröhnt in meinen `G`{.g} Ohren.
+
+Und der nasse Asphalt `Am`{.a} bebt,
+`D`{.d} wie ein Schleier staubt der `G`{.g} Regen
+bis sie abhebt und sie `Am`{.a} schwebt
+`D`{.d} der Sonne `G`{.g} entgegen.
+
+## Chorus
+
+Über den `Am7`{.a} Wolken
+`D`{.d} muss die Freiheit wohl `G`{.g} grenzenlos sein.
+`Em`{.e} Alle Ängste, alle `Am`{.a} Sorgen, sagt man,
+
+`D`{.d} blieben darunter `G`{.g} verborgen, und dann
+`C`{.c} würde, was uns gross und `G`{.g} wichtig erscheint,
+`D`{.d} plötzlich nichtig und `G`{.g} klein.
+
+## Verse 2
+
+Ich seh' ihr noch lange `Am`{.a} nach,
+`D`{.d} seh' sie die Wolken `G`{.g} erklimmen.
+Bis die Lichter nach und `Am`{.a} nach,
+`D`{.d} ganz im Regengrau ver`G`{.g}schwimmen.
+
+Meine Augen haben `Am`{.a} schon
+`D`{.d} jenen winz'gen Punkt `G`{.g} verloren,
+nur von fern klingt `Am`{.a} monoton
+`D`{.d} das Summen der `G`{.g} Motoren.
+
+## Chorus
+
+Über den `Am7`{.a} Wolken
+`D`{.d} muss die Freiheit wohl `G`{.g} grenzenlos sein.
+`Em`{.e} Alle Ängste, alle `Am`{.a} Sorgen, sagt man,
+
+`D`{.d} blieben darunter `G`{.g} verborgen, und dann
+`C`{.c} würde, was uns gross und `G`{.g} wichtig erscheint,
+`D`{.d} plötzlich nichtig und `G`{.g} klein.
+
+## Verse 3
+
+Dann ist alles still, ich `Am7`{.a} geh',
+`D`{.d} Regen durchdringt meine `G`{.g} Jacke.
+Irgendjemand kocht `Am`{.a} Kaffee
+`D`{.d} in der Luftaufsichts`G`{.g}baracke.
+
+In den Pfützen schwimmt `Am`{.a} Benzin,
+`D`{.d} schillernd wie ein Regen`G`{.g}bogen.
+Wolken spiegeln sich `Am`{.a} darin.
+`D`{.d} Ich wär' gerne mit`G`{.g}geflogen.
+
+## Chorus
+
+Über den `Am7`{.a} Wolken
+`D`{.d} muss die Freiheit wohl `G`{.g} grenzenlos sein.
+`Em`{.e} Alle Ängste, alle `Am`{.a} Sorgen, sagt man,
+
+`D`{.d} blieben darunter `G`{.g} verborgen, und dann
+`C`{.c} würde, was uns gross und `G`{.g} wichtig erscheint,
+`D`{.d} plötzlich nichtig und `G`{.g} klein.
+
+## Resources
+
+- [Song](https://www.youtube.com/watch?v=zWwW-gqr2pA)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/946605)
