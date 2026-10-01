@@ -68,8 +68,7 @@ body.theme-bright .ctrl > .visually-hidden {
   color: #333;
 }
 
-body.chords-hidden #toggle-chords-visibility::after,
-body.multiplex-free #toggle-follow::after {
+body.chords-hidden #toggle-chords-visibility::after {
   font-size: 3em;
   content: '❌';
   position: absolute;
@@ -161,12 +160,38 @@ section#TOC::-webkit-scrollbar-thumb {
   color: #bb0000;
 }
 
-#master-mode.is-master::after {
+#master-mode.session-active::after {
   font-size: 3em;
   content: '❌';
   position: absolute;
   right: 0;
   bottom: 0;
+}
+
+/* The end-of-session notice: a brief toast under the top-right buttons. */
+#multiplex-toast {
+  position: fixed;
+  top: 4.5rem;
+  right: 1em;
+  z-index: 100;
+  margin: 0;
+  max-width: 18em;
+  padding: 0.6em 0.9em;
+  border-radius: 0.4em;
+  background: #1c1c1c;
+  border: 1px solid #888;
+  color: var(--r-main-color);
+  font-family: sans-serif;
+  font-size: 1rem;
+  text-align: right;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+#multiplex-toast.visible {
+  opacity: 0.95;
+  visibility: visible;
 }
 
 /* showModal() puts the dialog in the top layer, centred; .modal-box is its face */
@@ -259,6 +284,11 @@ dialog.overlay-modal::backdrop {
   justify-content: center;
 }
 
+/* The scroll-choice dialog stacks its options, one per line. */
+.modal-buttons-stacked {
+  flex-direction: column;
+}
+
 .modal-box button {
   padding: 0.4em 1.2em;
   font-size: 1em;
@@ -340,6 +370,11 @@ body.theme-bright .modal-box button:hover {
 
 body.theme-bright .chord-tooltip-inner {
   background-color: #ffe29a;
+}
+
+body.theme-bright #multiplex-toast {
+  background: #f4f4f4;
+  border-color: #ccc;
 }
 .visually-hidden {
   position: absolute;
@@ -495,11 +530,11 @@ section.slide.level2 {
 </div>
 <div id="top-right-controls" class="controls-group">
   <button id="show-qr" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">🔗</span> <span class="visually-hidden">Show QR code</span></button>
-  <button id="toggle-follow" class="ctrl" aria-pressed="false" hidden><span aria-hidden="true">👣</span> <span class="visually-hidden">Browse freely</span></button>
-  <button id="master-mode" class="ctrl" aria-pressed="false"><span aria-hidden="true">🚀</span> <span class="visually-hidden">Lead slide navigation</span></button>
+  <button id="master-mode" class="ctrl" aria-haspopup="dialog" aria-pressed="false"><span aria-hidden="true">🚀</span> <span class="visually-hidden" id="master-mode-label">Live-Scrollen starten</span></button>
   <button id="toggle-theme" class="ctrl" aria-pressed="false"><span aria-hidden="true" id="toggle-theme-icon">🌞</span> <span class="visually-hidden" id="toggle-theme-label">Switch to bright mode</span></button>
 </div>
 <p id="multiplex-status" role="status"></p>
+<div id="multiplex-toast" role="status" aria-live="polite"></div>
 <script>
   document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
     document.body.classList.toggle('chords-hidden');
@@ -586,15 +621,15 @@ section.slide.level2 {
 
 <dialog id="master-modal" class="overlay-modal" aria-labelledby="master-title">
   <form class="modal-box" method="dialog">
-    <h2 id="master-title">Navigation übernehmen?</h2>
+    <h2 id="master-title">Live-Scrollen starten</h2>
     <div id="master-info">
-      <p>Alle anderen werden dir folgen.</p>
+      <p>Gib das Passwort ein, um das Live-Scrollen zu leiten.</p>
     </div>
     <label for="master-pw">Passwort</label>
     <input type="password" id="master-pw" autocomplete="off" autofocus>
     <div class="modal-buttons">
-      <button type="button" id="master-cancel">Cancel</button>
-      <button id="master-confirm">OK</button>
+      <button type="button" id="master-cancel">Abbrechen</button>
+      <button id="master-confirm">Weiter</button>
     </div>
   </form>
 </dialog>
@@ -608,68 +643,88 @@ section.slide.level2 {
   </div>
 </dialog>
 
+<dialog id="scroll-choice-modal" class="overlay-modal" aria-labelledby="scroll-choice-title">
+  <div class="modal-box">
+    <h2 id="scroll-choice-title" tabindex="-1" autofocus>Wer soll scrollen?</h2>
+    <p>«<span id="scroll-choice-song"></span>» wird als nächstes gespielt.</p>
+    <div class="modal-buttons modal-buttons-stacked">
+      <button id="scroll-self">Ich selber möchte scrollen</button>
+      <button id="scroll-guest">Ein Gast soll scrollen</button>
+      <button type="button" id="scroll-choice-cancel">Abbrechen</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="guest-invite-modal" class="overlay-modal" aria-labelledby="guest-invite-title">
+  <div class="modal-box">
+    <h2 id="guest-invite-title" tabindex="-1" autofocus>Live-Scrollen übernehmen?</h2>
+    <p>«<span id="guest-invite-song"></span>» wird als nächstes gespielt. Möchtest du das Live-Scrollen übernehmen?</p>
+    <div class="modal-buttons">
+      <button type="button" id="guest-decline">Nein danke</button>
+      <button id="guest-accept">Ja, ich scrolle</button>
+    </div>
+  </div>
+</dialog>
+
 <script>
 window.addEventListener('load', function() {
   var cfg = window.MULTIPLEX;
   if (!cfg || !window.io) return;
 
-  // The master repeats its state this often, so whoever joins late or comes
-  // back from a dead spot catches up without waiting for the next slide change.
-  // cfg.heartbeat lets the specs shorten it.
+  // The presenter repeats the session, and the scroller its position, this
+  // often, so whoever joins late or comes back from a dead spot catches up
+  // without waiting for the next move. cfg.heartbeat lets the specs shorten it.
   var HEARTBEAT_MS = 2000;
 
-  // One master leads: whoever took over last. Every message carries the time
-  // its sender took over (its claim). A master that hears a higher claim steps
-  // down; a client ignores a lower one while the leader is still sending. This
-  // long without a word, the leader counts as gone: a tab that has been in the
-  // background for a while is woken only once a minute.
-  var LEADER_SILENCE_MS = 65000;
-
-  var isMaster = false;
-  var claim = 0;                                         // this tab's, while it is master
-  var senderId = Math.random().toString(36).slice(2, 8); // per page load: settles a tie between duplicated tabs
-  var leader = { claim: 0, heardAt: 0 };                 // the master this client listens to
-  var heartbeat = null;
-  var lastState = null;       // the master's, as last received
-  var applyingRemote = false; // set while Reveal moves because the master did
+  var senderId = Math.random().toString(36).slice(2, 8); // per page load
   var socket = io(cfg.url);
 
-  var followBtn = document.getElementById('toggle-follow');
-  followBtn.hidden = false;
+  // ---- Controls and dialogs ----
+  var masterBtn   = document.getElementById('master-mode');
+  var masterLabel = document.getElementById('master-mode-label');
+  var masterModal = document.getElementById('master-modal');
+  var masterPw    = document.getElementById('master-pw');
+  var choiceModal = document.getElementById('scroll-choice-modal');
+  var choiceSong  = document.getElementById('scroll-choice-song');
+  var inviteModal = document.getElementById('guest-invite-modal');
+  var inviteSong  = document.getElementById('guest-invite-song');
+  var qrModal     = document.getElementById('qr-modal');
+  var statusEl    = document.getElementById('multiplex-status');
+  var toastEl     = document.getElementById('multiplex-toast');
+
+  // ---- Role and session ----
+  // The presenter is the single authority: it alone opens and closes a session
+  // and names the scroller. The scroller — the presenter itself, or a guest who
+  // volunteered — moves the deck; everyone else in the session follows and
+  // cannot navigate. This tab scrolls when session.scrollerId === senderId.
+  var isPresenter = false;    // this tab leads
+  var authed = false;         // the password was entered in this tab
+  var presenterClaim = 0;     // orders presenters across reload / duplicate tab
+  var sessionClaim = 0;       // the claim of the session this client trusts
+  var session = null;         // { id, song, songTitle, mode, scrollerId } while live
+  var navMode = 'free';       // 'free' | 'scroller' | 'follower'
+  var lastState = null;       // the scroller's position, as last received
+  var lastSessionAt = 0;      // last word from the session (heartbeat or move)
+  var applyingRemote = false; // set while Reveal moves because the scroller did
+  var invitedFor = null;      // session id whose invite this tab already saw
+  var heartbeat = null;
+  var everConnected = false;
+
+  function amScroller() { return !!session && session.scrollerId === senderId; }
 
   function sameState(a, b) {
     return a.indexh === b.indexh && a.indexv === b.indexv && a.indexf === b.indexf;
   }
 
-  // Clients get where the presenter is, not how they get there: browsing the
-  // overview for the next song, or pausing (B), stays on the presenter's
-  // screen. While the overview is open, the slide it was opened on is repeated.
+  // The scroller sends where it is, not how it got there: while it browses the
+  // overview, the slide it opened it on is repeated instead of a stray jump.
   var presented = null;
-  Reveal.on('overviewshown', function() { presented = Reveal.getState(); });
+  Reveal.on('overviewshown', function() { if (amScroller()) presented = Reveal.getState(); });
   Reveal.on('overviewhidden', function() { presented = null; });
-
   function stateToSend() {
     var s = presented || Reveal.getState();
     return { indexh: s.indexh, indexv: s.indexv, indexf: s.indexf };
   }
-
-  // Who leads, and whether this tab follows, in words: a phone that stopped
-  // moving otherwise gives no clue whether the presenter left, the connection
-  // dropped, or it is browsing freely. Nothing to say to someone who never
-  // heard a presenter.
-  var statusEl = document.getElementById('multiplex-status');
-  var everConnected = false; // „no connection" means a lost one, not the first second of a page load
-  function updateStatus() {
-    var silentFor = Date.now() - leader.heardAt;
-    var text = '';
-    if (!socket.connected) text = everConnected && (isMaster || leader.heardAt) ? 'Keine Verbindung' : '';
-    else if (isMaster) text = 'Du präsentierst';
-    else if (!leader.heardAt) text = '';
-    else if (silentFor > 3 * (cfg.heartbeat || HEARTBEAT_MS)) text = 'Niemand präsentiert';
-    else text = following ? 'Folgt' : 'Frei';
-    if (statusEl.textContent !== text) statusEl.textContent = text;
-  }
-  setInterval(updateStatus, 500);
 
   function follow(state) {
     if (sameState(state, Reveal.getState())) return; // a repeat changes nothing
@@ -677,131 +732,346 @@ window.addEventListener('load', function() {
     try { Reveal.setState(state); } finally { applyingRemote = false; }
   }
 
-  // Following is each client's own choice, remembered per tab so that a
-  // reload (or iOS discarding the tab) keeps it.
-  var following = true;
-  try { following = sessionStorage.getItem('multiplex-free') !== '1'; } catch (e) {}
-
-  function setFollowing(on) {
-    following = on;
-    document.body.classList.toggle('multiplex-free', !on);
-    followBtn.setAttribute('aria-pressed', on ? 'false' : 'true');
-    try { sessionStorage.setItem('multiplex-free', on ? '0' : '1'); } catch (e) {}
-    if (on && lastState) follow(lastState);
-    updateStatus();
+  function songTitleAt(h) {
+    var stacks = Reveal.getHorizontalSlides ? Reveal.getHorizontalSlides()
+                                            : document.querySelectorAll('.reveal .slides > section');
+    var stack = stacks[h];
+    if (!stack) return '';
+    var heading = stack.querySelector('h1') || stack.querySelector('h2, h3');
+    return heading ? heading.textContent.trim() : '';
   }
-  setFollowing(following);
 
-  followBtn.addEventListener('click', function() {
-    setFollowing(!following);
-  });
+  // ---- Navigation lock ----
+  // Horizontal keys the scroller must not use: it may only scroll within its
+  // own song (up/down). A swipe or a click that still leaves the song is undone
+  // by the snap-back in the Reveal handler below.
+  var SCROLLER_KEYS = { 37: null, 39: null, 33: null, 34: null, 72: null, 76: null, 78: null, 80: null };
 
-  // Paging on one's own device means browsing freely from then on: otherwise
-  // the next repeat would snap the page back. 👣 brings it back to the master.
-  ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewshown', 'overviewhidden'].forEach(function(ev) {
-    Reveal.on(ev, function() {
-      if (!isMaster && following && !applyingRemote) setFollowing(false);
-    });
-  });
-
-  socket.on(cfg.socketId, function(data) {
-    if (!data || !data.state) return;
-    var theirClaim = data.claim || 0;
-
-    if (isMaster) {
-      // The same claim is a duplicated tab: the higher sender id stays.
-      var outranked = theirClaim > claim || (theirClaim === claim && data.from > senderId);
-      if (!outranked) return;
-      becomeClient(); // someone took over after this tab
+  function applyNavMode() {
+    var mode = 'free';
+    if (session) {
+      if (session.scrollerId === senderId) mode = 'scroller';
+      else if (session.scrollerId) mode = 'follower';
     }
-
-    // An equal claim is the leader itself, reloaded under a new sender id.
-    var leaderGone = Date.now() - leader.heardAt > LEADER_SILENCE_MS;
-    if (theirClaim < leader.claim && !leaderGone) return; // an older master, about to step down
-    leader = { claim: theirClaim, heardAt: Date.now() };
-
-    lastState = data.state;
-    if (following) follow(lastState);
+    if (mode === navMode) return;
+    navMode = mode;
+    if (mode === 'free') {
+      Reveal.configure({ keyboard: true, touch: true, controls: true });
+    } else if (mode === 'scroller') {
+      // Lock to the song: vertical keys keep working, horizontal ones don't.
+      if (Reveal.getIndices().h !== session.song) {
+        applyingRemote = true;
+        try { Reveal.slide(session.song, 0); } finally { applyingRemote = false; }
+      }
+      Reveal.configure({ keyboard: SCROLLER_KEYS, touch: true, controls: false });
+      broadcastState();
+    } else { // follower: no navigation at all, snapped to the scroller
+      Reveal.configure({ keyboard: false, touch: false, controls: false });
+      if (lastState) follow(lastState);
+    }
     updateStatus();
+  }
+
+  // ---- Broadcasting (everything rides on the one relayed event) ----
+  function emit(payload) {
+    if (!socket.connected) return;
+    payload.secret = cfg.secret;
+    payload.socketId = cfg.socketId;
+    payload.from = senderId;
+    socket.emit('multiplex-statechanged', payload);
+  }
+
+  function broadcastSession() {
+    if (!isPresenter || !session) return;
+    emit({ type: 'session', claim: presenterClaim, session: {
+      id: session.id, active: true, song: session.song, songTitle: session.songTitle,
+      mode: session.mode, scrollerId: session.scrollerId
+    }});
+  }
+
+  function broadcastState() {
+    if (!amScroller()) return;
+    emit({ type: 'state', sessionId: session.id, state: stateToSend() });
+  }
+
+  function restartHeartbeat() {
+    clearInterval(heartbeat);
+    heartbeat = null;
+    if ((isPresenter && session) || amScroller()) {
+      heartbeat = setInterval(function() {
+        broadcastSession(); // no-op unless presenter
+        broadcastState();   // no-op unless scroller
+      }, cfg.heartbeat || HEARTBEAT_MS);
+    }
+  }
+
+  // ---- Receiving ----
+  socket.on(cfg.socketId, function(data) {
+    if (!data || data.from === senderId) return; // the relay never echoes, but guard
+    if (data.type === 'session') onSessionMessage(data);
+    else if (data.type === 'state') onStateMessage(data);
+    else if (data.type === 'volunteer') onVolunteerMessage(data);
   });
 
-  function broadcast() {
-    // Not while disconnected: socket.io would queue every repeat and replay
-    // them all at once. 'connect' sends the current state instead.
-    if (!socket.connected) return;
-    socket.emit('multiplex-statechanged', {
-      secret: cfg.secret,
-      socketId: cfg.socketId,
-      state: stateToSend(),
-      claim: claim,
-      from: senderId
+  function onSessionMessage(data) {
+    if (isPresenter) {
+      // Another presenter: the higher claim leads; an equal one is a duplicated
+      // tab, settled by the sender id. A lower claim is an old presenter that
+      // steps down once it hears this tab — ignore it.
+      var outranked = data.claim > presenterClaim ||
+                      (data.claim === presenterClaim && data.from > senderId);
+      if (!outranked) return;
+      stepDown(); // someone newer leads; fall through and follow them
+    }
+    if (session && data.claim < sessionClaim) return; // a stale presenter
+    sessionClaim = data.claim;
+    lastSessionAt = Date.now();
+    if (!data.session.active) { concludeSession(); return; }
+    reconcileSession(data.session);
+  }
+
+  function reconcileSession(s) {
+    session = { id: s.id, song: s.song, songTitle: s.songTitle, mode: s.mode, scrollerId: s.scrollerId };
+    if (s.mode === 'guest' && !s.scrollerId) {
+      // Awaiting a volunteer: offer it once per session.
+      if (invitedFor !== s.id) {
+        invitedFor = s.id;
+        inviteSong.textContent = s.songTitle;
+        if (!inviteModal.open) inviteModal.showModal();
+      }
+    } else if (inviteModal.open) {
+      inviteModal.close(); // a scroller was chosen, or this is a self session
+    }
+    applyNavMode();
+    updateButton();
+    updateStatus();
+    restartHeartbeat();
+  }
+
+  function concludeSession() {
+    var wasIn = !!session;
+    var wasScroller = amScroller();
+    if (inviteModal.open) inviteModal.close();
+    session = null;
+    sessionClaim = 0;
+    invitedFor = null;
+    applyNavMode();
+    updateButton();
+    updateStatus();
+    restartHeartbeat();
+    if (wasIn) {
+      var lines = ['Du kannst jetzt wieder frei navigieren'];
+      if (wasScroller) lines.push('Vielen Dank fürs Scrollen!');
+      showToast(lines);
+    }
+  }
+
+  // The presenter went quiet (tab closed, crashed, or a lasting dropout): a
+  // follower frees itself rather than stay frozen. The presenter's next
+  // heartbeat, if it returns, locks it again.
+  function releaseSilently() {
+    if (inviteModal.open) inviteModal.close();
+    session = null;
+    sessionClaim = 0;
+    invitedFor = null;
+    applyNavMode();
+    updateButton();
+    restartHeartbeat();
+  }
+
+  function onStateMessage(data) {
+    if (!session || data.sessionId !== session.id || amScroller()) return;
+    lastSessionAt = Date.now();
+    lastState = data.state;
+    if (navMode === 'follower') follow(lastState);
+  }
+
+  function onVolunteerMessage(data) {
+    // First volunteer wins. The presenter alone decides, so two near-simultaneous
+    // „Ja"s cannot both become scroller.
+    if (!isPresenter || !session || session.mode !== 'guest' || session.scrollerId) return;
+    if (data.sessionId !== session.id) return;
+    session.scrollerId = data.from;
+    persistPresenter();
+    broadcastSession();
+    applyNavMode();   // the presenter now follows the guest
+    updateButton();
+    updateStatus();
+    restartHeartbeat();
+  }
+
+  // The scroller leads and snaps back if it ever leaves its song; a follower
+  // cannot wander off — not even by clicking a link.
+  ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewhidden'].forEach(function(ev) {
+    Reveal.on(ev, function() {
+      if (applyingRemote) return;
+      if (amScroller()) {
+        if (Reveal.getIndices().h !== session.song) {
+          applyingRemote = true;
+          try { Reveal.slide(session.song, Reveal.getIndices().v); } finally { applyingRemote = false; }
+        }
+        broadcastState();
+      } else if (navMode === 'follower' && lastState) {
+        follow(lastState);
+      }
     });
+  });
+
+  // ---- Status line ----
+  var statusIntervalHb = function() { return cfg.heartbeat || HEARTBEAT_MS; };
+  function updateStatus() {
+    var text = '';
+    if (!socket.connected) {
+      text = everConnected && session ? 'Keine Verbindung' : '';
+    } else if (session) {
+      if (session.scrollerId === senderId) text = isPresenter ? 'Du scrollst live' : 'Du scrollst für alle';
+      else if (session.scrollerId) text = isPresenter ? 'Gast scrollt' : 'Folgt';
+      else if (isPresenter) text = 'Warte auf Gast …';
+    }
+    if (statusEl.textContent !== text) statusEl.textContent = text;
   }
-
-  socket.on('connect', function() { everConnected = true; if (isMaster) broadcast(); updateStatus(); });
-  socket.on('disconnect', updateStatus);
-
-  var REVEAL_EVENTS = ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewhidden'];
-
-  // The role is kept per tab, with its claim, so that a master that reloads
-  // (or whose tab iOS discarded) leads again without the password.
-  function becomeMaster(restoredClaim) {
-    // Above every claim heard, even one from a device whose clock runs ahead.
-    claim = restoredClaim || Math.max(Date.now(), leader.claim + 1);
-    try { sessionStorage.setItem('multiplex-master', String(claim)); } catch (e) {}
-    isMaster = true;
-    masterBtn.classList.add('is-master');
-    masterBtn.setAttribute('aria-pressed', 'true');
-    REVEAL_EVENTS.forEach(function(ev) { Reveal.on(ev, broadcast); });
-    broadcast();
-    heartbeat = setInterval(broadcast, cfg.heartbeat || HEARTBEAT_MS);
-    followBtn.hidden = true;
+  setInterval(function() {
+    if (session && socket.connected && navMode === 'follower' &&
+        Date.now() - lastSessionAt > 3 * statusIntervalHb()) {
+      releaseSilently();
+    }
     updateStatus();
+  }, 500);
+
+  // ---- End-of-session toast ----
+  var toastTimer = null;
+  function showToast(lines) {
+    toastEl.innerHTML = '';
+    lines.forEach(function(line) {
+      var el = document.createElement('div');
+      el.textContent = line;
+      toastEl.appendChild(el);
+    });
+    toastEl.classList.add('visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() { toastEl.classList.remove('visible'); }, 6000);
   }
 
-  function becomeClient() {
-    try { sessionStorage.removeItem('multiplex-master'); } catch (e) {}
-    isMaster = false;
-    masterBtn.classList.remove('is-master');
-    masterBtn.setAttribute('aria-pressed', 'false');
-    REVEAL_EVENTS.forEach(function(ev) { Reveal.off(ev, broadcast); });
-    clearInterval(heartbeat);
-    followBtn.hidden = false;
+  // ---- Presenter: start, choose, end ----
+  function newId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+
+  function persistPresenter() {
+    try { sessionStorage.setItem('multiplex-presenter', JSON.stringify({ claim: presenterClaim, session: session })); } catch (e) {}
+  }
+  function clearPresenter() {
+    try { sessionStorage.removeItem('multiplex-presenter'); } catch (e) {}
+  }
+
+  function startSession(mode) {
+    var song = Reveal.getIndices().h;
+    presenterClaim = Math.max(Date.now(), presenterClaim + 1); // above every claim heard
+    isPresenter = true;
+    session = {
+      id: newId(), song: song, songTitle: songTitleAt(song),
+      mode: mode, scrollerId: mode === 'self' ? senderId : null
+    };
+    persistPresenter();
+    applyNavMode();      // 'self' locks the presenter to the song; 'guest' waits
+    broadcastSession();
+    updateButton();
     updateStatus();
+    restartHeartbeat();
   }
 
-  var masterBtn    = document.getElementById('master-mode');
-  var masterModal  = document.getElementById('master-modal');
-  var masterPw     = document.getElementById('master-pw');
-  var qrModal      = document.getElementById('qr-modal');
+  function endSession() {
+    if (!isPresenter || !session) return;
+    emit({ type: 'session', claim: presenterClaim, session: {
+      id: session.id, active: false, song: session.song, songTitle: session.songTitle,
+      mode: session.mode, scrollerId: session.scrollerId
+    }});
+    clearPresenter();
+    session = null;
+    applyNavMode();
+    updateButton();
+    updateStatus();
+    restartHeartbeat();
+    showToast(['Du kannst jetzt wieder frei navigieren']); // the presenter is no guest, so no thanks
+  }
 
+  function stepDown() {
+    isPresenter = false;
+    clearPresenter();
+    updateButton();
+    // the winning presenter's session drives this tab from here
+  }
+
+  function updateButton() {
+    var active = isPresenter && !!session;
+    masterBtn.classList.toggle('session-active', active);
+    masterBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    masterLabel.textContent = active ? 'Live-Scrollen beenden' : 'Live-Scrollen starten';
+  }
+
+  // ---- Buttons and dialogs ----
   masterBtn.addEventListener('click', function() {
-    if (isMaster) { becomeClient(); return; }
+    if (isPresenter && session) { endSession(); return; }
+    if (authed) { openChoice(); return; }
     masterModal.showModal();
   });
 
-  document.getElementById('master-cancel').addEventListener('click', function() {
-    masterModal.close();
-  });
+  function openChoice() {
+    choiceSong.textContent = songTitleAt(Reveal.getIndices().h);
+    choiceModal.showModal();
+  }
 
-  // OK and Enter submit; method="dialog" closes the dialog unless we stop it
+  document.getElementById('master-cancel').addEventListener('click', function() { masterModal.close(); });
+
+  // Weiter and Enter submit; method="dialog" closes the dialog unless we stop it
   masterModal.querySelector('form').addEventListener('submit', function(e) {
-    if (masterPw.value === cfg.password) { becomeMaster(); return; }
+    if (masterPw.value === cfg.password) {
+      authed = true;
+      masterModal.close();
+      openChoice();
+      return;
+    }
     e.preventDefault();
     masterPw.classList.add('shake');
     setTimeout(function() { masterPw.classList.remove('shake'); }, 500);
     masterPw.value = '';
     masterPw.focus();
   });
-
   masterModal.addEventListener('close', function() { masterPw.value = ''; });
 
-  var storedClaim = 0;
-  try { storedClaim = Number(sessionStorage.getItem('multiplex-master')) || 0; } catch (e) {}
-  if (storedClaim) becomeMaster(storedClaim);
+  document.getElementById('scroll-self').addEventListener('click', function() { choiceModal.close(); startSession('self'); });
+  document.getElementById('scroll-guest').addEventListener('click', function() { choiceModal.close(); startSession('guest'); });
+  document.getElementById('scroll-choice-cancel').addEventListener('click', function() { choiceModal.close(); });
 
+  document.getElementById('guest-accept').addEventListener('click', function() {
+    if (session) emit({ type: 'volunteer', sessionId: session.id });
+    inviteModal.close(); // wait to hear whether this tab was the one chosen
+  });
+  document.getElementById('guest-decline').addEventListener('click', function() { inviteModal.close(); });
+
+  // ---- Connection ----
+  socket.on('connect', function() {
+    everConnected = true;
+    broadcastSession(); // no-op unless presenter
+    broadcastState();   // no-op unless scroller
+    updateStatus();
+  });
+  socket.on('disconnect', updateStatus);
+
+  // ---- Restore a reloaded presenter (role, claim and its live session) ----
+  var stored = null;
+  try { stored = JSON.parse(sessionStorage.getItem('multiplex-presenter')); } catch (e) {}
+  if (stored && stored.session) {
+    isPresenter = true;
+    authed = true;
+    presenterClaim = stored.claim || Date.now();
+    session = stored.session;
+    applyNavMode();
+    updateButton();
+    updateStatus();
+    restartHeartbeat();
+  }
+
+  // ---- QR code ----
   var showQrBtn = document.getElementById('show-qr');
-
   showQrBtn.addEventListener('click', function() {
     if (!window.QRCode) return;
     var url = window.location.href.split('#')[0];
@@ -815,13 +1085,12 @@ window.addEventListener('load', function() {
     if (canvas) canvas.setAttribute('aria-hidden', 'true');
     qrModal.showModal();
   });
-
   document.getElementById('qr-close').addEventListener('click', function() { qrModal.close(); });
 
   // showModal() makes the page behind inert and Esc closes natively. What is
   // left: Reveal listens for keys on the document, where they still arrive from
   // inside the dialog, and a click on the backdrop lands on the dialog itself.
-  [masterModal, qrModal].forEach(function(dialog) {
+  [masterModal, qrModal, choiceModal, inviteModal].forEach(function(dialog) {
     dialog.addEventListener('keydown', function(e) { e.stopPropagation(); });
     dialog.addEventListener('keypress', function(e) { e.stopPropagation(); });
     dialog.addEventListener('click', function(e) { if (e.target === dialog) dialog.close(); });

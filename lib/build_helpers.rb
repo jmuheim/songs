@@ -78,12 +78,15 @@ module BuildHelpers
   end
 
   def post_process_index(html, assets:, multiplex:)
-    html = html.sub('<body>', "<body><script>window.MULTIPLEX=#{multiplex.to_json};</script>" + style_file('body-controls.html').strip)
     html = html.sub('<style>', %(<link rel="stylesheet" href="#{assets}fonts/fonts.css">\n  <style>) + style_file('night.css') + style_file('shared.css'))
     html = without_pandoc_plugins(html)
     html = html.sub('keyboard: true,', "keyboard: { 83: null }, // 's' disabled (was: speaker notes)")
                .sub('controls: true,', 'controls: false,')
                .sub("display: 'block',", "display: 'flex',")
+    # body-controls.html goes in *after* the Reveal-config rewrites above: it
+    # configures Reveal too (a `keyboard: true` when a session ends), and a
+    # sub that ran first would clobber that line instead of Pandoc's init.
+    html = html.sub('<body>', "<body><script>window.MULTIPLEX=#{multiplex.to_json};</script>" + style_file('body-controls.html').strip)
     scripts = ["#{multiplex[:url]}/socket.io/socket.io.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}slide-zoom.js", "#{assets}chords.js"]
     html = html.sub('</body>', scripts.map { |src| %(  <script src="#{src}"></script>\n) }.join + '</body>')
     wrap_slide_content(html)
