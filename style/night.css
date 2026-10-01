@@ -18,6 +18,12 @@
   text-decoration: none;
 }
 
+/* Off a song there is nothing to live-scroll, so 🚀 is disabled (body-controls.html) */
+.ctrl:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
 .ctrl [aria-hidden] {
   font-size: 3em;
 }

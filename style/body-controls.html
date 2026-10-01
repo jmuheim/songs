@@ -140,6 +140,16 @@
   </div>
 </dialog>
 
+<dialog id="self-announce-modal" class="overlay-modal" aria-labelledby="self-announce-title">
+  <div class="modal-box">
+    <h2 id="self-announce-title" tabindex="-1" autofocus>Es geht gleich los!</h2>
+    <p>Der nächste Song ist «<span id="self-announce-song"></span>».</p>
+    <div class="modal-buttons">
+      <button id="self-announce-ok">OK</button>
+    </div>
+  </div>
+</dialog>
+
 <script>
 window.addEventListener('load', function() {
   var cfg = window.MULTIPLEX;
@@ -162,6 +172,8 @@ window.addEventListener('load', function() {
   var choiceSong  = document.getElementById('scroll-choice-song');
   var inviteModal = document.getElementById('guest-invite-modal');
   var inviteSong  = document.getElementById('guest-invite-song');
+  var announceModal = document.getElementById('self-announce-modal');
+  var announceSong  = document.getElementById('self-announce-song');
   var qrModal     = document.getElementById('qr-modal');
   var statusEl    = document.getElementById('multiplex-status');
   var toastEl     = document.getElementById('multiplex-toast');
@@ -181,6 +193,7 @@ window.addEventListener('load', function() {
   var lastSessionAt = 0;      // last word from the session (heartbeat or move)
   var applyingRemote = false; // set while Reveal moves because the scroller did
   var invitedFor = null;      // session id whose invite this tab already saw
+  var announcedFor = null;    // self-scroll session id this tab already announced to the room
   var heartbeat = null;
   var everConnected = false;
 
@@ -206,13 +219,40 @@ window.addEventListener('load', function() {
     try { Reveal.setState(state); } finally { applyingRemote = false; }
   }
 
+  function horizontalSlides() {
+    return Reveal.getHorizontalSlides ? Reveal.getHorizontalSlides()
+                                      : document.querySelectorAll('.reveal .slides > section');
+  }
+
   function songTitleAt(h) {
-    var stacks = Reveal.getHorizontalSlides ? Reveal.getHorizontalSlides()
-                                            : document.querySelectorAll('.reveal .slides > section');
-    var stack = stacks[h];
+    var stack = horizontalSlides()[h];
     if (!stack) return '';
     var heading = stack.querySelector('h1') || stack.querySelector('h2, h3');
     return heading ? heading.textContent.trim() : '';
+  }
+
+  // The title, the table of contents and the introduction are not songs. A live
+  // session only makes sense on a song, so 🚀 is disabled off these (see
+  // updateButton), and ending one drops everyone back onto the TOC (gotoToc).
+  var NON_SONG_SLIDES = { 'title-slide': true, 'TOC': true, 'introduction': true };
+  // A horizontal slide with sub-slides is a stack <section> with no id of its
+  // own — pandoc puts the slug on its first child. Title and TOC have no
+  // sub-slides, so their id sits on the section itself.
+  function slideId(stack) {
+    if (stack && stack.id) return stack.id;
+    var first = stack && stack.querySelector('section');
+    return first ? first.id : '';
+  }
+  function onSong() {
+    var stack = horizontalSlides()[Reveal.getIndices().h];
+    return !!stack && !NON_SONG_SLIDES[slideId(stack)];
+  }
+
+  function gotoToc() {
+    var stacks = horizontalSlides();
+    for (var i = 0; i < stacks.length; i++) {
+      if (stacks[i].id === 'TOC') { Reveal.slide(i, 0); return; }
+    }
   }
 
   // ---- Navigation lock ----
@@ -323,6 +363,13 @@ window.addEventListener('load', function() {
     } else if (inviteModal.open) {
       inviteModal.close(); // a scroller was chosen, or this is a self session
     }
+    // Self-scroll: the presenter drives, so there is nothing to volunteer for —
+    // just tell the room which song is coming, once per session.
+    if (s.mode === 'self' && !amScroller() && announcedFor !== s.id) {
+      announcedFor = s.id;
+      announceSong.textContent = s.songTitle;
+      if (!announceModal.open) announceModal.showModal();
+    }
     applyNavMode();
     updateButton();
     updateStatus();
@@ -333,14 +380,17 @@ window.addEventListener('load', function() {
     var wasIn = !!session;
     var wasScroller = amScroller();
     if (inviteModal.open) inviteModal.close();
+    if (announceModal.open) announceModal.close();
     session = null;
     sessionClaim = 0;
     invitedFor = null;
+    announcedFor = null;
     applyNavMode();
     updateButton();
     updateStatus();
     restartHeartbeat();
     if (wasIn) {
+      gotoToc(); // the presenter ended it: everyone lands back on the table of contents
       var lines = ['Du kannst jetzt wieder frei navigieren'];
       if (wasScroller) lines.push('Vielen Dank fürs Scrollen!');
       showToast(lines);
@@ -352,9 +402,11 @@ window.addEventListener('load', function() {
   // heartbeat, if it returns, locks it again.
   function releaseSilently() {
     if (inviteModal.open) inviteModal.close();
+    if (announceModal.open) announceModal.close();
     session = null;
     sessionClaim = 0;
     invitedFor = null;
+    announcedFor = null;
     applyNavMode();
     updateButton();
     restartHeartbeat();
@@ -468,6 +520,7 @@ window.addEventListener('load', function() {
     clearPresenter();
     session = null;
     applyNavMode();
+    gotoToc(); // the song is over: drop everyone back onto the table of contents
     updateButton();
     updateStatus();
     restartHeartbeat();
@@ -486,6 +539,9 @@ window.addEventListener('load', function() {
     masterBtn.classList.toggle('session-active', active);
     masterBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
     masterLabel.textContent = active ? 'Live-Scrollen beenden' : 'Live-Scrollen starten';
+    // Starting a session only makes sense on a song; while one runs the button
+    // ends it instead, so keep it enabled then (the scroller is always on a song).
+    masterBtn.disabled = !active && !onSong();
   }
 
   // ---- Buttons and dialogs ----
@@ -527,6 +583,7 @@ window.addEventListener('load', function() {
     inviteModal.close(); // wait to hear whether this tab was the one chosen
   });
   document.getElementById('guest-decline').addEventListener('click', function() { inviteModal.close(); });
+  document.getElementById('self-announce-ok').addEventListener('click', function() { announceModal.close(); });
 
   // ---- Connection ----
   socket.on('connect', function() {
@@ -551,6 +608,10 @@ window.addEventListener('load', function() {
     restartHeartbeat();
   }
 
+  // 🚀 is only live on a song: set it now and re-check whenever the slide moves.
+  Reveal.on('slidechanged', updateButton);
+  updateButton();
+
   // ---- QR code ----
   var showQrBtn = document.getElementById('show-qr');
   showQrBtn.addEventListener('click', function() {
@@ -571,7 +632,7 @@ window.addEventListener('load', function() {
   // showModal() makes the page behind inert and Esc closes natively. What is
   // left: Reveal listens for keys on the document, where they still arrive from
   // inside the dialog, and a click on the backdrop lands on the dialog itself.
-  [masterModal, qrModal, choiceModal, inviteModal].forEach(function(dialog) {
+  [masterModal, qrModal, choiceModal, inviteModal, announceModal].forEach(function(dialog) {
     dialog.addEventListener('keydown', function(e) { e.stopPropagation(); });
     dialog.addEventListener('keypress', function(e) { e.stopPropagation(); });
     dialog.addEventListener('click', function(e) { if (e.target === dialog) dialog.close(); });

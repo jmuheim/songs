@@ -87,7 +87,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
       within('#top-right-controls') do
         expect(page).to have_button('🔗 Show QR code')
-        expect(page).to have_button('🚀 Live-Scrollen starten')
+        expect(page).to have_button('🚀 Live-Scrollen starten', disabled: true) # off a song on the title slide
         expect(page).to have_button('🌞 Switch to bright mode')
       end
 
@@ -318,6 +318,8 @@ RSpec.describe 'index.html', :js, type: :feature do
       before { load_presentation }
 
       it 'the password gates the choice dialog, which opens no session by itself' do
+        page.evaluate_script("Reveal.slide(3, 0)") # 🚀 only starts a session from a song
+        wait_for_js("Reveal.getIndices().h === 3")
         expect(page).not_to have_visible('#master-modal')
         expect(page).to have_css('#master-mode[aria-pressed="false"]', text: /🚀\s+Live-Scrollen starten/)
 
@@ -365,6 +367,24 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
     end
 
+    describe '🚀 availability' do
+      before { load_presentation }
+
+      it 'enables 🚀 only on a song — disabled on the title, the TOC and the introduction' do
+        master_disabled_at = lambda do |h|
+          page.evaluate_script("Reveal.slide(#{h}, 0)")
+          wait_for_js("Reveal.getIndices().h === #{h}")
+          page.evaluate_script("document.getElementById('master-mode').disabled")
+        end
+
+        wait_for_js("document.getElementById('master-mode').disabled === true") # title slide on load
+        expect(master_disabled_at.call(1)).to be true  # TOC
+        expect(master_disabled_at.call(2)).to be true  # Introduction (a stack; its slug sits on the first sub-slide)
+        expect(master_disabled_at.call(3)).to be false # the first song
+        expect(master_disabled_at.call(1)).to be true  # back off a song
+      end
+    end
+
     describe 'live sync' do
       after { Capybara.reset_sessions! }
 
@@ -381,11 +401,19 @@ RSpec.describe 'index.html', :js, type: :feature do
           start_scroll_session(mode: :self)
           expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/)
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
+          expect(page).not_to have_visible('#self-announce-modal') # the presenter announces to the room, not to itself
         end
 
-        # The client is snapped onto the presenter's song and cannot move on its own
+        # The client is snapped on, told which song is coming, then locked
         using_session(:client) do
           wait_for_js("Reveal.getIndices().h === 3")
+          expect(page).to have_visible('#self-announce-modal')
+          expect(page).to have_css('#self-announce-modal', text: 'Es geht gleich los!')
+          song = page.evaluate_script("document.querySelectorAll('.slides > section')[3].querySelector('h1').textContent.trim()")
+          expect(page).to have_css('#self-announce-song', text: song)
+          within('#self-announce-modal') { click_button('OK') } # dismiss, so the lock below is really the lock, not the modal
+          expect(page).not_to have_visible('#self-announce-modal')
+
           expect(page).to have_css('#multiplex-status', text: 'Folgt')
           before = slide_indices
           press(:right)
@@ -411,17 +439,21 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
         end
 
-        # Ending frees everyone and shows the notice
+        # Ending drops everyone back on the TOC, frees them, and shows the notice
         using_session(:presenter) do
           click_button('🚀 Live-Scrollen beenden')
           expect(page).to have_no_css('#master-mode.session-active')
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
+          wait_for_js("Reveal.getIndices().h === 1") # sent to the table of contents
+          expect(slide_indices).to eq([1, 0])
         end
         using_session(:client) do
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
+          wait_for_js("Reveal.getIndices().h === 1") # every follower lands on the TOC too
+          expect(slide_indices).to eq([1, 0])
           find('body').send_keys(:right) # free to browse again
-          wait_for_js("Reveal.getIndices().h === 4")
-          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
+          wait_for_js("Reveal.getIndices().h === 2")
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(2)
         end
       end
 
@@ -439,7 +471,10 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
 
         [:guest_a, :guest_b].each do |s|
-          using_session(s) { expect(page).to have_visible('#guest-invite-modal') }
+          using_session(s) do
+            expect(page).to have_visible('#guest-invite-modal')
+            expect(page).not_to have_visible('#self-announce-modal') # that dialog is for self-scroll only
+          end
         end
 
         using_session(:guest_a) do
@@ -470,15 +505,23 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
         end
 
-        # Ending thanks the guest and frees the room
-        using_session(:presenter) { click_button('🚀 Live-Scrollen beenden') }
+        # Ending thanks the guest, frees the room, and sends everyone to the TOC
+        using_session(:presenter) do
+          click_button('🚀 Live-Scrollen beenden')
+          wait_for_js("Reveal.getIndices().h === 1")
+          expect(slide_indices).to eq([1, 0])
+        end
         using_session(:guest_a) do
           expect(page).to have_css('#multiplex-toast.visible', text: 'Vielen Dank fürs Scrollen!')
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
+          wait_for_js("Reveal.getIndices().h === 1")
+          expect(slide_indices).to eq([1, 0])
         end
         using_session(:guest_b) do
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
           expect(page).to have_no_css('#multiplex-toast', text: 'Vielen Dank fürs Scrollen!')
+          wait_for_js("Reveal.getIndices().h === 1")
+          expect(slide_indices).to eq([1, 0])
         end
       end
 
