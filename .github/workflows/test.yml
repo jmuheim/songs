@@ -83,8 +83,11 @@ jobs:
           echo "MULTIPLEX_SOCKET_ID=$(printf '%s' "$SECRET" | sha256sum | cut -d' ' -f1)" >> "$GITHUB_ENV"
           echo "MULTIPLEX_SECRET=$SECRET" >> "$GITHUB_ENV"
 
+      # `bundle exec`, not bare `./build`: bundler-cache above installs the gems
+      # into vendor/bundle, which is only on the load path under bundler — a bare
+      # `./build` fails with `cannot load such file -- nokogiri`.
       - name: Build
-        run: ./build
+        run: bundle exec ./build
 
       # The deploy key is locked on the server (authorized_keys
       # command="…/rrsync …/songs.josh.ch") to rsync into that one directory, so
