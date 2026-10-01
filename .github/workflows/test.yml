@@ -1,0 +1,48 @@
+name: Tests
+
+# Runs the whole RSpec suite on every push to any branch and on every pull
+# request — the song book is small, the repo is public, so the Actions minutes
+# are free and there is no reason to gate which branches run.
+on:
+  push:
+  pull_request:
+
+# A superseded run of the same branch is cancelled — except on master, where
+# every commit stays verified (the deploy, added later, hangs off a green run
+# there).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v5
+
+      # Matches the local Ruby (3.2). bundler-cache runs `bundle install` and
+      # caches the gems; the lockfile carries x86_64-linux next to
+      # arm64-darwin so the Linux runner resolves nokogiri's native gem.
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      # Pinned: the golden-HTML specs compare Pandoc's exact output, so CI must
+      # run the same version the committed golden fixtures were built with
+      # (3.9.0.2). Installed as the official .deb.
+      - name: Install Pandoc 3.9.0.2
+        run: |
+          wget -q https://github.com/jgm/pandoc/releases/download/3.9.0.2/pandoc-3.9.0.2-1-amd64.deb
+          sudo dpkg -i pandoc-3.9.0.2-1-amd64.deb
+
+      # The browser specs spawn the reveal-multiplex package (multiplex-server/)
+      # on 127.0.0.1, so they never touch the public Railway server. Node is
+      # preinstalled on ubuntu runners, and so is the Chrome that Cuprite drives.
+      - name: Install multiplex-server dependencies
+        run: npm ci --prefix multiplex-server
+
+      - name: Run RSpec
+        run: bundle exec rspec
