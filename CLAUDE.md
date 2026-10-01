@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-**Record decisions in [`decisions/`](decisions/), one file per entry** — see [DECISIONS.md](DECISIONS.md) for the format. Never append to a shared list.
+**Record decisions in [`decisions/`](decisions/), one file per entry** — see [DECISIONS.md](DECISIONS.md) for the format, and use the `songs-log-decision` skill to add one. Never append to a shared list.
 
 ## What this project is
 
@@ -13,10 +13,10 @@ A guitar song book generator. Songs are written in Markdown with inline chord no
 These are not descriptions of how things happen to work — they are commitments to keep. Follow them without being asked.
 
 - **Ask where new work lands before starting.** Confirm two things up front: which branch its commits go on — a fresh branch off `master` (the default) or the current one — and whether to work in the current checkout or a separate git worktree. Never append unrelated commits to a branch that has already been merged; that mixes two efforts under one PR's history. When in doubt, branch off `master`.
-- **Behaviour changes come with tests.** If you change the build pipeline, the chord regex, the multiplex logic, or anything in `style/*.js`, add or update the spec that pins that behaviour before considering the change done — and run `bundle exec rspec`. New behaviour with no covering spec is unfinished work.
+- **Behaviour changes come with tests.** If you change the build pipeline, the chord regex, the multiplex logic, or anything in `style/*.js`, add or update the spec that pins that behaviour before considering the change done — and run `bundle exec rspec`. New behaviour with no covering spec is unfinished work. For the browser specs, follow the `songs-browser-specs` skill.
 - **Keep the golden fixtures in sync.** `all-songs.md`, `index.html`, `print.html` and the fixtures under `spec/fixtures/` (except `golden/`) are build outputs — they are generated, not committed (gitignored; the specs regenerate the fixture HTML themselves). The one committed reference is `spec/fixtures/golden/`: when you change the markup or the generator, regenerate it with `bundle exec rake golden:update` in the same change — the golden specs exist to catch exactly the drift you'd otherwise leave behind.
 - **One source of truth.** Don't copy logic that already lives in `lib/build_helpers.rb` (or anywhere else) into a second place. If the build and a spec both need a transformation, both call the same helper, so the spec tests what ships.
-- **Skills are living artefacts.** The skills in `.claude/skills/` (e.g. `tab-to-song`) describe real, current behaviour of this repo. When the song format, the build, or a workflow they document changes, update the matching skill in the same change. If a task reveals a repeatable workflow the skills don't yet cover, propose one.
+- **Skills are living artefacts.** The skills in `.claude/skills/` (`tab-to-song`, `songs-browser-specs`, `songs-log-decision`) describe real, current behaviour of this repo. When the song format, the build, or a workflow they document changes, update the matching skill in the same change. If a task reveals a repeatable workflow the skills don't yet cover, propose one.
 - **Docs track reality.** This file and `README.md` must match what the code actually does. If you change a command, a dependency, or a default, update both.
 
 ## Build command
