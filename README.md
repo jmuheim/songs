@@ -23,10 +23,13 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 ## Build
 
 ```bash
-./build           # Build index.html and print.html
-./build --deploy  # HTML + deploy to songs.josh.ch
-./dev             # Watch, rebuild, and live-reload on every change
+bundle exec rake multiplex:token   # once per clone: create local multiplex credentials
+./build                            # Build index.html and print.html
+./build --deploy                   # HTML + deploy to songs.josh.ch (manual fallback)
+./dev                              # Watch, rebuild, and live-reload on every change (local only)
 ```
+
+`build` refuses to run without multiplex credentials; `rake multiplex:token` writes a gitignored `multiplex-token.json` for local use (see [Live sync](#live-sync-multiplex)). The usual way to publish is **not** `--deploy`: a push to `master` deploys to songs.josh.ch from CI once the tests pass (`.github/workflows/test.yml`).
 
 > Song files contain non-ASCII characters; `build` sets `LANG` and the UTF-8 encoding itself, so no `LANG=…` prefix is needed.
 
@@ -70,3 +73,5 @@ Default password: `guitar`. Change it with:
 ```bash
 MASTER_PASSWORD=yourpassword ./build
 ```
+
+The `socketId`/`secret` pair the sync uses is generated offline (the relay only checks `sha256(secret) == socketId`) — never fetched. Create your local pair once with `bundle exec rake multiplex:token`; it lands in a gitignored `multiplex-token.json`, so your local builds get their own session and never share the live songs.josh.ch channel. The CI deploy generates a fresh pair per run.

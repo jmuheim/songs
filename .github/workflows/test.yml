@@ -46,3 +46,67 @@ jobs:
 
       - name: Run RSpec
         run: bundle exec rspec
+
+  # Deploy to songs.josh.ch — only on a push to master, and only after the
+  # suite is green (needs: rspec, so a red run blocks the deploy). This replaces
+  # the old `./dev` loop that pushed every intermediate save live, untested.
+  # `./build --deploy` stays as the manual fallback.
+  deploy:
+    needs: rspec
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    # Its own group, never cancelled mid-flight, so two master pushes deploy one
+    # after the other instead of racing onto the server.
+    concurrency:
+      group: deploy-songs-josh-ch
+      cancel-in-progress: false
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Install Pandoc 3.9.0.2
+        run: |
+          wget -q https://github.com/jgm/pandoc/releases/download/3.9.0.2/pandoc-3.9.0.2-1-amd64.deb
+          sudo dpkg -i pandoc-3.9.0.2-1-amd64.deb
+
+      # A fresh multiplex pair per deploy, passed in the environment — build
+      # reads it from there and never touches the network (the relay only checks
+      # sha256(secret) == socketId).
+      - name: Generate multiplex credentials
+        run: |
+          SECRET=$(openssl rand -hex 16)
+          echo "MULTIPLEX_SOCKET_ID=$(printf '%s' "$SECRET" | sha256sum | cut -d' ' -f1)" >> "$GITHUB_ENV"
+          echo "MULTIPLEX_SECRET=$SECRET" >> "$GITHUB_ENV"
+
+      - name: Build
+        run: ./build
+
+      # The deploy key is locked on the server (authorized_keys
+      # command="…/rrsync …/songs.josh.ch") to rsync into that one directory, so
+      # the rsync target is relative to it. The host key is pinned — no
+      # StrictHostKeyChecking=no; refresh with `ssh-keyscan greip.uberspace.de`
+      # if the server's key ever changes.
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo 'greip.uberspace.de ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILVWUx1FFTYp58W/y/dMjzj6OVcUqhMZGCWs5weJ5hSy' > ~/.ssh/known_hosts
+          echo 'greip.uberspace.de ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCrbh6GrkOL5xZgjkPFbOkekjAm66HDYXMi5PolMqRFDROFwvxh5thXDRaehWOfr9ltERQwMr88JpCILdTS3qZid0VDglHMpPhiLMeBIEJIxsHFTq1ih1TLHDesLwoHrie3alHDXMXeKcKjsUjDpNxh5WaEBmmBbnz37QDDPnq/E4UY6R2knRBbuuVfxofSt0wNakP7+Ykj7BrUiJ0AtT/+cCJyyCMxwN6cXJ9XYp5JrZ7y0ETip3tCx7eAkNLvFk5lIgaxskD3uttOUYoLGz2+cb6fcEK2uc2Lltp8yjSnx1ImRyJq5ZO2HybS7kL1dQxLBj/sJuOJDlKWRM2E7E4lj7dD2I5zD+o/JazT/5eUubgBp6xSYUiO/EvjOVSzkqVt3OewBu2iSKU5YpLsQFw/lwTrrJ853uLU8TQGQviQLOtn+RcKSLUohQZmEL6LSo9HExel/CJ9ABtmlZULV3i6ealiA6hYJIfJ4Fgvwuvoe+FEM/4TBnFMi85mKGf/momkYeC2xxep6dZYxM8klx5DiACLYEG8mRK7ahbx7yq/kyfsnIdhrmk9/hJDauL9MgmjN+EGe1BOPs49N4W2InZ7hSV5redkjHbwG+MJu2U977+JCA+meiN1h4yARWBsJyzzQ44jgdGICn4LiYDXgj2oKXp8WMAHoGHjNVVs8dvETw==' >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      # Same rsync as `./build --deploy` does by hand (index.html + style/, with
+      # --delete), but the destination path is relative: rrsync chdirs into the
+      # locked directory, so the `.` target resolves to songs.josh.ch itself.
+      # print.html is intentionally not deployed.
+      - name: Deploy to songs.josh.ch
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes" \
+            index.html style \
+            maroni@greip.uberspace.de:.
