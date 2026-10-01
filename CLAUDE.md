@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-**Record decisions in [`decisions/`](decisions/), one file per entry** — see [DECISIONS.md](DECISIONS.md) for the format. Never append to a shared list.
+**Record decisions in [`decisions/`](decisions/), one file per entry** — see [DECISIONS.md](DECISIONS.md) for the format, and use the `songs-log-decision` skill to add one. Never append to a shared list.
 
 ## What this project is
 
@@ -13,10 +13,10 @@ A guitar song book generator. Songs are written in Markdown with inline chord no
 These are not descriptions of how things happen to work — they are commitments to keep. Follow them without being asked.
 
 - **Ask where new work lands before starting.** Confirm two things up front: which branch its commits go on — a fresh branch off `master` (the default) or the current one — and whether to work in the current checkout or a separate git worktree. Never append unrelated commits to a branch that has already been merged; that mixes two efforts under one PR's history. When in doubt, branch off `master`.
-- **Behaviour changes come with tests.** If you change the build pipeline, the chord regex, the multiplex logic, or anything in `style/*.js`, add or update the spec that pins that behaviour before considering the change done — and run `bundle exec rspec`. New behaviour with no covering spec is unfinished work.
-- **Keep the fixtures in sync.** The committed `all-songs.md`, `index.html`, `print.html`, and everything under `spec/fixtures/` are build outputs. When you change source or the generator, regenerate them (`./build`, and `rake golden:update` for the golden HTML) in the same change — the golden specs exist to catch exactly the drift you'd otherwise leave behind.
+- **Behaviour changes come with tests.** If you change the build pipeline, the chord regex, the multiplex logic, or anything in `style/*.js`, add or update the spec that pins that behaviour before considering the change done — and run `bundle exec rspec`. New behaviour with no covering spec is unfinished work. For the browser specs, follow the `songs-browser-specs` skill.
+- **Keep the golden fixtures in sync.** `all-songs.md`, `index.html`, `print.html` and the fixtures under `spec/fixtures/` (except `golden/`) are build outputs — they are generated, not committed (gitignored; the specs regenerate the fixture HTML themselves). The one committed reference is `spec/fixtures/golden/`: when you change the markup or the generator, regenerate it with `bundle exec rake golden:update` in the same change — the golden specs exist to catch exactly the drift you'd otherwise leave behind.
 - **One source of truth.** Don't copy logic that already lives in `lib/build_helpers.rb` (or anywhere else) into a second place. If the build and a spec both need a transformation, both call the same helper, so the spec tests what ships.
-- **Skills are living artefacts.** The skills in `.claude/skills/` (e.g. `tab-to-song`) describe real, current behaviour of this repo. When the song format, the build, or a workflow they document changes, update the matching skill in the same change. If a task reveals a repeatable workflow the skills don't yet cover, propose one.
+- **Skills are living artefacts.** The skills in `.claude/skills/` (`tab-to-song`, `songs-browser-specs`, `songs-log-decision`) describe real, current behaviour of this repo. When the song format, the build, or a workflow they document changes, update the matching skill in the same change. If a task reveals a repeatable workflow the skills don't yet cover, propose one.
 - **Docs track reality.** This file and `README.md` must match what the code actually does. If you change a command, a dependency, or a default, update both.
 
 ## Build command
@@ -24,12 +24,22 @@ These are not descriptions of how things happen to work — they are commitments
 ```bash
 ./build           # Build index.html and print.html
 ./build --deploy  # HTML + deploy to songs.josh.ch
-./dev             # Watch, rebuild, deploy, and live-reload on every change
+./dev             # Watch, rebuild, and live-reload on every change (local only, no deploy)
 ```
 
 Dependencies: Ruby 3.x, Pandoc (`brew install pandoc`), fswatch (`brew install fswatch`), browser-sync (`npm install -g browser-sync`).
 
+The first build on a fresh clone needs local multiplex credentials — `build` refuses to run without them. Create them once with `bundle exec rake multiplex:token` (writes the gitignored `multiplex-token.json`). Deploys to songs.josh.ch happen from CI on every push to `master` once the suite is green (see [Deploy](#deploy)); `./build --deploy` remains the manual fallback.
+
 > **Dev gotcha:** `./dev` passes `--no-ghost-mode` to browser-sync. Ghost mode (on by default) syncs clicks across all open tabs and interferes with the multiplex feature — it makes button presses appear to fire on all "clients" simultaneously during local testing.
+
+## Deploy
+
+Deploying is a CI job (`deploy` in `.github/workflows/test.yml`), not something a local save does. It runs **only on a push to `master`**, and only **after the `rspec` job is green** (`needs: rspec`) — so an untested commit never reaches songs.josh.ch. Its own `concurrency` group serialises deploys. The job generates a fresh multiplex pair, runs `./build`, and `rsync`s `index.html` + `style/` to the server (not `print.html`, matching the old manual deploy).
+
+The server is reached with a dedicated ed25519 **deploy key** (secret `DEPLOY_SSH_KEY`), separate from anyone's personal key and locked on the server via `authorized_keys` to `rrsync` into `…/songs.josh.ch/` only — so the rsync target is relative. The host key is pinned in the workflow (no `StrictHostKeyChecking=no`); refresh it with `ssh-keyscan greip.uberspace.de` if the server ever rotates its key.
+
+`./build --deploy` stays as the manual fallback: it rsyncs the same files from your machine using your own SSH access (absolute path), bypassing CI.
 
 ## Song file format
 
@@ -73,9 +83,11 @@ The regex only matches `[Word]` not followed by `(` — so standard Markdown lin
 
 ## Output files
 
-- `all-songs.md` — intermediate concatenated Markdown (committed, regenerated on each build)
-- `index.html` — interactive night-themed Reveal.js presentation (committed)
-- `print.html` — serif-themed version for printing (committed). Open it as `print.html?print-pdf` in Chrome and print: reveal.js then lays out every slide as a page of its own
+These are **generated, not committed** (gitignored; `./build` writes them, CI rebuilds them for the deploy, and the specs rebuild the fixture copies):
+
+- `all-songs.md` — intermediate concatenated Markdown
+- `index.html` — interactive night-themed Reveal.js presentation
+- `print.html` — serif-themed version for printing. Open it as `print.html?print-pdf` in Chrome and print: reveal.js then lays out every slide as a page of its own
 
 ## Tests
 
@@ -84,7 +96,7 @@ npm install --prefix multiplex-server   # once; needs Node.js >= 18
 bundle exec rspec
 ```
 
-`spec/support/fixture_builder.rb` builds `spec/fixtures/index.html` and `print.html` from the songs in `spec/fixtures/songs/`; both are committed. The browser specs serve them with WEBrick on `127.0.0.1` and a port the OS picks (`spec/support/file_server.rb`), so a second checkout's run does not collide with it.
+`spec/support/fixture_builder.rb` builds `spec/fixtures/index.html` and `print.html` from the songs in `spec/fixtures/songs/` at the start of the run (they are gitignored, not committed). The browser specs serve them with WEBrick on `127.0.0.1` and a port the OS picks (`spec/support/file_server.rb`), so a second checkout's run does not collide with it.
 
 **The specs never touch the live multiplex channel.** `spec/support/multiplex_server.rb` runs `multiplex-server/` — the official reveal-multiplex package, the same software the public Railway server runs, pinned by commit — on `127.0.0.1:18889` (`localhost.js` keeps it off the LAN) for the whole run. The fixture points at it with a fixed test pair (`sha256(secret) == socketId`, which is all the server checks). Before, the fixture carried `multiplex-token.json`, so the „live sync" spec became master on the channel songs.josh.ch listens to, and moved anyone who had it open at the time. Port and token are fixed rather than fresh per run so that the committed fixture stays the same from run to run. They refuse to start while port 18889 is taken (a multiplex server left over from a manual test, say): their own would die on `EADDRINUSE` while the other one answered the readiness check, and the specs would broadcast into it.
 
@@ -139,9 +151,14 @@ The code is the second `<script>` in `style/body-controls.html`; the server is a
 
 See [decisions/2026-09-30-live-scroll-sessions-presenter-delegates-to-a-guest.md](decisions/2026-09-30-live-scroll-sessions-presenter-delegates-to-a-guest.md).
 
-### Token (`multiplex-token.json`)
+### Token
 
-The `socketId` / `secret` pair is fetched once from the server and cached in `multiplex-token.json` (committed). All viewers share this session. Delete the file and rebuild to start a fresh session.
+The `socketId` / `secret` pair is generated offline, never fetched: the relay only checks `sha256(secret) == socketId`, so any self-consistent pair works. `build` resolves it in this order, and **refuses to build if none is found** (no silent network fetch):
+
+1. `MULTIPLEX_SOCKET_ID` + `MULTIPLEX_SECRET` from the environment — the CI deploy generates a fresh pair per run this way.
+2. a gitignored `multiplex-token.json` for local builds — create it once with `bundle exec rake multiplex:token` (run it again for a fresh local session).
+
+The file is no longer committed, so a local build never shares songs.josh.ch's live channel. The generator is `BuildHelpers.generate_multiplex_token`.
 
 ### Password
 

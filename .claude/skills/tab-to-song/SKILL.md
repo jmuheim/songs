@@ -60,4 +60,4 @@ Note: `## Resources` is automatically stripped from `print.html` at build time �
 
 ## Step 6 — Write and offer to build
 
-Write the file. Then offer to run `./build` (fast, HTML-only) so `index.html`/`print.html` pick up the new song — don't run `./build --pdf` or `./build --deploy` unless asked, since those are slow / publish externally.
+Write the file. Then offer to run `./build` (fast) so `index.html`/`print.html` pick up the new song — don't run `./build --deploy` unless asked, since that publishes externally.

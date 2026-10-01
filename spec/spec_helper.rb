@@ -28,6 +28,11 @@ Capybara.register_driver(:cuprite) do |app|
     app,
     headless:    true,
     window_size: [1280, 800],
+    # Ferrum's default 10s wait for Chrome to hand back its websocket URL is too
+    # tight for a cold start on a loaded CI runner — it timed out on a resize and
+    # reddened an otherwise-green run, blocking the deploy. 30s absorbs that; it
+    # only bounds the browser launch, so it costs nothing on a fast local start.
+    process_timeout: 30,
     browser_options: { 'no-sandbox': nil }
   )
 end

@@ -2,7 +2,6 @@
 
 require 'optparse'
 require 'json'
-require 'net/http'
 require 'nokogiri'
 require_relative 'lib/build_helpers'
 include BuildHelpers
@@ -14,9 +13,23 @@ Dir.chdir(__dir__)
 
 MULTIPLEX_URL     = 'https://multiplex.up.railway.app'
 MASTER_PASSWORD   = ENV.fetch('MASTER_PASSWORD', 'guitar')
-MULTIPLEX_TOKEN   = File.exist?('multiplex-token.json') \
-  ? JSON.parse(File.read('multiplex-token.json')) \
-  : JSON.parse(Net::HTTP.get(URI("#{MULTIPLEX_URL}/token"))).tap { |t| File.write('multiplex-token.json', JSON.generate(t)) }
+# The multiplex pair never comes from the network: the relay only checks
+# sha256(secret) == socketId, so any self-consistent pair works. CI/deploy pass
+# it in the environment (a fresh pair per deploy); locally it lives in the
+# gitignored multiplex-token.json, created with `bundle exec rake multiplex:token`.
+MULTIPLEX_TOKEN =
+  if ENV['MULTIPLEX_SOCKET_ID'] && ENV['MULTIPLEX_SECRET']
+    { 'socketId' => ENV['MULTIPLEX_SOCKET_ID'], 'secret' => ENV['MULTIPLEX_SECRET'] }
+  elsif File.exist?('multiplex-token.json')
+    JSON.parse(File.read('multiplex-token.json'))
+  else
+    abort <<~MSG
+      ❌ No multiplex credentials found — refusing to build.
+         Local build: create the gitignored multiplex-token.json with
+           bundle exec rake multiplex:token
+         CI / deploy: set MULTIPLEX_SOCKET_ID and MULTIPLEX_SECRET in the environment.
+    MSG
+  end
 
 options = { deploy: false }
 OptionParser.new do |opts|
