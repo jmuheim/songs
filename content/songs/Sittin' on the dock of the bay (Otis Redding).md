@@ -19,7 +19,7 @@ Wastin' [G] time [E]
 I [G] left my home in [B7] Georgia
 [C] Headed for the 'Frisco Bay [A]
 [G] 'Cause I've had nothing to [B7] live for
-And look like [C] nothin's gonna come my way [A]
+And look like [C] nothin's gonna come my [A] way
 
 ## Chorus
 
@@ -30,11 +30,17 @@ Wastin' [G] time [E]
 
 ## Bridge
 
-
 [G] Looks like [D] nothing's [C] gonna change [G]
 [G] Everything [D] still remains [C] the same [G]
 [G] I can't [D] do what [C] ten people [G] tell me to do
 So I [F] guess I'll remain the [D] same, yes
+
+## Verse 3
+
+[G] Sittin' here restin' my [B7] bones
+And this [C] loneliness won't leave me [A] alone
+This two [G] thousand miles I [B7] roamed
+Just to [C] make this dock my [A] home
 
 ## Chorus
 

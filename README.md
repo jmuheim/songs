@@ -9,7 +9,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - Swipe left/right to change songs, up/down to navigate song sections
 - Colour-coded chords (each root letter gets its own colour)
 - Toggle chord visibility (🎹 button)
-- **Live sync** — open the song book on your phone and follow along as the presenter advances slides (see below)
+- **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)
 - Print-friendly version: open `print.html?print-pdf` in Chrome and print
 
 ## Installation
@@ -52,21 +52,20 @@ Add a Markdown file to `content/songs/` following the naming convention `Title (
 
 ## Live sync (multiplex)
 
-The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multiplex/) so everyone in the room can follow along on their own device.
+The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multiplex/) so everyone in the room can follow along on their own device — song by song, led by the presenter or by a volunteer.
 
 | Button | Position | Function |
 |--------|----------|----------|
 | 🔗 | Top right | Show QR code — scan to open the song book |
-| 👣 | Top right | Browse freely instead of following the presenter (❌ while browsing freely); tap again to jump back to the presenter's slide |
-| 🚀 | Top right | Become the presenter (asks for password); tap again to stop |
+| 🚀 | Top right | Start a live-scroll session on the current song (asks for the password once); ❌ while active, tap again to end it |
 
-Once you enter the password and become presenter (❌ on 🚀), your slide navigation is broadcast live to everyone who has the page open. The presenter also repeats the current slide every two seconds, so whoever opens the song book later, or comes back from a dead spot, catches up by itself.
+Navigate to a song, then tap 🚀 and choose **„Ich selber möchte scrollen"** to scroll it yourself, or **„Ein Gast soll scrollen"** to let someone in the audience take over. In guest mode everyone with the page open is asked whether they want to scroll; the first to accept leads, and the rest follow. Whoever scrolls can only move up and down within that song.
 
-A short line under the buttons says what is going on: whether you follow, browse freely, present yourself, or whether nobody is presenting right now. Browsing the overview (Esc) or pausing (B) as presenter stays on your own screen.
+While a session runs, followers are held on the scroller's slide — their own navigation is off. The scroller repeats its position every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap ❌ on 🚀 to end the session: everyone is told they can navigate freely again, and a guest who scrolled is thanked.
 
-Paging on your own device switches you to browsing freely, so that the next repeat does not snap you back — 👣 brings you back to the presenter.
+A short line under the buttons says what is going on: „Du scrollst live", „Warte auf Gast …", „Gast scrollt", „Du scrollst für alle", „Folgt", or „Keine Verbindung".
 
-The presenter's tab stays presenter when it reloads. If someone else enters the password, they take over and the previous presenter becomes a listener.
+The presenter's tab stays presenter — and keeps its live session — when it reloads.
 
 Default password: `guitar`. Change it with:
 

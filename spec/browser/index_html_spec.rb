@@ -23,14 +23,18 @@ RSpec.describe 'index.html', :js, type: :feature do
     page.execute_script("document.getElementById('#{id}').click()") # e.target must be the overlay, not a child
   end
 
-  def become_master(heartbeat: 200) # repeat every 200 ms instead of 2 s
+  # Enter the password, then pick who scrolls. The heartbeat is shortened so
+  # late joiners and the end-of-session notice arrive quickly. Presenter tabs.
+  def start_scroll_session(mode:, heartbeat: 200)
     page.execute_script("window.MULTIPLEX.heartbeat = #{heartbeat}")
-    click_button('🚀 Lead slide navigation')
+    click_button('🚀 Live-Scrollen starten')
     within('#master-modal') do
       find('#master-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
-      click_button('OK')
+      click_button('Weiter')
     end
-    expect(page).to have_css('#master-mode.is-master')
+    within('#scroll-choice-modal') do
+      click_button(mode == :self ? 'Ich selber möchte scrollen' : 'Ein Gast soll scrollen')
+    end
   end
 
   def tooltip_shown?(id)
@@ -39,10 +43,6 @@ RSpec.describe 'index.html', :js, type: :feature do
 
   def slide_indices
     page.evaluate_script("[Reveal.getIndices().h, Reveal.getIndices().v]")
-  end
-
-  def master?(session)
-    using_session(session) { page.has_css?('#master-mode.is-master', wait: 0) }
   end
 
   # -----------------------------------------------------------------------
@@ -60,8 +60,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
       within('#top-right-controls') do
         expect(page).to have_button('🔗 Show QR code')
-        expect(page).to have_css('#toggle-follow[aria-pressed="false"]', text: /👣\s+Browse freely/)
-        expect(page).to have_button('🚀 Lead slide navigation')
+        expect(page).to have_button('🚀 Live-Scrollen starten')
         expect(page).to have_button('🌞 Switch to bright mode')
       end
 
@@ -288,31 +287,31 @@ RSpec.describe 'index.html', :js, type: :feature do
   # Multiplex
   # -----------------------------------------------------------------------
   describe 'multiplex' do
-    describe 'master modal' do
+    describe 'start dialog' do
       before { load_presentation }
 
-      it 'dismisses on outside click, cancel clears input, wrong password shakes, correct password activates master' do
+      it 'the password gates the choice dialog, which opens no session by itself' do
         expect(page).not_to have_visible('#master-modal')
-        expect(page).to have_css('#master-mode[aria-pressed="false"]', text: /🚀\s+Lead slide navigation/)
+        expect(page).to have_css('#master-mode[aria-pressed="false"]', text: /🚀\s+Live-Scrollen starten/)
 
-        click_button('🚀 Lead slide navigation')
+        click_button('🚀 Live-Scrollen starten')
         expect(page).to have_visible('#master-modal')
         expect(active_element_id).to eq('master-pw')
         backdrop_click('master-modal')
         expect(page).not_to have_visible('#master-modal')
 
-        click_button('🚀 Lead slide navigation')
+        click_button('🚀 Live-Scrollen starten')
         within('#master-modal') do
           find('#master-pw').set('something')
-          click_button('Cancel')
+          click_button('Abbrechen')
         end
         expect(page).not_to have_visible('#master-modal')
         expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
 
-        click_button('🚀 Lead slide navigation')
+        click_button('🚀 Live-Scrollen starten')
         within('#master-modal') do
           find('#master-pw').set('wrongpassword')
-          click_button('OK')
+          click_button('Weiter')
           expect(page).to have_css('#master-pw.shake')
           expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
         end
@@ -320,142 +319,158 @@ RSpec.describe 'index.html', :js, type: :feature do
 
         within('#master-modal') do
           find('#master-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
-          click_button('OK')
+          click_button('Weiter')
         end
         expect(page).not_to have_visible('#master-modal')
-        expect(page).to have_css('#master-mode.is-master')
-        expect(page).to have_css('#master-mode[aria-pressed="true"]', text: /🚀\s+Lead slide navigation/)
+        # The choice dialog opens; no session is live yet.
+        expect(page).to have_visible('#scroll-choice-modal')
+        expect(page).to have_no_css('#master-mode.session-active')
 
-        # 🚀 again ends the role, for the next page load too
-        click_button('🚀 Lead slide navigation')
-        expect(page).to have_no_css('#master-mode.is-master')
-        expect(page.evaluate_script("sessionStorage.getItem('multiplex-master')")).to be_nil
+        within('#scroll-choice-modal') { click_button('Abbrechen') }
+        expect(page).not_to have_visible('#scroll-choice-modal')
+        expect(page).to have_no_css('#master-mode.session-active')
+
+        # Already authenticated: 🚀 goes straight to the choice, no password.
+        click_button('🚀 Live-Scrollen starten')
+        expect(page).to have_visible('#scroll-choice-modal')
+        expect(page).not_to have_visible('#master-modal')
+        within('#scroll-choice-modal') { click_button('Abbrechen') }
       end
     end
 
     describe 'live sync' do
       after { Capybara.reset_sessions! }
 
-      it 'follows the master, catches up late, pages freely until 👣, and lets the last takeover lead, through reloads too' do
+      it 'self-scroll: the room is snapped and locked, vertical moves propagate, the song is a wall, ending frees everyone' do
         using_session(:client) do
           load_presentation
           expect(page).to have_css('#title-slide.present')
         end
 
-        using_session(:master) do
+        using_session(:presenter) do
           load_presentation
-          become_master
-          expect(page).to have_no_button('👣 Browse freely')
-          find('body').send_keys(:right)
-          expect(page).to have_css('#TOC.present')
+          page.evaluate_script("Reveal.slide(3, 0)") # the first song
+          wait_for_js("Reveal.getIndices().h === 3")
+          start_scroll_session(mode: :self)
+          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/)
+          expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
         end
 
+        # The client is snapped onto the presenter's song and cannot move on its own
         using_session(:client) do
-          expect(page).to have_css('#TOC.present')
+          wait_for_js("Reveal.getIndices().h === 3")
           expect(page).to have_css('#multiplex-status', text: 'Folgt')
-        end
-        using_session(:master) { expect(page).to have_css('#multiplex-status', text: 'Du präsentierst') }
-
-        # Opened after the master's last slide change: only the repeat brings it there
-        using_session(:late) do
-          load_presentation
-          expect(page).to have_css('#TOC.present')
+          before = slide_indices
+          press(:right)
+          press(:space)
+          sleep 0.3
+          expect(slide_indices).to eq(before)
         end
 
-        # Paging on its own frees the client, and a reload keeps it free
+        # The presenter scrolls down within the song; the client follows
+        using_session(:presenter) do
+          find('body').send_keys(:down)
+          wait_for_js("Reveal.getIndices().v === 1")
+        end
         using_session(:client) do
+          wait_for_js("Reveal.getIndices().v === 1")
+          expect(slide_indices).to eq([3, 1])
+        end
+
+        # The song is a wall — right does not leave it, even for the presenter
+        using_session(:presenter) do
           find('body').send_keys(:right)
-          expect(page).to have_css('#introduction.present')
-          expect(page).to have_css('#toggle-follow[aria-pressed="true"]')
-          expect(page).to have_css('#multiplex-status', text: 'Frei')
-        end
-
-        using_session(:master) do
-          find('body').send_keys(:right, :right)
-          wait_for_js("Reveal.getIndices().h === 3")
-        end
-
-        using_session(:client) do
-          page.refresh # a real reload: visiting the same URL with its #/… would only jump within the page
-          wait_for_reveal
-          expect(page).to have_css('#toggle-follow[aria-pressed="true"]')
-          sleep 0.6 # three repeats of the master's state, none of which may move it
-          expect(page.evaluate_script("Reveal.getIndices().h")).not_to eq(3)
-
-          click_button('👣 Browse freely')
-          expect(page).to have_css('#toggle-follow[aria-pressed="false"]')
-          wait_for_js("Reveal.getIndices().h === 3")
+          sleep 0.3
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
         end
 
-        # The overview and a pause stay on the presenter's screen: clients keep
-        # the slide the overview was opened on until another one is chosen
-        using_session(:master) do
-          page.evaluate_script("Reveal.toggleOverview(true)")
-          page.evaluate_script("Reveal.right()")
+        # Ending frees everyone and shows the notice
+        using_session(:presenter) do
+          click_button('🚀 Live-Scrollen beenden')
+          expect(page).to have_no_css('#master-mode.session-active')
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
+        end
+        using_session(:client) do
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
+          find('body').send_keys(:right) # free to browse again
+          wait_for_js("Reveal.getIndices().h === 4")
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
         end
-        using_session(:client) do
-          sleep 0.6 # three repeats
-          expect(page.evaluate_script("[Reveal.getIndices().h, Reveal.isOverview()]")).to eq([3, false])
+      end
+
+      it 'guest-scroll: the first volunteer leads the room, is walled into the song, and is thanked when it ends' do
+        [:guest_a, :guest_b].each do |s|
+          using_session(s) { load_presentation; expect(page).to have_css('#title-slide.present') }
         end
-        using_session(:master) do
-          page.evaluate_script("Reveal.toggleOverview(false)")
-          page.evaluate_script("Reveal.togglePause(true)")
-        end
-        using_session(:client) do
+
+        using_session(:presenter) do
+          load_presentation
+          page.evaluate_script("Reveal.slide(4, 0)") # Across the universe
           wait_for_js("Reveal.getIndices().h === 4")
-          sleep 0.6 # three repeats of the paused master
-          expect(page.evaluate_script("[Reveal.getIndices().h, Reveal.isPaused()]")).to eq([4, false])
+          start_scroll_session(mode: :guest)
+          expect(page).to have_css('#multiplex-status', text: 'Warte auf Gast …')
         end
-        using_session(:master) { page.evaluate_script("Reveal.togglePause(false)") }
 
-        # The late client takes over: the master steps down and follows along with everyone else
-        using_session(:late) do
-          become_master
-          page.evaluate_script("Reveal.slide(5)")
+        [:guest_a, :guest_b].each do |s|
+          using_session(s) { expect(page).to have_visible('#guest-invite-modal') }
         end
-        using_session(:master) do
-          expect(page).to have_no_css('#master-mode.is-master')
-          expect(page.evaluate_script("sessionStorage.getItem('multiplex-master')")).to be_nil
+
+        using_session(:guest_a) do
+          within('#guest-invite-modal') { click_button('Ja, ich scrolle') }
+          wait_for_js("Reveal.getIndices().h === 4")
+          expect(page).to have_css('#multiplex-status', text: 'Du scrollst für alle')
+        end
+
+        using_session(:guest_b) do
+          expect(page).not_to have_visible('#guest-invite-modal')
+          wait_for_js("Reveal.getIndices().h === 4")
+          expect(page).to have_css('#multiplex-status', text: 'Folgt')
+        end
+        using_session(:presenter) { expect(page).to have_css('#multiplex-status', text: 'Gast scrollt') }
+
+        # The guest scrolls down; the whole room — the presenter included — follows
+        using_session(:guest_a) do
+          find('body').send_keys(:down)
+          wait_for_js("Reveal.getIndices().v === 1")
+        end
+        using_session(:guest_b) { wait_for_js("Reveal.getIndices().v === 1"); expect(slide_indices).to eq([4, 1]) }
+        using_session(:presenter) { wait_for_js("Reveal.getIndices().v === 1"); expect(slide_indices).to eq([4, 1]) }
+
+        # The guest is walled into the song too
+        using_session(:guest_a) do
+          find('body').send_keys(:right)
+          sleep 0.3
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
+        end
+
+        # Ending thanks the guest and frees the room
+        using_session(:presenter) { click_button('🚀 Live-Scrollen beenden') }
+        using_session(:guest_a) do
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Vielen Dank fürs Scrollen!')
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
+        end
+        using_session(:guest_b) do
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
+          expect(page).to have_no_css('#multiplex-toast', text: 'Vielen Dank fürs Scrollen!')
+        end
+      end
+
+      it 'a device that joins mid-session follows straight away, without an invite' do
+        using_session(:presenter) do
+          load_presentation
+          page.evaluate_script("Reveal.slide(5, 0)") # I Have a Dream
           wait_for_js("Reveal.getIndices().h === 5")
-          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(5)
-        end
-        using_session(:client) do
-          wait_for_js("Reveal.getIndices().h === 5")
-          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(5)
+          start_scroll_session(mode: :self)
+          find('body').send_keys(:down)
+          wait_for_js("Reveal.getIndices().v === 1")
         end
 
-        # Reloaded, the new master leads again without the password, and the
-        # client accepts it under its new sender id
-        using_session(:late) do
-          page.refresh
-          wait_for_reveal
-          expect(page).to have_css('#master-mode.is-master')
-          page.evaluate_script("Reveal.slide(6)")
-        end
-        using_session(:client) do
-          wait_for_js("Reveal.getIndices().h === 6", timeout: 5) # a reloaded master repeats every 2 s
-          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(6)
-        end
-
-        # A duplicated tab inherits role and claim: of the two, exactly one stays master
-        claim = using_session(:late) { page.evaluate_script("sessionStorage.getItem('multiplex-master')") }
-        using_session(:master) do
-          page.execute_script("sessionStorage.setItem('multiplex-master', '#{claim}')")
-          page.refresh
-          wait_for_js("document.readyState === 'complete'", timeout: 5) # the load handler has restored the role
-        end
-        masters = -> { [master?(:master), master?(:late)].count(true) }
-        deadline = Time.now + 5
-        sleep 0.1 until masters.call == 1 || Time.now > deadline
-        expect(masters.call).to eq(1)
-
-        # The last master stops: the client says nobody is presenting
-        [:master, :late].each { |s| using_session(s) { click_button('🚀 Lead slide navigation') if master?(s) } }
-        using_session(:client) do
-          page.execute_script("window.MULTIPLEX.heartbeat = 200") # three repeats missed: 0.6 s
-          expect(page).to have_css('#multiplex-status', text: 'Niemand präsentiert')
+        using_session(:latecomer) do
+          load_presentation
+          wait_for_js("Reveal.getIndices().h === 5 && Reveal.getIndices().v === 1", timeout: 5)
+          expect(slide_indices).to eq([5, 1])
+          expect(page).not_to have_visible('#guest-invite-modal')
+          expect(page).to have_css('#multiplex-status', text: 'Folgt')
         end
       end
     end

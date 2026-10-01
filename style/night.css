@@ -54,8 +54,7 @@ body.theme-bright .ctrl > .visually-hidden {
   color: #333;
 }
 
-body.chords-hidden #toggle-chords-visibility::after,
-body.multiplex-free #toggle-follow::after {
+body.chords-hidden #toggle-chords-visibility::after {
   font-size: 3em;
   content: '❌';
   position: absolute;
@@ -147,12 +146,38 @@ section#TOC::-webkit-scrollbar-thumb {
   color: #bb0000;
 }
 
-#master-mode.is-master::after {
+#master-mode.session-active::after {
   font-size: 3em;
   content: '❌';
   position: absolute;
   right: 0;
   bottom: 0;
+}
+
+/* The end-of-session notice: a brief toast under the top-right buttons. */
+#multiplex-toast {
+  position: fixed;
+  top: 4.5rem;
+  right: 1em;
+  z-index: 100;
+  margin: 0;
+  max-width: 18em;
+  padding: 0.6em 0.9em;
+  border-radius: 0.4em;
+  background: #1c1c1c;
+  border: 1px solid #888;
+  color: var(--r-main-color);
+  font-family: sans-serif;
+  font-size: 1rem;
+  text-align: right;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+#multiplex-toast.visible {
+  opacity: 0.95;
+  visibility: visible;
 }
 
 /* showModal() puts the dialog in the top layer, centred; .modal-box is its face */
@@ -245,6 +270,11 @@ dialog.overlay-modal::backdrop {
   justify-content: center;
 }
 
+/* The scroll-choice dialog stacks its options, one per line. */
+.modal-buttons-stacked {
+  flex-direction: column;
+}
+
 .modal-box button {
   padding: 0.4em 1.2em;
   font-size: 1em;
@@ -326,4 +356,9 @@ body.theme-bright .modal-box button:hover {
 
 body.theme-bright .chord-tooltip-inner {
   background-color: #ffe29a;
+}
+
+body.theme-bright #multiplex-toast {
+  background: #f4f4f4;
+  border-color: #ccc;
 }
