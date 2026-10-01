@@ -240,6 +240,13 @@ window.addEventListener('load', function() {
       Reveal.configure({ keyboard: SCROLLER_KEYS, touch: true, controls: false });
       broadcastState();
     } else { // follower: no navigation at all, snapped to the scroller
+      // Entering follow restarts the silence grace period. The presenter becomes
+      // a follower too when it hands the song to a guest, and it never hears its
+      // own session heartbeats — so without this its lastSessionAt would still be
+      // 0 and the checker below would free it before the guest's first state
+      // arrived. Localhost won that race; the live relay's latency lost it, and
+      // the presenter dropped out of the session it had just opened.
+      lastSessionAt = Date.now();
       Reveal.configure({ keyboard: false, touch: false, controls: false });
       if (lastState) follow(lastState);
     }

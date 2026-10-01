@@ -37,6 +37,33 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
   end
 
+  # A second socket (forceNew, so the relay sees it as another client) that learns
+  # the live session id from the presenter's own heartbeat and then, on demand,
+  # volunteers under an id no real tab owns. The named scroller therefore never
+  # sends any state — exactly the live moment just after a guest takes over, its
+  # first state still crossing the network. Real localhost tabs can't reproduce
+  # it: their state arrives in milliseconds, before the release checker's next tick.
+  def install_phantom_guest
+    page.execute_script(<<~JS)
+      window._phantom = { connected: false, sessionId: null };
+      var cfg = window.MULTIPLEX;
+      var spy = io(cfg.url, { forceNew: true });
+      spy.on('connect', function() { window._phantom.connected = true; });
+      spy.on(cfg.socketId, function(data) {
+        if (data && data.type === 'session' && data.session && data.session.active &&
+            data.session.mode === 'guest' && !data.session.scrollerId) {
+          window._phantom.sessionId = data.session.id;
+        }
+      });
+      window._phantomVolunteer = function() {
+        spy.emit('multiplex-statechanged', {
+          type: 'volunteer', sessionId: window._phantom.sessionId, from: 'phantom-guest',
+          secret: cfg.secret, socketId: cfg.socketId
+        });
+      };
+    JS
+  end
+
   def tooltip_shown?(id)
     page.evaluate_script("getComputedStyle(document.querySelector('##{id} > .visually-hidden')).clipPath") == 'none'
   end
@@ -452,6 +479,29 @@ RSpec.describe 'index.html', :js, type: :feature do
         using_session(:guest_b) do
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
           expect(page).to have_no_css('#multiplex-toast', text: 'Vielen Dank fürs Scrollen!')
+        end
+      end
+
+      it 'the presenter stays in the session after handing off, before the guest has sent any state' do
+        using_session(:presenter) do
+          load_presentation
+          page.evaluate_script("Reveal.slide(4, 0)") # Across the universe
+          wait_for_js("Reveal.getIndices().h === 4")
+          install_phantom_guest
+          wait_for_js("window._phantom && window._phantom.connected")
+
+          start_scroll_session(mode: :guest, heartbeat: 3000)
+          expect(page).to have_css('#multiplex-status', text: 'Warte auf Gast …')
+
+          # The guest takes over but sends no state yet. The presenter becomes a
+          # follower and must stay in the session — it used to free itself at the
+          # next release tick, because at hand-off its own lastSessionAt was still 0.
+          wait_for_js("window._phantom.sessionId !== null")
+          page.execute_script("window._phantomVolunteer()")
+          expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
+          sleep 0.8 # well past the 500ms release-checker tick
+          expect(page).to have_css('#master-mode.session-active')
+          expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
         end
       end
 
