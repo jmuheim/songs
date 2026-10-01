@@ -3482,7 +3482,7 @@ Wastin' `G`{.g} time `E`{.e}
 I `G`{.g} left my home in `B7`{.b} Georgia
 `C`{.c} Headed for the 'Frisco Bay `A`{.a}
 `G`{.g} 'Cause I've had nothing to `B7`{.b} live for
-And look like `C`{.c} nothin's gonna come my way `A`{.a}
+And look like `C`{.c} nothin's gonna come my `A`{.a} way
 
 ## Chorus
 
@@ -3493,11 +3493,17 @@ Wastin' `G`{.g} time `E`{.e}
 
 ## Bridge
 
-
 `G`{.g} Looks like `D`{.d} nothing's `C`{.c} gonna change `G`{.g}
 `G`{.g} Everything `D`{.d} still remains `C`{.c} the same `G`{.g}
 `G`{.g} I can't `D`{.d} do what `C`{.c} ten people `G`{.g} tell me to do
 So I `F`{.f} guess I'll remain the `D`{.d} same, yes
+
+## Verse 3
+
+`G`{.g} Sittin' here restin' my `B7`{.b} bones
+And this `C`{.c} loneliness won't leave me `A`{.a} alone
+This two `G`{.g} thousand miles I `B7`{.b} roamed
+Just to `C`{.c} make this dock my `A`{.a} home
 
 ## Chorus
 
