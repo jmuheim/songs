@@ -33,12 +33,18 @@ namespace :golden do
     imagine_title = doc.at_css('section#imagine-john-lennon')
     raise 'section#imagine-john-lennon not found' unless imagine_title
 
+    across_title = doc.at_css('section#across-the-universe-beatles')
+    raise 'section#across-the-universe-beatles not found' unless across_title
+
     sections = {
       'title_slide.html'   => doc.at_css('section#title-slide'),
       'toc.html'           => doc.at_css('section#TOC'),
       'master_modal.html'  => doc.at_css('dialog#master-modal'),
       'imagine_verse1.html' => imagine_title
                                 .xpath('following-sibling::section[.//h2[normalize-space()="Verse 1"]][1]')
+                                .first,
+      'about_merged.html'  => across_title
+                                .xpath('following-sibling::section[.//h2[normalize-space()="About"]][1]')
                                 .first
     }
 

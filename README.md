@@ -66,7 +66,7 @@ To tag a song, add an `## About` section at the top with one tag per list item:
 ...
 ```
 
-The tags show on a short „About" slide after the song title and drive the filter chips on the table of contents — pick several to see songs matching **any** of them, „Alle" to clear. Tagging is optional: an untagged song just shows under „Alle". Tags are free text, so pick a vocabulary and keep it consistent (e.g. `Deutsch`, `Englisch`, `Mundart`, `Pop`, `Rock`, `Mantra`).
+The tags show on the song's „About" slide (merged with its Resources links and, if present, an Instructions section — see `CLAUDE.md`) and drive the Sprache/Genre filter dropdowns on the table of contents — pick a language and/or a genre to narrow the list (the two combine), „Reset" to clear both. Tagging is optional: an untagged song just shows when no filter is active. Tags are free text, so pick a vocabulary and keep it consistent (e.g. `Deutsch`, `Englisch`, `Mundart`, `Pop`, `Rock`, `Mantra`).
 
 ## Live sync (multiplex)
 

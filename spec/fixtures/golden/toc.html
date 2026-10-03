@@ -1,17 +1,28 @@
 <section id="TOC"><div class="slide-content">
-<div id="toc-filter" role="group" aria-label="Nach Tag filtern">
-<button type="button" class="toc-tag toc-tag-all" aria-pressed="true">Alle</button><button type="button" class="toc-tag" data-tag="Englisch" aria-pressed="false">Englisch</button><button type="button" class="toc-tag" data-tag="Pop" aria-pressed="false">Pop</button><button type="button" class="toc-tag" data-tag="Rock" aria-pressed="false">Rock</button>
+<fieldset id="toc-filter">
+<legend>Filter</legend>
+<div class="toc-filter-field">
+<label for="toc-filter-sprache">Sprache</label><select id="toc-filter-sprache"><option value="">Alle</option>
+<option value="Deutsch">Deutsch</option>
+<option value="Englisch">Englisch</option></select>
 </div>
+<div class="toc-filter-field">
+<label for="toc-filter-genre">Genre</label><select id="toc-filter-genre"><option value="">Alle</option>
+<option value="Pop">Pop</option>
+<option value="Rock">Rock</option></select>
+</div>
+<button type="button" id="toc-filter-reset">Reset</button>
+</fieldset>
 <nav role="doc-toc"> 
 <ul>
 <li><a href="#/introduction" id="/toc-introduction">Introduction</a></li>
-<li data-tags="Englisch,Rock"><a href="#/the-connells" id="/toc-the-connells">74-75 (The
+<li data-sprache="Deutsch" data-genre="Rock"><a href="#/the-connells" id="/toc-the-connells">74-75 (The
 Connells)</a></li>
-<li data-tags="Englisch,Pop"><a href="#/across-the-universe-beatles" id="/toc-across-the-universe-beatles">Across the universe
+<li data-sprache="Englisch" data-genre="Pop"><a href="#/across-the-universe-beatles" id="/toc-across-the-universe-beatles">Across the universe
 (Beatles)</a></li>
-<li data-tags="Englisch,Pop"><a href="#/i-have-a-dream-abba" id="/toc-i-have-a-dream-abba">I Have
+<li data-sprache="Englisch" data-genre="Pop"><a href="#/i-have-a-dream-abba" id="/toc-i-have-a-dream-abba">I Have
 a Dream (ABBA)</a></li>
-<li data-tags="Englisch,Pop"><a href="#/imagine-john-lennon" id="/toc-imagine-john-lennon">Imagine (John Lennon)</a></li>
+<li data-sprache="Englisch" data-genre="Pop"><a href="#/imagine-john-lennon" id="/toc-imagine-john-lennon">Imagine (John Lennon)</a></li>
 </ul>
 </nav>
 </div></section>
