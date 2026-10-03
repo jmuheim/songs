@@ -41,6 +41,52 @@
     'Gm':     '3 5 5 3 3 3'
   };
 
+  // Ukulele fingerings (G C E A, standard re-entrant soprano tuning) for the
+  // same chord names as DEFAULT_CHORDS above. Songs only ever document their
+  // own voicings for guitar (see parseSongChords), so this dictionary is the
+  // sole ukulele source — there is no per-song override to prefer.
+  // Source: https://ukulele-chords.com (cross-checked against the raw page,
+  // not an AI summary of it).
+  var UKULELE_CHORDS = {
+    'A':      '2 1 0 0',
+    'A7':     '0 1 0 0',
+    'Am':     '2 0 0 0',
+    'Am7':    '0 0 0 0',
+    'B':      '4 3 2 2',
+    'B7':     '2 3 2 2',
+    'Bb':     '3 2 1 1',
+    'Bdim':   '4 2 1 2',
+    'Bm':     '4 2 2 2',
+    'C':      '0 0 0 3',
+    'C7':     '0 0 0 1',
+    'D':      '2 2 2 0',
+    'D+':     '3 2 2 1',
+    'D7':     '2 2 2 3',
+    'D7sus4': '2 2 3 3',
+    'Dm':     '2 2 1 0',
+    'Dm6':    '2 2 1 2',
+    'Dm7':    '2 2 1 3',
+    'Dsus2':  '2 2 0 0',
+    'E':      '1 4 0 2',
+    'E7':     '1 2 0 2',
+    'Eb':     '3 3 3 1',
+    'Em':     '0 4 3 2',
+    'Em7':    '0 2 0 2',
+    'Esus4':  '4 4 0 0',
+    'F':      '2 0 1 0',
+    'F#':     '3 1 2 1',
+    'F#m':    '2 1 2 0',
+    'FM7':    '2 4 1 3',
+    'Fadd9':  '0 0 1 0',
+    'G':      '0 2 3 2',
+    'G#m':    '4 3 4 2',
+    'G5':     'x 2 3 5',
+    'G6':     '0 2 0 2',
+    'G7':     '0 2 1 2',
+    'G7sus4': '0 2 1 3',
+    'Gm':     '0 2 3 1'
+  };
+
   var SPECIAL_TEXT = {
     'X': 'Stop playing / percussive hit — no chord'
   };
@@ -80,9 +126,10 @@
   function lookupChord(chordName, songSection) {
     if (SPECIAL_TEXT[chordName]) return { text: SPECIAL_TEXT[chordName] };
     var songChord = parseSongChords(songSection)[chordName];
-    if (songChord) return songChord;
-    if (DEFAULT_CHORDS[chordName]) return { tab: DEFAULT_CHORDS[chordName] };
-    return null;
+    var result = songChord || (DEFAULT_CHORDS[chordName] ? { tab: DEFAULT_CHORDS[chordName] } : null);
+    if (!result) return null;
+    if (UKULELE_CHORDS[chordName]) result.ukulele = UKULELE_CHORDS[chordName];
+    return result;
   }
 
   function el(tag, className, text) {
@@ -92,9 +139,39 @@
     return node;
   }
 
-  // Renders the same "|E A D G B e|" tab look already used in songs' own
-  // Instructions legends, so the tooltip reads as the same notation, not a
-  // separate UI widget.
+  // Spaces, not a literal count: Array(n + 1).join(' ') is the idiom this
+  // file already uses to get n spaces without a trailing one.
+  function spaces(n) { return new Array(n + 1).join(' '); }
+
+  function padEnd(str, len) {
+    return str.length < len ? str + spaces(len - str.length) : str;
+  }
+
+  // The guitar block carries the chord name, so its own rows (including the
+  // "Guitar:" label) are indented by that name's width — the same pad the
+  // chord row needs anyway to line its "Name |" up under the header's
+  // opening pipe.
+  function guitarBlock(chordName, tab) {
+    var pad = spaces(chordName.length + 1);
+    return [
+      pad + 'Guitar:',
+      pad + '|E A D G B e|',
+      pad + '|-----------|',
+      chordName + ' |' + tab + '|'
+    ];
+  }
+
+  // The ukulele block never repeats the chord name — that'd be redundant
+  // next to the guitar column that already carries it — so its four rows
+  // are already each other's width and need no pad of their own.
+  function ukuleleBlock(tab) {
+    return ['Ukulele:', '|G C E A|', '|-------|', '|' + tab + '|'];
+  }
+
+  // Columns sit this many spaces apart — enough to read as two separate
+  // blocks, not so wide the tooltip outgrows a landscape phone.
+  var COLUMN_GAP = 2;
+
   function buildTooltipContent(chordName, result) {
     var pre = el('pre');
     var code = el('code');
@@ -105,12 +182,18 @@
     } else if (result.text) {
       code.textContent = chordName + ': ' + result.text;
     } else {
-      var pad = new Array(chordName.length + 2).join(' ');
-      var lines = [
-        pad + '|E A D G B e|',
-        pad + '|-----------|',
-        chordName + ' |' + result.tab + '|'
-      ];
+      var guitarLines = guitarBlock(chordName, result.tab);
+      var lines;
+      if (result.ukulele) {
+        var ukuleleLines = ukuleleBlock(result.ukulele);
+        var colWidth = Math.max.apply(null, guitarLines.map(function (l) { return l.length; })) + COLUMN_GAP;
+        lines = guitarLines.map(function (l, i) { return padEnd(l, colWidth) + ukuleleLines[i]; });
+      } else {
+        lines = guitarLines;
+      }
+      // The note comes from a song's own Instructions legend (see
+      // parseSongChords) and describes that guitar voicing specifically, so
+      // it runs full-width below both columns rather than inside either.
       if (result.note) lines.push('', result.note);
       code.textContent = lines.join('\n');
     }

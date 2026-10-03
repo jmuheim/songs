@@ -2,17 +2,24 @@ require 'capybara/rspec'
 
 # Exercises style/chords.js: clicking an inline chord badge opens a tooltip
 # showing how to grip it, in the same "|E A D G B e|" tab notation used in the
-# songs' own Instructions legends.
+# songs' own Instructions legends, with a "|G C E A|" ukulele column from the
+# built-in UKULELE_CHORDS dictionary beside it (side by side, not stacked —
+# there's more horizontal than vertical room in a landscape slide).
 #
 # Fixture leverage: "Across the universe" ships an Instructions legend with
 #   F#m    |2=4=4=2=2=2|   (barre notation, "=")
 #   (barré)|2 4 4 2 2 2|   (a "(…)" continuation line: names F#m(barré))
 # while the built-in fallback dictionary has plain "2 4 4 2 2 2" for F#m — so a
 # single F#m click proves the song's own voicing wins over the generic default,
-# and a D click (absent from the legend) proves the fallback path. Its Intro is
-# a chord-only progression — [F#m(barré)] [X] [Baug] [A7sus4] — that reaches the
-# three branches the verse can't: the "(…)" continuation name, the [X] special
-# text, and the "no fingering on file" message for a chord in neither source.
+# and a D click (absent from the legend) proves the fallback path. Since songs
+# only ever document guitar voicings, F#m's ukulele column comes from the
+# dictionary even though its guitar tab came from the legend — proving the two
+# lookups are independent. Its Intro is a chord-only progression —
+# [F#m(barré)] [X] [Baug] [A7sus4] — that reaches the three branches the verse
+# can't: the "(…)" continuation name (which has no ukulele entry under that
+# composed name, so no ukulele column shows, and the layout falls back to a
+# single guitar-only column), the [X] special text, and the "no fingering on
+# file" message for a chord in neither source.
 RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
   before(:all) do
     FixtureBuilder.build!
@@ -69,20 +76,35 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
 
     it "shows the fingering tab and prefers the song's own legend voicing over the fallback dictionary" do
       # Legend-documented chord: barre voicing straight from the Instructions block.
+      # Pinned in full, not just `include` — the point of this layout is that
+      # the two columns line up, and a loose substring check can't catch a
+      # misaligned pipe or a wrong gap between them.
       click_chord('code.f', 'F#m')
       expect(page).to have_visible('#chord-tooltip')
       expect(page).to have_css('code.f.chord-active', text: 'F#m')
-      tab = tooltip_tab
-      expect(tab).to include('|E A D G B e|')
-      expect(tab).to include('F#m |2=4=4=2=2=2|') # legend wins...
-      expect(tab).not_to include('2 4 4 2 2 2')   # ...over the plain fallback
+      # Guitar column: the legend's barre voicing ("2=4=4=2=2=2"), not the
+      # plain "2 4 4 2 2 2" fallback. Ukulele column (no chord name of its
+      # own — the guitar column already carries it): no per-song legend
+      # exists for ukulele, so it's always the dictionary's "2 1 2 0" — even
+      # here, where the guitar tab beside it came from the legend.
+      expect(tooltip_tab).to eq(
+        "    Guitar:        Ukulele:\n" \
+        "    |E A D G B e|  |G C E A|\n" \
+        "    |-----------|  |-------|\n" \
+        "F#m |2=4=4=2=2=2|  |2 1 2 0|"
+      )
 
-      # Chord absent from the legend: falls back to the built-in dictionary, and
-      # switching chords moves the active marker.
+      # Chord absent from the legend: falls back to the built-in dictionary
+      # for both columns, and switching chords moves the active marker.
       click_chord('code.d', 'D')
       expect(page).to have_css('code.d.chord-active', text: 'D')
       expect(page).to have_no_css('code.f.chord-active')
-      expect(tooltip_tab).to include('D |x x 0 2 3 2|')
+      expect(tooltip_tab).to eq(
+        "  Guitar:        Ukulele:\n" \
+        "  |E A D G B e|  |G C E A|\n" \
+        "  |-----------|  |-------|\n" \
+        "D |x x 0 2 3 2|  |2 2 2 0|"
+      )
 
       # From the keyboard a chord is a button: Tab reaches it, Enter opens it,
       # Space closes it again — and does not turn the page
@@ -156,11 +178,19 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
     it 'assembles a chord name from a "(…)" continuation line in the legend' do
       # F#m(barré) exists only because the legend's "(barré)" line inherits the
       # base name of the F#m line above it; both its voicing and its note show.
+      # That composed name has no entry of its own in the ukulele dictionary
+      # (only plain "F#m" does), so the layout falls back to a single
+      # guitar-only column instead of the usual two side by side.
       click_intro_chord('code.f', 'F#m(barré)')
       expect(page).to have_visible('#chord-tooltip')
-      tab = tooltip_tab
-      expect(tab).to include('F#m(barré) |2 4 4 2 2 2|')
-      expect(tab).to include('open-position shape')
+      expect(tooltip_tab).to eq(
+        "           Guitar:\n" \
+        "           |E A D G B e|\n" \
+        "           |-----------|\n" \
+        "F#m(barré) |2 4 4 2 2 2|\n" \
+        "\n" \
+        "open-position shape"
+      )
     end
   end
 end
