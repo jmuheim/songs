@@ -1,5 +1,10 @@
 # Family Portrait (P!nk)
 
+## About
+
+- Englisch
+- Pop
+
 _Capo 3rd fret_
 
 ## Intro

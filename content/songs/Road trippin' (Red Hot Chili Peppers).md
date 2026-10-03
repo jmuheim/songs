@@ -1,5 +1,10 @@
 # Road trippin' (Red Hot Chili Peppers)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 _(Instrumental)_

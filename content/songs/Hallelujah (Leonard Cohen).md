@@ -1,5 +1,10 @@
 # ❤️ Hallelujah (Leonard Cohen)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [C] [G]

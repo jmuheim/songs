@@ -1,5 +1,10 @@
 # Don't worry be happy (Bobby McFerrin)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 _(Instrumental)_

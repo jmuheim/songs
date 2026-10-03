@@ -1,5 +1,10 @@
 # Zombie (The Cranberries)
 
+## About
+
+- Englisch
+- Rock
+
 ## Intro
 
 [Em] [C] [G] [D] _(x2)_

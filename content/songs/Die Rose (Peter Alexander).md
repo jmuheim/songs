@@ -1,5 +1,10 @@
 # Die Rose (Peter Alexander)
 
+## About
+
+- Deutsch
+- Pop
+
 ## Verse 1
 
 Liebe [C] ist, wie wildes [G] Wasser,

@@ -1,5 +1,9 @@
 # Hemmige (Mani Matter)
 
+## About
+
+- Mundart
+
 ## Verse 1
 
 S'git [Am] Lüt, die würden alletwäge [Dm] nie

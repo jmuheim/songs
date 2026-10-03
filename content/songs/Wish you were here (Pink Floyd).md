@@ -1,5 +1,10 @@
 # ❤️ Wish you were here (Pink Floyd)
 
+## About
+
+- Englisch
+- Rock
+
 ## Intro
 
 _(Instrumental)_

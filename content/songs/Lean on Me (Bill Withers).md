@@ -1,5 +1,10 @@
 # Lean on Me (Bill Withers)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [C] [F] [F] [C] [C] [Em] [Em] [G9]

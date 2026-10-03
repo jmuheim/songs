@@ -33,8 +33,10 @@ module FixtureBuilder
       multiplex = { url: MultiplexServer.url, socketId: MultiplexServer::SOCKET_ID,
                     secret: MultiplexServer::SECRET, password: 'guitar' }
 
+      tags = song_files.map { |file| song_tags(File.read(file, encoding: 'UTF-8')) }
+
       FileUtils.mkdir_p(FIXTURE_DIR)
-      File.write(OUTPUT, post_process_index(File.read(index_path, encoding: 'UTF-8'), assets: '/style/', multiplex: multiplex), encoding: 'UTF-8')
+      File.write(OUTPUT, post_process_index(File.read(index_path, encoding: 'UTF-8'), assets: '/style/', multiplex: multiplex, tags: tags), encoding: 'UTF-8')
       File.write(PRINT_OUTPUT, post_process_print(File.read(print_path, encoding: 'UTF-8'), assets: '/style/'), encoding: 'UTF-8')
     end
 

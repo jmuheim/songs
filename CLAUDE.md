@@ -50,6 +50,11 @@ Each song lives in `content/songs/<Title> (<Artist>).md`. Structure:
 ```markdown
 # ❤️ Song Title (Artist Name)
 
+## About
+
+- Englisch
+- Mantra
+
 ## Section Name
 
 Lyrics with [Chord] inline like this [Am] and here [G7].
@@ -62,7 +67,8 @@ Lyrics with [Chord] inline like this [Am] and here [G7].
 - **H1** = song title (one per file, shown as the slide title)
 - **H2** = section (each becomes a sub-slide)
 - **Chords** use `[ChordName]` inline in lyrics
-- A `## Resources` section is automatically stripped from `print.html` (links are useless in print)
+- An **`## About`** section at the top holds the song's tags, one per list item (free text — keep the vocabulary consistent, e.g. `Deutsch` / `Englisch` / `Mundart` / `Pop` / `Rock` / `Mantra`). It drives the [table-of-contents tag filter](#table-of-contents-tag-filter); tagging is optional. `song_tags` in `lib/build_helpers.rb` parses it (list items only, so prose in About is ignored).
+- A `## Resources` section is automatically stripped from `print.html` (links are useless in print); the `## About` section is stripped from print too (tags are a screen feature)
 - `content/Introduction.md` is always prepended as the first slide
 
 ## Chord rendering pipeline
@@ -82,6 +88,17 @@ The regex only matches `[Word]` not followed by `(` — so standard Markdown lin
 ## Shared pipeline
 
 `build` and `spec/support/fixture_builder.rb` run the same code, in `lib/build_helpers.rb`: `songbook_markdown` (front matter with `lang: de-CH`, the introduction, the songs with their chords marked up), `pandoc!`, `post_process_index` and `post_process_print`. What differs is a parameter — `assets:` (`style/` beside `index.html`, `/style/` for the fixtures served from `spec/fixtures/`) and the multiplex config. Change the pipeline there, not in one of its callers.
+
+## Table of contents tag filter
+
+The TOC can be filtered by tag. Each song's tags live in its `## About` section (see [Song file format](#song-file-format)); the build carries them into the TOC and `style/toc-filter.js` wires the interaction:
+
+- `song_tags` parses the `## About` list items of each song. `build` and `fixture_builder` collect one tag array per song — in the same order the TOC lists them — and pass it to `post_process_index` as `tags:`.
+- `inject_toc_filter` (a Nokogiri pass, like `wrap_slide_content`) adds a `data-tags="Englisch,Pop"` attribute to each song's TOC `<li>` and prepends a chip bar (`#toc-filter`: one `<button class="toc-tag" data-tag="…">` per distinct tag, sorted, plus an „Alle" reset). The first `<li>` is the Introduction and is skipped — matching is **by order**, not by re-deriving Pandoc's slugs. With no tags anywhere, no bar is added.
+- `style/toc-filter.js` toggles a chip's `aria-pressed` on click and hides the `<li>`s matching no selected tag (`.toc-hidden`). Several tags combine with **OR**; „Alle" clears the selection; untagged entries (incl. the Introduction) hide while any filter is active. Chips are real buttons, so the `keyboardCondition` in `body-controls.html` already keeps Space from paging the deck. The selection is local to each client and is **not** synced over multiplex.
+- Styling: chip layout and `.toc-hidden` live in `shared.css`, colours and the sticky bar in `night.css` (with a bright-mode override).
+
+The golden `spec/fixtures/golden/toc.html` pins the generated markup; `spec/unit/song_tags_spec.rb` covers the parser, `spec/integration/golden_html_spec.rb` the injected attributes and the print stripping, and `spec/browser/toc_filter_spec.rb` the interaction.
 
 ## Output files
 

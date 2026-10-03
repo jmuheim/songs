@@ -1,5 +1,10 @@
 # The Sound of Silence (Simon & Garfunkel)
 
+## About
+
+- Englisch
+- Pop
+
 ## Verse 1
 
 [Am] Hello darkness, my old [G] friend,

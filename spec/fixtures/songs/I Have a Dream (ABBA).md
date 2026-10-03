@@ -1,5 +1,10 @@
 # I Have a Dream (ABBA)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [A] [E] [A]

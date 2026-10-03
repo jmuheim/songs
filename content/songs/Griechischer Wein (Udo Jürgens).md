@@ -1,5 +1,10 @@
 # Griechischer Wein (Udo Jürgens)
 
+## About
+
+- Deutsch
+- Pop
+
 ## Intro
 
 [Am] [Dm] [F] [G]

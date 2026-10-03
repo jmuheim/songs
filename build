@@ -66,7 +66,8 @@ end
 
 step("✨", "Post-processing index.html") do
   multiplex = { url: MULTIPLEX_URL, socketId: MULTIPLEX_TOKEN['socketId'], secret: MULTIPLEX_TOKEN['secret'], password: MASTER_PASSWORD }
-  File.write("index.html", post_process_index(File.read("index.html"), assets: "style/", multiplex: multiplex))
+  tags = song_files.map { |file| song_tags(File.read(file, encoding: 'UTF-8')) }
+  File.write("index.html", post_process_index(File.read("index.html"), assets: "style/", multiplex: multiplex, tags: tags))
 end
 
 step("🖨️", "Generating print.html (Pandoc)") do

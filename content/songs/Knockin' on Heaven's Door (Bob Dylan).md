@@ -1,5 +1,10 @@
 # Knockin' on Heaven's Door (Bob Dylan)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [G] [D] [Am]

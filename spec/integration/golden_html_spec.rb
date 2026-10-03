@@ -25,6 +25,27 @@ RSpec.describe 'HTML golden files' do
     expect(section.to_html + "\n").to eq(golden('toc.html'))
   end
 
+  it 'tags each TOC entry with the tags from its About section' do
+    imagine  = doc.at_css('#TOC a[href="#/imagine-john-lennon"]').parent
+    connells = doc.at_css('#TOC a[href="#/the-connells"]').parent
+    expect(imagine['data-tags']).to  eq('Englisch,Pop')
+    expect(connells['data-tags']).to eq('Englisch,Rock')
+    # The Introduction has no song behind it, so no tags.
+    expect(doc.at_css('#TOC a[href="#/introduction"]').parent['data-tags']).to be_nil
+  end
+
+  it 'builds a chip per distinct tag, sorted, with „Alle" first and pressed' do
+    chips = doc.css('#toc-filter .toc-tag').map { |b| b.text.strip }
+    expect(chips).to eq(['Alle', 'Englisch', 'Pop', 'Rock'])
+    expect(doc.at_css('#toc-filter .toc-tag-all')['aria-pressed']).to eq('true')
+    expect(doc.at_css('#toc-filter .toc-tag[data-tag="Pop"]')['aria-pressed']).to eq('false')
+  end
+
+  it 'strips the About sections from print.html (tags are a screen feature)' do
+    expect(print_doc.css('section[id^="about"]')).to be_empty
+    expect(print_doc.at_css('#toc-filter')).to be_nil
+  end
+
   it 'master modal HTML matches golden' do
     dialog = doc.at_css('dialog#master-modal')
     expect(dialog.to_html + "\n").to eq(golden('master_modal.html'))

@@ -1,5 +1,9 @@
 # Dr Wilhelm Täll (Mani Matter)
 
+## About
+
+- Mundart
+
 ## Verse 1
 
 Si [C] hei der Willhelm Täll ufgfüehrt

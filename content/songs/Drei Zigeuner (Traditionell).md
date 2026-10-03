@@ -1,5 +1,10 @@
 # Drei Zigeuner (Traditionell)
 
+## About
+
+- Deutsch
+- Traditionell
+
 ## Verse 1
 
 [C] Drei Zigeuner [G] fand ich ein[C]mal

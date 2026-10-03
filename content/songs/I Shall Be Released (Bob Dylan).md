@@ -1,5 +1,10 @@
 # I Shall Be Released (Bob Dylan)
 
+## About
+
+- Englisch
+- Pop
+
 ## Instructions
 
 _Capo 3rd_

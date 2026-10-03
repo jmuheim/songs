@@ -1,5 +1,10 @@
 # Sing (Travis)
 
+## About
+
+- Englisch
+- Pop
+
 ## Verse 1
 
 [Em] Baby, you've been going so [Am7] crazy

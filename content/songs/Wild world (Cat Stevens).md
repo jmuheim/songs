@@ -1,5 +1,10 @@
 # Wild world (Cat Stevens)
 
+## About
+
+- Englisch
+- Pop
+
 ## Instructions
 
 ```

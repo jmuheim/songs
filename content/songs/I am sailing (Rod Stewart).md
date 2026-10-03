@@ -1,5 +1,10 @@
 # I am sailing (Rod Stewart)
 
+## About
+
+- Englisch
+- Pop
+
 ## Instructions
 
 Capo on 3rd fret

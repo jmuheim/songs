@@ -1,5 +1,10 @@
 # Stets in Truure (Traditionell 🇨🇭)
 
+## About
+
+- Mundart
+- Traditionell
+
 ## Verse 1
 
 Stets i [D] Truu[A7]re mues i [D] läbe,

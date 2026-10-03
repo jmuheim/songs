@@ -1,5 +1,10 @@
 # Three Little Birds (Bob Marley)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [A]

@@ -1,5 +1,10 @@
 # Sittin' on the dock of the bay (Otis Redding)
 
+## About
+
+- Englisch
+- Pop
+
 ## Verse 1
 
 [G] Sittin' in the mornin' sun [B7]

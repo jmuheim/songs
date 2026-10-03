@@ -19,11 +19,27 @@ Also grab from the page: song title, artist, and any linked official video.
 
 `content/songs/<Title> (<Artist>).md`. Use the title/artist as commonly known (match the source's own capitalization — this repo doesn't enforce strict title-casing, e.g. both "Baby one more time" and "Can't Help Falling in Love" exist side by side). Check `content/songs/` and `content/legacy-songs/` first — if a file for this song already exists, confirm with the user before overwriting rather than silently replacing their work.
 
-## Step 3 — Convert sections
+## Step 3 — Add the `## About` tags
+
+Put an `## About` section **first** (before the song's own sections), one tag per list item — these drive the table-of-contents tag filter (see `CLAUDE.md`). The source tab won't list tags, so infer them and keep the repo's vocabulary consistent:
+
+- **Language** from the lyrics: `Deutsch`, `Englisch`, `Mundart` (Swiss German), …
+- **Genre/kind** from the artist/style where clear: `Pop`, `Rock`, `Mantra`, …
+
+```markdown
+## About
+
+- Englisch
+- Pop
+```
+
+Add what you're confident about (at least the language), and name the tags you chose in your final summary so the user can adjust. Don't invent a genre you're unsure of — a language-only About is fine.
+
+## Step 4 — Convert sections
 
 Each bracketed section label in the tab (`[Verse 1]`, `[Chorus]`, `[Bridge]`, `[Intro]`, etc.) becomes an `## H2` heading. **Keep the tab's own section names and language** — don't translate "Chorus" to "Refrain" or renumber things; just carry over what the source uses.
 
-## Step 4 — Convert chords: the core algorithm
+## Step 5 — Convert chords: the core algorithm
 
 This is the part that needs care. Read `references/chord-alignment.md` before doing this for the first time in a session — it has the full worked method with real examples, including how to handle contractions, compound words, dangling passing chords, and repeated lines that get denser harmonization on the second pass. Summary:
 
@@ -44,7 +60,7 @@ If a column position is genuinely ambiguous even after rounding, make the best c
 
 Before finishing, check: `awk -F'[][]' '{ n = (NF-1)/2; if (n >= 3) print length($0), n }' "content/songs/<file>.md" | sort -rn` and compare against the same command run over a couple of existing songs. If your lines run noticeably longer, split them — almost always at a spot the source tab already marks for you: a comma, or the wide gap the original ASCII tab left for a breath/rest. Move a trailing dangling passing-chord pair (like the `[F] [C]` turnaround at a phrase's end) onto the next line rather than tacking it onto the end of an already-long line — this is the same "standalone bracket token" convention from point 4, just given its own line when the line is otherwise full. Lines split this way are still the same stanza (no lyrical break, just a wrap for width), so don't insert a blank line between them — a blank line means an actual new stanza/repeat elsewhere in this format.
 
-## Step 5 — Resources section
+## Step 6 — Resources section
 
 ```markdown
 ## Resources
@@ -58,6 +74,6 @@ Only ever link a URL you actually found (on the tab page, via a real web search 
 
 Note: `## Resources` is automatically stripped from `print.html` at build time — nothing to do here for that.
 
-## Step 6 — Write and offer to build
+## Step 7 — Write and offer to build
 
 Write the file. Then offer to run `./build` (fast) so `index.html`/`print.html` pick up the new song — don't run `./build --deploy` unless asked, since that publishes externally.

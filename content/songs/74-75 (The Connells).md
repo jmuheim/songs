@@ -1,5 +1,10 @@
 # 74-75 (The Connells)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [Am] [C] [G] [Am] _(x2)_

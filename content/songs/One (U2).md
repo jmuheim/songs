@@ -1,5 +1,10 @@
 # One (U2)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [Am] [Dsus2] [FM7] [G] _(x4)_

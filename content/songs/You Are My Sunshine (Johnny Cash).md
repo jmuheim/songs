@@ -1,5 +1,10 @@
 # You Are My Sunshine (Johnny Cash)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [A] [A] [D] [A]

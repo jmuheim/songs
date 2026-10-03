@@ -1,5 +1,10 @@
 # Imagine (John Lennon)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [C] [F] _(x2)_

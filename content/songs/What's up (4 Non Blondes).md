@@ -1,5 +1,10 @@
 # Whats up (4 Non Blondes)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [D] [Em] [G] [D] _(x2)_

@@ -1,5 +1,10 @@
 # Verlieben verloren vergessen verzeihn (Wolfgang Petry)
 
+## About
+
+- Deutsch
+- Pop
+
 ## Intro
 
 [G] [G] [G] [D] [Am] [C] [D] [G]
