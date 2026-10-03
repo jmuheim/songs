@@ -1,5 +1,9 @@
 # Dynamit (Mani Matter)
 
+## About
+
+- Mundart
+
 ## Verse 1
 
 [Am] Einisch ir Nacht won i spät no bi [E7] gloffe

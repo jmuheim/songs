@@ -1,5 +1,10 @@
 # Junge (Die Ärzte)
 
+## About
+
+- Deutsch
+- Rock
+
 ## Intro
 
 [F] [G] [Am] [Am] _(x2)_

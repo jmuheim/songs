@@ -1,5 +1,10 @@
 # ❤️ Jolene (Dolly Parton)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [Am] _(x4)_

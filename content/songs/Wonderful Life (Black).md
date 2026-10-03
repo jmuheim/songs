@@ -1,5 +1,10 @@
 # Wonderful Life (Black)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [Em] [G] [Em] [Em] [Am] [Am] [D]

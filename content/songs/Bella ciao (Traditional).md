@@ -1,5 +1,10 @@
 # Bella ciao (Traditional)
 
+## About
+
+- Italienisch
+- Traditionell
+
 ## Verse 1
 
 Una mat[Am]tina mi son svegliato

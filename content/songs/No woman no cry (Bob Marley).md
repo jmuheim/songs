@@ -1,5 +1,10 @@
 # No woman no cry (Bob Marley)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 _(Instrumental)_

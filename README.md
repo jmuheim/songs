@@ -9,6 +9,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - Swipe left/right to change songs, up/down to navigate song sections
 - Colour-coded chords (each root letter gets its own colour)
 - Toggle chord visibility (🎹 button)
+- Tag songs (language, genre, …) and filter the table of contents by tag
 - **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)
 - Print-friendly version: open `print.html?print-pdf` in Chrome and print
 
@@ -49,6 +50,23 @@ GitHub Actions runs the whole suite on every push and pull request (`.github/wor
 ## Adding songs
 
 Add a Markdown file to `content/songs/` following the naming convention `Title (Artist).md`. Chords go inline as `[Am]`, `[G7]`, etc.
+
+To tag a song, add an `## About` section at the top with one tag per list item:
+
+```markdown
+# Kiss the Earth (Ajeet)
+
+## About
+
+- Englisch
+- Mantra
+
+## Verse 1
+
+...
+```
+
+The tags show on a short „About" slide after the song title and drive the filter chips on the table of contents — pick several to see songs matching **any** of them, „Alle" to clear. Tagging is optional: an untagged song just shows under „Alle". Tags are free text, so pick a vocabulary and keep it consistent (e.g. `Deutsch`, `Englisch`, `Mundart`, `Pop`, `Rock`, `Mantra`).
 
 ## Live sync (multiplex)
 

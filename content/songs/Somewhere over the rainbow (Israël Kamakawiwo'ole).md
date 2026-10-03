@@ -1,5 +1,10 @@
 # Somewhere over the rainbow (Israël Kamakawiwo'ole)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 _(Instrumental)_

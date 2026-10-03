@@ -1,5 +1,10 @@
 # Verdammt ich lieb dich (Matthias Reim)
 
+## About
+
+- Deutsch
+- Rock
+
 ## Verse 1
 
 Ich [Am] ziehe durch die Straßen bis nach Mitternacht

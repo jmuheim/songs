@@ -1,5 +1,10 @@
 # Across the universe (Beatles)
 
+## About
+
+- Englisch
+- Pop
+
 ## Instructions
 
 ```

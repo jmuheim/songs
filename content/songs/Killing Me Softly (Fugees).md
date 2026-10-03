@@ -1,5 +1,10 @@
 # Killing Me Softly (Fugees)
 
+## About
+
+- Englisch
+- Pop
+
 ## Chorus
 
 [Em] Strumming my pain with his [Am] fingers.

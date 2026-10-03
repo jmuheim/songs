@@ -1,5 +1,10 @@
 # Road to Mandalay (Robbie Williams)
 
+## About
+
+- Englisch
+- Pop
+
 ## Instructions
 
 Capo on 3rd fret

@@ -1,5 +1,10 @@
 # Further on up the road (Johnny Cash)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [Am] [C] [Am] [E7] [Am]

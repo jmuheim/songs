@@ -1,5 +1,9 @@
 # Lueget Vo Bärg Und Tal (Traditionell 🇨🇭)
 
+## About
+
+- Mundart
+
 ## Strophe 1
 
 [C] Lueget, vo [G] Bärg und [C] Tal.

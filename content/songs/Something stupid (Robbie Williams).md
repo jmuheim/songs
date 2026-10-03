@@ -1,5 +1,10 @@
 # Something stupid (Robbie Williams)
 
+## About
+
+- Englisch
+- Pop
+
 ## Instructions
 
 ```

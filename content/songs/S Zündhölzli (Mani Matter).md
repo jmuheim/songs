@@ -1,5 +1,9 @@
 # S Zündhölzli (Mani Matter)
 
+## About
+
+- Mundart
+
 ## Verse 1
 
 I han es [C]Zündhölzli azündet

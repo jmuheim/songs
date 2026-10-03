@@ -1,5 +1,10 @@
 # Feel (Robbie Williams)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 [Dm] [Am] [Dm] [Am] _(2x)_

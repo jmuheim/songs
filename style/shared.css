@@ -121,3 +121,28 @@ section.slide.level2 {
   display: flex;
   justify-content: center;
 }
+
+/* TOC tag filter (toc-filter.js). The chip bar sits at the top of #TOC; each
+   chip is a toggle button. Colours are theme-specific (night.css). */
+#toc-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4em;
+  justify-content: center;
+  padding: .6em;
+}
+
+.toc-tag {
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  cursor: pointer;
+  padding: .25em .9em;
+  border-radius: 999px;
+  border: 2px solid;
+  background: transparent;
+}
+
+#TOC li.toc-hidden {
+  display: none;
+}

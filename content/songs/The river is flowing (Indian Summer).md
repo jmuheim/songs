@@ -1,5 +1,10 @@
 # ❤️ The river is flowing (Indian Summer)
 
+## About
+
+- Englisch
+- Traditionell
+
 ## Verse 1
 
 _(Chords sequence remains the same)_

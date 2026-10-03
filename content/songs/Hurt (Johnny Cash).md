@@ -1,5 +1,10 @@
 # Hurt (Johnny Cash)
 
+## About
+
+- Englisch
+- Pop
+
 ## Instructions
 
 ```

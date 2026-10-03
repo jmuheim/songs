@@ -1,5 +1,10 @@
 # Der Mond ist aufgegangen (Traditionell)
 
+## About
+
+- Deutsch
+- Traditionell
+
 ## Verse 1
 
 Der [G7] Mond ist [F] aufge[G]gan[C]gen.

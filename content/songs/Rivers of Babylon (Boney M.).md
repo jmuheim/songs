@@ -1,5 +1,10 @@
 # Rivers of Babylon (Boney M.)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro
 
 _(Vocals only)_

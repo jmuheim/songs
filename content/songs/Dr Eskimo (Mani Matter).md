@@ -1,5 +1,9 @@
 # Dr Eskimo (Mani Matter)
 
+## About
+
+- Mundart
+
 ## Verse 1
 
 [Am] Kenned ihr das Gschichtli scho

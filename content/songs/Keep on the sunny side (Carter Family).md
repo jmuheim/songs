@@ -1,5 +1,10 @@
 # Keep on the sunny side (Carter Family)
 
+## About
+
+- Englisch
+- Traditionell
+
 ## Intro
 
 _(Instrumental)_

@@ -1,5 +1,10 @@
 # Lemon tree (Fool's Garden)
 
+## About
+
+- Englisch
+- Pop
+
 ## Instructions
 
 Capo on 2nd fret

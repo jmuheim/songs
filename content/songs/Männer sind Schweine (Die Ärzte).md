@@ -1,5 +1,10 @@
 # Männer sind Schweine (Die Ärzte)
 
+## About
+
+- Deutsch
+- Pop
+
 ## Verse 1
 
 Hal[G]lo, mein Schatz, ich liebe Dich,

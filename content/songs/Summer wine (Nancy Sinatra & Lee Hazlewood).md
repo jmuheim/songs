@@ -1,5 +1,10 @@
 # Summer wine (Nancy Sinatra & Lee Hazlewood)
 
+## About
+
+- Englisch
+- Pop
+
 ## Intro _(Frauen)_
 
 [Am] Strawberries, cherries and an
