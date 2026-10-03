@@ -363,6 +363,31 @@ dialog.overlay-modal::backdrop {
   height: auto;
 }
 
+/* Side by side past the mobile breakpoint used elsewhere (night.css above):
+   text and the close button form a left column, the QR code sits to its
+   right instead of stacking below it and pushing the dialog tall enough to
+   clip against the viewport. */
+@media (min-width: 769px) {
+  .modal-box-qr {
+    display: grid;
+    grid-template-columns: 1fr 12rem;
+    grid-template-areas: "text qr"
+                          "button qr";
+    align-items: center;
+    column-gap: 1.5em;
+    text-align: left;
+    width: min(44rem, 90vw);
+  }
+
+  .modal-box-qr .qr-text { grid-area: text; }
+  .modal-box-qr #qr-close { grid-area: button; justify-self: start; }
+
+  .modal-box-qr #qr-canvas {
+    grid-area: qr;
+    margin-bottom: 0;
+  }
+}
+
 /* Bright theme overrides */
 
 body.theme-bright .reveal section h1,

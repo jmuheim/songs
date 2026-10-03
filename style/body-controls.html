@@ -115,9 +115,11 @@
 </dialog>
 
 <dialog id="qr-modal" class="overlay-modal" aria-labelledby="qr-title">
-  <div class="modal-box">
-    <h2 id="qr-title" tabindex="-1" autofocus>Song Book öffnen</h2>
-    <p id="qr-info">Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.</p>
+  <div class="modal-box modal-box-qr">
+    <div class="qr-text">
+      <h2 id="qr-title" tabindex="-1" autofocus>Song Book öffnen</h2>
+      <p id="qr-info">Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.</p>
+    </div>
     <div id="qr-canvas"></div>
     <button id="qr-close">Schliessen</button>
   </div>
@@ -672,9 +674,12 @@ window.addEventListener('load', function() {
 
   // ---- QR code ----
   var showQrBtn = document.getElementById('show-qr');
-  showQrBtn.addEventListener('click', function() {
+  var QR_JOIN_PARAM = 'qr'; // marks a link reached by scanning someone else's QR code
+
+  function showQrModal() {
     if (!window.QRCode) return;
     var url = window.location.href.split('#')[0];
+    url += (url.indexOf('?') === -1 ? '?' : '&') + QR_JOIN_PARAM + '=1';
     var container = document.getElementById('qr-canvas');
     container.innerHTML = '';
     new QRCode(container, { text: url, width: 400, height: 400, colorDark: '#000000', colorLight: '#ffffff' });
@@ -684,8 +689,23 @@ window.addEventListener('load', function() {
     if (img) img.alt = 'QR-Code für ' + url;
     if (canvas) canvas.setAttribute('aria-hidden', 'true');
     qrModal.showModal();
-  });
+  }
+
+  showQrBtn.addEventListener('click', showQrModal);
   document.getElementById('qr-close').addEventListener('click', function() { qrModal.close(); });
+
+  // A scanned QR code's URL carries the marker: show this device's own QR
+  // right away, so whoever joins this way can pass the song book on too. The
+  // marker is stripped first, so this QR — and the URL after a reload — stays
+  // a plain link instead of growing one "qr=1" longer with every scan. The
+  // setTimeout defers both past the load event itself: a replaceState() called
+  // from inside it hung headless Chrome under the browser-spec driver.
+  if (window.location.search === '?' + QR_JOIN_PARAM + '=1') {
+    setTimeout(function() {
+      history.replaceState(null, '', window.location.pathname + window.location.hash);
+      showQrModal();
+    }, 0);
+  }
 
   // showModal() makes the page behind inert and Esc closes natively. What is
   // left: Reveal listens for keys on the document, where they still arrive from
