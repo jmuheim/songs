@@ -55,6 +55,14 @@ Each song lives in `content/songs/<Title> (<Artist>).md`. Structure:
 - Englisch
 - Mantra
 
+## Instructions
+
+```
+       |E A D G B e|
+       |-----------|
+A7sus4 |x 0 2 0 3 0|
+```
+
 ## Section Name
 
 Lyrics with [Chord] inline like this [Am] and here [G7].
@@ -67,8 +75,10 @@ Lyrics with [Chord] inline like this [Am] and here [G7].
 - **H1** = song title (one per file, shown as the slide title)
 - **H2** = section (each becomes a sub-slide)
 - **Chords** use `[ChordName]` inline in lyrics
-- An **`## About`** section at the top holds the song's tags, one per list item (free text — keep the vocabulary consistent, e.g. `Deutsch` / `Englisch` / `Mundart` / `Pop` / `Rock` / `Mantra`). It drives the [table-of-contents tag filter](#table-of-contents-tag-filter); tagging is optional. `song_tags` in `lib/build_helpers.rb` parses it (list items only, so prose in About is ignored).
-- A `## Resources` section is automatically stripped from `print.html` (links are useless in print); the `## About` section is stripped from print too (tags are a screen feature)
+- An **`## About`** section at the top holds the song's tags, one per list item (free text — keep the vocabulary consistent, e.g. `Deutsch` / `Englisch` / `Mundart` / `Pop` / `Rock` / `Mantra`). `song_tags` in `lib/build_helpers.rb` parses it (list items only, so prose in About is ignored); `tag_category` sorts each tag into `Sprache` (the `LANGUAGE_TAGS` list) or `Genre` (everything else) for the [table-of-contents tag filter](#table-of-contents-tag-filter). Tagging is optional.
+- An optional **`## Instructions`** section holds alternate chord fingerings (e.g. a capo shape or a barré alternative) as a plain code block, same as the [chord tooltip](#keyboard-and-dialogs)'s guitar tab.
+- A **`## Resources`** section lists external links (YouTube, tabs, tutorials).
+- `merge_about_section` in `lib/build_helpers.rb` folds `## About`, `## Instructions` and `## Resources` into one `## About` section at the front of the song, at build time — the source file keeps them as separate sections (above) for readability; nothing on disk needs to change when editing a song. The tags become bullets (`- Sprache: Mundart`, `- Genre: Pop`) in the same list as the Resources links; Instructions' code block follows. This merged `## About` is stripped from `print.html` entirely (tags, resource links and alternate fingerings are all screen-only features) — see [`spec/fixtures/golden/about_merged.html`](spec/fixtures/golden/about_merged.html).
 - `content/Introduction.md` is always prepended as the first slide
 
 ## Chord rendering pipeline
@@ -91,12 +101,12 @@ The regex only matches `[Word]` not followed by `(` — so standard Markdown lin
 
 ## Table of contents tag filter
 
-The TOC can be filtered by tag. Each song's tags live in its `## About` section (see [Song file format](#song-file-format)); the build carries them into the TOC and `style/toc-filter.js` wires the interaction:
+The TOC can be filtered by Sprache (language) and Genre. Each song's tags live in its `## About` section (see [Song file format](#song-file-format)); the build carries them into the TOC and `style/toc-filter.js` wires the interaction:
 
-- `song_tags` parses the `## About` list items of each song. `build` and `fixture_builder` collect one tag array per song — in the same order the TOC lists them — and pass it to `post_process_index` as `tags:`.
-- `inject_toc_filter` (a Nokogiri pass, like `wrap_slide_content`) adds a `data-tags="Englisch,Pop"` attribute to each song's TOC `<li>` and prepends a chip bar (`#toc-filter`: one `<button class="toc-tag" data-tag="…">` per distinct tag, sorted, plus an „Alle" reset). The first `<li>` is the Introduction and is skipped — matching is **by order**, not by re-deriving Pandoc's slugs. With no tags anywhere, no bar is added.
-- `style/toc-filter.js` toggles a chip's `aria-pressed` on click and hides the `<li>`s matching no selected tag (`.toc-hidden`). Several tags combine with **OR**; „Alle" clears the selection; untagged entries (incl. the Introduction) hide while any filter is active. Chips are real buttons, so the `keyboardCondition` in `body-controls.html` already keeps Space from paging the deck. The selection is local to each client and is **not** synced over multiplex.
-- Styling: chip layout and `.toc-hidden` live in `shared.css`, colours and the sticky bar in `night.css` (with a bright-mode override).
+- `song_tags` parses the `## About` list items of each song; `tag_category` sorts each one into `Sprache` or `Genre`. `build` and `fixture_builder` collect one tag array per song — in the same order the TOC lists them — and pass it to `post_process_index` as `tags:`.
+- `inject_toc_filter` (a Nokogiri pass, like `wrap_slide_content`) adds `data-sprache="Englisch"` / `data-genre="Pop"` attributes to each song's TOC `<li>` and prepends a `<fieldset id="toc-filter">` (legend „Filter") holding one `<select>` per category that has at least one tag (each sorted, first option „Alle") and a „Reset" button. The first `<li>` is the Introduction and is skipped — matching is **by order**, not by re-deriving Pandoc's slugs. With no tags anywhere, no fieldset is added.
+- `style/toc-filter.js` re-renders on every `change` and hides the `<li>`s that don't match (`.toc-hidden`). The two categories combine with **AND** (a song must match the selected Sprache *and* the selected Genre, for whichever of the two has a selection); „Reset" clears both selects; untagged entries (incl. the Introduction) hide while any filter is active. The selects and the Reset button are real form controls, so the `keyboardCondition` in `body-controls.html` already keeps their keys (Space, arrows, Home/End — reveal.js's own guard only excludes input/textarea, not select) from reaching Reveal. The selection is local to each client and is **not** synced over multiplex.
+- Styling: fieldset/select/button layout live in `shared.css`, colours and the sticky bar in `night.css` (with a bright-mode override). The bar is `position: sticky; top: 0`, so it stays visible while the list scrolls underneath it.
 
 The golden `spec/fixtures/golden/toc.html` pins the generated markup; `spec/unit/song_tags_spec.rb` covers the parser, `spec/integration/golden_html_spec.rb` the injected attributes and the print stripping, and `spec/browser/toc_filter_spec.rb` the interaction.
 
@@ -139,6 +149,10 @@ To upgrade, copy those five files from `dist/` at the release's tag in the Git r
 
 `style/qrcodejs/` holds qrcodejs 1.0.0 (the 🔗 dialog's QR code) with its `LICENSE`, served from the song book itself rather than jsDelivr.
 
+## Slide layout and zoom
+
+Reveal's own `center: true` only centers a slide **among its siblings inside a `.stack`** (`section.stack { flex-direction: column; justify-content: center }` in `shared.css`) — a song or the Introduction, which have sub-slides, gets this for free. `#title-slide` has no sub-slides, so Pandoc never wraps it in a `.stack`, and it needs its own rule (`shared.css`) to center vertically. That rule uses `align-items: center`, not the flex default `stretch`: `style/slide-zoom.js` measures `.slide-content`'s natural (shrink-to-fit) width to decide how far it can zoom in, and a stretched-to-100%-width box always measures as already full, capping the zoom at 1 instead of the ~1.4 the title actually fits.
+
 ## Keyboard and dialogs
 
 **The URL is written the moment the page is hidden** (`visibilitychange`): Reveal writes it at most once a second, and iOS stops that timer in the background, so a phone that switched apps right after a slide change and was discarded there reloaded a slide early.
@@ -163,7 +177,7 @@ The code is the second `<script>` in `style/body-controls.html`; the server is a
 - **The presenter is the single authority.** 🚀 (top right, enabled only while the current slide is a song) asks for the password once per tab (`sessionStorage` `multiplex-presenter` holds the claim and the live session), then opens a choice: „Ich selber möchte scrollen" or „Ein Gast soll scrollen". The role and session survive a reload. Only the presenter opens a session, names the scroller and closes it; 🚀 then reads „Live-Scrollen beenden" (and stays enabled, so it can be ended). Another presenter with a higher `claim` (a duplicated tab settles by `from`) makes this one step down — the only leaderless bit left.
 - **Guest delegation.** In guest mode every client is asked „«Song» wird als nächstes gespielt. Möchtest du das Live-Scrollen übernehmen?". The first „Ja" the presenter hears wins — it echoes the chosen `scrollerId`, the other invites close, and everyone (the presenter included) follows the guest. A single authority means two near-simultaneous „Ja"s cannot both take over.
 - **Self-scroll announcement.** In self mode the presenter scrolls, so there is nothing to volunteer for; each client that is present as the session opens is shown „Der nächste Song ist «Song». Es geht gleich los!" with an OK button (once per session, `announcedFor`) and then follows along. The opening `session` carries `fresh: true` and the heartbeats do not, so a latecomer who only ever hears a heartbeat just follows — as with the guest invite. The presenter sees no such dialog.
-- **The scroller is locked to its song** (`SCROLLER_KEYS` disables the horizontal keys, and a capture-phase guard swallows horizontal *swipes* before Reveal sees them — Reveal has no vertical-only touch option, so this keeps vertical scrolling while a left/right swipe does nothing; a link that still leaves the song snaps back on `slidechanged`). It may only scroll up/down within the current song; to move on, the presenter ends the session.
+- **The scroller is locked to its song** (`SCROLLER_KEYS` disables the horizontal keys plus Space/Home/End — reveal.js binds those to "next slide"/"first slide"/"last slide", which reached the snap-back below too, but only after already jumping and losing the scroll position (v reset to 0); a capture-phase guard swallows horizontal *swipes* before Reveal sees them — Reveal has no vertical-only touch option, so this keeps vertical scrolling while a left/right swipe does nothing; a link that still leaves the song snaps back on `slidechanged`). It may only scroll up/down within the current song; to move on, the presenter ends the session.
 - **Everyone else follows, with no opt-out.** A follower's keyboard, touch and controls are off and its view is snapped to the scroller — there is no more „browse freely" (👣 is gone). A follower that hears nothing from the session for three heartbeats frees itself rather than freeze; the presenter's next heartbeat locks it again.
 - **Heartbeat:** the presenter repeats the `session` and the scroller its `state` every 2 s (`HEARTBEAT_MS`; the specs shorten it through `window.MULTIPLEX.heartbeat`), and again right after a reconnect. That is how someone who opens the page mid-session, or comes back from a dead spot, catches up — the relay hands out no last state. A latecomer who arrives while a guest is still being sought is invited too; once a scroller is named, latecomers just follow.
 - **Only the slide is sent** (`stateToSend`): indices, never `overview` or `paused`. While the scroller browses the overview, the slide it was opened on is repeated.

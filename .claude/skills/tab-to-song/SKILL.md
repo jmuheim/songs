@@ -72,7 +72,7 @@ Before finishing, check: `awk -F'[][]' '{ n = (NF-1)/2; if (n >= 3) print length
 
 Only ever link a URL you actually found (on the tab page, via a real web search you ran, or one the user gave you) — never fabricate a plausible-looking YouTube link. If you can't confidently find an official video, ask the user or just omit the `Song` line rather than guess. A `Source tab` entry is required — that's the URL you were given.
 
-Note: `## Resources` is automatically stripped from `print.html` at build time — nothing to do here for that.
+Note: at build time, `## About` and `## Resources` (and an `## Instructions` section, if the song has one) are merged into a single `## About` slide at the front, with the tags rendered as `Sprache:`/`Genre:` bullets in the Resources list — this is automatic (`merge_about_section` in `lib/build_helpers.rb`); keep writing them as separate sections here, same as always.
 
 ## Step 7 — Write and offer to build
 

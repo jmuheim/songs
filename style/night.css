@@ -146,25 +146,31 @@ section#TOC::-webkit-scrollbar-thumb {
   border-bottom: 1px solid #444;
 }
 
-.toc-tag {
+#toc-filter legend,
+.toc-filter-field label {
   color: var(--r-main-color);
+}
+
+#toc-filter select,
+#toc-filter button {
+  color: var(--r-main-color);
+  border-color: var(--r-main-color);
   opacity: 0.85;
 }
 
-.toc-tag:hover {
+#toc-filter select:hover,
+#toc-filter button:hover {
   opacity: 1;
 }
 
-.toc-tag:focus-visible {
+#toc-filter select:focus-visible,
+#toc-filter button:focus-visible {
   outline: 3px solid var(--r-main-color);
   outline-offset: 2px;
 }
 
-.toc-tag[aria-pressed="true"] {
-  background: #e7ad52;
-  border-color: #e7ad52;
-  color: #1c1c1c;
-  opacity: 1;
+#toc-filter select option {
+  color: initial; /* <option> ignores the select's own color in some browsers */
 }
 
 body.theme-bright #toc-filter {

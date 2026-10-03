@@ -2,7 +2,7 @@
 
 ## About
 
-- Englisch
+- Deutsch
 - Rock
 
 ## Intro

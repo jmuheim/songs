@@ -40,6 +40,12 @@
     Reveal.configure({
       keyboardCondition: function(event) {
         var el = document.activeElement;
+        // A focused <select> (the TOC filter) drives its own value with the
+        // same keys Reveal navigates with — Up/Down/Space would otherwise
+        // change the slide and the dropdown at once. reveal.js already
+        // excludes input/textarea from its own key handling; select needs
+        // the same treatment here.
+        if (el && el.tagName === 'SELECT') return false;
         if (event.key !== ' ' || !el || !el.matches('button, [role="button"]')) return true;
         if (el !== unseenFocus) return false;
         el.blur();
@@ -258,8 +264,15 @@ window.addEventListener('load', function() {
   // ---- Navigation lock ----
   // Horizontal keys the scroller must not use: it may only scroll within its
   // own song (up/down). A swipe or a click that still leaves the song is undone
-  // by the snap-back in the Reveal handler below.
-  var SCROLLER_KEYS = { 37: null, 39: null, 33: null, 34: null, 72: null, 76: null, 78: null, 80: null };
+  // by the snap-back in the Reveal handler below — but Space, Home and End
+  // default to "next"/"first slide"/"last slide" and reached that snap-back
+  // too, landing the scroller back on v=0 instead of where it was. Disabling
+  // them here keeps the scroll position intact instead of relying on the
+  // after-the-fact correction.
+  var SCROLLER_KEYS = {
+    37: null, 39: null, 33: null, 34: null, 72: null, 76: null, 78: null, 80: null,
+    32: null, 35: null, 36: null
+  };
 
   function applyNavMode() {
     var mode = 'free';

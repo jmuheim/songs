@@ -122,17 +122,57 @@ section.slide.level2 {
   justify-content: center;
 }
 
-/* TOC tag filter (toc-filter.js). The chip bar sits at the top of #TOC; each
-   chip is a toggle button. Colours are theme-specific (night.css). */
+/* Every other top-level section is either a .stack (a song/the introduction,
+   centered vertically among its sub-slides by the rule above) or #TOC (its
+   own height: 100% + overflow-y: scroll). #title-slide is the one top-level
+   section with no sub-slides, so it never gets the .stack treatment and was
+   sitting at the top of its absolutely-positioned box instead of centered. */
+#title-slide {
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center (not the stretch default) keeps .slide-content at its
+     natural shrink-to-fit width — slide-zoom.js measures that natural width to
+     compute how far it can zoom in, and a stretched-to-100% box would always
+     measure as already full width, capping the zoom at 1 instead of the ~1.4
+     the title actually fits. */
+  align-items: center;
+}
+
+/* TOC tag filter (toc-filter.js): a <fieldset> sitting at the top of #TOC with
+   one <select> per category (Sprache, Genre) and a Reset button. Colours are
+   theme-specific (night.css). Reset browser UA defaults for fieldset/legend
+   first, then lay the fields and the button out in a row. */
 #toc-filter {
   display: flex;
   flex-wrap: wrap;
-  gap: .4em;
+  align-items: center;
+  gap: .6em;
   justify-content: center;
-  padding: .6em;
+  margin: 0;
+  border: none;
+  padding: .3em .6em .6em;
 }
 
-.toc-tag {
+#toc-filter legend {
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  padding: 0;
+}
+
+.toc-filter-field {
+  display: flex;
+  align-items: center;
+  gap: .4em;
+}
+
+.toc-filter-field label {
+  font-family: sans-serif;
+  font-size: 1.5rem;
+}
+
+#toc-filter select,
+#toc-filter button {
   font-family: sans-serif;
   font-size: 1.5rem;
   line-height: 1.2;

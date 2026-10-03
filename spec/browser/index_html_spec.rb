@@ -124,6 +124,21 @@ RSpec.describe 'index.html', :js, type: :feature do
       # title-slide + TOC + Introduction + fixture songs
       expect(all('.slides > section', visible: :all).size).to eq(3 + song_count)
     end
+
+    it 'centers the title slide content vertically' do
+      # #title-slide has no sub-slides, so it never gets wrapped in a .stack —
+      # the flex rule that centers every other top-level section vertically
+      # among its children does not apply to it, so it needs its own.
+      rects = page.evaluate_script(<<~JS)
+        (function() {
+          var section = document.getElementById('title-slide').getBoundingClientRect();
+          var content = document.querySelector('#title-slide .slide-content').getBoundingClientRect();
+          return [section.top, section.height, content.top, content.height];
+        })();
+      JS
+      section_top, section_height, content_top, content_height = rects
+      expect(content_top).to be_within(1).of(section_top + (section_height - content_height) / 2)
+    end
   end
 
   # -----------------------------------------------------------------------
@@ -474,6 +489,22 @@ RSpec.describe 'index.html', :js, type: :feature do
           swipe(dx: 0, dy: 250) # finger down → previous sub-slide
           wait_for_js("Reveal.getIndices().v === 0")
           expect(slide_indices).to eq([3, 0])
+
+          # reveal.js binds Space to "next", Home to the first slide and End to
+          # the last one — all of them used to reach the snap-back too, landing
+          # the presenter back on v = 0 instead of leaving the scroll position
+          # alone (the snap-back fired after the jump, not before it).
+          find('body').send_keys(:down)
+          wait_for_js("Reveal.getIndices().v === 1")
+          find('body').send_keys(:space)
+          sleep 0.3
+          expect(slide_indices).to eq([3, 1])
+          find('body').send_keys(:home)
+          sleep 0.3
+          expect(slide_indices).to eq([3, 1])
+          find('body').send_keys(:end)
+          sleep 0.3
+          expect(slide_indices).to eq([3, 1])
         end
 
         # Ending drops everyone back on the TOC, frees them, and shows the notice
