@@ -674,6 +674,41 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(active_element_id).to eq('qr-title')
         expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"]', visible: :all)
 
+        # Wide viewports (this spec's default window is 1280x800, past the
+        # 769px breakpoint night.css switches on): the QR sits beside the text
+        # and the close button, not stacked below them where a tall dialog
+        # could clip against a short viewport.
+        wide = page.evaluate_script(<<~JS)
+          (function() {
+            function r(sel) { return document.querySelector(sel).getBoundingClientRect(); }
+            var box = r('.modal-box-qr'), text = r('.qr-text'), canvas = r('#qr-canvas'), close = r('#qr-close');
+            return [box.right, text.right, canvas.left, close.right, window.innerWidth];
+          })();
+        JS
+        box_right, text_right, canvas_left, close_right, viewport_width = wide
+        expect(canvas_left).to be >= text_right
+        expect(canvas_left).to be >= close_right
+        expect(box_right).to be <= viewport_width
+
+        # Narrower than that breakpoint: back to the original stacked order —
+        # text, then the QR, then the close button — instead of side by side.
+        begin
+          page.driver.browser.resize(width: 375, height: 812)
+          wait_for_js("getComputedStyle(document.querySelector('.modal-box-qr')).display !== 'grid'")
+          narrow = page.evaluate_script(<<~JS)
+            (function() {
+              function r(sel) { return document.querySelector(sel).getBoundingClientRect(); }
+              var text = r('.qr-text'), canvas = r('#qr-canvas'), close = r('#qr-close');
+              return [text.bottom, canvas.top, canvas.bottom, close.top];
+            })();
+          JS
+          text_bottom, canvas_top, canvas_bottom, close_top = narrow
+          expect(canvas_top).to be >= text_bottom
+          expect(close_top).to be >= canvas_bottom
+        ensure
+          page.driver.browser.resize(width: 1280, height: 800)
+        end
+
         # Reveal listens on the document: nothing pressed inside the dialog reaches it
         before = slide_indices
         press(:right)
@@ -691,6 +726,19 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_visible('#qr-modal')
         backdrop_click('qr-modal')
         expect(page).not_to have_visible('#qr-modal')
+      end
+    end
+
+    describe 'QR modal, joined via a scanned code' do
+      it 'shows its own QR right away, with the join marker stripped from the address bar' do
+        visit FixtureBuilder::URL_PATH + '?qr=1'
+        wait_for_reveal
+        expect(page).to have_visible('#qr-modal')
+        expect(active_element_id).to eq('qr-title')
+        # The marker is re-added to the freshly generated code (so the chain of
+        # scans keeps going), but removed from the address bar itself.
+        expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"][alt$="?qr=1"]', visible: :all)
+        expect(page.evaluate_script('window.location.search')).to eq('')
       end
     end
 
