@@ -37,11 +37,15 @@ The first build on a fresh clone needs local multiplex credentials — `build` r
 
 ## Deploy
 
-Deploying is a CI job (`deploy` in `.github/workflows/test.yml`), not something a local save does. It runs **only on a push to `master`**, and only **after the `rspec` job is green** (`needs: rspec`) — so an untested commit never reaches songs.josh.ch. Its own `concurrency` group serialises deploys. The job generates a fresh multiplex pair, runs `./build`, and `rsync`s `index.html` + `style/` to the server (not `print.html`, matching the old manual deploy).
+Deploying is a CI job (`deploy` in `.github/workflows/test.yml`), not something a local save does. It runs **only on a push to `master`**, and only **after the `rspec` job is green** (`needs: rspec`) — so an untested commit never reaches songs.josh.ch. Its own `concurrency` group serialises deploys. The job generates a fresh multiplex pair, runs `./build`, and `rsync`s `index.html` + `style/` + `.htaccess` to the server (not `print.html`, matching the old manual deploy).
 
 The server is reached with a dedicated ed25519 **deploy key** (secret `DEPLOY_SSH_KEY`), separate from anyone's personal key and locked on the server via `authorized_keys` to `rrsync` into `…/songs.josh.ch/` only — so the rsync target is relative. The host key is pinned in the workflow (no `StrictHostKeyChecking=no`); refresh it with `ssh-keyscan greip.uberspace.de` if the server ever rotates its key.
 
 `./build --deploy` stays as the manual fallback: it rsyncs the same files from your machine using your own SSH access (absolute path), bypassing CI.
+
+### Cache headers
+
+The repo's root [`.htaccess`](.htaccess) ships with every deploy and tells Uberspace's Apache (`mod_headers`) to send `Cache-Control: no-cache, must-revalidate` for `.html`/`.css`/`.js`, and a year-long `immutable` cache for fonts. Without it, browsers fall back to heuristic caching of `index.html` and `style/*.css|js` — since those keep the same filename on every deploy, a cached copy never looks stale on its own, and phones with the song book added to the home screen (an even more aggressive webview cache) could sit on a build from weeks ago. `no-cache` still lets the browser keep a local copy; it just forces a conditional request every time, so an unchanged file comes back as a cheap 304.
 
 ## Song file format
 
