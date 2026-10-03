@@ -72,6 +72,30 @@ RSpec.describe 'index.html', :js, type: :feature do
     page.evaluate_script("[Reveal.getIndices().h, Reveal.getIndices().v]")
   end
 
+  # Simulate a touch swipe by (dx, dy) px across the current slide. Below
+  # Capybara on purpose: a swipe has no Capybara action, and Cuprite's mouse
+  # emits pointerType 'mouse', which both Reveal and the song-book's swipe guard
+  # ignore. We drive the very events they listen to — pointer events with
+  # pointerType 'touch' where the browser has them (Chrome does), touch events
+  # otherwise.
+  def swipe(dx:, dy:)
+    page.execute_script(<<~JS, dx, dy)
+      var dx = arguments[0], dy = arguments[1];
+      var usePointer = ('onpointerdown' in window);
+      var el = Reveal.getCurrentSlide();
+      var r = el.getBoundingClientRect();
+      var x0 = Math.round(r.left + r.width / 2), y0 = Math.round(r.top + r.height / 2);
+      function fire(type, x, y) {
+        el.dispatchEvent(new PointerEvent(type, { pointerId: 1, pointerType: 'touch',
+          clientX: Math.round(x), clientY: Math.round(y), bubbles: true, cancelable: true }));
+      }
+      if (!usePointer) throw new Error('swipe helper assumes pointer events');
+      fire('pointerdown', x0, y0);
+      for (var i = 1; i <= 5; i++) fire('pointermove', x0 + dx * i / 5, y0 + dy * i / 5);
+      fire('pointerup', x0 + dx, y0 + dy);
+    JS
+  end
+
   # -----------------------------------------------------------------------
   # Structure & initial state
   # -----------------------------------------------------------------------
@@ -437,6 +461,17 @@ RSpec.describe 'index.html', :js, type: :feature do
           find('body').send_keys(:right)
           sleep 0.3
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
+
+          # A horizontal swipe does nothing either — it used to navigate to the
+          # neighbouring song and snap back to this one's title slide (v = 0).
+          swipe(dx: -250, dy: 0)
+          sleep 0.3
+          expect(slide_indices).to eq([3, 1])
+
+          # A vertical swipe still scrolls the song: the scroller needs it.
+          swipe(dx: 0, dy: 250) # finger down → previous sub-slide
+          wait_for_js("Reveal.getIndices().v === 0")
+          expect(slide_indices).to eq([3, 0])
         end
 
         # Ending drops everyone back on the TOC, frees them, and shows the notice

@@ -293,6 +293,46 @@ window.addEventListener('load', function() {
     updateStatus();
   }
 
+  // Horizontal swipes must not move the scroller off its song. The keyboard is
+  // locked by SCROLLER_KEYS, but touch is left on so the scroller can still
+  // scroll the song vertically — and Reveal has no "vertical-only" touch option
+  // (its data-prevent-swipe kills both axes). So we watch the gesture in the
+  // capture phase, before Reveal's own handler on the reveal element, and once a
+  // scroller's swipe turns out to be mostly horizontal we swallow it; vertical
+  // swipes fall through untouched. Without this a left/right swipe navigated to
+  // the neighbouring song and the slidechanged snap-back returned to the song at
+  // v = 0 — the title slide — instead of leaving the scroller where it was.
+  var usePointer = ('onpointerdown' in window);
+  var swipe = null; // { x, y, axis } for the active scroller gesture, else null
+  function swipeIsTouch(e) { return usePointer ? e.pointerType === 'touch' : true; }
+  function swipePoint(e) { return e.touches && e.touches[0] ? e.touches[0] : e; }
+  function onSwipeStart(e) {
+    if (!amScroller() || !swipeIsTouch(e)) { swipe = null; return; }
+    var p = swipePoint(e);
+    swipe = { x: p.clientX, y: p.clientY, axis: null };
+  }
+  function onSwipeMove(e) {
+    if (!swipe || !amScroller() || !swipeIsTouch(e)) return;
+    var p = swipePoint(e), dx = p.clientX - swipe.x, dy = p.clientY - swipe.y;
+    if (swipe.axis === null && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
+      swipe.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+    }
+    if (swipe.axis === 'x') { e.preventDefault(); e.stopPropagation(); }
+  }
+  function onSwipeEnd(e) {
+    if (swipe && swipe.axis === 'x') e.stopPropagation();
+    swipe = null;
+  }
+  (usePointer ? ['pointerdown'] : ['touchstart']).forEach(function(ev) {
+    document.addEventListener(ev, onSwipeStart, true);
+  });
+  (usePointer ? ['pointermove'] : ['touchmove']).forEach(function(ev) {
+    document.addEventListener(ev, onSwipeMove, true);
+  });
+  (usePointer ? ['pointerup', 'pointercancel'] : ['touchend', 'touchcancel']).forEach(function(ev) {
+    document.addEventListener(ev, onSwipeEnd, true);
+  });
+
   // ---- Broadcasting (everything rides on the one relayed event) ----
   function emit(payload) {
     if (!socket.connected) return;
