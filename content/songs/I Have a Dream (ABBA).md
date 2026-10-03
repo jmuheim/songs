@@ -16,12 +16,12 @@ even if you [A] fail
 
 ## Chorus
 
-[E] I believe in angels
+I believe in [E] angels
 Something good in, [D] everything I [A] see
-[E] I believe in angels
+I believe in [E] angels
 
 When I know the [D] time, is right for [A] me
-[E] I'll cross the stream
+I'll cross the [E] stream
 I have a [A] dream
 
 ## Verse 2
@@ -36,12 +36,12 @@ still another [A] mile
 
 ## Chorus 2
 
-[E] I believe in angels
+I believe in [E] angels
 Something good in, [D] everything I [A] see
-[E] I believe in angels
+I believe in [E] angels
 When I know the [D] time, is right for [A] me
 
-[E] I'll cross the stream
+I'll cross the [E] stream
 I have a [A] dream _(2x)_
 
 ## Interlude
@@ -60,12 +60,12 @@ even if you [A] fail
 
 ## Chorus 3
 
-[E] I believe in angels
+I believe in [E] angels
 Something good in, [D] everything I [A] see
-[E] I believe in angels
+I believe in [E] angels
 When I know the [D] time, is right for [A] me
 
-[E] I'll cross the stream
+I'll cross the [E] stream
 I have a [A] dream _(2x)_
 
 ## Resources
