@@ -48,7 +48,7 @@ The server is reached with a dedicated ed25519 **deploy key** (secret `DEPLOY_SS
 Each song lives in `content/songs/<Title> (<Artist>).md`. Structure:
 
 ```markdown
-# ❤️ Song Title (Artist Name)
+# Song Title (Artist Name)
 
 ## About
 
