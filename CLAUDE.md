@@ -18,6 +18,8 @@ These are not descriptions of how things happen to work — they are commitments
 - **One source of truth.** Don't copy logic that already lives in `lib/build_helpers.rb` (or anywhere else) into a second place. If the build and a spec both need a transformation, both call the same helper, so the spec tests what ships.
 - **Skills are living artefacts.** The skills in `.claude/skills/` (`tab-to-song`, `songs-browser-specs`, `songs-log-decision`) describe real, current behaviour of this repo. When the song format, the build, or a workflow they document changes, update the matching skill in the same change. If a task reveals a repeatable workflow the skills don't yet cover, propose one.
 - **Docs track reality.** This file and `README.md` must match what the code actually does. If you change a command, a dependency, or a default, update both.
+- **Knowledge lives in the repo, not in a private store.** Record decisions, conventions, gotchas and working practices here, in [`decisions/`](decisions/), or in `README.md` — never in Claude Code's per-project memory. Repo files travel with the code, are reviewable, and are visible to everyone; a private memory is none of those. If something is worth remembering, commit it.
+- **Merging pull requests: wait for green, by hand.** Never `gh pr merge --auto` on this repo. It has no required status checks and repo-level auto-merge is off, so `--auto` has nothing to gate on and merges immediately — even while CI is red or pending (this bit us on #52). Watch the checks (`gh pr checks <n> --watch`, or `gh run watch <id> --exit-status`), then merge once they pass. `master` is deliberately left directly pushable (no branch protection) so a quick fix can go straight in; the "wait for green" is discipline, not a gate. The sibling repo `Access4all/axipedia` is configured the same way.
 
 ## Build command
 
@@ -105,6 +107,8 @@ Nothing leaves the machine during a run: the fonts are local too (see below). Th
 `bundle exec rake golden:update` regenerates the golden snapshots in `spec/fixtures/golden/` after an intended markup change.
 
 **CI runs the whole suite on every push and every pull request** (`.github/workflows/test.yml`): Ruby 3.2, Pandoc pinned to the same 3.9.0.2 the golden fixtures were built with, the `multiplex-server/` dependencies via `npm ci`, then `bundle exec rspec`. `Gemfile.lock` carries `x86_64-linux` alongside `arm64-darwin` so the Linux runner resolves nokogiri's native gem — regenerate both platforms with `bundle lock --add-platform x86_64-linux` if you ever relock.
+
+**Cold-boot retry:** headless Chrome cold-starts on the first browser example of a run, and on a loaded runner that launch handshake used to occasionally exceed `process_timeout` and fail the whole run (and the deploy) with `Ferrum::ProcessTimeoutError: Browser did not produce websocket url …` — not a real assertion, just a flaky launch. A `prepend_before(:each, type: :feature)` hook in `spec/spec_helper.rb` now forces the browser up and, on a boot timeout, quits the dead process and retries the launch (up to three attempts), so a flaky cold start no longer reddens the run. If a `ProcessTimeoutError` still surfaces, the launch failed three times running — treat that as a real environment problem (missing browser, starved runner), not a re-run.
 
 ## Vendored reveal.js
 

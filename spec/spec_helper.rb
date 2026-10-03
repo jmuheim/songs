@@ -21,6 +21,25 @@ RSpec.configure do |config|
   config.warnings = true
   config.order = :random
   Kernel.srand config.seed
+
+  # Chrome cold-starts on the first browser example of a run. On a loaded CI
+  # runner that launch handshake occasionally exceeds process_timeout, and the
+  # ProcessTimeoutError reddens the whole run (and blocks the deploy) on whatever
+  # example happened to go first — not a real assertion failure. Waiting longer
+  # doesn't help a launch that failed rather than lagged, so force the browser up
+  # before each feature example and, on a boot timeout, tear the dead process
+  # down and retry the launch instead of failing. After the first example the
+  # browser is already running, so this is a cheap no-op for the rest of the run.
+  config.prepend_before(:each, type: :feature) do
+    attempts = 0
+    begin
+      page.driver.browser
+    rescue Ferrum::ProcessTimeoutError
+      raise if (attempts += 1) >= 3
+      page.driver.quit
+      retry
+    end
+  end
 end
 
 Capybara.register_driver(:cuprite) do |app|
