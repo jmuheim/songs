@@ -19,6 +19,7 @@
   padding: 0.15em 0.4em;
   cursor: pointer;
   font-family: inherit;
+  font-size: inherit;
   line-height: 1;
   text-decoration: none;
 }
