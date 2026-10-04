@@ -160,7 +160,17 @@ module BuildHelpers
     toc = doc.at_css('section#TOC')
     return html unless toc
 
-    toc.css('nav li').drop(1).each_with_index do |li, i|
+    list = toc.at_css('nav ul')
+    return html unless list
+
+    # The Introduction isn't a song and carries no tags — drop it from the
+    # TOC entirely (it stays reachable as the deck's first slide) rather than
+    # just excluding it from the filter, so `tags[i]` lines up with the
+    # remaining <li>s by plain order.
+    list.at_css('li')&.remove
+    list.name = 'ol'
+
+    list.css('li').each_with_index do |li, i|
       song = Array(tags[i]).map { |(cat, val)| [cat, val.to_s.strip] }.reject { |(_, val)| val.empty? }
       by_category = song.group_by { |(cat, _)| cat }
       li['data-sprache'] = by_category['Sprache'].map { |(_, v)| v }.join(',') if by_category['Sprache']
@@ -176,6 +186,9 @@ module BuildHelpers
     fieldset = Nokogiri::XML::Node.new('fieldset', doc)
     fieldset['id'] = 'toc-filter'
     legend = Nokogiri::XML::Node.new('legend', doc)
+    # The categories (Sprache/Genre) next to their selects already say what's
+    # being filtered; "Filter" itself only needs to reach a screen reader.
+    legend['class'] = 'visually-hidden'
     legend.content = 'Filter'
     fieldset.add_child(legend)
     fieldset.add_child(toc_filter_select(doc, id: 'toc-filter-sprache', label: 'Sprache', options: sprachen)) unless sprachen.empty?
@@ -187,6 +200,13 @@ module BuildHelpers
     fieldset.add_child(reset)
 
     toc.prepend_child(fieldset)
+
+    empty_message = Nokogiri::XML::Node.new('p', doc)
+    empty_message['id'] = 'toc-filter-empty'
+    empty_message['class'] = 'toc-hidden'
+    empty_message.content = 'Keine Ergebnisse, bitte Filter anpassen'
+    list.add_next_sibling(empty_message)
+
     doc.to_html
   end
 

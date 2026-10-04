@@ -32,10 +32,15 @@ RSpec.describe 'HTML golden files' do
     expect(imagine['data-genre']).to    eq('Pop')
     expect(connells['data-sprache']).to eq('Deutsch')
     expect(connells['data-genre']).to   eq('Rock')
-    # The Introduction has no song behind it, so no tags.
-    intro = doc.at_css('#TOC a[href="#/introduction"]').parent
-    expect(intro['data-sprache']).to be_nil
-    expect(intro['data-genre']).to be_nil
+  end
+
+  it 'drops the Introduction from the TOC entirely — it has no song/tags behind it' do
+    expect(doc.at_css('#TOC a[href="#/introduction"]')).to be_nil
+  end
+
+  it 'renders the TOC entries as an <ol>, not a <ul>' do
+    expect(doc.at_css('#TOC nav ol')).not_to be_nil
+    expect(doc.at_css('#TOC nav ul')).to be_nil
   end
 
   it 'builds a Sprache and a Genre dropdown, each sorted with „Alle" first, plus a Reset button' do
@@ -43,8 +48,16 @@ RSpec.describe 'HTML golden files' do
     genre_options   = doc.css('#toc-filter-genre option').map { |o| o.text.strip }
     expect(sprache_options).to eq(['Alle', 'Deutsch', 'Englisch'])
     expect(genre_options).to   eq(['Alle', 'Pop', 'Rock'])
-    expect(doc.at_css('#toc-filter legend').text.strip).to eq('Filter')
+    legend = doc.at_css('#toc-filter legend')
+    expect(legend.text.strip).to eq('Filter')
+    expect(legend['class']).to eq('visually-hidden')
     expect(doc.at_css('#toc-filter-reset').text.strip).to eq('Reset')
+  end
+
+  it 'renders a hidden "no results" message after the TOC list, for the filter to reveal' do
+    message = doc.at_css('#toc-filter-empty')
+    expect(message.text.strip).to eq('Keine Ergebnisse, bitte Filter anpassen')
+    expect(message['class']).to eq('toc-hidden')
   end
 
   it 'strips the Infos-über-das-Lied sections from print.html (tags, resources and fingerings are a screen feature)' do

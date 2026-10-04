@@ -268,13 +268,14 @@ RSpec.describe 'index.html', :js, type: :feature do
 
     it 'has correct structure and navigates on click' do
       expect(page).to have_css('#go-to-toc[href="#/1"]')
-      expect(all('#TOC a', visible: :all).size).to eq(song_count + 1) # +1 for Introduction
+      # The Introduction isn't a song and isn't listed.
+      expect(all('#TOC a', visible: :all).size).to eq(song_count)
 
       click_link('Table of contents')
       expect(page).to have_css('#TOC.present')
 
-      click_link 'Introduction'
-      expect(page).to have_css('#introduction.present')
+      click_link 'Imagine (John Lennon)'
+      expect(page).to have_css('#imagine-john-lennon.present')
     end
   end
 

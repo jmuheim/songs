@@ -119,6 +119,13 @@ section#TOC {
 section#TOC > .slide-content {
   width: 100%;
   box-sizing: border-box;
+  /* The present slide is also display:flex (align-items:stretch by default),
+     so without this .slide-content would be capped at #TOC's own viewport
+     height instead of growing to its actual (much taller) content — and
+     #toc-filter's position:sticky sticks only within its containing block,
+     so past that cap it would just scroll away with everything else instead
+     of staying put. flex-start lets it grow to full content height. */
+  align-self: flex-start;
 }
 
 section#TOC::-webkit-scrollbar {
@@ -154,8 +161,11 @@ section#TOC::-webkit-scrollbar-thumb {
   border-bottom: 1px solid #444;
 }
 
-#toc-filter legend,
 .toc-filter-field label {
+  color: var(--r-main-color);
+}
+
+#toc-filter-empty {
   color: var(--r-main-color);
 }
 

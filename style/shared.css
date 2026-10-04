@@ -154,12 +154,6 @@ section.slide.level2 {
   padding: .3em .6em .6em;
 }
 
-#toc-filter legend {
-  font-family: sans-serif;
-  font-size: 1.5rem;
-  padding: 0;
-}
-
 .toc-filter-field {
   display: flex;
   align-items: center;
@@ -183,6 +177,29 @@ section.slide.level2 {
   background: transparent;
 }
 
-#TOC li.toc-hidden {
+#TOC li.toc-hidden,
+#toc-filter-empty.toc-hidden {
   display: none;
+}
+
+/* The reveal theme makes #TOC's <ol> an inline-block shrink-to-fit box
+   (centred by the <nav>'s own text-align), so its width used to change with
+   whatever the filter currently left standing. Pin it to a constant share of
+   the slide instead, and truncate any title wider than that with "…" rather
+   than letting it wrap or push the box wider. */
+#TOC ol {
+  width: 90%;
+}
+
+#TOC ol li a {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#toc-filter-empty {
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 1.5rem;
 }
