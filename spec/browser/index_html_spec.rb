@@ -424,6 +424,17 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_visible('#scroll-choice-modal')
         expect(page).not_to have_visible('#master-modal')
         within('#scroll-choice-modal') { click_button('Abbrechen') }
+
+        # The password survives a reload too, even with no session live —
+        # authentication isn't tied to a particular session.
+        page.refresh
+        wait_for_reveal
+        page.evaluate_script("Reveal.slide(3, 0)")
+        wait_for_js("Reveal.getIndices().h === 3")
+        click_button('🚀 Live-Scrollen starten')
+        expect(page).to have_visible('#scroll-choice-modal')
+        expect(page).not_to have_visible('#master-modal')
+        within('#scroll-choice-modal') { click_button('Abbrechen') }
       end
     end
 
@@ -534,6 +545,30 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(slide_indices).to eq([3, 1])
         end
 
+        # A reload mid-session restores the role on both sides: no password
+        # prompt again for the presenter, and no flash of free navigation for
+        # the client while waiting for the next heartbeat to re-establish it.
+        # The song (h) is guaranteed by the session restore itself; the exact
+        # sub-slide (v) depends on reveal.js's own hash write, which is
+        # debounced up to a second behind rapid moves — not asserted here.
+        using_session(:presenter) do
+          page.refresh
+          wait_for_reveal
+          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/)
+          expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
+        end
+        using_session(:client) do
+          page.refresh
+          wait_for_reveal
+          expect(page).to have_css('#multiplex-status', text: 'Folgt')
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
+          before = slide_indices
+          find('body').send_keys(:right) # still locked immediately, not just once the next heartbeat arrives
+          sleep 0.3
+          expect(slide_indices).to eq(before)
+        end
+
         # Ending drops everyone back on the TOC, frees them, and shows the notice
         using_session(:presenter) do
           click_button('🚀 Live-Scrollen beenden')
@@ -608,6 +643,20 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
         end
 
+        # A reload keeps the guest recognised as the same scroller — senderId
+        # is stable across a reload, so the presenter's session (still naming
+        # that id) locks this tab back in immediately, not just a stray follower.
+        # Only h is asserted: v depends on reveal.js's own debounced hash write.
+        using_session(:guest_a) do
+          page.refresh
+          wait_for_reveal
+          expect(page).to have_css('#multiplex-status', text: 'Du scrollst für alle')
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
+          find('body').send_keys(:right) # still walled in right away
+          sleep 0.3
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
+        end
+
         # Ending thanks the guest, frees the room, and sends everyone to the TOC
         using_session(:presenter) do
           click_button('🚀 Live-Scrollen beenden')
@@ -666,6 +715,58 @@ RSpec.describe 'index.html', :js, type: :feature do
           sleep 0.8 # well past the 500ms release-checker tick
           expect(page).to have_css('#master-mode.session-active')
           expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
+        end
+      end
+
+      it 'the presenter keeps the ability to end the session even if the delegated guest goes silent for a while' do
+        using_session(:presenter) do
+          load_presentation
+          page.evaluate_script("Reveal.slide(4, 0)") # Across the universe
+          wait_for_js("Reveal.getIndices().h === 4")
+          install_phantom_guest
+          wait_for_js("window._phantom && window._phantom.connected")
+
+          start_scroll_session(mode: :guest, heartbeat: 100)
+          wait_for_js("window._phantom.sessionId !== null")
+          page.execute_script("window._phantomVolunteer()")
+          expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
+
+          # The phantom guest never sends any state at all. Past three missed
+          # heartbeats (300ms here) an ordinary follower frees itself — and
+          # before the presenter was exempted from that, so did the presenter:
+          # the ❌ vanished and 🚀 reverted to "Live-Scrollen starten", even
+          # though the guest — and everyone else still locked to it — carried
+          # on regardless. A flaky connection to the guest must not cost the
+          # presenter its own ability to end the session.
+          sleep 0.5
+          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/)
+
+          click_button('🚀 Live-Scrollen beenden')
+          expect(page).to have_no_css('#master-mode.session-active')
+          wait_for_js("Reveal.getIndices().h === 1")
+          expect(slide_indices).to eq([1, 0])
+        end
+      end
+
+      it 'ending a session repeats the broadcast, so one dropped packet does not strand the room' do
+        using_session(:presenter) do
+          load_presentation
+          page.evaluate_script("Reveal.slide(4, 0)") # Across the universe
+          wait_for_js("Reveal.getIndices().h === 4")
+          start_scroll_session(mode: :self)
+          install_spy
+          page.execute_script(<<~JS)
+            window._endMessages = [];
+            window._spy.on(window.MULTIPLEX.socketId, function(data) {
+              if (data && data.type === 'session' && data.session && data.session.active === false) {
+                window._endMessages.push(Date.now());
+              }
+            });
+          JS
+
+          click_button('🚀 Live-Scrollen beenden')
+          sleep 1.2 # past the retries' 1s spread
+          expect(page.evaluate_script('window._endMessages.length')).to be >= 2
         end
       end
 
