@@ -1,9 +1,12 @@
 # Father and son (Cat Stevens)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=P6zaCV4niKk)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/father-and-son-chords-84491)
+- [Guitar tutorial](https://www.youtube.com/watch?v=fP7VC-2J_Ok)
 
 ## Instructions
 
@@ -101,9 +104,3 @@ Now there's a way [G], and I know [Em]
 that I [D] have to go away [G]
 
 I [D] know I [C] have to [G] go
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=P6zaCV4niKk)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/father-and-son-chords-84491)
-- [Guitar tutorial](https://www.youtube.com/watch?v=fP7VC-2J_Ok)

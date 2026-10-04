@@ -1,9 +1,13 @@
 # Something stupid (Robbie Williams)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=icZHj6DG7ms)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/something-stupid-chords-1186829)
+- [Guitar tutorial](https://www.youtube.com/watch?v=pXuxL7pMb7c)
+- [Sing in harmony tutorial](https://www.youtube.com/watch?v=eet2ETbsRwU)
 
 ## Instructions
 
@@ -108,10 +112,3 @@ by [Am] saying something [D7] stupid
 like: "I [G] love you" [Eb]
 
 I [G] love you [Eb] _(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=icZHj6DG7ms)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/something-stupid-chords-1186829)
-- [Guitar tutorial](https://www.youtube.com/watch?v=pXuxL7pMb7c)
-- [Sing in harmony tutorial](https://www.youtube.com/watch?v=eet2ETbsRwU)

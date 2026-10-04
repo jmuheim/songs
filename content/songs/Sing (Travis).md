@@ -1,9 +1,11 @@
 # Sing (Travis)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=eYO1-gGWJyo)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/travis/sing-chords-1334)
 
 ## Verse 1
 
@@ -56,8 +58,3 @@ Oh baby, [G] sing, [D] [Am] sing,
 [Am] sing, sing, sing, [G] sing
 For the love you [G] bring [D] won't mean a [Am] thing
 Unless you [Am] sing, sing sing [G] sing
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=eYO1-gGWJyo)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/travis/sing-chords-1334)

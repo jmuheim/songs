@@ -1,9 +1,12 @@
 # Rivers of Babylon (Boney M.)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=ta42xU2UXLA)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/boney-m-/rivers-of-babylon-chords-1458631)
+- [Guitar tutorial](https://www.youtube.com/watch?v=E9WcazK7eOI)
 
 ## Intro
 
@@ -51,9 +54,3 @@ Ye-eah we [D7] wept
 when we remembered Zi[G]on
 
 _(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=ta42xU2UXLA)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/boney-m-/rivers-of-babylon-chords-1458631)
-- [Guitar tutorial](https://www.youtube.com/watch?v=E9WcazK7eOI)

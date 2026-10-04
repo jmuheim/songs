@@ -1,9 +1,13 @@
 # Keep on the sunny side (Carter Family)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Traditionell
+- Sprache: Englisch
+- Genre: Traditionell
+- [Lied auf YouTube](https://www.youtube.com/watch?v=ZbmQQ4RfzVE)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/the-carter-family/keep-on-the-sunny-side-chords-1431252)
+- [Guitar tutorial](https://www.youtube.com/watch?v=O2j6cZlT2LI)
+- [Interpretation by The Whites](https://www.youtube.com/watch?v=8joVnqleS9Q)
 
 ## Intro
 
@@ -80,10 +84,3 @@ _(Fade out_
 [C] It will help us every day
 It will [F] brighten all the [C] way
 If we'll [C] keep on the [G] sunny side of [C] life
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=ZbmQQ4RfzVE)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/the-carter-family/keep-on-the-sunny-side-chords-1431252)
-- [Guitar tutorial](https://www.youtube.com/watch?v=O2j6cZlT2LI)
-- [Interpretation by The Whites](https://www.youtube.com/watch?v=8joVnqleS9Q)

@@ -1,9 +1,11 @@
 # Männer sind Schweine (Die Ärzte)
 
-## About
+## Infos über das Lied
 
-- Deutsch
-- Pop
+- Sprache: Deutsch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=404oPn6tudE)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/568214)
 
 ## Verse 1
 
@@ -108,8 +110,3 @@ Männer sind [G] Autos
 Nur ohne Re[Em]serverad
 Yeah, yeah, yeah, yeaääääää [Am]
 [C] Uh-hu, uh-hu [D]
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=404oPn6tudE)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/568214)

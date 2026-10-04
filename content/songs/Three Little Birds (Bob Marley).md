@@ -1,9 +1,11 @@
 # Three Little Birds (Bob Marley)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=LanCLS_hIo4)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-marley/three-little-birds-chords-166605)
 
 ## Intro
 
@@ -28,8 +30,3 @@ Of melodies [E] pure and true
 Singin', [D] this is my message to [A] you-ou-ou
 
 _(Start over)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=LanCLS_hIo4)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-marley/three-little-birds-chords-166605)

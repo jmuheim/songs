@@ -1,6 +1,11 @@
 # I choose to live in love (Sam Garett)
 
-_Capo 4. Bund_
+## Infos über das Lied
+
+- Capo: 4. Bund
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=pOL66P0FdPQ)
 
 ## Intro
 
@@ -47,7 +52,3 @@ Sri Laxmi Nama[D]ha _(2x)_
 [G] [D] [Em] Ohhhhhhhhh
 I walk [C] softly on this earth,
 in the [D] light of God's name
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=pOL66P0FdPQ)

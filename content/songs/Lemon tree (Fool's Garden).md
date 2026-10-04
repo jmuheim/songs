@@ -1,13 +1,15 @@
 # Lemon tree (Fool's Garden)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Capo: 2. Bund
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=wCQfkEkePx8)
+- [Source tab](https://tabs.ultimate-guitar.com/user/tab/view?h=_5ECoKMMKHZmcTbZHfp9P2JQ&tab_id=27297698)
+- [Guitar tutorial](https://www.youtube.com/watch?v=Yv-AsMzWaV0)
 
 ## Instructions
-
-Capo on 2nd fret
 
 ```
     |E A D G B e|
@@ -134,9 +136,3 @@ I [F] wonder how I [C] wonder why
 
 And all [Bb] that I can see [C] _(3x)_
 Is just a yellow [F] lemon tree
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=wCQfkEkePx8)
-- [Source tab](https://tabs.ultimate-guitar.com/user/tab/view?h=_5ECoKMMKHZmcTbZHfp9P2JQ&tab_id=27297698)
-- [Guitar tutorial](https://www.youtube.com/watch?v=Yv-AsMzWaV0)

@@ -1,9 +1,12 @@
 # One (U2)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=ftjEcrrf7r0)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/u2/one-chords-87432)
+- [Guitar tutorial](https://www.youtube.com/watch?v=wQZaTaexcbk)
 
 ## Intro
 
@@ -94,9 +97,3 @@ We got to [FM7] carry each other, car[C]ry each other
 
 One [C] [Am] One [FM7] [C]
 _(Repeat several times and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=ftjEcrrf7r0)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/u2/one-chords-87432)
-- [Guitar tutorial](https://www.youtube.com/watch?v=wQZaTaexcbk)

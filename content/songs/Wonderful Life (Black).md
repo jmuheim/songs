@@ -1,9 +1,10 @@
 # Wonderful Life (Black)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Source tab](https://tabs.ultimate-guitar.com/tab/black-uk/wonderful-life-chords-830823)
 
 ## Intro
 
@@ -76,7 +77,3 @@ It's a [Em] wonderful, [Am] wonderful [D] life _(2x)_
 
 [Em] [Am] Wonderful [Em] life, [Am] wonderful [Em] life
 [Em] [Am] Wonderful [Em] life _(fade)_
-
-## Resources
-
-- [Source tab](https://tabs.ultimate-guitar.com/tab/black-uk/wonderful-life-chords-830823)

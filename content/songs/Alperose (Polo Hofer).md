@@ -1,9 +1,11 @@
 # Alperose (Polo Hofer)
 
-## About
+## Infos über das Lied
 
-- Mundart
-- Pop
+- Sprache: Mundart
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=kinhpcXbTqA)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/polo-hofer/alperose-ukulele-4330988)
 
 ## Verse 1
 
@@ -57,8 +59,3 @@ wo [F] nebed üs im Heu gläge [G] si
 [F] Alperose, si das gsi [C] denn
 [F] Alperose, müesse das gsi [Am] si,
 wo [F] nebed üs im Heu gläge [G] si
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=kinhpcXbTqA)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/polo-hofer/alperose-ukulele-4330988)

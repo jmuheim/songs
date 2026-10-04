@@ -1,8 +1,11 @@
 # Dr Wilhelm Täll (Mani Matter)
 
-## About
+## Infos über das Lied
 
-- Mundart
+- Sprache: Mundart
+- Genre: Traditional
+- [Lied auf YouTube](https://www.youtube.com/watch?v=-Qtp0EC2P4M)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/1911563)
 
 ## Verse 1
 
@@ -88,8 +91,3 @@ Hingäge [G7] eis weiss ig sit[C]här:
 
 Sy [F] würde d'Freiheit [C] gwinne
 Wenn sy [G7] dä Wäg z'gwinne [C] wär _(x2)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=-Qtp0EC2P4M)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/1911563)

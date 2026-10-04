@@ -1,9 +1,11 @@
 # Further on up the road (Johnny Cash)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=HMCQgWtST5c)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/further-on-up-the-road-chords-520573)
 
 ## Intro
 
@@ -77,8 +79,3 @@ further [G] on up the [Am] road [G] _(2x)_
 
 And I'll [F] meet you
 further [G] on up the [Am] road
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=HMCQgWtST5c)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/further-on-up-the-road-chords-520573)

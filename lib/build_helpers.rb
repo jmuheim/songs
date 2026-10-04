@@ -39,12 +39,22 @@ module BuildHelpers
     h2s = content.lines.select { |l| l.start_with?('## ') }
     errors << "must have at least one H2 section (found #{h2s.size})" if h2s.empty?
 
+    if h2s.any?
+      title, = song_sections(content)
+      stray = title.drop(1).reject { |l| l.strip.empty? }
+      errors << "has content between the H1 and the first H2 — move it into \"#{ABOUT_HEADING}\": #{stray.map(&:strip).inspect}" unless stray.empty?
+    end
+
     opens, closes = content.count('['), content.count(']')
     errors << "has mismatched brackets (#{opens} [ vs #{closes} ])" unless opens == closes
 
     bad_chords = content.scan(/\[([^\]]+)\](?!\()/).flatten
       .select { |c| c.match?(/^[A-Z]/) && c.include?(' ') }
     errors << "has chord names with spaces: #{bad_chords.inspect}" unless bad_chords.empty?
+
+    by_category = song_tags(content).group_by { |(cat, _)| cat }
+    errors << "is missing a Sprache tag in its \"#{ABOUT_HEADING}\" section" if (by_category['Sprache'] || []).empty?
+    errors << "is missing a Genre tag in its \"#{ABOUT_HEADING}\" section"   if (by_category['Genre']   || []).empty?
 
     return if errors.empty?
     abort "#{name}: #{errors.join('; ')}"
@@ -54,35 +64,41 @@ module BuildHelpers
     text.gsub(CHORD_REGEX) { "`#{$1}`{.#{$1[0].downcase}}" }
   end
 
-  # A song's tags live as a markdown list in its `## About` section (one tag per
-  # list item). Returns the trimmed item texts in order, [] when there is no
-  # About section. Prose in About is ignored, so the section can hold more later.
+  # The heading every song opens on: its Sprache/Genre tags and resource links,
+  # authored directly in this shape in the source file (see song file format
+  # in CLAUDE.md) rather than assembled from separate sections at build time.
+  ABOUT_HEADING = 'Infos über das Lied'
+
+  # A song's tags live as "- Sprache: X" / "- Genre: Y" list items in its
+  # ABOUT_HEADING section (one tag per list item; everything else there — a
+  # Capo note, resource links — is not a tag and is skipped). Returns
+  # [category, value] pairs in order, [] when there is no such section. The
+  # category is exactly what was written, not inferred from a fixed
+  # vocabulary — so a language or genre value this book hasn't seen before
+  # is still classified correctly, and the About slide can't disagree with
+  # the filter dropdowns about what something is.
   def song_tags(content)
     lines = content.lines
-    start = lines.index { |l| l.match?(/\A##\s+About\s*\z/i) }
+    start = lines.index { |l| l.match?(/\A##\s+#{Regexp.escape(ABOUT_HEADING)}\s*\z/i) }
     return [] unless start
 
     lines[(start + 1)..].each_with_object([]) do |line, tags|
       break tags if line.start_with?('## ')
-      m = line.match(/\A\s*[-*]\s+(.+?)\s*\z/)
-      tags << m[1] if m
+      m = line.match(/\A\s*[-*]\s+(Sprache|Genre):\s*(.+?)\s*\z/i)
+      tags << [m[1].downcase == 'sprache' ? 'Sprache' : 'Genre', m[2]] if m
     end
-  end
-
-  # The two tag categories the TOC filter offers as dropdowns. A tag not in
-  # LANGUAGE_TAGS is a genre — this is the one place that decision is made, so
-  # the About slide's bullets and the filter dropdowns can't disagree on it.
-  LANGUAGE_TAGS = %w[Deutsch Englisch Mundart Italienisch].freeze
-
-  def tag_category(tag)
-    LANGUAGE_TAGS.include?(tag) ? 'Sprache' : 'Genre'
   end
 
   # Splits a song's markdown into its leading title lines and an ordered list
   # of `## `-delimited sections ({name:, lines:}, lines including the heading
-  # itself) — the shape merge_about_section needs to pull three sections out
-  # by name and reassemble the rest in their original order.
+  # itself) — the shape merge_about_section needs to pull sections out by name
+  # and reassemble the rest in their original order, and validate_song! needs
+  # to check nothing but the H1 sits ahead of the first H2.
   def song_sections(content)
+    # Without a trailing newline, the file's last line carries no "\n" of its own, so when
+    # merge_about_section relocates that section its line-terminator goes missing too —
+    # swallowing the blank line before whatever section follows.
+    content += "\n" unless content.end_with?("\n")
     lines = content.lines
     first_h2 = lines.index { |l| l.start_with?('## ') } || lines.size
     title = lines[0...first_h2]
@@ -98,32 +114,25 @@ module BuildHelpers
     [title, sections]
   end
 
-  # Folds a song's `## About` (tags), `## Instructions` (alternate chord
-  # fingerings) and `## Resources` (links) into a single `## About` section at
-  # the front — where `## About` already sat — so every song opens on one
-  # slide instead of scattering the same information across up to three. The
-  # tags move into the Resources bullet list, labelled with tag_category so
-  # the filter dropdowns and this slide read from the same classification.
+  # Splices a song's `## Instructions` (alternate chord fingerings) into its
+  # ABOUT_HEADING section — which already carries the song's tags and resource
+  # links as authored in the source file — so every song opens on one slide
+  # instead of scattering the same information across two.
   def merge_about_section(content)
     title, sections = song_sections(content)
-    about        = sections.find { |s| s[:name] == 'About' }
+    about        = sections.find { |s| s[:name] == ABOUT_HEADING }
     instructions = sections.find { |s| s[:name] == 'Instructions' }
-    resources    = sections.find { |s| s[:name] == 'Resources' }
-    return content unless about || instructions || resources
+    return content unless about
 
-    rest = sections - [about, instructions, resources].compact
+    rest = sections - [about, instructions].compact
 
-    tag_bullets = song_tags(content).map { |t| "- #{tag_category(t)}: #{t}\n" }
-    resource_items = resources ? resources[:lines].drop(1).select { |l| l.match?(/\A\s*[-*]\s+/) } : []
-    list = tag_bullets + resource_items
-
-    merged = ["## About\n", "\n", *list]
+    merged = about[:lines].dup
     if instructions
       body = instructions[:lines].drop(1).drop_while { |l| l.strip.empty? }
-      merged << "\n" unless list.empty?
+      merged << "\n" unless merged.last.strip.empty?
       merged += body
     end
-    merged << "\n" # a blank line before whatever section follows, or at EOF
+    merged << "\n" unless merged.last.strip.empty? # a blank line before whatever section follows, or at EOF
 
     (title + merged + rest.flat_map { |s| s[:lines] }).join
   end
@@ -140,30 +149,29 @@ module BuildHelpers
     doc.to_html
   end
 
-  # Carries the per-song tags (parsed from each `## About` section with song_tags,
-  # one array per song in the same order the TOC lists them) into the TOC so
-  # toc-filter.js can filter it: a `data-sprache`/`data-genre` attribute on each
-  # song's <li> (tag_category sorts each tag into one of the two, so every tag
-  # lands in exactly one) and a <fieldset id="toc-filter"> with one <select> per
-  # category plus a Reset button at the top of #TOC. The first <li> is the
-  # Introduction — it has no song behind it, so it is skipped.
+  # Carries the per-song tags (parsed from each ABOUT_HEADING section with song_tags,
+  # one array of [category, value] pairs per song in the same order the TOC lists
+  # them) into the TOC so toc-filter.js can filter it: a `data-sprache`/`data-genre`
+  # attribute on each song's <li> and a <fieldset id="toc-filter"> with one
+  # <select> per category plus a Reset button at the top of #TOC. The first
+  # <li> is the Introduction — it has no song behind it, so it is skipped.
   def inject_toc_filter(html, tags:)
     doc = Nokogiri::HTML(html)
     toc = doc.at_css('section#TOC')
     return html unless toc
 
     toc.css('nav li').drop(1).each_with_index do |li, i|
-      song = Array(tags[i]).map { |t| t.to_s.strip }.reject(&:empty?)
-      by_category = song.group_by { |t| tag_category(t) }
-      li['data-sprache'] = by_category['Sprache'].join(',') if by_category['Sprache']
-      li['data-genre']   = by_category['Genre'].join(',')   if by_category['Genre']
+      song = Array(tags[i]).map { |(cat, val)| [cat, val.to_s.strip] }.reject { |(_, val)| val.empty? }
+      by_category = song.group_by { |(cat, _)| cat }
+      li['data-sprache'] = by_category['Sprache'].map { |(_, v)| v }.join(',') if by_category['Sprache']
+      li['data-genre']   = by_category['Genre'].map   { |(_, v)| v }.join(',') if by_category['Genre']
     end
 
-    all_tags = tags.flatten.map { |t| t.to_s.strip }.reject(&:empty?).uniq
-    return doc.to_html if all_tags.empty?
+    all_pairs = tags.flat_map { |song| Array(song) }.map { |(cat, val)| [cat, val.to_s.strip] }.reject { |(_, val)| val.empty? }
+    return doc.to_html if all_pairs.empty?
 
-    sprachen = all_tags.select { |t| tag_category(t) == 'Sprache' }.sort
-    genres   = all_tags.select { |t| tag_category(t) == 'Genre' }.sort
+    sprachen = all_pairs.select { |(cat, _)| cat == 'Sprache' }.map { |(_, v)| v }.uniq.sort
+    genres   = all_pairs.select { |(cat, _)| cat == 'Genre'   }.map { |(_, v)| v }.uniq.sort
 
     fieldset = Nokogiri::XML::Node.new('fieldset', doc)
     fieldset['id'] = 'toc-filter'
@@ -243,10 +251,12 @@ module BuildHelpers
 
   def post_process_print(html, assets:)
     html = html.sub('<style>', '<style>' + style_file('serif.css') + style_file('shared.css'))
-    # About now carries tags, resource links and alternate fingerings — all
-    # screen features, useless on paper (merge_about_section folds the three
-    # into this one section, so stripping "about" is enough).
-    html = html.gsub(/<section id="about[-\d]*?" class="slide level2">.*?<\/section>/m, '')
+    # ABOUT_HEADING carries tags, resource links and alternate fingerings — all
+    # screen features, useless on paper (merge_about_section folds instructions
+    # into this one section, so stripping it alone is enough). Pandoc slugifies
+    # the heading text verbatim (lowercased, spaces to hyphens, "ü" kept as-is)
+    # for the id, with a "-N" suffix to disambiguate it across songs.
+    html = html.gsub(/<section id="infos-über-das-lied[-\d]*?" class="slide level2">.*?<\/section>/m, '')
     html = html.sub('<section id="title-slide"', %(<section id="title-slide" data-background-image="#{assets}background.jpg"))
     wrap_slide_content(without_pandoc_plugins(html))
   end

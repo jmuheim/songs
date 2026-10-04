@@ -1,9 +1,11 @@
 # Lean on Me (Bill Withers)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=fOZ-MySzAac)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/bill-withers/lean-on-me-chords-150987)
 
 ## Intro
 
@@ -74,8 +76,3 @@ I'll share your [C] load
 If you just [G7] call [C] me
 
 [G7] Call [C] me _(repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=fOZ-MySzAac)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/bill-withers/lean-on-me-chords-150987)

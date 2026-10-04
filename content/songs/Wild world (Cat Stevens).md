@@ -1,9 +1,12 @@
 # Wild world (Cat Stevens)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=yffOnXYgy3o)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/wild-world-chords-992169)
+- [Guitar tutorial](https://www.youtube.com/watch?v=SeDzGf7L3Fs)
 
 ## Instructions
 
@@ -100,9 +103,3 @@ it's a [F] wild world [C] _(Riff 1)_
 [F] like a [C] child girl [Dm] [E] _(1st time only)_
 
 _(Repeat)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=yffOnXYgy3o)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/wild-world-chords-992169)
-- [Guitar tutorial](https://www.youtube.com/watch?v=SeDzGf7L3Fs)

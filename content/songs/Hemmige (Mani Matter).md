@@ -1,8 +1,12 @@
 # Hemmige (Mani Matter)
 
-## About
+## Infos über das Lied
 
-- Mundart
+- Sprache: Mundart
+- Genre: Traditional
+- [Lied auf YouTube](https://www.youtube.com/watch?v=L0OydDmfwAo)
+    - [Super Interpretation vom\n Stephan Eicher](https://www.youtube.com/watch?v=pxjNh3sq66U)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/stephan-eicher/hemmige-chords-1716428)
 
 ## Verse 1
 
@@ -49,9 +53,3 @@ Und [Am] we me gseht, was hütt dr Mönschheit [Dm] droht
 So [G] gseht me würklech schwarz, nid nume [C] rot
 Und [C] was me no cha hoffen isch a[E7]lei
 Dass si [Am] Hemm[E7]ige [Am] hei
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=L0OydDmfwAo)
-    - [Super Interpretation vom\n Stephan Eicher](https://www.youtube.com/watch?v=pxjNh3sq66U)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/stephan-eicher/hemmige-chords-1716428)

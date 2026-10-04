@@ -1,9 +1,11 @@
 # Verlieben verloren vergessen verzeihn (Wolfgang Petry)
 
-## About
+## Infos über das Lied
 
-- Deutsch
-- Pop
+- Sprache: Deutsch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=Mlt2xg_j5AY)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/wolfgang-petry/verlieben-verloren-vergessen-verzeihn-chords-1041842)
 
 ## Intro
 
@@ -52,8 +54,3 @@ Ich hatte doch alles, [Am] alles was zählt, [C]
 Ohne Dich leben, [D] jetzt ist es zu spät. [G]
 
 _(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=Mlt2xg_j5AY)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/wolfgang-petry/verlieben-verloren-vergessen-verzeihn-chords-1041842)

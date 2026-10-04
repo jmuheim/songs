@@ -1,6 +1,11 @@
 # All I Have To Do (Helen Knight)
 
-_Capo 3. Bund_
+## Infos über das Lied
+
+- Capo: 3. Bund
+- Sprache: Englisch
+- Genre: Traditional
+- [Lied auf YouTube](https://www.youtube.com/watch?v=u9DzUAdaLCg)
 
 ## Intro
 
@@ -17,7 +22,3 @@ Across these [G] lands
 on which i [Am] stand
 
 _(Repeat)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=u9DzUAdaLCg)

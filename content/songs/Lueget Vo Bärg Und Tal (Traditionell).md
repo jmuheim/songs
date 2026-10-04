@@ -1,8 +1,11 @@
 # Lueget Vo Bärg Und Tal (Traditionell 🇨🇭)
 
-## About
+## Infos über das Lied
 
-- Mundart
+- Sprache: Mundart
+- Genre: Traditional
+- [Lied auf YouTube](https://www.youtube.com/watch?v=Hdshwr1hDX8)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/rumpelstilz/stets-in-truure-chords-4407716)
 
 ## Strophe 1
 
@@ -47,8 +50,3 @@ Stärnli, Gott [F] grüess di, [G] wie [C] goht's?
 [Am] Vater im [G] Himmel, dä [C] wacht
 [C] Stärnli, liebs [F] Stärnli, [G] guet [C] Nacht!
 [Am] Stärnli, liebs [Dm] Stärnli, [G7] guet [C] Nacht!
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=Hdshwr1hDX8)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/rumpelstilz/stets-in-truure-chords-4407716)

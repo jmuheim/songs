@@ -1,9 +1,12 @@
 # Road trippin' (Red Hot Chili Peppers)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=11GYvfYjyV0)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/red-hot-chili-peppers/road-trippin-chords-1009501)
+- [Guitar tutorial](https://www.youtube.com/watch?v=NXLH5YT1ZLM)
 
 ## Intro
 
@@ -102,9 +105,3 @@ Just a [B] mirror for the sun [Em]
 
 [Am] These smiling [G/B] eyes
 are just a [C] mirror for [D] _(x3)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=11GYvfYjyV0)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/red-hot-chili-peppers/road-trippin-chords-1009501)
-- [Guitar tutorial](https://www.youtube.com/watch?v=NXLH5YT1ZLM)

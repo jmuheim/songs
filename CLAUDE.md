@@ -54,10 +54,12 @@ Each song lives in `content/songs/<Title> (<Artist>).md`. Structure:
 ```markdown
 # Song Title (Artist Name)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Mantra
+- Sprache: Englisch
+- Genre: Mantra
+- [Lied auf YouTube](https://youtube.com/...)
+- [Source tab](https://...)
 
 ## Instructions
 
@@ -70,19 +72,14 @@ A7sus4 |x 0 2 0 3 0|
 ## Section Name
 
 Lyrics with [Chord] inline like this [Am] and here [G7].
-
-## Resources
-
-- [Song](https://youtube.com/...)
 ```
 
-- **H1** = song title (one per file, shown as the slide title)
+- **H1** = song title (one per file, shown as the slide title). **Nothing but blank lines may follow it before the first H2** — `validate_song!` aborts the build otherwise; a capo note or any other aside belongs in `## Infos über das Lied` instead (e.g. `- Capo: 3. Bund`).
 - **H2** = section (each becomes a sub-slide)
 - **Chords** use `[ChordName]` inline in lyrics
-- An **`## About`** section at the top holds the song's tags, one per list item (free text — keep the vocabulary consistent, e.g. `Deutsch` / `Englisch` / `Mundart` / `Pop` / `Rock` / `Mantra`). `song_tags` in `lib/build_helpers.rb` parses it (list items only, so prose in About is ignored); `tag_category` sorts each tag into `Sprache` (the `LANGUAGE_TAGS` list) or `Genre` (everything else) for the [table-of-contents tag filter](#table-of-contents-tag-filter). Tagging is optional.
-- An optional **`## Instructions`** section holds alternate chord fingerings (e.g. a capo shape or a barré alternative) as a plain code block, same as the [chord tooltip](#keyboard-and-dialogs)'s guitar tab.
-- A **`## Resources`** section lists external links (YouTube, tabs, tutorials).
-- `merge_about_section` in `lib/build_helpers.rb` folds `## About`, `## Instructions` and `## Resources` into one `## About` section at the front of the song, at build time — the source file keeps them as separate sections (above) for readability; nothing on disk needs to change when editing a song. The tags become bullets (`- Sprache: Mundart`, `- Genre: Pop`) in the same list as the Resources links; Instructions' code block follows. This merged `## About` is stripped from `print.html` entirely (tags, resource links and alternate fingerings are all screen-only features) — see [`spec/fixtures/golden/about_merged.html`](spec/fixtures/golden/about_merged.html).
+- An **`## Infos über das Lied`** section at the top holds the song's tags and its resource links together, authored in this shape directly (not assembled at build time): one `- Sprache: <value>` line and one or more `- Genre: <value>` lines (free text — keep the vocabulary consistent, e.g. `Deutsch` / `Englisch` / `Mundart` / `Pop` / `Rock` / `Mantra`), followed by the resource links (YouTube, tabs, tutorials) as plain Markdown link bullets, plus any other aside (e.g. `- Capo: 3. Bund`) that would otherwise float between the H1 and the first H2. The YouTube link is always labelled `[Lied auf YouTube]`; other links are free text (`Source tab`, `Guitar tutorial`, …). `song_tags` in `lib/build_helpers.rb` parses the `Sprache:`/`Genre:` lines into `[category, value]` pairs (other list items — a Capo note, the resource links — are not tags and are skipped); the category is exactly what was written, not inferred from a fixed vocabulary, so a language or genre this book hasn't seen before still lands in the right [table-of-contents tag filter](#table-of-contents-tag-filter) dropdown. `validate_song!` **requires** at least one Sprache and one Genre tag, aborting the build otherwise — tagging is not optional.
+- An optional **`## Instructions`** section, right after `## Infos über das Lied`, holds alternate chord fingerings (e.g. a capo shape or a barré alternative) as a plain code block, same as the [chord tooltip](#keyboard-and-dialogs)'s guitar tab.
+- `merge_about_section` in `lib/build_helpers.rb` splices `## Instructions` into `## Infos über das Lied` at build time — the source file keeps them as two sections (above) for readability; nothing else on disk needs to change when editing a song. This merged section is stripped from `print.html` entirely (tags, resource links and alternate fingerings are all screen-only features) — see [`spec/fixtures/golden/infos_ueber_das_lied.html`](spec/fixtures/golden/infos_ueber_das_lied.html).
 - `content/Introduction.md` is always prepended as the first slide
 
 ## Chord rendering pipeline
@@ -105,9 +102,9 @@ The regex only matches `[Word]` not followed by `(` — so standard Markdown lin
 
 ## Table of contents tag filter
 
-The TOC can be filtered by Sprache (language) and Genre. Each song's tags live in its `## About` section (see [Song file format](#song-file-format)); the build carries them into the TOC and `style/toc-filter.js` wires the interaction:
+The TOC can be filtered by Sprache (language) and Genre. Each song's tags live in its `## Infos über das Lied` section (see [Song file format](#song-file-format)); the build carries them into the TOC and `style/toc-filter.js` wires the interaction:
 
-- `song_tags` parses the `## About` list items of each song; `tag_category` sorts each one into `Sprache` or `Genre`. `build` and `fixture_builder` collect one tag array per song — in the same order the TOC lists them — and pass it to `post_process_index` as `tags:`.
+- `song_tags` parses the `Sprache:`/`Genre:` list items of each song's `## Infos über das Lied` section into `[category, value]` pairs. `build` and `fixture_builder` collect one such array per song — in the same order the TOC lists them — and pass it to `post_process_index` as `tags:`.
 - `inject_toc_filter` (a Nokogiri pass, like `wrap_slide_content`) adds `data-sprache="Englisch"` / `data-genre="Pop"` attributes to each song's TOC `<li>` and prepends a `<fieldset id="toc-filter">` (legend „Filter") holding one `<select>` per category that has at least one tag (each sorted, first option „Alle") and a „Reset" button. The first `<li>` is the Introduction and is skipped — matching is **by order**, not by re-deriving Pandoc's slugs. With no tags anywhere, no fieldset is added.
 - `style/toc-filter.js` re-renders on every `change` and hides the `<li>`s that don't match (`.toc-hidden`). The two categories combine with **AND** (a song must match the selected Sprache *and* the selected Genre, for whichever of the two has a selection); „Reset" clears both selects; untagged entries (incl. the Introduction) hide while any filter is active. The selects and the Reset button are real form controls, so the `keyboardCondition` in `body-controls.html` already keeps their keys (Space, arrows, Home/End — reveal.js's own guard only excludes input/textarea, not select) from reaching Reveal. The selection is local to each client and is **not** synced over multiplex.
 - Styling: fieldset/select/button layout live in `shared.css`, colours and the sticky bar in `night.css` (with a bright-mode override). The bar is `position: sticky; top: 0`, so it stays visible while the list scrolls underneath it.

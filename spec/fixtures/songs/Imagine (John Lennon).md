@@ -1,9 +1,11 @@
 # Imagine (John Lennon)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=iOs9Osz3UFQ)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/john-lennon/imagine-chords-9306)
 
 ## Intro
 
@@ -60,8 +62,3 @@
 
 [F] I hope some [G] day you'll [C] join us [E]
 [F] And the [G] world will be as [C] one
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=iOs9Osz3UFQ)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/john-lennon/imagine-chords-9306)

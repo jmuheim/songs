@@ -1,9 +1,11 @@
 # Summer wine (Nancy Sinatra & Lee Hazlewood)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=Ib_eW9VSUwM)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/ville-valo/summer-wine-chords-590088)
 
 ## Intro _(Frauen)_
 
@@ -97,8 +99,3 @@ a [Am] dollar and a dime
 
 [Am] [G] [Am] [G]
 [Dm] [Am] [Dm] [Am]
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=Ib_eW9VSUwM)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/ville-valo/summer-wine-chords-590088)

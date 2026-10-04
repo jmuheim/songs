@@ -1,6 +1,11 @@
 # Abre la puerta (Glen Phillips)
 
-_Capo 4. Bund_
+## Infos über das Lied
+
+- Capo: 4. Bund
+- Sprache: Spanisch
+- Genre: Traditional
+- [Lied auf YouTube](https://www.youtube.com/watch?v=TVfpenKPVSc)
 
 ## Chorus
 
@@ -14,7 +19,3 @@ Que entre la [G] tierra, en el corazón [Am] _(2x)_
 [G] Somos los ojos, los ojos de Dios [E7]
 
 _(Repeat)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=TVfpenKPVSc)

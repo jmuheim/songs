@@ -1,9 +1,11 @@
 # Die Rose (Peter Alexander)
 
-## About
+## Infos über das Lied
 
-- Deutsch
-- Pop
+- Sprache: Deutsch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=tTJ990zzDFI)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/peter-alexander/die-rose-chords-2328527)
 
 ## Verse 1
 
@@ -37,8 +39,3 @@ Doch ver[Em]giss nicht – an dem [Am] Zweig dort,
 der im [F] Schnee beinah er[G]fror.
 Blüht im [C] Frühjahr eine [G] Rose,
 so [F] schön [G] wie nie zu[C]vor.
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=tTJ990zzDFI)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/peter-alexander/die-rose-chords-2328527)

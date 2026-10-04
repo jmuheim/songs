@@ -1,13 +1,12 @@
 # I Shall Be Released (Bob Dylan)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
-
-## Instructions
-
-_Capo 3rd_
+- Capo: 3. Bund
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=In7MChGC2Wo)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-dylan/i-shall-be-released-chords-14873)
 
 ## Verse
 
@@ -53,8 +52,3 @@ _Capo 3rd_
 [C] Any day now,
 [Dm] Any day now,
 [Em] I [F] shall be [G] re[C]leased
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=In7MChGC2Wo)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-dylan/i-shall-be-released-chords-14873)

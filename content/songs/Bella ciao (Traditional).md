@@ -1,9 +1,12 @@
 # Bella ciao (Traditional)
 
-## About
+## Infos über das Lied
 
-- Italienisch
-- Traditionell
+- Sprache: Italienisch
+- Genre: Traditionell
+- [Lied auf YouTube](https://www.youtube.com/watch?v=4CI3lhyNKfo)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/bella-ciao-chords-1839756)
+- [Guitar interpretation](https://www.youtube.com/watch?v=2iCOH6GOmRA)
 
 ## Verse 1
 
@@ -64,9 +67,3 @@ Bella, [Am7] ciao, ciao, ciao!
 
 "È questo il [Dm] fiore del parti[Am]giano
 morto [E7] per la liber[Am]tà!" _(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=4CI3lhyNKfo)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/bella-ciao-chords-1839756)
-- [Guitar interpretation](https://www.youtube.com/watch?v=2iCOH6GOmRA)

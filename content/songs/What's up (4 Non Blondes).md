@@ -1,9 +1,11 @@
 # Whats up (4 Non Blondes)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=6NXnxTNIWkc)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/4-non-blondes/whats-up-chords-268676)
 
 ## Intro
 
@@ -80,8 +82,3 @@ _(Repeat)_
 [D] Twenty-five years and my life is still
 [Em] Trying to get up that great big hill
 Of [G] hope for a destina[D]tion
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=6NXnxTNIWkc)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/4-non-blondes/whats-up-chords-268676)

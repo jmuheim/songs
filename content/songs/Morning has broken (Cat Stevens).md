@@ -1,9 +1,12 @@
 # Morning has broken (Cat Stevens)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=uZAsfB1Np-8)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/morning-has-broken-chords-84520)
+- [Guitar tutorial](https://www.youtube.com/watch?v=eyRVPNenXlg)
 
 ## Instructions
 
@@ -91,9 +94,3 @@ Morning has [C]brok[Dm]en
 [F] [G] [E] [Am]
 [F#] [Bm] [G] [D]
 [A7/D] [D]
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=uZAsfB1Np-8)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/morning-has-broken-chords-84520)
-- [Guitar tutorial](https://www.youtube.com/watch?v=eyRVPNenXlg)

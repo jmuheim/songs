@@ -1,9 +1,12 @@
 # Baby one more time (Britney Spears)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=C-u5WLJ9Yk4)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/britney-spears/baby-one-more-time-chords-1512732)
+- [Guitar tutorial](https://www.youtube.com/watch?v=jn4ydR1m96E)
 
 ## Intro
 
@@ -100,9 +103,3 @@ is killing me now, don't you know I still believe
 that you would be here and give me a sign**
 
 _(Together)_ Hit me baby one more time! [Am]
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=C-u5WLJ9Yk4)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/britney-spears/baby-one-more-time-chords-1512732)
-- [Guitar tutorial](https://www.youtube.com/watch?v=jn4ydR1m96E)

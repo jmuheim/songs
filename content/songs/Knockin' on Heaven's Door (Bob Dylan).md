@@ -1,9 +1,11 @@
 # Knockin' on Heaven's Door (Bob Dylan)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=rm9coqlk8fY)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-dylan/knockin-on-heavens-door-chords-66559)
 
 ## Intro
 
@@ -37,8 +39,3 @@
 ## Outro
 
 [G] Oo [D] oo-oo [Am] oo [G] (fade)
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=rm9coqlk8fY)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-dylan/knockin-on-heavens-door-chords-66559)

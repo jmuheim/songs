@@ -25,7 +25,7 @@ RSpec.describe 'HTML golden files' do
     expect(section.to_html + "\n").to eq(golden('toc.html'))
   end
 
-  it 'tags each TOC entry with its Sprache/Genre from its About section' do
+  it 'tags each TOC entry with its Sprache/Genre from its Infos-über-das-Lied section' do
     imagine  = doc.at_css('#TOC a[href="#/imagine-john-lennon"]').parent
     connells = doc.at_css('#TOC a[href="#/the-connells"]').parent
     expect(imagine['data-sprache']).to  eq('Englisch')
@@ -47,17 +47,17 @@ RSpec.describe 'HTML golden files' do
     expect(doc.at_css('#toc-filter-reset').text.strip).to eq('Reset')
   end
 
-  it 'strips the About sections from print.html (tags, resources and fingerings are a screen feature)' do
-    expect(print_doc.css('section[id^="about"]')).to be_empty
+  it 'strips the Infos-über-das-Lied sections from print.html (tags, resources and fingerings are a screen feature)' do
+    expect(print_doc.css('section[id^="infos-über-das-lied"]')).to be_empty
     expect(print_doc.at_css('#toc-filter')).to be_nil
   end
 
-  it 'About (merged with Instructions and Resources) HTML matches golden' do
+  it 'Infos über das Lied (merged with Instructions) HTML matches golden' do
     across_title = doc.at_css('section#across-the-universe-beatles')
     section = across_title
-                .xpath('following-sibling::section[.//h2[normalize-space()="About"]][1]')
+                .xpath('following-sibling::section[.//h2[normalize-space()="Infos über das Lied"]][1]')
                 .first
-    expect(section.to_html + "\n").to eq(golden('about_merged.html'))
+    expect(section.to_html + "\n").to eq(golden('infos_ueber_das_lied.html'))
   end
 
   it 'master modal HTML matches golden' do

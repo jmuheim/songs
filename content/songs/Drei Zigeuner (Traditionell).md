@@ -1,9 +1,11 @@
 # Drei Zigeuner (Traditionell)
 
-## About
+## Infos über das Lied
 
-- Deutsch
-- Traditionell
+- Sprache: Deutsch
+- Genre: Traditionell
+- [Lied auf YouTube](https://www.youtube.com/watch?v=RTcrVGNL5Us)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/drei-zigeuner-chords-3500390)
 
 ## Verse 1
 
@@ -46,8 +48,3 @@ Spott den Erdenge[G7]schic[C]ken.
 [Am] musst' ich im Weiter[Dm]fahren,
 [C] nach den Gesichtern [F] dunkel[C]braun,
 nach den schwarzlockigen [G7] Haa[C]ren.
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=RTcrVGNL5Us)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/drei-zigeuner-chords-3500390)

@@ -15,8 +15,8 @@ RSpec.describe 'index.html', :js, type: :feature do
   end
 
   def go_to_first_song
-    # v=0 is the song's title slide, v=1 its About (tags) slide; the first slide
-    # that carries chords is v=2.
+    # v=0 is the song's title slide, v=1 its "Infos über das Lied" (tags) slide;
+    # the first slide that carries chords is v=2.
     page.evaluate_script("Reveal.slide(3, 2)")
     wait_for_js("Reveal.getIndices().h === 3 && Reveal.getIndices().v === 2")
   end

@@ -1,8 +1,11 @@
 # S Zündhölzli (Mani Matter)
 
-## About
+## Infos über das Lied
 
-- Mundart
+- Sprache: Mundart
+- Genre: Traditional
+- [Lied auf YouTube](https://www.youtube.com/watch?v=PkGatIgXERI)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/1197401)
 
 ## Verse 1
 
@@ -75,8 +78,3 @@ Aber ds [F] Hölzli isch dervogspickt
 Und [C] uf e Teppich cho -
 ~~Und es hätt no fasch...~~ Gottsei[G7]dank
 Dass i's vom Teppich wider [C] furt ha gno
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=PkGatIgXERI)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/1197401)

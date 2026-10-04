@@ -1,5 +1,12 @@
 # I Walk the Line (Johnny Cash)
 
+## Infos über das Lied
+
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=st22r2pDCKA)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/i-walk-the-line-chords-15835)
+
 ## Intro
 
 [A] [D] [A] [E] [B7] [E]
@@ -39,8 +46,3 @@ I keep my [B7] eyes wide open all the [E] time
 I keep the [A] ends out for the tie that [E] binds
 
 Because you're [B7] mine, I walk the [E] line _(Repeat_)
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=st22r2pDCKA)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/i-walk-the-line-chords-15835)

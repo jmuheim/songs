@@ -1,9 +1,11 @@
 # Killing Me Softly (Fugees)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=oKOtzIo-uYw)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/fugees/killing-me-softly-chords-50470)
 
 ## Chorus
 
@@ -71,8 +73,3 @@ _(scat: woah-ah-ah… la-la-la…)_
 Killing me softly [D] with [C] his song.
 Telling my [G] whole life with [C] his words.
 Killing me [F] softly, with his [E] song.
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=oKOtzIo-uYw)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/fugees/killing-me-softly-chords-50470)

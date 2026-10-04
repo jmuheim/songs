@@ -1,9 +1,13 @@
 # Jolene (Dolly Parton)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=Ixrje2rXLMA)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/dolly-parton/jolene-chords-183019)
+- [Guitar tutorial](https://www.youtube.com/watch?v=O2j6cZlT2LI)
+- [Interpretation by The Petersens](https://www.youtube.com/watch?v=viQx4KDivPY)
 
 ## Intro
 
@@ -74,10 +78,3 @@ please don't take my [Am] man
 Jo[Am]lene, Jo[C]lene, Jo[G]lene, Jo[Am]lene
 [G] Please don't take him
 [Em] ~~just because~~ **even though** you [Am] can
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=Ixrje2rXLMA)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/dolly-parton/jolene-chords-183019)
-- [Guitar tutorial](https://www.youtube.com/watch?v=O2j6cZlT2LI)
-- [Interpretation by The Petersens](https://www.youtube.com/watch?v=viQx4KDivPY)

@@ -1,8 +1,11 @@
 # Dynamit (Mani Matter)
 
-## About
+## Infos über das Lied
 
-- Mundart
+- Sprache: Mundart
+- Genre: Traditional
+- [Lied auf YouTube](https://www.youtube.com/watch?v=qaeVSV0fRDo)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/mani-matter/dynamit-chords-2553321)
 
 ## Verse 1
 
@@ -62,8 +65,3 @@ vergangenen Tag gekommen ist. ([Quelle](https://www.msn.com/de-ch/nachrichten/ot
 [Am] S'länge fürs z'Spränge paar [E7] Seck Dyna[Am]mit!
 
 [E7] [Am]
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=qaeVSV0fRDo)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/mani-matter/dynamit-chords-2553321)

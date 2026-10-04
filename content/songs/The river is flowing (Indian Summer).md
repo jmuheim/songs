@@ -1,9 +1,11 @@
 # The river is flowing (Indian Summer)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Traditionell
+- Sprache: Englisch
+- Genre: Traditionell
+- [Lied auf YouTube](https://www.youtube.com/watch?v=sB2AaVVjF-0)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196)
 
 ## Verse 1
 
@@ -54,8 +56,3 @@ Violet Flame burn over me
 a child I will always be
 violet Flame burn over me
 until we are pure
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=sB2AaVVjF-0)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196)

@@ -1,9 +1,12 @@
 # Verdammt ich lieb dich (Matthias Reim)
 
-## About
+## Infos über das Lied
 
-- Deutsch
-- Rock
+- Sprache: Deutsch
+- Genre: Rock
+- [Lied auf YouTube](https://www.youtube.com/watch?v=x6q0ciiqyG0)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929)
+- [Guitar cover](https://www.youtube.com/watch?v=GIlCtOrisx0)
 
 ## Verse 1
 
@@ -76,9 +79,3 @@ ich will dich [G] nicht,
 Ich [F] will dich nicht verli[Am]er'n! - Ooooh!
 
 _(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=x6q0ciiqyG0)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929)
-- [Guitar cover](https://www.youtube.com/watch?v=GIlCtOrisx0)

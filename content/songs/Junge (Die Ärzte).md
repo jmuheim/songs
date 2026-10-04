@@ -1,9 +1,12 @@
 # Junge (Die Ärzte)
 
-## About
+## Infos über das Lied
 
-- Deutsch
-- Rock
+- Sprache: Deutsch
+- Genre: Rock
+- [Lied auf YouTube](https://www.youtube.com/watch?v=iK-1oGphELM)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/751634)
+- [Acoustic guitar interpretation](https://www.youtube.com/watch?v=YycHXyyI4fI)
 
 ## Intro
 
@@ -103,9 +106,3 @@ denk' an deine Zu[F]kunft
 denk' an deine El[Dm]tern...
 
 ...willst du, dass wir [Am] sterb'n?
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=iK-1oGphELM)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/751634)
-- [Acoustic guitar interpretation](https://www.youtube.com/watch?v=YycHXyyI4fI)

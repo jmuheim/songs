@@ -1,9 +1,12 @@
 # Don't worry be happy (Bobby McFerrin)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=d-diB65scQU)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/bobby-mcferrin/dont-worry-be-happy-chords-484289)
+- [Guitar tutorial](https://www.youtube.com/watch?v=vJfE-WNl_z8)
 
 ## Intro
 
@@ -78,9 +81,3 @@ Don't [C] worry, be [G] happy
 [G] [Am] [C] [G] (x2)
 
 _(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=d-diB65scQU)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/bobby-mcferrin/dont-worry-be-happy-chords-484289)
-- [Guitar tutorial](https://www.youtube.com/watch?v=vJfE-WNl_z8)

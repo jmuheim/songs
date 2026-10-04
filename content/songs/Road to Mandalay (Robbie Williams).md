@@ -1,13 +1,14 @@
 # Road to Mandalay (Robbie Williams)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Capo: 3. Bund
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=KohurXfPb7s)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/the-road-to-mandalay-chords-303)
 
 ## Instructions
-
-Capo on 3rd fret
 
 ```
        |E A D G B e|
@@ -96,8 +97,3 @@ _(Instrumental)_
 [Am] Beat me up on the beach
 [Dm]What a lovely holiday [E7(1)]
 There's nothing funny left to say [Am]
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=KohurXfPb7s)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/the-road-to-mandalay-chords-303)

@@ -1,9 +1,11 @@
 # Zombie (The Cranberries)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Rock
+- Sprache: Englisch
+- Genre: Rock
+- [Lied auf YouTube](https://www.youtube.com/watch?v=6Ejga4kJUts)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/the-cranberries/zombie-chords-844902)
 
 ## Intro
 
@@ -64,8 +66,3 @@ zombie, [G] zombie, zombie [D] _(2x)_
 
 In your [Em] head, in your [C] head
 zombie, [G] zombie, zombie [D] _(2x)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=6Ejga4kJUts)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/the-cranberries/zombie-chords-844902)

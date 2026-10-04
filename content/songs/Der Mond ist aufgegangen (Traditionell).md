@@ -1,9 +1,10 @@
 # Der Mond ist aufgegangen (Traditionell)
 
-## About
+## Infos über das Lied
 
-- Deutsch
-- Traditionell
+- Sprache: Deutsch
+- Genre: Traditionell
+- [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/der-mond-ist-aufgegangen-chords-1896814)
 
 ## Verse 1
 
@@ -74,7 +75,3 @@ kalt [C] ist der [F] Abend[G]hauch.
 Ver[G7]schon uns, [F] Gott, mit [G] Stra[C]fen  
 und [Am] lass uns [F] ruhig [G7] schla[C]fen  
 und [C] unsern [F] kranken [G] Nachbar [C] auch!
-
-## Resources
-
-- [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/der-mond-ist-aufgegangen-chords-1896814)

@@ -1,9 +1,11 @@
 # Gang rüef de Bruune (Traditionell)
 
-## About
+## Infos über das Lied
 
-- Mundart
-- Traditionell
+- Sprache: Mundart
+- Genre: Traditionell
+- [Lied auf YouTube](https://www.youtube.com/watch?v=7GZ9iltYFvU)
+- [Inspiration](https://www.stimmvolk.ch/gang-rueef-de-bruune)
 
 ## Original
 
@@ -27,8 +29,3 @@ si sölid allsamm jetz zäme stoh.
 
 Zuelose hoa hoa, alli zu Wort la cho _(3x)_
 Zuelose hoa hoa ho!
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=7GZ9iltYFvU)
-- [Inspiration](https://www.stimmvolk.ch/gang-rueef-de-bruune)

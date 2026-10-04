@@ -1,9 +1,11 @@
 # Guggisbergerlied (Traditionell 🇨🇭)
 
-## About
+## Infos über das Lied
 
-- Mundart
-- Traditionell
+- Sprache: Mundart
+- Genre: Traditionell
+- [Lied auf YouTube](https://www.youtube.com/watch?v=d2Bw5XVJzHA)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/guggisbergerlied-chords-2972969)
 
 ## Intro
 
@@ -98,8 +100,3 @@ Und ds [E] Vreneli ab em Guggisbärg
 und [Dm] Simes Hans[E]jogg[Am]eli [E] ännet em Bärg,
 das [Am] Mühli[G]rad isch [C] bro[Dm]che,
 die [Am] Liebi [E] het es [Am] Änd.
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=d2Bw5XVJzHA)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/guggisbergerlied-chords-2972969)

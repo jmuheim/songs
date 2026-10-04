@@ -1,9 +1,12 @@
 # Feel (Robbie Williams)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=iy4mXZN1Zzk)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/feel-chords-133140)
+- [Guitar tutorial](https://www.youtube.com/watch?v=LVGNZyeff7)
 
 ## Intro
 
@@ -89,9 +92,3 @@ Come on and hold my [Dm] hand
 [Am] This role I've been gi[Dm]ven
 
 [Am] Not sure I under[Dm]stand _(4x)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=iy4mXZN1Zzk)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/feel-chords-133140)
-- [Guitar tutorial](https://www.youtube.com/watch?v=LVGNZyeff7)

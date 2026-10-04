@@ -1,5 +1,12 @@
 # Donna Donna (Joan Baez)
 
+## Infos über das Lied
+
+- Sprache: Englisch
+- Genre: Traditional
+- [Lied auf YouTube](https://www.youtube.com/watch?v=oZZwVJAcbqU)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/joan-baez/donna-donna-chords-1489829)
+
 ## Intro
 
 [Am] [E7] [Am]
@@ -60,8 +67,3 @@ and [E] half the summers [Am] night
 [G] Donna Donna Donna [C] Don [Am]
 [E7] Donna Donna Donna [Am] Donna,
 [E7] Donna Donna Donna [Am] Don
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=oZZwVJAcbqU)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/joan-baez/donna-donna-chords-1489829)

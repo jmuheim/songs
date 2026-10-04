@@ -1,9 +1,12 @@
 # 74-75 (The Connells)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=t590jjWEJ5s)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/the-connells/74-75-chords-15799)
+- [Guitar tutorial](https://www.youtube.com/watch?v=dS7u8SqW3Vo)
 
 ## Intro
 
@@ -74,9 +77,3 @@ seventy[Am]four, seventy[C]five [G]
 ## Outro
 
 [Am] [C] [G] [Am] _(2x, fade out)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=t590jjWEJ5s)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/the-connells/74-75-chords-15799)
-- [Guitar tutorial](https://www.youtube.com/watch?v=dS7u8SqW3Vo)

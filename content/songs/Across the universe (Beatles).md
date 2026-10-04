@@ -1,9 +1,13 @@
 # Across the universe (Beatles)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=90M60PzmxEE)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/the-beatles/across-the-universe-chords-202167)
+- [Guitar tutorial](https://www.youtube.com/watch?v=CQ1P8IQc8AY)
+- [Interpretation by Fiona Apple](https://www.youtube.com/watch?v=RhMEKiIb86I)
 
 ## Instructions
 
@@ -77,10 +81,3 @@ a[A]cross the uni[A7]verse
 ## Outro
 
 [D] Jai guru deva om _(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=90M60PzmxEE)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/the-beatles/across-the-universe-chords-202167)
-- [Guitar tutorial](https://www.youtube.com/watch?v=CQ1P8IQc8AY)
-- [Interpretation by Fiona Apple](https://www.youtube.com/watch?v=RhMEKiIb86I)

@@ -43,8 +43,8 @@ namespace :golden do
       'imagine_verse1.html' => imagine_title
                                 .xpath('following-sibling::section[.//h2[normalize-space()="Verse 1"]][1]')
                                 .first,
-      'about_merged.html'  => across_title
-                                .xpath('following-sibling::section[.//h2[normalize-space()="About"]][1]')
+      'infos_ueber_das_lied.html' => across_title
+                                .xpath('following-sibling::section[.//h2[normalize-space()="Infos über das Lied"]][1]')
                                 .first
     }
 

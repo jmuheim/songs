@@ -1,9 +1,11 @@
 # Über den Wolken (Reinhard Mey)
 
-## About
+## Infos über das Lied
 
-- Deutsch
-- Pop
+- Sprache: Deutsch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=zWwW-gqr2pA)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/946605)
 
 ## Verse 1
 
@@ -70,8 +72,3 @@ Wolken spiegeln sich [Am] darin.
 [D] blieben darunter [G] verborgen, und dann
 [C] würde, was uns gross und [G] wichtig erscheint,
 [D] plötzlich nichtig und [G] klein.
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=zWwW-gqr2pA)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/946605)

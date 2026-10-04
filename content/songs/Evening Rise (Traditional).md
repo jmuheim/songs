@@ -1,5 +1,11 @@
 # Evening Rise (Traditional)
 
+## Infos über das Lied
+
+- Sprache: Englisch
+- Genre: Traditional
+- [Lied auf YouTube](https://www.youtube.com/watch?v=3o1xu9MQcTA)
+
 ## Chorus
 
 [Am] Evening rise, [Dm] spirit come,
@@ -8,7 +14,3 @@
 with the [C] heartbeat [Em] of the [Am] sea
 
 _(Repeat)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=3o1xu9MQcTA)

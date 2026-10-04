@@ -1,9 +1,11 @@
 # Somewhere over the rainbow (Israël Kamakawiwo'ole)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=Z26BvHOD_sg)
+- [Source tab](https://ukutabs.com/i/israel-kamakawiwoole/somewhere-over-the-rainbow-what-a-wonderful-world/)
 
 ## Intro
 
@@ -113,8 +115,3 @@ you'll [F] find me
 [F] ooo-ooo [C] ooo-ooo
 [F] ooo-ooo [E7] ooo-ooo
 [Am] ooo-a-eh-a [F] a-a-a-a-a
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=Z26BvHOD_sg)
-- [Source tab](https://ukutabs.com/i/israel-kamakawiwoole/somewhere-over-the-rainbow-what-a-wonderful-world/)

@@ -1,9 +1,11 @@
 # Ewigi Liäbi (Mash)
 
-## About
+## Infos über das Lied
 
-- Mundart
-- Pop
+- Sprache: Mundart
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=8ax3HmHUK3I)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/1829530)
 
 ## Verse 1
 
@@ -63,8 +65,3 @@ ewigi [A] liäbi - fühl mich bi [D] dier dehäi
 [D] ewigi liäbi (ewigi liäbi)
 [G] ewigi liäbi, ohhh
 [A] u ewigi liäbi [G] [D]
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=8ax3HmHUK3I)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/1829530)

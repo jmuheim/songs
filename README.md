@@ -51,22 +51,25 @@ GitHub Actions runs the whole suite on every push and pull request (`.github/wor
 
 Add a Markdown file to `content/songs/` following the naming convention `Title (Artist).md`. Chords go inline as `[Am]`, `[G7]`, etc.
 
-To tag a song, add an `## About` section at the top with one tag per list item:
+Every song needs an `## Infos über das Lied` section at the top with its Sprache (language) and Genre tags plus its resource links, one per list item:
 
 ```markdown
 # Kiss the Earth (Ajeet)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Mantra
+- Sprache: Englisch
+- Genre: Mantra
+- [Lied auf YouTube](https://youtube.com/...)
 
 ## Verse 1
 
 ...
 ```
 
-The tags show on the song's „About" slide (merged with its Resources links and, if present, an Instructions section — see `CLAUDE.md`) and drive the Sprache/Genre filter dropdowns on the table of contents — pick a language and/or a genre to narrow the list (the two combine), „Reset" to clear both. Tagging is optional: an untagged song just shows when no filter is active. Tags are free text, so pick a vocabulary and keep it consistent (e.g. `Deutsch`, `Englisch`, `Mundart`, `Pop`, `Rock`, `Mantra`).
+The tags and links show on the song's „Infos über das Lied" slide (together with, if present, an Instructions section — see `CLAUDE.md`) and drive the Sprache/Genre filter dropdowns on the table of contents — pick a language and/or a genre to narrow the list (the two combine), „Reset" to clear both. At least one Sprache and one Genre tag are **required**: the build aborts on a song missing either. Tags are free text, so pick a vocabulary and keep it consistent (e.g. `Deutsch`, `Englisch`, `Mundart`, `Pop`, `Rock`, `Mantra`).
+
+Nothing but blank lines may sit between the H1 and the first H2 — a capo note or any other aside goes into the `## Infos über das Lied` list instead (e.g. `- Capo: 3. Bund`); the build aborts otherwise.
 
 ## Live sync (multiplex)
 

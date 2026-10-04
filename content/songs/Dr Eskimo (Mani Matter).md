@@ -1,8 +1,10 @@
 # Dr Eskimo (Mani Matter)
 
-## About
+## Infos über das Lied
 
-- Mundart
+- Sprache: Mundart
+- Genre: Traditional
+- [Source tab](https://tabs.ultimate-guitar.com/tab/mani-matter/dr-eskimo-chords-2146513)
 
 ## Verse 1
 
@@ -42,7 +44,3 @@
 [Em] Wie dem [Am] arme [Em] Eski[Am]mo
 [Em] Wo in [Am] Grönland [Em] einisch [Am] so
 [Em] Truurig [Am] isch ums [Em] Lebe [Am] cho.
-
-## Resources
-
-- [Source tab](https://tabs.ultimate-guitar.com/tab/mani-matter/dr-eskimo-chords-2146513)

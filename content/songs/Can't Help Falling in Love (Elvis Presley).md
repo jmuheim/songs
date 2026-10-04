@@ -1,9 +1,11 @@
 # Can't Help Falling in Love (Elvis Presley)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=vGJTaP6anOU)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/elvis-presley/cant-help-falling-in-love-chords-1086983)
 
 ## Intro
 
@@ -53,8 +55,3 @@ For [F] I [G] can't [Am] help
 
 For [F] I [G] can't [Am] help
 [F] falling in [C] love [G] with [C] you
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=vGJTaP6anOU)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/elvis-presley/cant-help-falling-in-love-chords-1086983)

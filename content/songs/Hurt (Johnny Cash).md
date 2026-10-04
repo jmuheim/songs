@@ -1,9 +1,12 @@
 # Hurt (Johnny Cash)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=8AHCfZTRGiI)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/hurt-chords-89849)
+- [Guitar tutorial](https://www.youtube.com/watch?v=hEKexrWq5RU)
 
 ## Instructions
 
@@ -98,9 +101,3 @@ a [C/E] million miles a[G]way
 [Am]
 [C] [D] [Am]
 [C] [D] [Am]
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=8AHCfZTRGiI)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/hurt-chords-89849)
-- [Guitar tutorial](https://www.youtube.com/watch?v=hEKexrWq5RU)

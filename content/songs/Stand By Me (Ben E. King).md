@@ -1,5 +1,12 @@
 # Stand By Me (Ben E. King)
 
+## Infos über das Lied
+
+- Sprache: Englisch
+- Genre: Traditional
+- [Lied auf YouTube](https://www.youtube.com/watch?v=z5i9vT8wGY8)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/ben-e-king/stand-by-me-chords-349585)
+
 ## Intro
 
 [C] [Am] [F] [G]
@@ -43,8 +50,3 @@ oh now now [Am] stand by me
 Whenever you're in trouble won't you [C] stand by me,
 oh now now [Am] stand by me
 Oh [F] stand by me, [G] stand by me, stand by [C] me
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=z5i9vT8wGY8)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/ben-e-king/stand-by-me-chords-349585)

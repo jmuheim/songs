@@ -1,9 +1,11 @@
 # You Are My Sunshine (Johnny Cash)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=cGa3zFRqDn4)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/you-are-my-sunshine-chords-834069)
 
 ## Intro
 
@@ -59,8 +61,3 @@ You'll never [D] know dear, how much I [A] love you
 Please don't [A] take my [E] sunshine [A] away
 
 _(repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=cGa3zFRqDn4)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/you-are-my-sunshine-chords-834069)

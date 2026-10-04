@@ -1,9 +1,11 @@
 # I Have a Dream (ABBA)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=ER_3h03omdE)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/abba/i-have-a-dream-chords-897049)
 
 ## Intro
 
@@ -72,8 +74,3 @@ When I know the [D] time, is right for [A] me
 
 I'll cross the [E] stream
 I have a [A] dream _(2x)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=ER_3h03omdE)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/abba/i-have-a-dream-chords-897049)

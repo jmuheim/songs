@@ -1,9 +1,12 @@
 # Sittin' on the dock of the bay (Otis Redding)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=wyPKRcBTsFQ)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/otis-redding/sittin-on-the-dock-of-the-bay-chords-1088518)
+- [Guitar tutorial](https://www.youtube.com/watch?v=WNvoNPbmREY)
 
 ## Verse 1
 
@@ -55,9 +58,3 @@ Watching the [G] tide roll [E]away, ooh
 Wastin' [G] time [E]
 
 _(Repeat and whistle, fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=wyPKRcBTsFQ)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/otis-redding/sittin-on-the-dock-of-the-bay-chords-1088518)
-- [Guitar tutorial](https://www.youtube.com/watch?v=WNvoNPbmREY)

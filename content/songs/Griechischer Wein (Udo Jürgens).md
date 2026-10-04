@@ -1,9 +1,11 @@
 # Griechischer Wein (Udo Jürgens)
 
-## About
+## Infos über das Lied
 
-- Deutsch
-- Pop
+- Sprache: Deutsch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=6Ucp1IxujUg)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/1018193)
 
 ## Intro
 
@@ -91,8 +93,3 @@ Werd' ich immer nur ein Fremder [Am] sein
 
 [Am] [Dm] [F] [G]
 [C] [E] [Am]
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=6Ucp1IxujUg)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/1018193)

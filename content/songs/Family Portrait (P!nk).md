@@ -1,11 +1,11 @@
 # Family Portrait (P!nk)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
-
-_Capo 3rd fret_
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=hSjIz8oQuko)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/pnk/family-portrait-chords-753196)
 
 ## Intro
 
@@ -145,8 +145,3 @@ Ooh no Ooh no
 Ooh no Ooh
 
 _(Fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=hSjIz8oQuko)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/pnk/family-portrait-chords-753196)

@@ -1,8 +1,11 @@
 # Dr Sidi Abdel Assar (Mani Matter)
 
-## About
+## Infos über das Lied
 
-- Mundart
+- Sprache: Mundart
+- Genre: Traditional
+- [Lied auf YouTube](https://www.youtube.com/watch?v=O9tzZ3CE-rM)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/mani-matter/dr-sidi-abdel-assar-chords-1693629)
 
 ## Verse 1
 
@@ -48,8 +51,3 @@ De [Am] schoene Ouge na -
 _(Schnell)_
 
 Und [E] daenkt: Haett i doch frueecher afa [Am] spara!
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=O9tzZ3CE-rM)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/mani-matter/dr-sidi-abdel-assar-chords-1693629)

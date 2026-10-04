@@ -1,9 +1,11 @@
 # The Sound of Silence (Simon & Garfunkel)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=6ukmjBSQY-c)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/simon-garfunkel/the-sound-of-silence-chords-159157)
 
 ## Verse 1
 
@@ -58,8 +60,3 @@ And [F] words of the prophets
 Are written on the subway [C] walls
 And tenement halls [Am]
 [C] And whisper'd in the [G] sounds of [Am] silence.
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=6ukmjBSQY-c)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/simon-garfunkel/the-sound-of-silence-chords-159157)

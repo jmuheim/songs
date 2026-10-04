@@ -1,13 +1,16 @@
 # I am sailing (Rod Stewart)
 
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Capo: 3. Bund
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=P6zaCV4niKk)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/rod-stewart/sailing-chords-380559) (transpose by -5 to start with G instead of B)
+- [Guitar tutorial](https://www.youtube.com/watch?v=m4KTNKZSFVs)
+    - [Another guitar tutorial with additional inspirations](https://www.youtube.com/watch?v=JmiW9-kpGck)
 
 ## Instructions
-
-Capo on 3rd fret
 
 ```
    Riff:
@@ -60,10 +63,3 @@ to be [Am] near you, to be [G] free. [D] Oh Lord
 
 To be [Am] near you, to be [G] free.
 Oh Lord, to be [Am] near you, to be free. [G]
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=P6zaCV4niKk)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/rod-stewart/sailing-chords-380559) (transpose by -5 to start with G instead of B)
-- [Guitar tutorial](https://www.youtube.com/watch?v=m4KTNKZSFVs)
-    - [Another guitar tutorial with additional inspirations](https://www.youtube.com/watch?v=JmiW9-kpGck)

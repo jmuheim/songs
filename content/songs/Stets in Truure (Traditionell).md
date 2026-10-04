@@ -1,9 +1,11 @@
 # Stets in Truure (Traditionell 🇨🇭)
 
-## About
+## Infos über das Lied
 
-- Mundart
-- Traditionell
+- Sprache: Mundart
+- Genre: Traditionell
+- [Lied auf YouTube](https://www.youtube.com/watch?v=PU-Xn55joiE)
+- [Source tab](https://tabs.ultimate-guitar.com/tab/rumpelstilz/stets-in-truure-chords-4407716)
 
 ## Verse 1
 
@@ -53,8 +55,3 @@ solang [D] söllsch [A7] du blybe [D] mir
 
 Bis dr [Bm] Tod mir nimmt das [Em] Läbe,
 solang [D] söllsch [A7] du blybe [G] mir [D]
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=PU-Xn55joiE)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/rumpelstilz/stets-in-truure-chords-4407716)

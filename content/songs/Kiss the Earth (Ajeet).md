@@ -1,6 +1,11 @@
 # Kiss the Earth (Ajeet)
 
-_Capo 3. Bund_
+## Infos über das Lied
+
+- Capo: 3. Bund
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](https://www.youtube.com/watch?v=VVWu6Q0mrlo)
 
 ## Verse 1
 
@@ -59,7 +64,3 @@ With our [Em] steps
 La [C] lu[G]na
 
 _(Repeat and fade)_
-
-## Resources
-
-- [Song](https://www.youtube.com/watch?v=VVWu6Q0mrlo)_

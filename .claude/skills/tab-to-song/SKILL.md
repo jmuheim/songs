@@ -19,21 +19,30 @@ Also grab from the page: song title, artist, and any linked official video.
 
 `content/songs/<Title> (<Artist>).md`. Use the title/artist as commonly known (match the source's own capitalization — this repo doesn't enforce strict title-casing, e.g. both "Baby one more time" and "Can't Help Falling in Love" exist side by side). Check `content/songs/` and `content/legacy-songs/` first — if a file for this song already exists, confirm with the user before overwriting rather than silently replacing their work.
 
-## Step 3 — Add the `## About` tags
+## Step 3 — Add the `## Infos über das Lied` section
 
-Put an `## About` section **first** (before the song's own sections), one tag per list item — these drive the table-of-contents tag filter (see `CLAUDE.md`). The source tab won't list tags, so infer them and keep the repo's vocabulary consistent:
+Put an `## Infos über das Lied` section **first** (before the song's own sections), holding the song's tags and its resource links together, one per list item — see `CLAUDE.md` for the full format. `validate_song!` **requires** at least one Sprache and one Genre tag; the build aborts without them, so this section isn't optional.
 
-- **Language** from the lyrics: `Deutsch`, `Englisch`, `Mundart` (Swiss German), …
-- **Genre/kind** from the artist/style where clear: `Pop`, `Rock`, `Mantra`, …
+- **Sprache** from the lyrics: `Deutsch`, `Englisch`, `Mundart` (Swiss German), …
+- **Genre** from the artist/style: `Pop`, `Rock`, `Mantra`, …
+- Resource links, same as always — only ever link a URL you actually found (on the tab page, via a real web search you ran, or one the user gave you), never a fabricated-looking one:
+  - `[Lied auf YouTube](<official or lyric video>)` — if you can't confidently find one, omit this line rather than guess
+  - `[Source tab](<the URL you were given>)` — required, that's the URL you were given
+  - `[Guitar tutorial](<optional>)`
+- If the tab page gives a capo position, add it too: `- Capo: 3. Bund`. Nothing may sit between the H1 and this section — `validate_song!` aborts on a stray capo line left outside the list.
 
 ```markdown
-## About
+## Infos über das Lied
 
-- Englisch
-- Pop
+- Sprache: Englisch
+- Genre: Pop
+- [Lied auf YouTube](<official or lyric video>)
+- [Source tab](<the URL you were given>)
 ```
 
-Add what you're confident about (at least the language), and name the tags you chose in your final summary so the user can adjust. Don't invent a genre you're unsure of — a language-only About is fine.
+The source tab won't list Sprache/Genre, so infer them and keep the repo's vocabulary consistent. Make your best call on genre even if unsure — an incomplete section fails the build — and name the tags you chose in your final summary so the user can adjust.
+
+If the song also gets an `## Instructions` section (alternate fingerings), it goes right after `## Infos über das Lied` — at build time `merge_about_section` splices it in automatically (`lib/build_helpers.rb`).
 
 ## Step 4 — Convert sections
 
@@ -60,20 +69,6 @@ If a column position is genuinely ambiguous even after rounding, make the best c
 
 Before finishing, check: `awk -F'[][]' '{ n = (NF-1)/2; if (n >= 3) print length($0), n }' "content/songs/<file>.md" | sort -rn` and compare against the same command run over a couple of existing songs. If your lines run noticeably longer, split them — almost always at a spot the source tab already marks for you: a comma, or the wide gap the original ASCII tab left for a breath/rest. Move a trailing dangling passing-chord pair (like the `[F] [C]` turnaround at a phrase's end) onto the next line rather than tacking it onto the end of an already-long line — this is the same "standalone bracket token" convention from point 4, just given its own line when the line is otherwise full. Lines split this way are still the same stanza (no lyrical break, just a wrap for width), so don't insert a blank line between them — a blank line means an actual new stanza/repeat elsewhere in this format.
 
-## Step 6 — Resources section
-
-```markdown
-## Resources
-
-- [Song](<official or lyric video>)
-- [Source tab](<the URL you were given>)
-- [Guitar tutorial](<optional>)
-```
-
-Only ever link a URL you actually found (on the tab page, via a real web search you ran, or one the user gave you) — never fabricate a plausible-looking YouTube link. If you can't confidently find an official video, ask the user or just omit the `Song` line rather than guess. A `Source tab` entry is required — that's the URL you were given.
-
-Note: at build time, `## About` and `## Resources` (and an `## Instructions` section, if the song has one) are merged into a single `## About` slide at the front, with the tags rendered as `Sprache:`/`Genre:` bullets in the Resources list — this is automatic (`merge_about_section` in `lib/build_helpers.rb`); keep writing them as separate sections here, same as always.
-
-## Step 7 — Write and offer to build
+## Step 6 — Write and offer to build
 
 Write the file. Then offer to run `./build` (fast) so `index.html`/`print.html` pick up the new song — don't run `./build --deploy` unless asked, since that publishes externally.
