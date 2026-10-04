@@ -8,7 +8,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 
 - Swipe left/right to change songs, up/down to navigate song sections
 - Colour-coded chords (each root letter gets its own colour)
-- Toggle chord visibility (🎹 button)
+- Dark/bright theme and chord visibility, both in the ⚙️ Settings dialog
 - Tag songs (language, genre, …) and filter the table of contents by tag
 - **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)
 - Print-friendly version: open `print.html?print-pdf` in Chrome and print
@@ -77,14 +77,17 @@ The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multipl
 
 | Button | Position | Function |
 |--------|----------|----------|
-| 🔗 | Top right | Show QR code — scan to open the song book |
-| 🚀 | Top right | Start a live-scroll session on the current song (asks for the password once); ❌ while active, tap again to end it |
+| 🔗 | Top left | Show QR code — scan to open the song book |
+| 📖 | Top left | Jump to the table of contents (hidden while a live-scroll session locks your navigation) |
+| ⚙️ | Top right | Settings — theme, chord visibility |
+| Status dot | Bottom left | Shows your live-scroll connection/role at a glance; tap for details |
+| 🚀 | Bottom right, song slides only | Start a live-scroll session on the current song (asks for the password once); ❌ while active, tap again to end it |
 
 Navigate to a song, then tap 🚀 and choose **„Ich selber möchte scrollen"** to scroll it yourself, or **„Ein Gast soll scrollen"** to let someone in the audience take over. In guest mode everyone with the page open is asked whether they want to scroll; the first to accept leads, and the rest follow. Whoever scrolls can only move up and down within that song.
 
 While a session runs, followers are held on the scroller's slide — their own navigation is off. The scroller repeats its position every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap ❌ on 🚀 to end the session: everyone is told they can navigate freely again, and a guest who scrolled is thanked.
 
-A short line under the buttons says what is going on: „Du scrollst live", „Warte auf Gast …", „Gast scrollt", „Du scrollst für alle", „Folgt", or „Keine Verbindung".
+The bottom-left status button shows at a glance who's driving — a filled dot for you, a ring while you follow someone else, amber while waiting for a guest, a strike through it if the connection drops — and a tap opens a dialog spelling it out in words: „Du scrollst live", „Warte auf Gast …", „Gast scrollt", „Du scrollst für alle", „Folgt", or „Keine Verbindung".
 
 The presenter's tab stays presenter — and keeps its live session — when it reloads.
 

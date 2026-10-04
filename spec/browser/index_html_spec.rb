@@ -135,14 +135,18 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page).to have_css('#title-slide.present')
       expect(page.evaluate_script("document.documentElement.lang")).to eq('de-CH')
       within('#top-left-controls') do
+        expect(page).to have_button('🔗 Show QR code')
         expect(page).to have_link('📖 Table of contents')
-        expect(page).to have_button('🎹 Hide chords')
       end
       within('#top-right-controls') do
-        expect(page).to have_button('🔗 Show QR code')
-        expect(page).to have_button('🚀 Live-Scrollen starten', disabled: true) # off a song on the title slide
-        expect(page).to have_button('🌞 Switch to bright mode')
+        expect(page).to have_button('⚙️ Settings')
       end
+      within('#bottom-left-controls') do
+        expect(page).to have_css('#multiplex-status-button[aria-haspopup="dialog"]')
+      end
+      # 🚀 only shows on a song — hidden on the title slide (see '🚀 visibility' below)
+      expect(page).not_to have_button('🚀 Live-Scrollen starten')
+      expect(page).to have_css('#master-mode', visible: :hidden)
 
       socket_id = page.evaluate_script("window.MULTIPLEX && window.MULTIPLEX.socketId")
       expect(socket_id).not_to be_nil
@@ -281,55 +285,38 @@ RSpec.describe 'index.html', :js, type: :feature do
     before do
       load_presentation
       go_to_first_song
+      click_button('⚙️ Settings')
     end
 
-    it 'toggles chord visibility' do
+    it 'toggles chord visibility from the settings dialog' do
       expect(page).to have_no_css('body.chords-hidden')
       within 'section.slide.present' do
         expect(page).to have_css('code')
         expect(page).to have_no_css('code', visible: :hidden)
       end
-      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="false"]')
+      expect(page).to have_checked_field('Akkorde anzeigen')
 
-      click_button('🎹 Hide chords')
-      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="true"]', text: /🎹\s+Hide chords/)
+      uncheck('Akkorde anzeigen')
       expect(page).to have_css('body.chords-hidden')
       within 'section.slide.present' do
         expect(page).to have_css('code', visible: :hidden)
         expect(page).to have_no_css('code')
       end
 
-      click_button('🎹 Hide chords')
-      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="false"]', text: /🎹\s+Hide chords/)
+      check('Akkorde anzeigen')
       expect(page).to have_no_css('body.chords-hidden')
       within 'section.slide.present' do
         expect(page).to have_css('code')
         expect(page).to have_no_css('code', visible: :hidden)
       end
 
-      # Clicked with the mouse, 🎹 keeps a focus nobody sees: Space turns the page instead
-      click_button('🎹 Hide chords')
+      # check() leaves the checkbox itself focused (it's what was clicked). The
+      # dialog stops a keydown before it ever reaches Reveal, so — unlike a
+      # .ctrl button sitting directly on the slide — there's no page-turn race
+      # to guard against here: Space just toggles the still-focused checkbox.
       before = slide_indices
       press(:space)
-      wait_for_js("Reveal.getIndices().v !== #{before[1]}")
-      expect(slide_indices).not_to eq(before)
-      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="true"]')
-
-      # Reached with the keyboard, its focus shows: Space presses it, and the slide stays.
-      # The mouse leaves first: keys pressed while it rested on 🎹 dismissed its tooltip.
-      page.driver.browser.mouse.move(x: 640, y: 500)
-      20.times { break if active_element_id == 'toggle-chords-visibility'; press(:tab) }
-      expect(active_element_id).to eq('toggle-chords-visibility')
-
-      # The keyboard focus shows the label as a tooltip; Esc hides it without opening the overview
-      expect(tooltip_shown?('toggle-chords-visibility')).to be true
-      press(:escape)
-      expect(tooltip_shown?('toggle-chords-visibility')).to be false
-      expect(page.evaluate_script("Reveal.isOverview()")).to be false
-
-      before = slide_indices
-      press(:space)
-      expect(page).to have_css('#toggle-chords-visibility[aria-pressed="false"]')
+      expect(page).to have_css('body.chords-hidden')
       expect(slide_indices).to eq(before)
     end
   end
@@ -345,21 +332,24 @@ RSpec.describe 'index.html', :js, type: :feature do
     before { load_presentation }
     after { page.evaluate_script("localStorage.removeItem('theme')") }
 
-    it 'toggles theme, persists preference, and restores on reload' do
+    it 'switches theme from the settings dialog, persists preference, and restores on reload' do
       expect(page).to have_no_css('body.theme-bright')
       expect(body_background_color).to eq('#111')
-      expect(page).to have_css('#toggle-theme[aria-pressed="false"]', text: /🌞\s+Switch to bright mode/)
 
-      click_button('🌞 Switch to bright mode')
+      click_button('⚙️ Settings')
+      expect(page).to have_select('theme-select', selected: 'Dunkel')
+
+      select('Hell', from: 'theme-select')
       expect(page).to have_css('body.theme-bright')
       expect(body_background_color).to eq('#fffad5')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('bright')
-      expect(page).to have_css('#toggle-theme[aria-pressed="true"]', text: /🌛\s+Switch to dark mode/)
 
       load_presentation
       expect(page).to have_css('body.theme-bright')
 
-      click_button('🌛 Switch to dark mode')
+      click_button('⚙️ Settings')
+      expect(page).to have_select('theme-select', selected: 'Hell')
+      select('Dunkel', from: 'theme-select')
       expect(page).to have_no_css('body.theme-bright')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('dark')
 
@@ -372,9 +362,44 @@ RSpec.describe 'index.html', :js, type: :feature do
         JS
         load_presentation
         expect { page.evaluate_script('localStorage') }.to raise_error(Ferrum::JavaScriptError)
-        click_button('🌞 Switch to bright mode')
+        click_button('⚙️ Settings')
+        select('Hell', from: 'theme-select')
         expect(page).to have_css('body.theme-bright')
       end
+    end
+  end
+
+  # -----------------------------------------------------------------------
+  # Settings dialog
+  # -----------------------------------------------------------------------
+  describe 'settings dialog' do
+    before { load_presentation }
+
+    it 'keeps the keys to itself, and closes on Esc, close button and outside click' do
+      expect(page).not_to have_visible('#settings-modal')
+      expect(page).to have_css('#open-settings[aria-haspopup="dialog"]')
+
+      click_button('⚙️ Settings')
+      expect(page).to have_visible('#settings-modal')
+      expect(active_element_id).to eq('settings-title')
+
+      # Reveal listens on the document: nothing pressed inside the dialog reaches it
+      before = slide_indices
+      press(:right)
+      expect(slide_indices).to eq(before)
+      press(:escape)
+      expect(page).not_to have_visible('#settings-modal')
+      expect(page.evaluate_script("Reveal.isOverview()")).to be false
+      expect(active_element_id).to eq('open-settings')
+
+      click_button('⚙️ Settings')
+      click_button('Schliessen')
+      expect(page).not_to have_visible('#settings-modal')
+
+      click_button('⚙️ Settings')
+      expect(page).to have_visible('#settings-modal')
+      backdrop_click('settings-modal')
+      expect(page).not_to have_visible('#settings-modal')
     end
   end
 
@@ -446,21 +471,21 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
     end
 
-    describe '🚀 availability' do
+    describe '🚀 visibility' do
       before { load_presentation }
 
-      it 'enables 🚀 only on a song — disabled on the title, the TOC and the introduction' do
-        master_disabled_at = lambda do |h|
+      it 'shows 🚀 only on a song — hidden on the title, the TOC and the introduction' do
+        master_hidden_at = lambda do |h|
           page.evaluate_script("Reveal.slide(#{h}, 0)")
           wait_for_js("Reveal.getIndices().h === #{h}")
-          page.evaluate_script("document.getElementById('master-mode').disabled")
+          page.evaluate_script("document.getElementById('master-mode').hidden")
         end
 
-        wait_for_js("document.getElementById('master-mode').disabled === true") # title slide on load
-        expect(master_disabled_at.call(1)).to be true  # TOC
-        expect(master_disabled_at.call(2)).to be true  # Introduction (a stack; its slug sits on the first sub-slide)
-        expect(master_disabled_at.call(3)).to be false # the first song
-        expect(master_disabled_at.call(1)).to be true  # back off a song
+        wait_for_js("document.getElementById('master-mode').hidden === true") # title slide on load
+        expect(master_hidden_at.call(1)).to be true  # TOC
+        expect(master_hidden_at.call(2)).to be true  # Introduction (a stack; its slug sits on the first sub-slide)
+        expect(master_hidden_at.call(3)).to be false # the first song
+        expect(master_hidden_at.call(1)).to be true  # back off a song
       end
     end
 
@@ -480,7 +505,10 @@ RSpec.describe 'index.html', :js, type: :feature do
           start_scroll_session(mode: :self)
           expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/)
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
+          expect(page).to have_css('#multiplex-status-button.multiplex-driving')
           expect(page).not_to have_visible('#self-announce-modal') # the presenter announces to the room, not to itself
+          # Locked to the song: 📖 would otherwise jump straight back to the TOC
+          expect(page).to have_css('#go-to-toc', visible: false)
         end
 
         # The client is snapped on, told which song is coming, then locked
@@ -494,6 +522,8 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).not_to have_visible('#self-announce-modal')
 
           expect(page).to have_css('#multiplex-status', text: 'Folgt')
+          expect(page).to have_css('#multiplex-status-button.multiplex-following')
+          expect(page).to have_css('#go-to-toc', visible: false)
           before = slide_indices
           press(:right)
           press(:space)
@@ -584,11 +614,15 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
           wait_for_js("Reveal.getIndices().h === 1") # sent to the table of contents
           expect(slide_indices).to eq([1, 0])
+          expect(page).to have_link('Table of contents') # free again: 📖 is back
+          expect(page).to have_no_css('#multiplex-status-button.multiplex-driving')
         end
         using_session(:client) do
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
           wait_for_js("Reveal.getIndices().h === 1") # every follower lands on the TOC too
           expect(slide_indices).to eq([1, 0])
+          expect(page).to have_link('Table of contents')
+          expect(page).to have_no_css('#multiplex-status-button.multiplex-following')
           find('body').send_keys(:right) # free to browse again
           wait_for_js("Reveal.getIndices().h === 2")
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(2)
@@ -606,6 +640,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           wait_for_js("Reveal.getIndices().h === 4")
           start_scroll_session(mode: :guest)
           expect(page).to have_css('#multiplex-status', text: 'Warte auf Gast …')
+          expect(page).to have_css('#multiplex-status-button.multiplex-waiting')
         end
 
         [:guest_a, :guest_b].each do |s|
@@ -619,6 +654,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           within('#guest-invite-modal') { click_button('Ja, ich scrolle') }
           wait_for_js("Reveal.getIndices().h === 4")
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst für alle')
+          expect(page).to have_css('#multiplex-status-button.multiplex-driving')
           # Chosen as scroller: thanked for volunteering, not left to guess from the status line alone
           expect(page).to have_css('#multiplex-toast.visible', text: 'Danke für deine Bereitschaft! Lass uns gleich starten…')
         end
@@ -632,6 +668,8 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
         using_session(:presenter) do
           expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
+          # Delegated to the guest: the presenter now follows too (ring, not dot)
+          expect(page).to have_css('#multiplex-status-button.multiplex-following')
           # A quick heads-up that someone stepped up, instead of a silent status-line change
           expect(page).to have_css('#multiplex-toast.visible', text: 'Jemand hat sich bereit erklärt, es geht gleich los')
         end
@@ -783,10 +821,12 @@ RSpec.describe 'index.html', :js, type: :feature do
           # disconnect the actual socket the page is using.
           page.execute_script("window.MULTIPLEX.socket.disconnect()")
           expect(page).to have_css('#multiplex-status', text: 'Keine Verbindung')
+          expect(page).to have_css('#multiplex-status-button.multiplex-disconnected')
           expect(page).to have_css('#multiplex-toast.visible', text: 'Verbindung verloren')
 
           page.execute_script("window.MULTIPLEX.socket.connect()")
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
+          expect(page).to have_no_css('#multiplex-status-button.multiplex-disconnected')
           expect(page).to have_css('#multiplex-toast.visible', text: 'Wieder verbunden')
         end
       end
@@ -831,6 +871,38 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).not_to have_visible('#self-announce-modal') # joined mid-session: no „Es geht gleich los!"
           expect(page).to have_css('#multiplex-status', text: 'Folgt')
         end
+      end
+    end
+
+    describe 'multiplex status dialog' do
+      before { load_presentation }
+
+      it 'opens with the current status, and closes on Esc, close button and outside click' do
+        expect(page).not_to have_visible('#multiplex-info-modal')
+        expect(page).to have_css('#multiplex-status-button[aria-haspopup="dialog"]')
+
+        find('#multiplex-status-button').click
+        expect(page).to have_visible('#multiplex-info-modal')
+        expect(active_element_id).to eq('multiplex-info-title')
+        expect(page).to have_css('#multiplex-info-status', text: 'Kein Live-Scrollen aktiv')
+
+        # Reveal listens on the document: nothing pressed inside the dialog reaches it
+        before = slide_indices
+        press(:right)
+        expect(slide_indices).to eq(before)
+        press(:escape)
+        expect(page).not_to have_visible('#multiplex-info-modal')
+        expect(page.evaluate_script("Reveal.isOverview()")).to be false
+        expect(active_element_id).to eq('multiplex-status-button')
+
+        find('#multiplex-status-button').click
+        click_button('Schliessen')
+        expect(page).not_to have_visible('#multiplex-info-modal')
+
+        find('#multiplex-status-button').click
+        expect(page).to have_visible('#multiplex-info-modal')
+        backdrop_click('multiplex-info-modal')
+        expect(page).not_to have_visible('#multiplex-info-modal')
       end
     end
 

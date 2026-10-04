@@ -1,20 +1,18 @@
 <div id="top-left-controls" class="controls-group">
+  <button id="show-qr" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">🔗</span> <span class="visually-hidden">Show QR code</span></button>
   <a href="#/1" id="go-to-toc" class="ctrl"><span aria-hidden="true">📖</span> <span class="visually-hidden">Table of contents</span></a>
-  <button id="toggle-chords-visibility" class="ctrl" aria-pressed="false"><span aria-hidden="true">🎹</span> <span class="visually-hidden">Hide chords</span></button>
 </div>
 <div id="top-right-controls" class="controls-group">
-  <button id="show-qr" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">🔗</span> <span class="visually-hidden">Show QR code</span></button>
-  <button id="master-mode" class="ctrl" aria-haspopup="dialog" aria-pressed="false"><span aria-hidden="true">🚀</span> <span class="visually-hidden" id="master-mode-label">Live-Scrollen starten</span></button>
-  <button id="toggle-theme" class="ctrl" aria-pressed="false"><span aria-hidden="true" id="toggle-theme-icon">🌞</span> <span class="visually-hidden" id="toggle-theme-label">Switch to bright mode</span></button>
+  <button id="open-settings" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">⚙️</span> <span class="visually-hidden">Settings</span></button>
 </div>
-<p id="multiplex-status" role="status"></p>
 <div id="multiplex-toast" role="status" aria-live="polite"></div>
+<div id="bottom-left-controls" class="controls-group controls-bottom">
+  <button id="multiplex-status-button" class="ctrl" aria-haspopup="dialog"><span class="visually-hidden" id="multiplex-status" role="status">Kein Live-Scrollen aktiv</span></button>
+</div>
+<div id="bottom-right-controls" class="controls-group controls-bottom">
+  <button id="master-mode" class="ctrl" aria-haspopup="dialog" aria-pressed="false" hidden><span aria-hidden="true">🚀</span> <span class="visually-hidden" id="master-mode-label">Live-Scrollen starten</span></button>
+</div>
 <script>
-  document.getElementById('toggle-chords-visibility').addEventListener('click', function() {
-    document.body.classList.toggle('chords-hidden');
-    this.setAttribute('aria-pressed', document.body.classList.contains('chords-hidden'));
-  });
-
   // Space on a focused button (or chord, see chords.js) presses it, and Reveal must not turn the page
   // as well. Except where a mouse click put the focus there: nobody sees it
   // (no focus ring), so Space turns the page. Read when the focus arrives,
@@ -54,27 +52,44 @@
     });
   });
 
+  // Theme and chord visibility live behind ⚙️ Settings, independent of the
+  // multiplex gate below: both must keep working even if socket.io fails to
+  // load, same as they did as standalone corner buttons before.
   (function() {
     function applyTheme(bright) {
       document.body.classList.toggle('theme-bright', bright);
-      var icon  = document.getElementById('toggle-theme-icon');
-      var label = document.getElementById('toggle-theme-label');
-      var btn   = document.getElementById('toggle-theme');
-      if (icon)  icon.textContent  = bright ? '🌛' : '🌞';
-      if (label) label.textContent = bright ? 'Switch to dark mode' : 'Switch to bright mode';
-      if (btn)   btn.setAttribute('aria-pressed', bright ? 'true' : 'false');
     }
 
     // With site data blocked, merely touching localStorage throws: the theme
     // then switches without being remembered.
     var stored = null;
     try { stored = localStorage.getItem('theme'); } catch (e) {}
-    applyTheme(stored === 'bright');
+    var bright = stored === 'bright';
+    applyTheme(bright); // applied right away, so there's no flash of the wrong theme
 
-    document.getElementById('toggle-theme').addEventListener('click', function() {
-      var bright = !document.body.classList.contains('theme-bright');
-      applyTheme(bright);
-      try { localStorage.setItem('theme', bright ? 'bright' : 'dark'); } catch (e) {}
+    // The rest waits for 'load': the settings dialog markup sits further down
+    // the document, after this script tag, so it isn't parsed yet at this point.
+    window.addEventListener('load', function() {
+      var themeSelect = document.getElementById('theme-select');
+      themeSelect.value = bright ? 'bright' : 'dark';
+      themeSelect.addEventListener('change', function() {
+        var nowBright = themeSelect.value === 'bright';
+        applyTheme(nowBright);
+        try { localStorage.setItem('theme', nowBright ? 'bright' : 'dark'); } catch (e) {}
+      });
+
+      var chordsCheckbox = document.getElementById('show-chords-checkbox');
+      chordsCheckbox.checked = !document.body.classList.contains('chords-hidden');
+      chordsCheckbox.addEventListener('change', function() {
+        document.body.classList.toggle('chords-hidden', !chordsCheckbox.checked);
+      });
+
+      var settingsModal = document.getElementById('settings-modal');
+      document.getElementById('open-settings').addEventListener('click', function() { settingsModal.showModal(); });
+      document.getElementById('settings-close').addEventListener('click', function() { settingsModal.close(); });
+      settingsModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
+      settingsModal.addEventListener('keypress', function(e) { e.stopPropagation(); });
+      settingsModal.addEventListener('click', function(e) { if (e.target === settingsModal) settingsModal.close(); });
     });
   })();
 
@@ -98,6 +113,30 @@
     }, true);
   })();
 </script>
+
+<dialog id="settings-modal" class="overlay-modal" aria-labelledby="settings-title">
+  <div class="modal-box">
+    <h2 id="settings-title" tabindex="-1" autofocus>Einstellungen</h2>
+    <div class="settings-field">
+      <label for="theme-select">Thema</label>
+      <select id="theme-select">
+        <option value="dark">Dunkel</option>
+        <option value="bright">Hell</option>
+      </select>
+    </div>
+    <label class="settings-checkbox"><input type="checkbox" id="show-chords-checkbox"> Akkorde anzeigen</label>
+    <button id="settings-close">Schliessen</button>
+  </div>
+</dialog>
+
+<dialog id="multiplex-info-modal" class="overlay-modal" aria-labelledby="multiplex-info-title">
+  <div class="modal-box">
+    <h2 id="multiplex-info-title" tabindex="-1" autofocus>Multiplex</h2>
+    <p id="multiplex-info-status"></p>
+    <p id="multiplex-info-legend">●&nbsp;Du scrollst &nbsp;○&nbsp;Du folgst &nbsp;●&nbsp;Warte auf Gast &nbsp;⦸&nbsp;Keine Verbindung</p>
+    <button id="multiplex-info-close">Schliessen</button>
+  </div>
+</dialog>
 
 <dialog id="master-modal" class="overlay-modal" aria-labelledby="master-title">
   <form class="modal-box" method="dialog">
@@ -197,6 +236,10 @@ window.addEventListener('load', function() {
   var qrModal     = document.getElementById('qr-modal');
   var statusEl    = document.getElementById('multiplex-status');
   var toastEl     = document.getElementById('multiplex-toast');
+  var goToTocLink = document.getElementById('go-to-toc');
+  var multiplexBtn   = document.getElementById('multiplex-status-button');
+  var multiplexModal = document.getElementById('multiplex-info-modal');
+  var multiplexInfoStatus = document.getElementById('multiplex-info-status');
 
   // ---- Role and session ----
   // The presenter is the single authority: it alone opens and closes a session
@@ -255,7 +298,7 @@ window.addEventListener('load', function() {
   }
 
   // The title, the table of contents and the introduction are not songs. A live
-  // session only makes sense on a song, so 🚀 is disabled off these (see
+  // session only makes sense on a song, so 🚀 is hidden off these (see
   // updateButton), and ending one drops everyone back onto the TOC (gotoToc).
   var NON_SONG_SLIDES = { 'title-slide': true, 'TOC': true, 'introduction': true };
   // A horizontal slide with sub-slides is a stack <section> with no id of its
@@ -303,6 +346,10 @@ window.addEventListener('load', function() {
     }
     if (mode === navMode) return;
     navMode = mode;
+    // A session locks navigation to the scroller's song; 📖 would otherwise
+    // still jump a locked device straight back to the table of contents (the
+    // slidechanged snap-back undoes it, but not before an unwanted flash).
+    goToTocLink.hidden = mode !== 'free';
     if (mode === 'free') {
       Reveal.configure({ keyboard: true, touch: true, controls: true });
     } else if (mode === 'scroller') {
@@ -558,16 +605,33 @@ window.addEventListener('load', function() {
 
   // ---- Status line ----
   var statusIntervalHb = function() { return cfg.heartbeat || HEARTBEAT_MS; };
-  function updateStatus() {
-    var text = '';
-    if (!socket.connected) {
-      text = everConnected && session ? 'Keine Verbindung' : '';
-    } else if (session) {
-      if (session.scrollerId === senderId) text = isPresenter ? 'Du scrollst live' : 'Du scrollst für alle';
-      else if (session.scrollerId) text = isPresenter ? 'Gast scrollt' : 'Folgt';
-      else if (isPresenter) text = 'Warte auf Gast …';
+  function statusText() {
+    if (!socket.connected) return (everConnected && session) ? 'Keine Verbindung' : 'Kein Live-Scrollen aktiv';
+    if (session) {
+      if (session.scrollerId === senderId) return isPresenter ? 'Du scrollst live' : 'Du scrollst für alle';
+      if (session.scrollerId) return isPresenter ? 'Gast scrollt' : 'Folgt';
+      if (isPresenter) return 'Warte auf Gast …';
     }
+    return 'Kein Live-Scrollen aktiv';
+  }
+
+  // The bottom-left button's shape/colour double the status text
+  // graphically: a filled dot when this device drives the scroll (self-scroll
+  // presenter or a guest scrolling for everyone), a ring when it follows
+  // someone else's (an ordinary follower, or a presenter who delegated to a
+  // guest), amber while a presenter waits for a guest to volunteer, and a
+  // diagonal strike — layered on top of whichever shape applies — whenever
+  // the socket itself is disconnected. Colour alone is never the only signal
+  // (style/night.css draws the shapes).
+  function updateStatus() {
+    var text = statusText();
     if (statusEl.textContent !== text) statusEl.textContent = text;
+    if (multiplexModal.open) multiplexInfoStatus.textContent = text;
+
+    multiplexBtn.classList.toggle('multiplex-driving', !!session && session.scrollerId === senderId);
+    multiplexBtn.classList.toggle('multiplex-following', !!session && !!session.scrollerId && session.scrollerId !== senderId);
+    multiplexBtn.classList.toggle('multiplex-waiting', isPresenter && !!session && !session.scrollerId);
+    multiplexBtn.classList.toggle('multiplex-disconnected', !socket.connected);
   }
   // Fixed at 500ms — unlike HEARTBEAT_MS, not scaled by cfg.heartbeat. A spec
   // shortening the heartbeat to test staleness must keep 3x it comfortably
@@ -687,9 +751,11 @@ window.addEventListener('load', function() {
     masterBtn.classList.toggle('session-active', active);
     masterBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
     masterLabel.textContent = active ? 'Live-Scrollen beenden' : 'Live-Scrollen starten';
-    // Starting a session only makes sense on a song; while one runs the button
-    // ends it instead, so keep it enabled then (the scroller is always on a song).
-    masterBtn.disabled = !active && !onSong();
+    // 🚀 only makes sense on a song: hidden elsewhere, not just disabled. While
+    // a session is active onSong() is always true anyway — the scroller can't
+    // leave the song and every follower is snapped to it — so this one check
+    // covers both starting and ending.
+    masterBtn.hidden = !onSong();
   }
 
   // ---- Buttons and dialogs ----
@@ -750,9 +816,9 @@ window.addEventListener('load', function() {
   });
   socket.on('disconnect', function() {
     // Only while something was actually riding on the connection — a drop
-    // while just browsing freely is nobody's concern. #multiplex-status
-    // already shows "Keine Verbindung" for as long as it lasts; this toast is
-    // only the one-off "something changed" moment, on both ends of it.
+    // while just browsing freely is nobody's concern. The multiplex status
+    // button already shows "Keine Verbindung" for as long as it lasts; this
+    // toast is only the one-off "something changed" moment, on both ends of it.
     if (session) {
       connectionLostShown = true;
       showToast(['Verbindung verloren']);
@@ -817,6 +883,13 @@ window.addEventListener('load', function() {
   showQrBtn.addEventListener('click', showQrModal);
   document.getElementById('qr-close').addEventListener('click', function() { qrModal.close(); });
 
+  // ---- Multiplex status dialog ----
+  multiplexBtn.addEventListener('click', function() {
+    multiplexInfoStatus.textContent = statusText();
+    multiplexModal.showModal();
+  });
+  document.getElementById('multiplex-info-close').addEventListener('click', function() { multiplexModal.close(); });
+
   // A scanned QR code's URL carries the marker: show this device's own QR
   // right away, so whoever joins this way can pass the song book on too. The
   // marker is stripped first, so this QR — and the URL after a reload — stays
@@ -833,7 +906,7 @@ window.addEventListener('load', function() {
   // showModal() makes the page behind inert and Esc closes natively. What is
   // left: Reveal listens for keys on the document, where they still arrive from
   // inside the dialog, and a click on the backdrop lands on the dialog itself.
-  [masterModal, qrModal, choiceModal, inviteModal, announceModal].forEach(function(dialog) {
+  [masterModal, qrModal, choiceModal, inviteModal, announceModal, multiplexModal].forEach(function(dialog) {
     dialog.addEventListener('keydown', function(e) { e.stopPropagation(); });
     dialog.addEventListener('keypress', function(e) { e.stopPropagation(); });
     dialog.addEventListener('click', function(e) { if (e.target === dialog) dialog.close(); });

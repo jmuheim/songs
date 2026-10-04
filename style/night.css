@@ -24,14 +24,16 @@
   text-decoration: none;
 }
 
-/* Off a song there is nothing to live-scroll, so 🚀 is disabled (body-controls.html) */
-.ctrl:disabled {
-  opacity: 0.25;
-  cursor: default;
-}
-
 .ctrl [aria-hidden] {
   font-size: 3em;
+}
+
+/* The author stylesheet's own `.ctrl { display: inline-flex }` would otherwise
+   win the cascade over the UA stylesheet's `[hidden] { display: none }` —
+   both have equal specificity, and this rule comes later. 🚀 relies on
+   [hidden] actually hiding it off a song (body-controls.html). */
+.ctrl[hidden] {
+  display: none;
 }
 
 /* The label, shown as a tooltip (body-controls.html says when). A transparent
@@ -53,25 +55,31 @@
   font-size: 1rem;
 }
 
-#top-left-controls .ctrl > .visually-hidden {
+#top-left-controls .ctrl > .visually-hidden,
+#bottom-left-controls .ctrl > .visually-hidden {
   left: 0;
 }
 
-#top-right-controls .ctrl > .visually-hidden {
+#top-right-controls .ctrl > .visually-hidden,
+#bottom-right-controls .ctrl > .visually-hidden {
   right: 0;
+}
+
+/* The bottom row opens its tooltip upward instead of down (the shared rule
+   above opens downward) so it never runs off the bottom of the viewport. */
+#bottom-left-controls .ctrl.tooltip-hover:not(.tooltip-dismissed) > .visually-hidden,
+#bottom-left-controls .ctrl:focus-visible:not(.tooltip-dismissed) > .visually-hidden,
+#bottom-right-controls .ctrl.tooltip-hover:not(.tooltip-dismissed) > .visually-hidden,
+#bottom-right-controls .ctrl:focus-visible:not(.tooltip-dismissed) > .visually-hidden {
+  top: auto;
+  bottom: 100%;
+  border-top: none;
+  border-bottom: 0.4rem solid transparent;
 }
 
 body.theme-bright .ctrl > .visually-hidden {
   background-color: #f4f4f4;
   color: #333;
-}
-
-body.chords-hidden #toggle-chords-visibility::after {
-  font-size: 3em;
-  content: '❌';
-  position: absolute;
-  right: 0;
-  bottom: 0;
 }
 
 body.chords-hidden .reveal code {
@@ -187,16 +195,22 @@ body.theme-bright #toc-filter {
   right: 1em;
 }
 
-#multiplex-status {
-  position: fixed;
-  top: 4.5rem;
+#bottom-left-controls {
+  bottom: 1em;
+  left: 1em;
+}
+
+#bottom-right-controls {
+  bottom: 1em;
   right: 1em;
-  z-index: 100;
-  margin: 0;
-  font-family: sans-serif;
-  font-size: 1rem;
-  opacity: 0.75;
-  color: var(--r-main-color);
+}
+
+/* #multiplex-toast spans the full bottom edge while visible (below it in this
+   file): lift the bottom controls clear of it so a toast's text never
+   overlaps the rocket or the multiplex lamp. */
+#multiplex-toast.visible ~ .controls-bottom {
+  bottom: 4.5em;
+  transition: bottom 0.3s ease;
 }
 
 
@@ -214,6 +228,53 @@ body.theme-bright #toc-filter {
   position: absolute;
   right: 0;
   bottom: 0;
+}
+
+/* The multiplex status button (bottom-left): a graphical, role-aware stand-in
+   for the old floating status line. Shape says who's driving (a filled dot)
+   versus just following (an open ring) — not colour alone (WCAG 1.4.1) — and
+   a diagonal strike overlays either shape when the socket is disconnected.
+   The dialog behind it (body-controls.html) spells the state out in words. */
+#multiplex-status-button::before {
+  content: '';
+  display: inline-block;
+  box-sizing: border-box;
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 50%;
+  background: #888; /* idle: no session running */
+}
+
+#multiplex-status-button.multiplex-driving::before {
+  background: #5ad066;
+}
+
+#multiplex-status-button.multiplex-following::before {
+  background: none;
+  border: 0.3em solid #4da3ff;
+}
+
+#multiplex-status-button.multiplex-waiting::before {
+  background: #e7ad52;
+}
+
+#multiplex-status-button.multiplex-disconnected::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.6em;
+  height: 2px;
+  background: #e53935;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+body.theme-bright #multiplex-status-button::before {
+  background: #999;
+}
+
+body.theme-bright #multiplex-status-button.multiplex-following::before {
+  border-color: #1565c0;
 }
 
 /* A brief toast spanning the bottom of the screen, clear of the top-right
@@ -291,13 +352,15 @@ dialog.overlay-modal::backdrop {
 }
 
 #master-info,
-#qr-info {
+#qr-info,
+#multiplex-info-legend {
   font-size: 0.8em;
   opacity: 0.6;
   margin-top: -0.4em;
 }
 
-.modal-box input[type="password"] {
+.modal-box input[type="password"],
+.settings-field select {
   display: block;
   width: 100%;
   padding: 0.4em 0.6em;
@@ -311,8 +374,26 @@ dialog.overlay-modal::backdrop {
   outline: none;
 }
 
-.modal-box input[type="password"]:focus {
+.modal-box input[type="password"]:focus,
+.settings-field select:focus {
   border-color: #e7ad52;
+}
+
+.settings-field {
+  margin-bottom: 1em;
+  text-align: left;
+}
+
+.settings-checkbox {
+  display: block;
+  margin-bottom: 1.5em;
+  font-size: 0.9em;
+  text-align: left;
+  cursor: pointer;
+}
+
+.settings-checkbox input {
+  margin-right: 0.5em;
 }
 
 .modal-box input.shake {
@@ -427,7 +508,8 @@ body.theme-bright .modal-box {
   color: #333;
 }
 
-body.theme-bright .modal-box input[type="password"] {
+body.theme-bright .modal-box input[type="password"],
+body.theme-bright .settings-field select {
   background: #fff;
   border-color: #bbb;
   color: #333;
