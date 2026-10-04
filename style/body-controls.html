@@ -201,6 +201,7 @@ window.addEventListener('load', function() {
   var lastSessionAt = 0;      // last word from the session (heartbeat or move)
   var applyingRemote = false; // set while Reveal moves because the scroller did
   var invitedFor = null;      // session id whose invite this tab already saw
+  var volunteeredFor = null;  // session id this tab last said "Ja, ich scrolle" to
   var announcedFor = null;    // self-scroll session id this tab already announced to the room
   var heartbeat = null;
   var everConnected = false;
@@ -266,14 +267,18 @@ window.addEventListener('load', function() {
   // ---- Navigation lock ----
   // Horizontal keys the scroller must not use: it may only scroll within its
   // own song (up/down). A swipe or a click that still leaves the song is undone
-  // by the snap-back in the Reveal handler below — but Space, Home and End
-  // default to "next"/"first slide"/"last slide" and reached that snap-back
-  // too, landing the scroller back on v=0 instead of where it was. Disabling
-  // them here keeps the scroll position intact instead of relying on the
-  // after-the-fact correction.
+  // by the snap-back in the Reveal handler below. Home and End jump to the
+  // first/last *horizontal* slide — there is no vertical equivalent worth
+  // keeping, so they stay fully disabled. Space/Shift+Space default to
+  // reveal.js's own next()/prev(), which — at the song's last/first sub-slide —
+  // step past it into the neighbouring song, reaching the snap-back only after
+  // the jump, with the scroll position already reset to v=0. Remapped here to
+  // the same Reveal.down()/up() the vertical arrow keys already use safely:
+  // one step within the song, never past it.
   var SCROLLER_KEYS = {
     37: null, 39: null, 33: null, 34: null, 72: null, 76: null, 78: null, 80: null,
-    32: null, 35: null, 36: null
+    32: function(e) { if (e.shiftKey) { Reveal.up(); } else { Reveal.down(); } },
+    35: null, 36: null
   };
 
   function applyNavMode() {
@@ -411,6 +416,12 @@ window.addEventListener('load', function() {
   }
 
   function reconcileSession(s, fresh) {
+    // Caught before the overwrite below: whether *this* session already had a
+    // scroller the last time this tab heard of it, and whether this tab was
+    // among the invited (only those ever see a resolution toast at all).
+    var hadScrollerAlready = !!(session && session.id === s.id && session.scrollerId);
+    var wasInvited = invitedFor === s.id;
+    var hadVolunteered = volunteeredFor === s.id;
     session = { id: s.id, song: s.song, songTitle: s.songTitle, mode: s.mode, scrollerId: s.scrollerId };
     if (s.mode === 'guest' && !s.scrollerId) {
       // Awaiting a volunteer: offer it once per session.
@@ -419,8 +430,22 @@ window.addEventListener('load', function() {
         inviteSong.textContent = s.songTitle;
         if (!inviteModal.open) inviteModal.showModal();
       }
-    } else if (inviteModal.open) {
-      inviteModal.close(); // a scroller was chosen, or this is a self session
+    } else {
+      if (inviteModal.open) inviteModal.close(); // a scroller was chosen, or this is a self session
+      // A guest scroller was just named (not merely re-heard on a heartbeat):
+      // tell whoever we'd invited how it went for them — the winner, a
+      // volunteer who lost the race, or just everyone else waiting on an
+      // answer.
+      if (s.mode === 'guest' && s.scrollerId && !hadScrollerAlready && wasInvited) {
+        volunteeredFor = null;
+        if (s.scrollerId === senderId) {
+          showToast(['Danke für deine Bereitschaft! Lass uns gleich starten…']);
+        } else if (hadVolunteered) {
+          showToast(['Oh, das wäre nett gewesen – aber jemand anderes scrollt bereits!']);
+        } else {
+          showToast(['Es geht gleich los!']);
+        }
+      }
     }
     // Self-scroll: the presenter drives, so there is nothing to volunteer for —
     // tell the room which song is coming, but only those here as it opens
@@ -444,6 +469,7 @@ window.addEventListener('load', function() {
     session = null;
     sessionClaim = 0;
     invitedFor = null;
+    volunteeredFor = null;
     announcedFor = null;
     applyNavMode();
     updateButton();
@@ -466,6 +492,7 @@ window.addEventListener('load', function() {
     session = null;
     sessionClaim = 0;
     invitedFor = null;
+    volunteeredFor = null;
     announcedFor = null;
     applyNavMode();
     updateButton();
@@ -491,6 +518,7 @@ window.addEventListener('load', function() {
     updateButton();
     updateStatus();
     restartHeartbeat();
+    showToast(['Jemand hat sich bereit erklärt, es geht gleich los']);
   }
 
   // The scroller leads and snaps back if it ever leaves its song; a follower
@@ -639,7 +667,10 @@ window.addEventListener('load', function() {
   document.getElementById('scroll-choice-cancel').addEventListener('click', function() { choiceModal.close(); });
 
   document.getElementById('guest-accept').addEventListener('click', function() {
-    if (session) emit({ type: 'volunteer', sessionId: session.id });
+    if (session) {
+      volunteeredFor = session.id;
+      emit({ type: 'volunteer', sessionId: session.id });
+    }
     inviteModal.close(); // wait to hear whether this tab was the one chosen
   });
   document.getElementById('guest-decline').addEventListener('click', function() { inviteModal.close(); });

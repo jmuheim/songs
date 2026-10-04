@@ -66,6 +66,25 @@ RSpec.describe 'index.html', :js, type: :feature do
     JS
   end
 
+  # A second socket (forceNew) that feeds a lone tab fabricated `session`
+  # broadcasts, standing in for a presenter. Driving a real two-guest race to
+  # test the *losing* side's feedback doesn't work: the relay resolves it in
+  # milliseconds, well before a second real tab could still have its invite
+  # open to lose from (see install_phantom_guest above for the same problem
+  # from the presenter's side).
+  def install_spy
+    page.execute_script("window._spy = io(window.MULTIPLEX.url, { forceNew: true });")
+    wait_for_js("window._spy.connected")
+  end
+
+  def spy_send_session(session, claim: 1, fresh: false)
+    page.execute_script(<<~JS)
+      window._spy.emit('multiplex-statechanged', Object.assign({
+        type: 'session', claim: #{claim}, fresh: #{fresh}, session: #{session.to_json}
+      }, { secret: window.MULTIPLEX.secret, socketId: window.MULTIPLEX.socketId, from: 'spy' }));
+    JS
+  end
+
   def tooltip_shown?(id)
     page.evaluate_script("getComputedStyle(document.querySelector('##{id} > .visually-hidden')).clipPath") == 'none'
   end
@@ -490,20 +509,28 @@ RSpec.describe 'index.html', :js, type: :feature do
           wait_for_js("Reveal.getIndices().v === 0")
           expect(slide_indices).to eq([3, 0])
 
-          # reveal.js binds Space to "next", Home to the first slide and End to
-          # the last one — all of them used to reach the snap-back too, landing
-          # the presenter back on v = 0 instead of leaving the scroll position
-          # alone (the snap-back fired after the jump, not before it).
+          # reveal.js binds Home to the first slide and End to the last one —
+          # both used to reach the snap-back too, landing the presenter back on
+          # v = 0 instead of leaving the scroll position alone (the snap-back
+          # fired after the jump, not before it); they stay fully blocked, with
+          # no vertical equivalent worth offering instead.
           find('body').send_keys(:down)
           wait_for_js("Reveal.getIndices().v === 1")
-          find('body').send_keys(:space)
-          sleep 0.3
-          expect(slide_indices).to eq([3, 1])
           find('body').send_keys(:home)
           sleep 0.3
           expect(slide_indices).to eq([3, 1])
           find('body').send_keys(:end)
           sleep 0.3
+          expect(slide_indices).to eq([3, 1])
+
+          # Space/Shift+Space default to reveal.js's own next()/prev(), the
+          # same escape-prone bindings as above — remapped to step within the
+          # song instead, exactly like the (already safe) arrow keys.
+          press(:space)
+          wait_for_js("Reveal.getIndices().v === 2")
+          expect(slide_indices).to eq([3, 2])
+          press([:shift, :space])
+          wait_for_js("Reveal.getIndices().v === 1")
           expect(slide_indices).to eq([3, 1])
         end
 
@@ -525,7 +552,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
       end
 
-      it 'guest-scroll: the first volunteer leads the room, is walled into the song, and is thanked when it ends' do
+      it 'guest-scroll: the first volunteer leads the room, is walled into the song, and is thanked when it starts and when it ends' do
         [:guest_a, :guest_b].each do |s|
           using_session(s) { load_presentation; expect(page).to have_css('#title-slide.present') }
         end
@@ -549,14 +576,22 @@ RSpec.describe 'index.html', :js, type: :feature do
           within('#guest-invite-modal') { click_button('Ja, ich scrolle') }
           wait_for_js("Reveal.getIndices().h === 4")
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst für alle')
+          # Chosen as scroller: thanked for volunteering, not left to guess from the status line alone
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Danke für deine Bereitschaft! Lass uns gleich starten…')
         end
 
         using_session(:guest_b) do
           expect(page).not_to have_visible('#guest-invite-modal')
           wait_for_js("Reveal.getIndices().h === 4")
           expect(page).to have_css('#multiplex-status', text: 'Folgt')
+          # Invited but never answered: told things are starting anyway, same as a decline would be
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Es geht gleich los!')
         end
-        using_session(:presenter) { expect(page).to have_css('#multiplex-status', text: 'Gast scrollt') }
+        using_session(:presenter) do
+          expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
+          # A quick heads-up that someone stepped up, instead of a silent status-line change
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Jemand hat sich bereit erklärt, es geht gleich los')
+        end
 
         # The guest scrolls down; the whole room — the presenter included — follows
         using_session(:guest_a) do
@@ -590,6 +625,24 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).to have_no_css('#multiplex-toast', text: 'Vielen Dank fürs Scrollen!')
           wait_for_js("Reveal.getIndices().h === 1")
           expect(slide_indices).to eq([1, 0])
+        end
+      end
+
+      it 'a guest who volunteers but loses the race is told someone else is already scrolling' do
+        using_session(:guest) do
+          load_presentation
+          page.evaluate_script("Reveal.slide(4, 0)") # Across the universe
+          wait_for_js("Reveal.getIndices().h === 4")
+          install_spy
+          spy_send_session({ id: 'spy-1', active: true, song: 4, songTitle: 'Across the universe', mode: 'guest', scrollerId: nil }, fresh: true)
+          expect(page).to have_visible('#guest-invite-modal')
+
+          within('#guest-invite-modal') { click_button('Ja, ich scrolle') }
+          expect(page).not_to have_visible('#guest-invite-modal')
+
+          spy_send_session({ id: 'spy-1', active: true, song: 4, songTitle: 'Across the universe', mode: 'guest', scrollerId: 'someone-else' })
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Oh, das wäre nett gewesen – aber jemand anderes scrollt bereits!')
+          expect(page).to have_css('#multiplex-status', text: 'Folgt') # the room still runs; this guest just isn't the one scrolling
         end
       end
 
