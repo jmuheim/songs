@@ -216,22 +216,24 @@ body.theme-bright #toc-filter {
   bottom: 0;
 }
 
-/* The end-of-session notice: a brief toast under the top-right buttons. */
+/* A brief toast spanning the bottom of the screen, clear of the top-right
+   controls and the TOC filter it used to sit on top of. */
 #multiplex-toast {
   position: fixed;
-  top: 4.5rem;
-  right: 1em;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 100;
   margin: 0;
-  max-width: 18em;
+  width: 100%;
   padding: 0.6em 0.9em;
-  border-radius: 0.4em;
   background: #1c1c1c;
-  border: 1px solid #888;
+  border: none;
+  border-top: 1px solid #888;
   color: var(--r-main-color);
   font-family: sans-serif;
   font-size: 1rem;
-  text-align: right;
+  text-align: center;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease;

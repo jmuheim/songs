@@ -168,8 +168,20 @@ window.addEventListener('load', function() {
   // without waiting for the next move. cfg.heartbeat lets the specs shorten it.
   var HEARTBEAT_MS = 2000;
 
-  var senderId = Math.random().toString(36).slice(2, 8); // per page load
+  // Stable across a reload of this tab (sessionStorage, not a fresh random
+  // value every load): a guest who just became the scroller — or anyone just
+  // following along — is still recognised as themselves afterwards, since the
+  // presenter's broadcast keeps naming this same id as scrollerId.
+  var senderId = (function() {
+    var stored = null;
+    try { stored = sessionStorage.getItem('multiplex-sender-id'); } catch (e) {}
+    if (stored) return stored;
+    var id = Math.random().toString(36).slice(2, 8);
+    try { sessionStorage.setItem('multiplex-sender-id', id); } catch (e) {}
+    return id;
+  })();
   var socket = io(cfg.url);
+  cfg.socket = socket; // a seam for the specs to simulate a real drop/reconnect (socket.disconnect()/.connect()) — nothing here is secret beyond what the page source already is (see the Token section in CLAUDE.md)
 
   // ---- Controls and dialogs ----
   var masterBtn   = document.getElementById('master-mode');
@@ -201,9 +213,12 @@ window.addEventListener('load', function() {
   var lastSessionAt = 0;      // last word from the session (heartbeat or move)
   var applyingRemote = false; // set while Reveal moves because the scroller did
   var invitedFor = null;      // session id whose invite this tab already saw
+  var volunteeredFor = null;  // session id this tab last said "Ja, ich scrolle" to
   var announcedFor = null;    // self-scroll session id this tab already announced to the room
   var heartbeat = null;
   var everConnected = false;
+  var connectionLostShown = false; // a "Verbindung verloren" toast is owed a "Wieder verbunden" once it reconnects
+  var guestSilent = false;         // presenter only: the delegated guest has gone quiet
 
   function amScroller() { return !!session && session.scrollerId === senderId; }
 
@@ -266,14 +281,18 @@ window.addEventListener('load', function() {
   // ---- Navigation lock ----
   // Horizontal keys the scroller must not use: it may only scroll within its
   // own song (up/down). A swipe or a click that still leaves the song is undone
-  // by the snap-back in the Reveal handler below — but Space, Home and End
-  // default to "next"/"first slide"/"last slide" and reached that snap-back
-  // too, landing the scroller back on v=0 instead of where it was. Disabling
-  // them here keeps the scroll position intact instead of relying on the
-  // after-the-fact correction.
+  // by the snap-back in the Reveal handler below. Home and End jump to the
+  // first/last *horizontal* slide — there is no vertical equivalent worth
+  // keeping, so they stay fully disabled. Space/Shift+Space default to
+  // reveal.js's own next()/prev(), which — at the song's last/first sub-slide —
+  // step past it into the neighbouring song, reaching the snap-back only after
+  // the jump, with the scroll position already reset to v=0. Remapped here to
+  // the same Reveal.down()/up() the vertical arrow keys already use safely:
+  // one step within the song, never past it.
   var SCROLLER_KEYS = {
     37: null, 39: null, 33: null, 34: null, 72: null, 76: null, 78: null, 80: null,
-    32: null, 35: null, 36: null
+    32: function(e) { if (e.shiftKey) { Reveal.up(); } else { Reveal.down(); } },
+    35: null, 36: null
   };
 
   function applyNavMode() {
@@ -411,6 +430,12 @@ window.addEventListener('load', function() {
   }
 
   function reconcileSession(s, fresh) {
+    // Caught before the overwrite below: whether *this* session already had a
+    // scroller the last time this tab heard of it, and whether this tab was
+    // among the invited (only those ever see a resolution toast at all).
+    var hadScrollerAlready = !!(session && session.id === s.id && session.scrollerId);
+    var wasInvited = invitedFor === s.id;
+    var hadVolunteered = volunteeredFor === s.id;
     session = { id: s.id, song: s.song, songTitle: s.songTitle, mode: s.mode, scrollerId: s.scrollerId };
     if (s.mode === 'guest' && !s.scrollerId) {
       // Awaiting a volunteer: offer it once per session.
@@ -419,8 +444,22 @@ window.addEventListener('load', function() {
         inviteSong.textContent = s.songTitle;
         if (!inviteModal.open) inviteModal.showModal();
       }
-    } else if (inviteModal.open) {
-      inviteModal.close(); // a scroller was chosen, or this is a self session
+    } else {
+      if (inviteModal.open) inviteModal.close(); // a scroller was chosen, or this is a self session
+      // A guest scroller was just named (not merely re-heard on a heartbeat):
+      // tell whoever we'd invited how it went for them — the winner, a
+      // volunteer who lost the race, or just everyone else waiting on an
+      // answer.
+      if (s.mode === 'guest' && s.scrollerId && !hadScrollerAlready && wasInvited) {
+        volunteeredFor = null;
+        if (s.scrollerId === senderId) {
+          showToast(['Danke für deine Bereitschaft! Lass uns gleich starten…']);
+        } else if (hadVolunteered) {
+          showToast(['Oh, das wäre nett gewesen – aber jemand anderes scrollt bereits!']);
+        } else {
+          showToast(['Es geht gleich los!']);
+        }
+      }
     }
     // Self-scroll: the presenter drives, so there is nothing to volunteer for —
     // tell the room which song is coming, but only those here as it opens
@@ -430,6 +469,7 @@ window.addEventListener('load', function() {
       announceSong.textContent = s.songTitle;
       if (!announceModal.open) announceModal.showModal();
     }
+    persistSession();
     applyNavMode();
     updateButton();
     updateStatus();
@@ -444,7 +484,9 @@ window.addEventListener('load', function() {
     session = null;
     sessionClaim = 0;
     invitedFor = null;
+    volunteeredFor = null;
     announcedFor = null;
+    persistSession();
     applyNavMode();
     updateButton();
     updateStatus();
@@ -466,7 +508,9 @@ window.addEventListener('load', function() {
     session = null;
     sessionClaim = 0;
     invitedFor = null;
+    volunteeredFor = null;
     announcedFor = null;
+    persistSession();
     applyNavMode();
     updateButton();
     restartHeartbeat();
@@ -485,12 +529,14 @@ window.addEventListener('load', function() {
     if (!isPresenter || !session || session.mode !== 'guest' || session.scrollerId) return;
     if (data.sessionId !== session.id) return;
     session.scrollerId = data.from;
+    guestSilent = false; // fresh delegate: the silence clock restarts clean
     persistPresenter();
     broadcastSession();
     applyNavMode();   // the presenter now follows the guest
     updateButton();
     updateStatus();
     restartHeartbeat();
+    showToast(['Jemand hat sich bereit erklärt, es geht gleich los']);
   }
 
   // The scroller leads and snaps back if it ever leaves its song; a follower
@@ -523,10 +569,32 @@ window.addEventListener('load', function() {
     }
     if (statusEl.textContent !== text) statusEl.textContent = text;
   }
+  // Fixed at 500ms — unlike HEARTBEAT_MS, not scaled by cfg.heartbeat. A spec
+  // shortening the heartbeat to test staleness must keep 3x it comfortably
+  // above this tick, or "fresh again" can never be observed: by the time the
+  // next tick runs, more time than a too-short threshold has already passed.
   setInterval(function() {
-    if (session && socket.connected && navMode === 'follower' &&
-        Date.now() - lastSessionAt > 3 * statusIntervalHb()) {
+    // Not the presenter: a regular follower (or the presenter's own guest
+    // delegate) has no other way back to free navigation if the session it
+    // was following goes quiet, so it frees itself. The presenter is excluded
+    // — it is the one actor with a deliberate way to end the session (🚀), and
+    // must keep that even while silently "following" a guest it delegated to:
+    // a dropout on the *guest's* end (flaky phone, bad wifi) used to silently
+    // eject the presenter from its own session, taking the ❌ with it, while
+    // the guest — and everyone else still locked to it — carried right on.
+    var stale = session && socket.connected && navMode === 'follower' &&
+                Date.now() - lastSessionAt > 3 * statusIntervalHb();
+    if (stale && !isPresenter) {
       releaseSilently();
+    } else if (stale && isPresenter && !guestSilent) {
+      // The presenter no longer frees itself here (see above), but it still
+      // deserves to know *why* the view has stopped moving, and that ending
+      // the session is an option rather than just waiting it out blind.
+      guestSilent = true;
+      showToast(['Keine Rückmeldung vom Gast mehr – du kannst die Sitzung bei Bedarf beenden']);
+    } else if (!stale && guestSilent) {
+      guestSilent = false;
+      if (session) showToast(['Der Gast ist wieder verbunden']);
     }
     updateStatus();
   }, 500);
@@ -548,11 +616,21 @@ window.addEventListener('load', function() {
   // ---- Presenter: start, choose, end ----
   function newId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
 
+  // The password, once entered in this tab, survives a reload regardless of
+  // whether a session is live right now — only the live session itself (and
+  // isPresenter with it) is forgotten once it ends or this tab steps down.
   function persistPresenter() {
-    try { sessionStorage.setItem('multiplex-presenter', JSON.stringify({ claim: presenterClaim, session: session })); } catch (e) {}
+    try { sessionStorage.setItem('multiplex-presenter', JSON.stringify({ authed: authed, claim: presenterClaim, session: session })); } catch (e) {}
   }
-  function clearPresenter() {
-    try { sessionStorage.removeItem('multiplex-presenter'); } catch (e) {}
+
+  // The last session any tab — presenter or not — knows about, so a guest who
+  // is scrolling or just following survives a reload too, instead of coming
+  // back to free navigation until the next heartbeat sorts it out.
+  function persistSession() {
+    try {
+      if (session) sessionStorage.setItem('multiplex-session', JSON.stringify({ claim: sessionClaim, session: session }));
+      else sessionStorage.removeItem('multiplex-session');
+    } catch (e) {}
   }
 
   function startSession(mode) {
@@ -573,12 +651,21 @@ window.addEventListener('load', function() {
 
   function endSession() {
     if (!isPresenter || !session) return;
-    emit({ type: 'session', claim: presenterClaim, session: {
+    var endMessage = { type: 'session', claim: presenterClaim, session: {
       id: session.id, active: false, song: session.song, songTitle: session.songTitle,
       mode: session.mode, scrollerId: session.scrollerId
-    }});
-    clearPresenter();
+    }};
+    // The relay is fire-and-forget with no delivery guarantee, and this is the
+    // one message that is never repeated by a heartbeat (there is no more
+    // session to heartbeat once we think we're done) — so a single dropped
+    // packet used to strand everyone else, still locked to a session that, as
+    // far as they ever heard, is still running. Sending it a few more times
+    // over the next second costs nothing and covers a brief connection blip.
+    emit(endMessage);
+    setTimeout(function() { emit(endMessage); }, 400);
+    setTimeout(function() { emit(endMessage); }, 1000);
     session = null;
+    persistPresenter(); // keep authed and the claim; forget the ended session
     applyNavMode();
     gotoToc(); // the song is over: drop everyone back onto the table of contents
     updateButton();
@@ -589,7 +676,8 @@ window.addEventListener('load', function() {
 
   function stepDown() {
     isPresenter = false;
-    clearPresenter();
+    session = null;
+    persistPresenter(); // keep authed; this tab's own (now stale) session is gone
     updateButton();
     // the winning presenter's session drives this tab from here
   }
@@ -622,6 +710,7 @@ window.addEventListener('load', function() {
   masterModal.querySelector('form').addEventListener('submit', function(e) {
     if (masterPw.value === cfg.password) {
       authed = true;
+      persistPresenter(); // survives a reload: no re-entering the password on this tab
       masterModal.close();
       openChoice();
       return;
@@ -639,7 +728,10 @@ window.addEventListener('load', function() {
   document.getElementById('scroll-choice-cancel').addEventListener('click', function() { choiceModal.close(); });
 
   document.getElementById('guest-accept').addEventListener('click', function() {
-    if (session) emit({ type: 'volunteer', sessionId: session.id });
+    if (session) {
+      volunteeredFor = session.id;
+      emit({ type: 'volunteer', sessionId: session.id });
+    }
     inviteModal.close(); // wait to hear whether this tab was the one chosen
   });
   document.getElementById('guest-decline').addEventListener('click', function() { inviteModal.close(); });
@@ -650,23 +742,54 @@ window.addEventListener('load', function() {
     everConnected = true;
     broadcastSession(); // no-op unless presenter
     broadcastState();   // no-op unless scroller
+    if (connectionLostShown) {
+      connectionLostShown = false;
+      if (session) showToast(['Wieder verbunden']);
+    }
     updateStatus();
   });
-  socket.on('disconnect', updateStatus);
-
-  // ---- Restore a reloaded presenter (role, claim and its live session) ----
-  var stored = null;
-  try { stored = JSON.parse(sessionStorage.getItem('multiplex-presenter')); } catch (e) {}
-  if (stored && stored.session) {
-    isPresenter = true;
-    authed = true;
-    presenterClaim = stored.claim || Date.now();
-    session = stored.session;
-    applyNavMode();
-    updateButton();
+  socket.on('disconnect', function() {
+    // Only while something was actually riding on the connection — a drop
+    // while just browsing freely is nobody's concern. #multiplex-status
+    // already shows "Keine Verbindung" for as long as it lasts; this toast is
+    // only the one-off "something changed" moment, on both ends of it.
+    if (session) {
+      connectionLostShown = true;
+      showToast(['Verbindung verloren']);
+    }
     updateStatus();
+  });
+
+  // ---- Restore a reloaded tab: auth, role, claim and the live session ----
+  // The password survives on its own, independent of whether a session is
+  // live right now — entering it once per tab is the point, not once per page
+  // load. If this tab was presenting, that takes priority for the session
+  // itself; otherwise fall back to the last session any role heard of, so a
+  // guest scroller or a follower resumes without a flash of free navigation
+  // while waiting for the next heartbeat.
+  var storedPresenter = null;
+  try { storedPresenter = JSON.parse(sessionStorage.getItem('multiplex-presenter')); } catch (e) {}
+  if (storedPresenter && storedPresenter.authed) {
+    authed = true;
+    presenterClaim = storedPresenter.claim || Date.now();
+  }
+  if (storedPresenter && storedPresenter.session) {
+    isPresenter = true;
+    session = storedPresenter.session;
+  } else {
+    var storedSession = null;
+    try { storedSession = JSON.parse(sessionStorage.getItem('multiplex-session')); } catch (e) {}
+    if (storedSession && storedSession.session) {
+      session = storedSession.session;
+      sessionClaim = storedSession.claim || 0;
+    }
+  }
+  if (session) {
+    applyNavMode();
     restartHeartbeat();
   }
+  updateButton();
+  updateStatus();
 
   // 🚀 is only live on a song: set it now and re-check whenever the slide moves.
   Reveal.on('slidechanged', updateButton);
