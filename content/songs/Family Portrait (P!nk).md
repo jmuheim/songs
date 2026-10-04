@@ -32,7 +32,7 @@
 [C] And this I come home to
 [B7] This is [E] my shelter
 
-### Pre-Chorus
+## Pre-Chorus
 
 [Am] It ain't easy, growin' up in world war 3
 [Dm] Never known what love could be, you'll see,
@@ -73,7 +73,7 @@
 [C] Don't wanna go back to that place
 [B7] But don't have no choice, [E] no way (no choice, no way)
 
-### Pre-Chorus
+## Pre-Chorus
 
 [Am] It ain't easy, growin' up in world war 3
 [Dm] Never knowin' what love could be
