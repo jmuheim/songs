@@ -38,6 +38,18 @@ RSpec.describe 'HTML golden files' do
     expect(doc.at_css('#TOC a[href="#/introduction"]')).to be_nil
   end
 
+  it 'splits a song\'s "Title - Artist" H1 into the title and a p.song-artist line, on both index and print' do
+    [doc, print_doc].each do |page|
+      section = page.at_css('section#riptide---vance-joy')
+      expect(section.at_css('h1').text).to eq('Riptide')
+      expect(section.at_css('p.song-artist').text).to eq('Vance Joy')
+    end
+  end
+
+  it 'leaves a song with no artist in its H1 as a bare h1 (e.g. the Introduction)' do
+    expect(doc.at_css('section#introduction p.song-artist')).to be_nil
+  end
+
   it 'renders the TOC entries as an <ol>, not a <ul>' do
     expect(doc.at_css('#TOC nav ol')).not_to be_nil
     expect(doc.at_css('#TOC nav ul')).to be_nil
@@ -47,7 +59,7 @@ RSpec.describe 'HTML golden files' do
     sprache_options = doc.css('#toc-filter-sprache option').map { |o| o.text.strip }
     genre_options   = doc.css('#toc-filter-genre option').map { |o| o.text.strip }
     expect(sprache_options).to eq(['Alle', 'Deutsch', 'Englisch'])
-    expect(genre_options).to   eq(['Alle', 'Pop', 'Rock'])
+    expect(genre_options).to   eq(['Alle', 'Mantra', 'Pop', 'Rock'])
     legend = doc.at_css('#toc-filter legend')
     expect(legend.text.strip).to eq('Filter')
     expect(legend['class']).to eq('visually-hidden')

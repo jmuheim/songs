@@ -49,12 +49,12 @@ GitHub Actions runs the whole suite on every push and pull request (`.github/wor
 
 ## Adding songs
 
-Add a Markdown file to `content/songs/` following the naming convention `Title (Artist).md`. Chords go inline as `[Am]`, `[G7]`, etc.
+Add a Markdown file to `content/songs/`, named after its own H1: lowercase the `Title - Artist` heading, drop any `.`/`,`/`'`, transliterate umlauts (`ä`→`ae`, `ö`→`oe`, `ü`→`ue`, `ß`→`ss`), and turn spaces into underscores, e.g. `# Kiss the Earth - Ajeet` → `kiss_the_earth_-_ajeet.md`, `# Über den Wolken - Reinhard Mey` → `ueber_den_wolken_-_reinhard_mey.md`. Drop the artist (just `Title`, no file suffix) for a traditional/folk song with nobody specific to credit. Chords go inline as `[Am]`, `[G7]`, etc.
 
 Every song needs an `## Infos über das Lied` section at the top with its Sprache (language) and Genre tags plus its resource links, one per list item:
 
 ```markdown
-# Kiss the Earth (Ajeet)
+# Kiss the Earth - Ajeet
 
 ## Infos über das Lied
 

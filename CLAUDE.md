@@ -49,10 +49,10 @@ The repo's root [`.htaccess`](.htaccess) ships with every deploy and tells Ubers
 
 ## Song file format
 
-Each song lives in `content/songs/<Title> (<Artist>).md`. Structure:
+Each song lives in `content/songs/<slug>.md`, where `<slug>` is its H1 lowercased, with `.`/`,`/`'` dropped, German umlauts transliterated (`ä`→`ae`, `ö`→`oe`, `ü`→`ue`, `ß`→`ss`), and the remaining spaces turned into underscores (everything else — `&`, `!` — passes through as-is): `# Family Portrait - P!nk` lives in `family_portrait_-_p!nk.md`, `# Knockin' on Heaven's Door - Bob Dylan` in `knockin_on_heavens_door_-_bob_dylan.md`, `# Über den Wolken - Reinhard Mey` in `ueber_den_wolken_-_reinhard_mey.md`. The H1 itself keeps its real spelling (punctuation and umlauts both) — only the filename is transliterated/stripped, to stay plain-ASCII-friendly in a shell. Structure:
 
 ```markdown
-# Song Title (Artist Name)
+# Song Title - Artist Name
 
 ## Infos über das Lied
 
@@ -74,7 +74,8 @@ A7sus4 |x 0 2 0 3 0|
 Lyrics with [Chord] inline like this [Am] and here [G7].
 ```
 
-- **H1** = song title (one per file, shown as the slide title). **Nothing but blank lines may follow it before the first H2** — `validate_song!` aborts the build otherwise; a capo note or any other aside belongs in `## Infos über das Lied` instead (e.g. `- Capo: 3. Bund`).
+- **H1** = `Title - Artist` (the literal separator is a space, a hyphen and a space — reserved, so a title may not itself contain that exact substring; `74-75`'s unspaced hyphen is fine). Drop the artist entirely — just `Title`, no trailing `- …` — when there's no specific one to credit: a traditional/folk song, written `Traditional` for an English title or `Traditionell` for a German one (the two forms this book already uses; any flag or other annotation that used to ride along in the parenthetical, e.g. `(Traditionell 🇨🇭)`, is dropped with it rather than kept on the bare title). One per file, shown as the slide title. **Nothing but blank lines may follow it before the first H2** — `validate_song!` aborts the build otherwise; a capo note or any other aside belongs in `## Infos über das Lied` instead (e.g. `- Capo: 3. Bund`).
+- On a song's own title slide, `split_song_artist` (`lib/build_helpers.rb`, part of the shared pipeline below) splits that H1 back apart: the title stays in the `<h1>`, the artist becomes a sibling `<p class="song-artist">` right after it, styled smaller and a shade darker than the title (`style/shared.css` for size, `style/night.css`/`style/serif.css` for colour, per theme). A bare `Title`-only H1 (no artist) is left as a plain `<h1>`, same as "Introduction". This only touches each song's own `section.level1 h1` — never the deck's single cover `#title-slide`.
 - **H2** = section (each becomes a sub-slide)
 - **Chords** use `[ChordName]` inline in lyrics
 - An **`## Infos über das Lied`** section at the top holds the song's tags and its resource links together, authored in this shape directly (not assembled at build time): one `- Sprache: <value>` line and one or more `- Genre: <value>` lines (free text — keep the vocabulary consistent, e.g. `Deutsch` / `Englisch` / `Mundart` / `Pop` / `Rock` / `Mantra`), followed by the resource links (YouTube, tabs, tutorials) as plain Markdown link bullets, plus any other aside (e.g. `- Capo: 3. Bund`) that would otherwise float between the H1 and the first H2. The YouTube link is always labelled `[Lied auf YouTube]`; other links are free text (`Source tab`, `Guitar tutorial`, …). `song_tags` in `lib/build_helpers.rb` parses the `Sprache:`/`Genre:` lines into `[category, value]` pairs (other list items — a Capo note, the resource links — are not tags and are skipped); the category is exactly what was written, not inferred from a fixed vocabulary, so a language or genre this book hasn't seen before still lands in the right [table-of-contents tag filter](#table-of-contents-tag-filter) dropdown. `validate_song!` **requires** at least one Sprache and one Genre tag, aborting the build otherwise — tagging is not optional.
@@ -98,7 +99,7 @@ The regex only matches `[Word]` not followed by `(` — so standard Markdown lin
 
 ## Shared pipeline
 
-`build` and `spec/support/fixture_builder.rb` run the same code, in `lib/build_helpers.rb`: `songbook_markdown` (front matter with `lang: de-CH`, the introduction, the songs with their chords marked up), `pandoc!`, `post_process_index` and `post_process_print`. What differs is a parameter — `assets:` (`style/` beside `index.html`, `/style/` for the fixtures served from `spec/fixtures/`) and the multiplex config. Change the pipeline there, not in one of its callers.
+`build` and `spec/support/fixture_builder.rb` run the same code, in `lib/build_helpers.rb`: `songbook_markdown` (front matter with `lang: de-CH`, the introduction, the songs with their chords marked up), `pandoc!`, `post_process_index` and `post_process_print` (both of which call `split_song_artist`, see [Song file format](#song-file-format)). What differs is a parameter — `assets:` (`style/` beside `index.html`, `/style/` for the fixtures served from `spec/fixtures/`) and the multiplex config. Change the pipeline there, not in one of its callers.
 
 ## Table of contents tag filter
 

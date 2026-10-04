@@ -5,7 +5,7 @@ description: "Create a new song file for this guitar song book from an online ch
 
 # Tab to Song
 
-Converts an online chord/tab page into a new `content/songs/<Title> (<Artist>).md` file that matches this repo's format (see `CLAUDE.md` for the full spec). The hard part isn't fetching the page — it's re-aligning a monospace "chord line above lyric line" tab into this project's inline `[Chord]` notation. That algorithm is the bulk of this skill.
+Converts an online chord/tab page into a new `content/songs/<slug>.md` file that matches this repo's format (see `CLAUDE.md` for the full spec). The hard part isn't fetching the page — it's re-aligning a monospace "chord line above lyric line" tab into this project's inline `[Chord]` notation. That algorithm is the bulk of this skill.
 
 ## Step 1 — Fetch the tab
 
@@ -17,7 +17,9 @@ Also grab from the page: song title, artist, and any linked official video.
 
 ## Step 2 — Name the file
 
-`content/songs/<Title> (<Artist>).md`. Use the title/artist as commonly known (match the source's own capitalization — this repo doesn't enforce strict title-casing, e.g. both "Baby one more time" and "Can't Help Falling in Love" exist side by side). Check `content/songs/` and `content/legacy-songs/` first — if a file for this song already exists, confirm with the user before overwriting rather than silently replacing their work.
+The H1 comes first: `# Title - Artist` (title and artist as commonly known — match the source's own capitalization, this repo doesn't enforce strict title-casing, e.g. both "Baby one more time" and "Can't Help Falling in Love" exist side by side). The literal separator is a space, a hyphen and a space — reserved, so don't let the title itself contain that exact substring. Drop the artist entirely (just `# Title`) for a traditional/folk song with nobody specific to credit — write `Traditional` for an English title, `Traditionell` for a German one, the same way an untitled song would have been credited before, but leave it off the H1 and filename rather than keeping it.
+
+The filename is derived from that H1, not chosen independently: lowercase it, drop any `.`/`,`/`'`, transliterate umlauts (`ä`→`ae`, `ö`→`oe`, `ü`→`ue`, `ß`→`ss`), and turn the remaining spaces into underscores — e.g. `# Kiss the Earth - Ajeet` → `content/songs/kiss_the_earth_-_ajeet.md`, `# Knockin' on Heaven's Door - Bob Dylan` → `knockin_on_heavens_door_-_bob_dylan.md`, `# Über den Wolken - Reinhard Mey` → `ueber_den_wolken_-_reinhard_mey.md`. The H1 itself keeps its real spelling, punctuation and umlauts both; only the filename is transliterated/stripped. Everything else (`&`, `!`) passes through as-is. Check `content/songs/` and `content/legacy-songs/` first — if a file for this song already exists, confirm with the user before overwriting rather than silently replacing their work.
 
 ## Step 3 — Add the `## Infos über das Lied` section
 

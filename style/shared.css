@@ -15,6 +15,11 @@
   font-size: 2em;
 }
 
+.reveal section p.song-artist {
+  font-size: 1em;
+  margin: 0 0 0.5em;
+}
+
 .reveal section h2 {
   font-size: 1.5em;
 }
@@ -117,6 +122,7 @@ section.stack {
   justify-content: center;
 }
 
+section.slide.level1,
 section.slide.level2 {
   display: flex;
   justify-content: center;
