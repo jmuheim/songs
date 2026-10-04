@@ -506,20 +506,17 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/)
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
           expect(page).to have_css('#multiplex-status-button.multiplex-driving')
-          expect(page).not_to have_visible('#self-announce-modal') # the presenter announces to the room, not to itself
+          expect(page).not_to have_css('#multiplex-toast.visible', text: 'Es geht gleich los!') # the presenter announces to the room, not to itself
           # Locked to the song: 📖 would otherwise jump straight back to the TOC
           expect(page).to have_css('#go-to-toc', visible: false)
         end
 
-        # The client is snapped on, told which song is coming, then locked
+        # The client is snapped on, told which song is coming via a toast, then locked
         using_session(:client) do
           wait_for_js("Reveal.getIndices().h === 3")
-          expect(page).to have_visible('#self-announce-modal')
-          expect(page).to have_css('#self-announce-modal', text: 'Es geht gleich los!')
           song = page.evaluate_script("document.querySelectorAll('.slides > section')[3].querySelector('h1').textContent.trim()")
-          expect(page).to have_css('#self-announce-song', text: song)
-          within('#self-announce-modal') { click_button('OK') } # dismiss, so the lock below is really the lock, not the modal
-          expect(page).not_to have_visible('#self-announce-modal')
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Es geht gleich los!')
+          expect(page).to have_css('#multiplex-toast.visible', text: song)
 
           expect(page).to have_css('#multiplex-status', text: 'Folgt')
           expect(page).to have_css('#multiplex-status-button.multiplex-following')
@@ -644,10 +641,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
 
         [:guest_a, :guest_b].each do |s|
-          using_session(s) do
-            expect(page).to have_visible('#guest-invite-modal')
-            expect(page).not_to have_visible('#self-announce-modal') # that dialog is for self-scroll only
-          end
+          using_session(s) { expect(page).to have_visible('#guest-invite-modal') }
         end
 
         using_session(:guest_a) do
@@ -868,7 +862,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           wait_for_js("Reveal.getIndices().h === 5 && Reveal.getIndices().v === 1", timeout: 5)
           expect(slide_indices).to eq([5, 1])
           expect(page).not_to have_visible('#guest-invite-modal')
-          expect(page).not_to have_visible('#self-announce-modal') # joined mid-session: no „Es geht gleich los!"
+          expect(page).not_to have_css('#multiplex-toast.visible', text: 'Es geht gleich los!') # joined mid-session: no announcement
           expect(page).to have_css('#multiplex-status', text: 'Folgt')
         end
       end

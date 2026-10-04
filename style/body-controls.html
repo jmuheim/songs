@@ -187,16 +187,6 @@
   </div>
 </dialog>
 
-<dialog id="self-announce-modal" class="overlay-modal" aria-labelledby="self-announce-title">
-  <div class="modal-box">
-    <h2 id="self-announce-title" tabindex="-1" autofocus>Es geht gleich los!</h2>
-    <p>Der nächste Song ist «<span id="self-announce-song"></span>».</p>
-    <div class="modal-buttons">
-      <button id="self-announce-ok">OK</button>
-    </div>
-  </div>
-</dialog>
-
 <script>
 window.addEventListener('load', function() {
   var cfg = window.MULTIPLEX;
@@ -231,8 +221,6 @@ window.addEventListener('load', function() {
   var choiceSong  = document.getElementById('scroll-choice-song');
   var inviteModal = document.getElementById('guest-invite-modal');
   var inviteSong  = document.getElementById('guest-invite-song');
-  var announceModal = document.getElementById('self-announce-modal');
-  var announceSong  = document.getElementById('self-announce-song');
   var qrModal     = document.getElementById('qr-modal');
   var statusEl    = document.getElementById('multiplex-status');
   var toastEl     = document.getElementById('multiplex-toast');
@@ -513,8 +501,7 @@ window.addEventListener('load', function() {
     // (`fresh`): a latecomer that catches up on a heartbeat just follows.
     if (fresh && s.mode === 'self' && !amScroller() && announcedFor !== s.id) {
       announcedFor = s.id;
-      announceSong.textContent = s.songTitle;
-      if (!announceModal.open) announceModal.showModal();
+      showToast(['Es geht gleich los!', 'Der nächste Song ist «' + s.songTitle + '».']);
     }
     persistSession();
     applyNavMode();
@@ -527,7 +514,6 @@ window.addEventListener('load', function() {
     var wasIn = !!session;
     var wasScroller = amScroller();
     if (inviteModal.open) inviteModal.close();
-    if (announceModal.open) announceModal.close();
     session = null;
     sessionClaim = 0;
     invitedFor = null;
@@ -551,7 +537,6 @@ window.addEventListener('load', function() {
   // heartbeat, if it returns, locks it again.
   function releaseSilently() {
     if (inviteModal.open) inviteModal.close();
-    if (announceModal.open) announceModal.close();
     session = null;
     sessionClaim = 0;
     invitedFor = null;
@@ -801,7 +786,6 @@ window.addEventListener('load', function() {
     inviteModal.close(); // wait to hear whether this tab was the one chosen
   });
   document.getElementById('guest-decline').addEventListener('click', function() { inviteModal.close(); });
-  document.getElementById('self-announce-ok').addEventListener('click', function() { announceModal.close(); });
 
   // ---- Connection ----
   socket.on('connect', function() {
@@ -906,7 +890,7 @@ window.addEventListener('load', function() {
   // showModal() makes the page behind inert and Esc closes natively. What is
   // left: Reveal listens for keys on the document, where they still arrive from
   // inside the dialog, and a click on the backdrop lands on the dialog itself.
-  [masterModal, qrModal, choiceModal, inviteModal, announceModal, multiplexModal].forEach(function(dialog) {
+  [masterModal, qrModal, choiceModal, inviteModal, multiplexModal].forEach(function(dialog) {
     dialog.addEventListener('keydown', function(e) { e.stopPropagation(); });
     dialog.addEventListener('keypress', function(e) { e.stopPropagation(); });
     dialog.addEventListener('click', function(e) { if (e.target === dialog) dialog.close(); });
