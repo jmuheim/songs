@@ -2,9 +2,12 @@ require 'capybara/rspec'
 
 # The table of contents carries a Sprache/Genre filter (built by inject_toc_filter
 # in lib/build_helpers.rb, wired by style/toc-filter.js). The fixture songs are
-# tagged so that Deutsch = {74-75} and Englisch = {Across, I Have a Dream, Imagine}
-# are disjoint, and likewise Rock = {74-75} and Pop = the other three — a clean
-# test of single-select filtering within a category and AND across categories.
+# tagged so that Deutsch = {74-75} and Englisch ⊇ {Across, I Have a Dream, Imagine}
+# are disjoint, and likewise Rock = {74-75} and Pop = exactly those same three — a
+# clean test of single-select filtering within a category and AND across
+# categories. Riptide (Englisch/Mantra) is the fixture for split_song_artist's
+# "Title - Artist" H1 (see spec/unit/split_song_artist_spec.rb); it's Englisch
+# too but tagged with its own Genre so it never joins the Pop/Rock sets above.
 RSpec.describe 'TOC tag filter', :js, type: :feature do
   before(:all) do
     FixtureBuilder.build!
@@ -30,7 +33,7 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
       within '#toc-filter' do
         expect(page).to have_css('legend.visually-hidden', text: 'Filter', visible: :all) # reaches a screen reader, not the screen
         expect(page).to have_select('Sprache', options: ['Alle', 'Deutsch', 'Englisch'])
-        expect(page).to have_select('Genre', options: ['Alle', 'Pop', 'Rock'])
+        expect(page).to have_select('Genre', options: ['Alle', 'Mantra', 'Pop', 'Rock'])
         expect(page).to have_select('Sprache', selected: 'Alle')
         expect(page).to have_select('Genre', selected: 'Alle')
         expect(page).to have_button('Reset')

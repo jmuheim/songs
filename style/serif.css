@@ -3,6 +3,10 @@
   text-shadow: 1px 2px 4px #ffffff;
 }
 
+.reveal section p.song-artist {
+  color: #2a2e2e;
+}
+
 body {
   background-color: transparent !important;
 }

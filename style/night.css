@@ -97,6 +97,10 @@ body.chords-hidden .reveal code {
   color: #e7ad52 !important;
 }
 
+.reveal section p.song-artist {
+  color: #b88a42;
+}
+
 .reveal section pre code {
   background-color: #ffe4ba;
 }
@@ -487,6 +491,10 @@ body.theme-bright .reveal section h1,
 body.theme-bright .reveal section h2,
 body.theme-bright .reveal section em {
   color: unset !important;
+}
+
+body.theme-bright .reveal section p.song-artist {
+  color: #1a1a1a;
 }
 
 body.theme-bright .reveal section code.x {

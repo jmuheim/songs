@@ -149,6 +149,29 @@ module BuildHelpers
     doc.to_html
   end
 
+  # Each song's own title slide is a `section.level1 h1` (the top of its
+  # `.stack`, distinct from the deck's own #title-slide cover, which carries no
+  # `level1` class and so never matches here). Its H1 text is "Title - Artist"
+  # once the source file uses that shape; split the artist out into its own
+  # `<p class="song-artist">` right after the <h1> so CSS can size/colour it
+  # apart from the title. A song with no " - " (an untitled-artist song, or
+  # "Introduction") is left as a bare <h1>. Must run before wrap_slide_content,
+  # so the new <p> still lands inside the same .slide-content div as the <h1>.
+  def split_song_artist(html)
+    doc = Nokogiri::HTML(html)
+    doc.css('section.level1 > h1').each do |h1|
+      title, sep, artist = h1.text.rpartition(' - ')
+      next if sep.empty?
+
+      h1.content = title
+      p = Nokogiri::XML::Node.new('p', doc)
+      p['class'] = 'song-artist'
+      p.content = artist
+      h1.add_next_sibling(p)
+    end
+    doc.to_html
+  end
+
   # Carries the per-song tags (parsed from each ABOUT_HEADING section with song_tags,
   # one array of [category, value] pairs per song in the same order the TOC lists
   # them) into the TOC so toc-filter.js can filter it: a `data-sprache`/`data-genre`
@@ -266,7 +289,7 @@ module BuildHelpers
     html = html.sub('<body>', "<body><script>window.MULTIPLEX=#{multiplex.to_json};</script>" + style_file('body-controls.html').strip)
     scripts = ["#{multiplex[:url]}/socket.io/socket.io.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}slide-zoom.js", "#{assets}chords.js", "#{assets}toc-filter.js"]
     html = html.sub('</body>', scripts.map { |src| %(  <script src="#{src}"></script>\n) }.join + '</body>')
-    wrap_slide_content(inject_toc_filter(html, tags: tags))
+    wrap_slide_content(inject_toc_filter(split_song_artist(html), tags: tags))
   end
 
   def post_process_print(html, assets:)
@@ -278,7 +301,7 @@ module BuildHelpers
     # for the id, with a "-N" suffix to disambiguate it across songs.
     html = html.gsub(/<section id="infos-über-das-lied[-\d]*?" class="slide level2">.*?<\/section>/m, '')
     html = html.sub('<section id="title-slide"', %(<section id="title-slide" data-background-image="#{assets}background.jpg"))
-    wrap_slide_content(without_pandoc_plugins(html))
+    wrap_slide_content(split_song_artist(without_pandoc_plugins(html)))
   end
 
   def style_file(name)
