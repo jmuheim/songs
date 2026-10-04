@@ -1,10 +1,16 @@
 name: Tests
 
-# Runs the whole RSpec suite on every push to any branch and on every pull
-# request — the song book is small, the repo is public, so the Actions minutes
-# are free and there is no reason to gate which branches run.
+# Runs the whole RSpec suite on every pull request, and on every push to
+# master (merges, and the odd direct push — master has no branch protection).
+# push is deliberately not left unscoped: a branch with an open PR fires both
+# push and pull_request on every commit, running the identical suite twice.
+# pull_request alone covers feature branches; master still needs its own push
+# trigger since the deploy job's `needs: rspec` depends on an rspec run having
+# happened in that same push-triggered workflow (a merge doesn't re-fire
+# pull_request — only opened/synchronize/reopened do, not closed).
 on:
   push:
+    branches: [master]
   pull_request:
 
 # A superseded run of the same branch is cancelled — except on master, where
