@@ -4,7 +4,7 @@
 
 - Capo: 3. Bund
 - Sprache: Englisch
-- Genre: Traditional
+- Genre: Traditionell
 - [Lied auf YouTube](https://www.youtube.com/watch?v=u9DzUAdaLCg)
 
 ## Intro

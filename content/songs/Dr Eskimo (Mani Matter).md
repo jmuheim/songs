@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Mundart
-- Genre: Traditional
+- Genre: Traditionell
 - [Source tab](https://tabs.ultimate-guitar.com/tab/mani-matter/dr-eskimo-chords-2146513)
 
 ## Verse 1

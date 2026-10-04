@@ -95,7 +95,7 @@ RSpec.describe 'BuildHelpers#validate_song!' do
     end
 
     it 'accepts a Sprache/Genre value this book has never seen before (category comes from the label, not a fixed vocabulary)' do
-      expect_valid("# My Song\n\n## Infos über das Lied\n\n- Sprache: Spanisch\n- Genre: Traditional\n\n## Verse\n\nLyrics\n")
+      expect_valid("# My Song\n\n## Infos über das Lied\n\n- Sprache: Spanisch\n- Genre: Traditionell\n\n## Verse\n\nLyrics\n")
     end
   end
 

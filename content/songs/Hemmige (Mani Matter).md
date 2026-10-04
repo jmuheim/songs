@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Mundart
-- Genre: Traditional
+- Genre: Traditionell
 - [Lied auf YouTube](https://www.youtube.com/watch?v=L0OydDmfwAo)
     - [Super Interpretation vom\n Stephan Eicher](https://www.youtube.com/watch?v=pxjNh3sq66U)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/stephan-eicher/hemmige-chords-1716428)

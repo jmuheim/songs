@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Mundart
-- Genre: Traditional
+- Genre: Traditionell
 - [Lied auf YouTube](https://www.youtube.com/watch?v=PkGatIgXERI)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/1197401)
 

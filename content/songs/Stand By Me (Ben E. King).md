@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Englisch
-- Genre: Traditional
+- Genre: Traditionell
 - [Lied auf YouTube](https://www.youtube.com/watch?v=z5i9vT8wGY8)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/ben-e-king/stand-by-me-chords-349585)
 

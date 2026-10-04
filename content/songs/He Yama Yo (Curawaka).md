@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Andere
-- Genre: Traditional
+- Genre: Traditionell
 - [Lied auf YouTube](https://www.youtube.com/watch?v=aGL1_HDWevo)
 
 ## Verse

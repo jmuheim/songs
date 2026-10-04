@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Englisch
-- Genre: Traditional
+- Genre: Traditionell
 - [Lied auf YouTube](https://www.youtube.com/watch?v=3o1xu9MQcTA)
 
 ## Chorus

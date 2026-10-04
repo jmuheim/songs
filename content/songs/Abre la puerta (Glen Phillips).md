@@ -4,7 +4,7 @@
 
 - Capo: 4. Bund
 - Sprache: Spanisch
-- Genre: Traditional
+- Genre: Traditionell
 - [Lied auf YouTube](https://www.youtube.com/watch?v=TVfpenKPVSc)
 
 ## Chorus

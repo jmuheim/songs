@@ -13,8 +13,8 @@ RSpec.describe '#song_tags' do
   end
 
   it 'takes the category from what was written, not a fixed vocabulary (so an unseen language/genre still classifies correctly)' do
-    content = "# S\n\n## Infos über das Lied\n\n- Sprache: Spanisch\n- Genre: Traditional\n\n## Verse 1\n"
-    expect(song_tags(content)).to eq([%w[Sprache Spanisch], %w[Genre Traditional]])
+    content = "# S\n\n## Infos über das Lied\n\n- Sprache: Spanisch\n- Genre: Traditionell\n\n## Verse 1\n"
+    expect(song_tags(content)).to eq([%w[Sprache Spanisch], %w[Genre Traditionell]])
   end
 
   it 'ignores resource links and other list items (e.g. a Capo note), which are not tags' do

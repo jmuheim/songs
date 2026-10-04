@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Mundart
-- Genre: Traditional
+- Genre: Traditionell
 - [Lied auf YouTube](https://www.youtube.com/watch?v=Hdshwr1hDX8)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/rumpelstilz/stets-in-truure-chords-4407716)
 
