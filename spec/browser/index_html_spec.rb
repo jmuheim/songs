@@ -63,6 +63,14 @@ RSpec.describe 'index.html', :js, type: :feature do
           secret: cfg.secret, socketId: cfg.socketId
         });
       };
+      // Simulates the phantom guest resuming after a silence — a state
+      // message is all it takes to refresh lastSessionAt on the receiving end.
+      window._phantomState = function() {
+        spy.emit('multiplex-statechanged', {
+          type: 'state', sessionId: window._phantom.sessionId, state: { indexh: 4, indexv: 0 },
+          from: 'phantom-guest', secret: cfg.secret, socketId: cfg.socketId
+        });
+      };
     JS
   end
 
@@ -726,25 +734,60 @@ RSpec.describe 'index.html', :js, type: :feature do
           install_phantom_guest
           wait_for_js("window._phantom && window._phantom.connected")
 
-          start_scroll_session(mode: :guest, heartbeat: 100)
+          # heartbeat: 300, not the usual fast 100/200ms other specs use: the
+          # release-checker ticks on a fixed 500ms, independent of cfg.heartbeat
+          # (see body-controls.html) — a staleness threshold shorter than that
+          # tick (3 * 100 = 300ms < 500ms) can never be observed as "fresh"
+          # again, since by the time the next tick runs more than 300ms has
+          # always already passed. 3 * 300 = 900ms comfortably clears it.
+          start_scroll_session(mode: :guest, heartbeat: 300)
           wait_for_js("window._phantom.sessionId !== null")
           page.execute_script("window._phantomVolunteer()")
           expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
 
           # The phantom guest never sends any state at all. Past three missed
-          # heartbeats (300ms here) an ordinary follower frees itself — and
+          # heartbeats (900ms here) an ordinary follower frees itself — and
           # before the presenter was exempted from that, so did the presenter:
           # the ❌ vanished and 🚀 reverted to "Live-Scrollen starten", even
           # though the guest — and everyone else still locked to it — carried
           # on regardless. A flaky connection to the guest must not cost the
           # presenter its own ability to end the session.
-          sleep 0.5
+          sleep 1.1
           expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/)
+          # Told why the view has stopped moving, instead of silently wondering
+          expect(page).to have_css('#multiplex-toast.visible',
+            text: 'Keine Rückmeldung vom Gast mehr – du kannst die Sitzung bei Bedarf beenden')
+
+          # The guest comes back: told so, once
+          page.execute_script("window._phantomState()")
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Der Gast ist wieder verbunden')
 
           click_button('🚀 Live-Scrollen beenden')
           expect(page).to have_no_css('#master-mode.session-active')
           wait_for_js("Reveal.getIndices().h === 1")
           expect(slide_indices).to eq([1, 0])
+        end
+      end
+
+      it 'shows a toast when the connection drops and when it comes back, on top of the persistent status line' do
+        using_session(:presenter) do
+          load_presentation
+          page.evaluate_script("Reveal.slide(3, 0)")
+          wait_for_js("Reveal.getIndices().h === 3")
+          start_scroll_session(mode: :self)
+          expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
+
+          # window.MULTIPLEX.socket is a seam for exactly this: Chrome's CDP
+          # offline emulation does not reliably sever an already-open
+          # WebSocket, so the only way to simulate a real drop here is to
+          # disconnect the actual socket the page is using.
+          page.execute_script("window.MULTIPLEX.socket.disconnect()")
+          expect(page).to have_css('#multiplex-status', text: 'Keine Verbindung')
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Verbindung verloren')
+
+          page.execute_script("window.MULTIPLEX.socket.connect()")
+          expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Wieder verbunden')
         end
       end
 

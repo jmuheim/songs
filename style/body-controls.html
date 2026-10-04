@@ -181,6 +181,7 @@ window.addEventListener('load', function() {
     return id;
   })();
   var socket = io(cfg.url);
+  cfg.socket = socket; // a seam for the specs to simulate a real drop/reconnect (socket.disconnect()/.connect()) — nothing here is secret beyond what the page source already is (see the Token section in CLAUDE.md)
 
   // ---- Controls and dialogs ----
   var masterBtn   = document.getElementById('master-mode');
@@ -216,6 +217,8 @@ window.addEventListener('load', function() {
   var announcedFor = null;    // self-scroll session id this tab already announced to the room
   var heartbeat = null;
   var everConnected = false;
+  var connectionLostShown = false; // a "Verbindung verloren" toast is owed a "Wieder verbunden" once it reconnects
+  var guestSilent = false;         // presenter only: the delegated guest has gone quiet
 
   function amScroller() { return !!session && session.scrollerId === senderId; }
 
@@ -526,6 +529,7 @@ window.addEventListener('load', function() {
     if (!isPresenter || !session || session.mode !== 'guest' || session.scrollerId) return;
     if (data.sessionId !== session.id) return;
     session.scrollerId = data.from;
+    guestSilent = false; // fresh delegate: the silence clock restarts clean
     persistPresenter();
     broadcastSession();
     applyNavMode();   // the presenter now follows the guest
@@ -565,6 +569,10 @@ window.addEventListener('load', function() {
     }
     if (statusEl.textContent !== text) statusEl.textContent = text;
   }
+  // Fixed at 500ms — unlike HEARTBEAT_MS, not scaled by cfg.heartbeat. A spec
+  // shortening the heartbeat to test staleness must keep 3x it comfortably
+  // above this tick, or "fresh again" can never be observed: by the time the
+  // next tick runs, more time than a too-short threshold has already passed.
   setInterval(function() {
     // Not the presenter: a regular follower (or the presenter's own guest
     // delegate) has no other way back to free navigation if the session it
@@ -574,9 +582,19 @@ window.addEventListener('load', function() {
     // a dropout on the *guest's* end (flaky phone, bad wifi) used to silently
     // eject the presenter from its own session, taking the ❌ with it, while
     // the guest — and everyone else still locked to it — carried right on.
-    if (session && socket.connected && navMode === 'follower' && !isPresenter &&
-        Date.now() - lastSessionAt > 3 * statusIntervalHb()) {
+    var stale = session && socket.connected && navMode === 'follower' &&
+                Date.now() - lastSessionAt > 3 * statusIntervalHb();
+    if (stale && !isPresenter) {
       releaseSilently();
+    } else if (stale && isPresenter && !guestSilent) {
+      // The presenter no longer frees itself here (see above), but it still
+      // deserves to know *why* the view has stopped moving, and that ending
+      // the session is an option rather than just waiting it out blind.
+      guestSilent = true;
+      showToast(['Keine Rückmeldung vom Gast mehr – du kannst die Sitzung bei Bedarf beenden']);
+    } else if (!stale && guestSilent) {
+      guestSilent = false;
+      if (session) showToast(['Der Gast ist wieder verbunden']);
     }
     updateStatus();
   }, 500);
@@ -724,9 +742,23 @@ window.addEventListener('load', function() {
     everConnected = true;
     broadcastSession(); // no-op unless presenter
     broadcastState();   // no-op unless scroller
+    if (connectionLostShown) {
+      connectionLostShown = false;
+      if (session) showToast(['Wieder verbunden']);
+    }
     updateStatus();
   });
-  socket.on('disconnect', updateStatus);
+  socket.on('disconnect', function() {
+    // Only while something was actually riding on the connection — a drop
+    // while just browsing freely is nobody's concern. #multiplex-status
+    // already shows "Keine Verbindung" for as long as it lasts; this toast is
+    // only the one-off "something changed" moment, on both ends of it.
+    if (session) {
+      connectionLostShown = true;
+      showToast(['Verbindung verloren']);
+    }
+    updateStatus();
+  });
 
   // ---- Restore a reloaded tab: auth, role, claim and the live session ----
   // The password survives on its own, independent of whether a session is
