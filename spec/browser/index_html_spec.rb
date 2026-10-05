@@ -132,7 +132,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     before { load_presentation }
 
     it 'has the correct DOM structure and initial state' do
-      expect(page).to have_css('#title-slide.present')
+      expect(page).to have_css('section.deck-title-slide.present')
       expect(page.evaluate_script("document.documentElement.lang")).to eq('de-CH')
       within('#top-left-controls') do
         expect(page).to have_button('🔗 Show QR code')
@@ -157,13 +157,13 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
 
     it 'centers the title slide content vertically' do
-      # #title-slide has no sub-slides, so it never gets wrapped in a .stack —
-      # the flex rule that centers every other top-level section vertically
-      # among its children does not apply to it, so it needs its own.
+      # section.deck-title-slide has no sub-slides, so it never gets wrapped in
+      # a .stack — the flex rule that centers every other top-level section
+      # vertically among its children does not apply to it, so it needs its own.
       rects = page.evaluate_script(<<~JS)
         (function() {
-          var section = document.getElementById('title-slide').getBoundingClientRect();
-          var content = document.querySelector('#title-slide .slide-content').getBoundingClientRect();
+          var section = document.querySelector('section.deck-title-slide').getBoundingClientRect();
+          var content = document.querySelector('section.deck-title-slide .slide-content').getBoundingClientRect();
           return [section.top, section.height, content.top, content.height];
         })();
       JS
@@ -199,6 +199,23 @@ RSpec.describe 'index.html', :js, type: :feature do
         document.dispatchEvent(new Event('visibilitychange'));
       JS
       expect(page.evaluate_script("location.hash")).to eq(current)
+    end
+
+    it 'keeps the title slide hash-free, adds one navigating off it, and drops it again coming back' do
+      # Reveal debounces URL writes up to ~1s (see the comment above), so wait
+      # for it rather than reading location.hash once — have_current_path
+      # polls until Capybara.default_max_wait_time is exhausted.
+      expect(page).to have_current_path(/\A[^#]*\z/, url: true)
+      base_url = page.current_url
+      # The title slide carries no id any more — see
+      # decisions/2026-10-05-title-slide-id-replaced-with-a-class.md.
+      expect(base_url).not_to include('#')
+
+      find('body').send_keys(:right) # -> TOC, which does have an id
+      expect(page).to have_current_path(%r{#/TOC\z}, url: true)
+
+      find('body').send_keys(:left) # back to the id-less title slide
+      expect(page).to have_current_path(Regexp.new("\\A#{Regexp.escape(base_url)}\\z"), url: true)
     end
   end
 
@@ -241,11 +258,11 @@ RSpec.describe 'index.html', :js, type: :feature do
       # chrome-builds.md); its exact zoom therefore only holds locally, so on the
       # CI runner we assert only that the title is zoomed up to fill.
       if ENV['CI']
-        wait_for_js("document.querySelector('#title-slide .slide-content').style.zoom !== ''")
-        title_zoom = page.evaluate_script("parseFloat(document.querySelector('#title-slide .slide-content').style.zoom)")
+        wait_for_js("document.querySelector('section.deck-title-slide .slide-content').style.zoom !== ''")
+        title_zoom = page.evaluate_script("parseFloat(document.querySelector('section.deck-title-slide .slide-content').style.zoom)")
         expect(title_zoom).to be_between(1.3, 1.7)
       else
-        expect(page).to have_css('#title-slide .slide-content[style="zoom: 1.41436;"]', visible: :all)
+        expect(page).to have_css('section.deck-title-slide .slide-content[style="zoom: 1.41436;"]', visible: :all)
       end
 
       page.evaluate_script("Reveal.slide(2, 1)")
@@ -254,7 +271,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       page.evaluate_script("Reveal.slide(0, 0)")
       page.driver.browser.resize(width: 480, height: 600)
       page.evaluate_script("window.dispatchEvent(new Event('resize'))") # Cuprite's resize doesn't fire the browser event
-      expect(page).to have_css('#title-slide .slide-content[style="zoom: 1;"]', visible: :all)
+      expect(page).to have_css('section.deck-title-slide .slide-content[style="zoom: 1;"]', visible: :all)
     ensure
       page.driver.browser.resize(width: 1280, height: 800)
     end
@@ -496,7 +513,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       it 'self-scroll: the room is snapped and locked, vertical moves propagate, the song is a wall, ending frees everyone' do
         using_session(:client) do
           load_presentation
-          expect(page).to have_css('#title-slide.present')
+          expect(page).to have_css('section.deck-title-slide.present')
         end
 
         using_session(:presenter) do
@@ -629,7 +646,7 @@ RSpec.describe 'index.html', :js, type: :feature do
 
       it 'guest-scroll: the first volunteer leads the room, is walled into the song, and is thanked when it starts and when it ends' do
         [:guest_a, :guest_b].each do |s|
-          using_session(s) { load_presentation; expect(page).to have_css('#title-slide.present') }
+          using_session(s) { load_presentation; expect(page).to have_css('section.deck-title-slide.present') }
         end
 
         using_session(:presenter) do

@@ -16,8 +16,12 @@ RSpec.describe 'HTML golden files' do
   end
 
   it 'title slide HTML matches golden' do
-    section = doc.at_css('section#title-slide')
+    section = doc.at_css('section.deck-title-slide')
     expect(section.to_html + "\n").to eq(golden('title_slide.html'))
+    # rename_title_slide_id drops the Pandoc-given id entirely — reveal.js's
+    # hash routing otherwise pins "#/title-slide" into the URL forever after
+    # it's first shown (decisions/2026-10-05-title-slide-id-replaced-with-a-class.md).
+    expect(doc.at_css('#title-slide')).to be_nil
   end
 
   it 'TOC HTML matches golden' do

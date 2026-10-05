@@ -37,7 +37,7 @@ namespace :golden do
     raise 'section#across-the-universe-beatles not found' unless across_title
 
     sections = {
-      'title_slide.html'   => doc.at_css('section#title-slide'),
+      'title_slide.html'   => doc.at_css('section.deck-title-slide'),
       'toc.html'           => doc.at_css('section#TOC'),
       'master_modal.html'  => doc.at_css('dialog#master-modal'),
       'imagine_verse1.html' => imagine_title

@@ -149,9 +149,26 @@ module BuildHelpers
     doc.to_html
   end
 
+  # Pandoc gives the deck's own title slide `id="title-slide"` and nothing
+  # else. reveal.js's Location plugin builds the URL hash from the current
+  # slide's id (getHash), so once that slide had been shown, reloading or
+  # copying the URL never landed on a plain index.html again — it came back
+  # as ".../#/title-slide". Swap the id for a class instead, so the slide
+  # falls back to the bare "/" hash like any other id-less slide. A bare
+  # "title-slide" class would collide with the one Pandoc already stamps on
+  # every level-1 section (each song's own title slide), hence
+  # "deck-title-slide". Run this before anything else in the pipeline, so
+  # every later step (and every CSS/JS selector) only ever sees the class.
+  # Idempotent: a no-op once the id is already gone.
+  # See decisions/2026-10-05-title-slide-id-replaced-with-a-class.md.
+  def rename_title_slide_id(html)
+    html.sub('<section id="title-slide"', '<section class="deck-title-slide"')
+  end
+
   # Each song's own title slide is a `section.level1 h1` (the top of its
-  # `.stack`, distinct from the deck's own #title-slide cover, which carries no
-  # `level1` class and so never matches here). Its H1 text is "Title - Artist"
+  # `.stack`, distinct from the deck's own title-slide cover
+  # (`section.deck-title-slide`), which carries no `level1` class and so
+  # never matches here). Its H1 text is "Title - Artist"
   # once the source file uses that shape; split the artist out into its own
   # `<p class="song-artist">` right after the <h1> so CSS can size/colour it
   # apart from the title. A song with no " - " (an untitled-artist song, or
@@ -278,6 +295,7 @@ module BuildHelpers
   end
 
   def post_process_index(html, assets:, multiplex:, tags: [])
+    html = rename_title_slide_id(html)
     html = html.sub('<style>', %(<link rel="stylesheet" href="#{assets}fonts/fonts.css">\n  <style>) + style_file('night.css') + style_file('shared.css'))
     html = without_pandoc_plugins(html)
     html = html.sub('keyboard: true,', "keyboard: { 83: null }, // 's' disabled (was: speaker notes)")
@@ -300,7 +318,8 @@ module BuildHelpers
     # the heading text verbatim (lowercased, spaces to hyphens, "ü" kept as-is)
     # for the id, with a "-N" suffix to disambiguate it across songs.
     html = html.gsub(/<section id="infos-über-das-lied[-\d]*?" class="slide level2">.*?<\/section>/m, '')
-    html = html.sub('<section id="title-slide"', %(<section id="title-slide" data-background-image="#{assets}background.jpg"))
+    html = rename_title_slide_id(html)
+    html = html.sub('<section class="deck-title-slide"', %(<section class="deck-title-slide" data-background-image="#{assets}background.jpg"))
     wrap_slide_content(split_song_artist(without_pandoc_plugins(html)))
   end
 

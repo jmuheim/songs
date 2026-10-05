@@ -17,7 +17,7 @@ RSpec.describe 'print.html', :js, type: :feature do
   it 'has correct DOM structure and content' do
     expect(page.title).to eq('Lieblings-Songs 🔥🎶🌛')
 
-    within(find('#title-slide[data-background-image*="background.jpg"]', visible: :all)) do
+    within(find('section.deck-title-slide[data-background-image*="background.jpg"]', visible: :all)) do
       expect(page).to have_css('h1', text: /Lieblings-Songs 🔥🎶🌛/)
     end
 

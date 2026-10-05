@@ -1,7 +1,7 @@
 (function () {
   function fitSlide(section) {
     if (!section) return;
-    var isSlide = section.id === 'title-slide' || section.classList.contains('level1') || section.classList.contains('level2');
+    var isSlide = section.classList.contains('deck-title-slide') || section.classList.contains('level1') || section.classList.contains('level2');
     if (!isSlide) return;
     var content = section.querySelector('.slide-content');
     if (!content) return;

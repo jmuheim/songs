@@ -130,10 +130,15 @@ section.slide.level2 {
 
 /* Every other top-level section is either a .stack (a song/the introduction,
    centered vertically among its sub-slides by the rule above) or #TOC (its
-   own height: 100% + overflow-y: scroll). #title-slide is the one top-level
-   section with no sub-slides, so it never gets the .stack treatment and was
-   sitting at the top of its absolutely-positioned box instead of centered. */
-#title-slide {
+   own height: 100% + overflow-y: scroll). The deck's own title slide
+   (section.deck-title-slide — a class, not an id, so reveal.js's hash
+   routing doesn't pin "#/title-slide" into the URL forever after it's first
+   shown; see decisions/2026-10-05-title-slide-id-replaced-with-a-class.md)
+   is the one top-level section with no sub-slides, so it never gets the
+   .stack treatment and was sitting at the top of its absolutely-positioned
+   box instead of centered. The element selector (not a bare class) avoids
+   also matching reveal.js's .slide-background copy of this section's class. */
+section.deck-title-slide {
   height: 100%;
   flex-direction: column;
   justify-content: center;

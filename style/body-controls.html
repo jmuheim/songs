@@ -288,7 +288,10 @@ window.addEventListener('load', function() {
   // The title, the table of contents and the introduction are not songs. A live
   // session only makes sense on a song, so 🚀 is hidden off these (see
   // updateButton), and ending one drops everyone back onto the TOC (gotoToc).
-  var NON_SONG_SLIDES = { 'title-slide': true, 'TOC': true, 'introduction': true };
+  // The title slide carries no id of its own any more (see build_helpers.rb's
+  // rename_title_slide_id) — it's matched by its class below instead; TOC and
+  // the introduction are still plain id lookups.
+  var NON_SONG_SLIDES = { 'TOC': true, 'introduction': true };
   // A horizontal slide with sub-slides is a stack <section> with no id of its
   // own — pandoc puts the slug on its first child. Title and TOC have no
   // sub-slides, so their id sits on the section itself.
@@ -299,7 +302,8 @@ window.addEventListener('load', function() {
   }
   function onSong() {
     var stack = horizontalSlides()[Reveal.getIndices().h];
-    return !!stack && !NON_SONG_SLIDES[slideId(stack)];
+    if (!stack || stack.classList.contains('deck-title-slide')) return false;
+    return !NON_SONG_SLIDES[slideId(stack)];
   }
 
   function gotoToc() {
