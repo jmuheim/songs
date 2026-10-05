@@ -4,6 +4,7 @@
 
 - Sprache: Mundart
 - Genre: Traditionell
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=O9tzZ3CE-rM)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/mani-matter/dr-sidi-abdel-assar-chords-1693629)
 

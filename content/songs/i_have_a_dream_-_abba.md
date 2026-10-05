@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=ER_3h03omdE)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/abba/i-have-a-dream-chords-897049)
 

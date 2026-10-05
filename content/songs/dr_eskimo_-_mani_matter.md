@@ -4,6 +4,7 @@
 
 - Sprache: Mundart
 - Genre: Traditionell
+- Gastgeber: Josua
 - [Source tab](https://tabs.ultimate-guitar.com/tab/mani-matter/dr-eskimo-chords-2146513)
 
 ## Verse 1

@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=ta42xU2UXLA)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/boney-m-/rivers-of-babylon-chords-1458631)
 - [Guitar tutorial](https://www.youtube.com/watch?v=E9WcazK7eOI)

@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=LanCLS_hIo4)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/bob-marley/three-little-birds-chords-166605)
 

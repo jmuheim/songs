@@ -4,6 +4,7 @@
 
 - Sprache: Deutsch
 - Genre: Rock
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=t590jjWEJ5s)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/the-connells/74-75-chords-15799)
 - [Guitar tutorial](https://www.youtube.com/watch?v=dS7u8SqW3Vo)

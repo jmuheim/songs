@@ -4,6 +4,7 @@
 
 - Sprache: Deutsch
 - Genre: Rock
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=x6q0ciiqyG0)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929)
 - [Guitar cover](https://www.youtube.com/watch?v=GIlCtOrisx0)

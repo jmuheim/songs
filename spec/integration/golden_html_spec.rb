@@ -29,13 +29,19 @@ RSpec.describe 'HTML golden files' do
     expect(section.to_html + "\n").to eq(golden('toc.html'))
   end
 
-  it 'tags each TOC entry with its Sprache/Genre from its Infos-über-das-Lied section' do
+  it 'tags each TOC entry with its Sprache/Genre/Gastgeber from its Infos-über-das-Lied section' do
     imagine  = doc.at_css('#TOC a[href="#/imagine-john-lennon"]').parent
     connells = doc.at_css('#TOC a[href="#/the-connells"]').parent
-    expect(imagine['data-sprache']).to  eq('Englisch')
-    expect(imagine['data-genre']).to    eq('Pop')
-    expect(connells['data-sprache']).to eq('Deutsch')
-    expect(connells['data-genre']).to   eq('Rock')
+    across   = doc.at_css('#TOC a[href="#/across-the-universe-beatles"]').parent
+    riptide  = doc.at_css('#TOC a[href="#/riptide---vance-joy"]').parent
+    expect(imagine['data-sprache']).to    eq('Englisch')
+    expect(imagine['data-genre']).to      eq('Pop')
+    expect(imagine['data-gastgeber']).to  eq('Daniel')
+    expect(connells['data-sprache']).to   eq('Deutsch')
+    expect(connells['data-genre']).to     eq('Rock')
+    expect(connells['data-gastgeber']).to eq('Josua')
+    expect(across['data-gastgeber']).to   eq('Josua,Monika') # a comma-separated Gastgeber line splits into one value per name, rejoined here
+    expect(riptide['data-gastgeber']).to  be_nil # Gastgeber is optional, unlike Sprache/Genre
   end
 
   it 'drops the Introduction from the TOC entirely — it has no song/tags behind it' do
@@ -68,6 +74,16 @@ RSpec.describe 'HTML golden files' do
     expect(legend.text.strip).to eq('Filter')
     expect(legend['class']).to eq('visually-hidden')
     expect(doc.at_css('#toc-filter-reset').text.strip).to eq('Reset')
+  end
+
+  it 'builds a sorted Gastgeber checkbox group, unlike the single-select Sprache/Genre dropdowns' do
+    group = doc.at_css('#toc-filter div.toc-filter-checkboxes')
+    expect(group['role']).to eq('group')
+    expect(group['aria-label']).to eq('Gastgeber')
+    expect(group.at_css('span.toc-filter-checkboxes-label').text.strip).to eq('Gastgeber')
+    checkboxes = group.css('input[type="checkbox"]')
+    expect(checkboxes.map { |cb| cb['value'] }).to eq(%w[Daniel Josua Monika])
+    expect(checkboxes).to all(satisfy { |cb| cb['checked'].nil? }) # none pre-checked
   end
 
   it 'renders a hidden "no results" message after the TOC list, for the filter to reveal' do

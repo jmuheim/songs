@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=Ixrje2rXLMA)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/dolly-parton/jolene-chords-183019)
 - [Guitar tutorial](https://www.youtube.com/watch?v=O2j6cZlT2LI)

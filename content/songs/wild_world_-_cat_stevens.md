@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=yffOnXYgy3o)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/wild-world-chords-992169)
 - [Guitar tutorial](https://www.youtube.com/watch?v=SeDzGf7L3Fs)

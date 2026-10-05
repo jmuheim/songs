@@ -4,6 +4,7 @@
 
 - Sprache: Mundart
 - Genre: Traditionell
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=PU-Xn55joiE)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/rumpelstilz/stets-in-truure-chords-4407716)
 

@@ -5,6 +5,7 @@
 - Capo: 3. Bund
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=KohurXfPb7s)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/the-road-to-mandalay-chords-303)
 

@@ -4,6 +4,7 @@
 
 - Sprache: Deutsch
 - Genre: Pop
+- Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=Mlt2xg_j5AY)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/wolfgang-petry/verlieben-verloren-vergessen-verzeihn-chords-1041842)
 

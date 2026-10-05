@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=8AHCfZTRGiI)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/hurt-chords-89849)
 - [Guitar tutorial](https://www.youtube.com/watch?v=hEKexrWq5RU)

@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=hSjIz8oQuko)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/pnk/family-portrait-chords-753196)
 

@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=fOZ-MySzAac)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/bill-withers/lean-on-me-chords-150987)
 

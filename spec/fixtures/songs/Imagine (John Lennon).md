@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Daniel
 - [Lied auf YouTube](https://www.youtube.com/watch?v=iOs9Osz3UFQ)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/john-lennon/imagine-chords-9306)
 

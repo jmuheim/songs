@@ -4,6 +4,7 @@
 
 - Sprache: Deutsch
 - Genre: Traditionell
+- Gastgeber: Josua
 - [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/der-mond-ist-aufgegangen-chords-1896814)
 
 ## Verse 1

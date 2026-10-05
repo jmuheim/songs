@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=11GYvfYjyV0)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/red-hot-chili-peppers/road-trippin-chords-1009501)
 - [Guitar tutorial](https://www.youtube.com/watch?v=NXLH5YT1ZLM)

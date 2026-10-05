@@ -4,6 +4,7 @@
 
 - Sprache: Mundart
 - Genre: Traditionell
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=d2Bw5XVJzHA)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/guggisbergerlied-chords-2972969)
 

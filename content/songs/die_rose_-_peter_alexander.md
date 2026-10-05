@@ -4,6 +4,7 @@
 
 - Sprache: Deutsch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=tTJ990zzDFI)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/peter-alexander/die-rose-chords-2328527)
 

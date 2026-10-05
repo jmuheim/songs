@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=ttEMYvpoR-k)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/leonard-cohen/hallelujah-chords-629185)
 - [Guitar tutorial](https://www.youtube.com/watch?v=Mzm1enk7W4Y)

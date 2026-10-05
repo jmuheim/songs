@@ -4,6 +4,7 @@
 
 - Sprache: Mundart
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=8ax3HmHUK3I)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/1829530)
 

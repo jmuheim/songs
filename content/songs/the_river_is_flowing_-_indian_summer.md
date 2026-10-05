@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Traditionell
+- Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=sB2AaVVjF-0)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196)
 
