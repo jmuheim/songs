@@ -5,6 +5,7 @@
 - Capo: 2. Bund
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=wCQfkEkePx8)
 - [Source tab](https://tabs.ultimate-guitar.com/user/tab/view?h=_5ECoKMMKHZmcTbZHfp9P2JQ&tab_id=27297698)
 - [Guitar tutorial](https://www.youtube.com/watch?v=Yv-AsMzWaV0)

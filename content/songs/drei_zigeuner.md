@@ -4,6 +4,7 @@
 
 - Sprache: Deutsch
 - Genre: Traditionell
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=RTcrVGNL5Us)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/drei-zigeuner-chords-3500390)
 

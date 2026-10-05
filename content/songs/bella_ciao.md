@@ -4,6 +4,7 @@
 
 - Sprache: Italienisch
 - Genre: Traditionell
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=4CI3lhyNKfo)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/misc-traditional/bella-ciao-chords-1839756)
 - [Guitar interpretation](https://www.youtube.com/watch?v=2iCOH6GOmRA)

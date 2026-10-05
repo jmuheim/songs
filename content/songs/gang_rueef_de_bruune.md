@@ -4,6 +4,7 @@
 
 - Sprache: Mundart
 - Genre: Traditionell
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=7GZ9iltYFvU)
 - [Inspiration](https://www.stimmvolk.ch/gang-rueef-de-bruune)
 

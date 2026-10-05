@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Traditionell
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=oZZwVJAcbqU)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/joan-baez/donna-donna-chords-1489829)
 

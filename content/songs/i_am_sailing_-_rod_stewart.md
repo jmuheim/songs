@@ -5,6 +5,7 @@
 - Capo: 3. Bund
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=P6zaCV4niKk)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/rod-stewart/sailing-chords-380559) (transpose by -5 to start with G instead of B)
 - [Guitar tutorial](https://www.youtube.com/watch?v=m4KTNKZSFVs)

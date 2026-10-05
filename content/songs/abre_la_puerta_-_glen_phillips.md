@@ -5,6 +5,7 @@
 - Capo: 4. Bund
 - Sprache: Spanisch
 - Genre: Traditionell
+- Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=TVfpenKPVSc)
 
 ## Chorus

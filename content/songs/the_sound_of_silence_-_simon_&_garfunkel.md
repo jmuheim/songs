@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=6ukmjBSQY-c)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/simon-garfunkel/the-sound-of-silence-chords-159157)
 

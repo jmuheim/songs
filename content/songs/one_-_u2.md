@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=ftjEcrrf7r0)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/u2/one-chords-87432)
 - [Guitar tutorial](https://www.youtube.com/watch?v=wQZaTaexcbk)

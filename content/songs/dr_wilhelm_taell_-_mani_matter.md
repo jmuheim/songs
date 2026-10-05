@@ -4,6 +4,7 @@
 
 - Sprache: Mundart
 - Genre: Traditionell
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=-Qtp0EC2P4M)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/1911563)
 

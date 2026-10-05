@@ -176,6 +176,31 @@ section.deck-title-slide {
   font-size: 1.5rem;
 }
 
+/* The Gastgeber checkbox group reuses .toc-filter-field's flex layout (a
+   plain role="group" <div>, not a <fieldset>/<legend> — both Chrome and
+   Firefox still render a <legend> as its own line even inside a flex
+   fieldset, which inflated the whole bar's height enough to collide with
+   the sticky-near-end-of-scroll edge case). Its label span is visible, not
+   .visually-hidden — there is no label sitting next to it on screen the way
+   "Sprache" and "Genre" sit next to their selects. */
+.toc-filter-checkboxes {
+  gap: .6em;
+}
+
+.toc-filter-checkboxes-label {
+  font-family: sans-serif;
+  font-size: 1.5rem;
+}
+
+.toc-filter-checkboxes label {
+  display: flex;
+  align-items: center;
+  gap: .3em;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
 #toc-filter select,
 #toc-filter button {
   font-family: sans-serif;

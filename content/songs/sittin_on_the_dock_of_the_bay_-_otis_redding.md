@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=wyPKRcBTsFQ)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/otis-redding/sittin-on-the-dock-of-the-bay-chords-1088518)
 - [Guitar tutorial](https://www.youtube.com/watch?v=WNvoNPbmREY)

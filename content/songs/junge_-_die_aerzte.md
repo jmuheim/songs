@@ -4,6 +4,7 @@
 
 - Sprache: Deutsch
 - Genre: Rock
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=iK-1oGphELM)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/751634)
 - [Acoustic guitar interpretation](https://www.youtube.com/watch?v=YycHXyyI4fI)

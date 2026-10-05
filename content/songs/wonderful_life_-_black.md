@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Source tab](https://tabs.ultimate-guitar.com/tab/black-uk/wonderful-life-chords-830823)
 
 ## Intro

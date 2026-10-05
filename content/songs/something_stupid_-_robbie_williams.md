@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=icZHj6DG7ms)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/something-stupid-chords-1186829)
 - [Guitar tutorial](https://www.youtube.com/watch?v=pXuxL7pMb7c)

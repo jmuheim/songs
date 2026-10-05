@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Rock
+- Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=6Ejga4kJUts)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/the-cranberries/zombie-chords-844902)
 

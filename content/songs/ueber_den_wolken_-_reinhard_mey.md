@@ -4,6 +4,7 @@
 
 - Sprache: Deutsch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=zWwW-gqr2pA)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/946605)
 

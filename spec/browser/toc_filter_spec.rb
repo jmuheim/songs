@@ -1,13 +1,18 @@
 require 'capybara/rspec'
 
-# The table of contents carries a Sprache/Genre filter (built by inject_toc_filter
-# in lib/build_helpers.rb, wired by style/toc-filter.js). The fixture songs are
-# tagged so that Deutsch = {74-75} and Englisch ⊇ {Across, I Have a Dream, Imagine}
-# are disjoint, and likewise Rock = {74-75} and Pop = exactly those same three — a
-# clean test of single-select filtering within a category and AND across
-# categories. Riptide (Englisch/Mantra) is the fixture for split_song_artist's
-# "Title - Artist" H1 (see spec/unit/split_song_artist_spec.rb); it's Englisch
-# too but tagged with its own Genre so it never joins the Pop/Rock sets above.
+# The table of contents carries a Sprache/Genre/Gastgeber filter (built by
+# inject_toc_filter in lib/build_helpers.rb, wired by style/toc-filter.js).
+# The fixture songs are tagged so that Deutsch = {74-75} and Englisch ⊇
+# {Across, I Have a Dream, Imagine} are disjoint, and likewise Rock = {74-75}
+# and Pop = exactly those same three — a clean test of single-select
+# filtering within a category and AND across categories. Riptide
+# (Englisch/Mantra) is the fixture for split_song_artist's "Title - Artist"
+# H1 (see spec/unit/split_song_artist_spec.rb); it's Englisch too but tagged
+# with its own Genre so it never joins the Pop/Rock sets above, and carries no
+# Gastgeber at all (the untagged case). Gastgeber itself is Josua =
+# {74-75, Across}, Monika = {Across, I Have a Dream}, Daniel = {Imagine} —
+# Josua and Monika overlap on Across so checking both exercises the OR
+# combination, and Daniel is disjoint from both.
 RSpec.describe 'TOC tag filter', :js, type: :feature do
   before(:all) do
     FixtureBuilder.build!
@@ -47,6 +52,46 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
       expect(page).to have_css('#TOC nav ol') # an ordered list, not a <ul>
       expect(page).to have_no_css('#TOC nav ul')
     end
+  end
+
+  it 'offers a Gastgeber checkbox group, all unchecked, under its own visible label' do
+    within '#toc-filter div.toc-filter-checkboxes' do
+      expect(page).to have_css('span.toc-filter-checkboxes-label', text: 'Gastgeber')
+      expect(page).to have_unchecked_field('Daniel')
+      expect(page).to have_unchecked_field('Josua')
+      expect(page).to have_unchecked_field('Monika')
+    end
+  end
+
+  it 'filters to songs naming any checked Gastgeber (OR), ANDed with Sprache/Genre' do
+    check 'Josua'
+    # Josua = {74-75, Across the universe}
+    expect(visible_entries).to contain_exactly('74-75 (The Connells)', 'Across the universe (Beatles)')
+    expect(page).to have_css('#TOC.present') # a checkbox change must not navigate the deck
+
+    check 'Monika'
+    # Josua ∪ Monika = {74-75, Across the universe, I Have a Dream}
+    expect(visible_entries).to contain_exactly(
+      '74-75 (The Connells)', 'Across the universe (Beatles)', 'I Have a Dream (ABBA)'
+    )
+
+    select 'Englisch', from: 'Sprache'
+    # ANDed with Sprache: Englisch drops 74-75 (Deutsch), leaving the two Englisch hosts of Josua/Monika.
+    expect(visible_entries).to contain_exactly('Across the universe (Beatles)', 'I Have a Dream (ABBA)')
+
+    uncheck 'Josua'
+    uncheck 'Monika'
+    select 'Alle', from: 'Sprache'
+    expect(visible_entries).to include('74-75 (The Connells)') # filters cleared, back to everything
+  end
+
+  it 'hides untagged entries while a Gastgeber filter is active, and clears checkboxes on Reset' do
+    check 'Daniel'
+    expect(visible_entries).to eq(['Imagine (John Lennon)']) # Riptide has no Gastgeber at all
+
+    click_button 'Reset'
+    expect(visible_entries).to include('Riptide - Vance Joy')
+    expect(page).to have_unchecked_field('Daniel')
   end
 
   it 'filters to the selected Sprache, and restores everything on "Alle", without paging the deck' do

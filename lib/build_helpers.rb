@@ -69,14 +69,18 @@ module BuildHelpers
   # in CLAUDE.md) rather than assembled from separate sections at build time.
   ABOUT_HEADING = 'Infos über das Lied'
 
-  # A song's tags live as "- Sprache: X" / "- Genre: Y" list items in its
-  # ABOUT_HEADING section (one tag per list item; everything else there — a
-  # Capo note, resource links — is not a tag and is skipped). Returns
-  # [category, value] pairs in order, [] when there is no such section. The
-  # category is exactly what was written, not inferred from a fixed
-  # vocabulary — so a language or genre value this book hasn't seen before
-  # is still classified correctly, and the About slide can't disagree with
-  # the filter dropdowns about what something is.
+  # A song's tags live as "- Sprache: X" / "- Genre: Y" / "- Gastgeber: X, Y"
+  # list items in its ABOUT_HEADING section (one tag per list item; everything
+  # else there — a Capo note, resource links — is not a tag and is skipped).
+  # Returns [category, value] pairs in order, [] when there is no such
+  # section. Sprache/Genre carry one value per list item; Gastgeber may name
+  # several hosts on one line, comma-separated, and is split here into one
+  # pair per name so every downstream consumer (grouping by category, the TOC
+  # filter) sees the same flat shape regardless of category. The category is
+  # exactly what was written, not inferred from a fixed vocabulary — so a
+  # language, genre or host value this book hasn't seen before is still
+  # classified correctly, and the About slide can't disagree with the filter
+  # controls about what something is.
   def song_tags(content)
     lines = content.lines
     start = lines.index { |l| l.match?(/\A##\s+#{Regexp.escape(ABOUT_HEADING)}\s*\z/i) }
@@ -84,8 +88,15 @@ module BuildHelpers
 
     lines[(start + 1)..].each_with_object([]) do |line, tags|
       break tags if line.start_with?('## ')
-      m = line.match(/\A\s*[-*]\s+(Sprache|Genre):\s*(.+?)\s*\z/i)
-      tags << [m[1].downcase == 'sprache' ? 'Sprache' : 'Genre', m[2]] if m
+      m = line.match(/\A\s*[-*]\s+(Sprache|Genre|Gastgeber):\s*(.+?)\s*\z/i)
+      next unless m
+
+      category = m[1].downcase == 'sprache' ? 'Sprache' : (m[1].downcase == 'genre' ? 'Genre' : 'Gastgeber')
+      if category == 'Gastgeber'
+        m[2].split(',').each { |name| tags << [category, name.strip] }
+      else
+        tags << [category, m[2]]
+      end
     end
   end
 
@@ -191,10 +202,15 @@ module BuildHelpers
 
   # Carries the per-song tags (parsed from each ABOUT_HEADING section with song_tags,
   # one array of [category, value] pairs per song in the same order the TOC lists
-  # them) into the TOC so toc-filter.js can filter it: a `data-sprache`/`data-genre`
-  # attribute on each song's <li> and a <fieldset id="toc-filter"> with one
-  # <select> per category plus a Reset button at the top of #TOC. The first
-  # <li> is the Introduction — it has no song behind it, so it is skipped.
+  # them) into the TOC so toc-filter.js can filter it: a `data-sprache`/`data-genre`/
+  # `data-gastgeber` attribute on each song's <li> and a <fieldset id="toc-filter">
+  # with one <select> each for Sprache/Genre (single-choice, AND'd together),
+  # a checkbox group for Gastgeber (any number of hosts can be checked at
+  # once, OR'd together — a song usually has just one host, but showing songs
+  # for *either* of two checked hosts is more useful than forcing one at a
+  # time), and a Reset button at the top of #TOC. The first <li> is the
+  # Introduction — it has no song behind it, so it is skipped. See
+  # decisions/2026-10-05-gastgeber-filter-uses-checkboxes-not-a-select.md.
   def inject_toc_filter(html, tags:)
     doc = Nokogiri::HTML(html)
     toc = doc.at_css('section#TOC')
@@ -213,26 +229,30 @@ module BuildHelpers
     list.css('li').each_with_index do |li, i|
       song = Array(tags[i]).map { |(cat, val)| [cat, val.to_s.strip] }.reject { |(_, val)| val.empty? }
       by_category = song.group_by { |(cat, _)| cat }
-      li['data-sprache'] = by_category['Sprache'].map { |(_, v)| v }.join(',') if by_category['Sprache']
-      li['data-genre']   = by_category['Genre'].map   { |(_, v)| v }.join(',') if by_category['Genre']
+      li['data-sprache']   = by_category['Sprache'].map   { |(_, v)| v }.join(',') if by_category['Sprache']
+      li['data-genre']     = by_category['Genre'].map     { |(_, v)| v }.join(',') if by_category['Genre']
+      li['data-gastgeber'] = by_category['Gastgeber'].map { |(_, v)| v }.join(',') if by_category['Gastgeber']
     end
 
     all_pairs = tags.flat_map { |song| Array(song) }.map { |(cat, val)| [cat, val.to_s.strip] }.reject { |(_, val)| val.empty? }
     return doc.to_html if all_pairs.empty?
 
-    sprachen = all_pairs.select { |(cat, _)| cat == 'Sprache' }.map { |(_, v)| v }.uniq.sort
-    genres   = all_pairs.select { |(cat, _)| cat == 'Genre'   }.map { |(_, v)| v }.uniq.sort
+    sprachen   = all_pairs.select { |(cat, _)| cat == 'Sprache'   }.map { |(_, v)| v }.uniq.sort
+    genres     = all_pairs.select { |(cat, _)| cat == 'Genre'     }.map { |(_, v)| v }.uniq.sort
+    gastgeber  = all_pairs.select { |(cat, _)| cat == 'Gastgeber' }.map { |(_, v)| v }.uniq.sort
 
     fieldset = Nokogiri::XML::Node.new('fieldset', doc)
     fieldset['id'] = 'toc-filter'
     legend = Nokogiri::XML::Node.new('legend', doc)
-    # The categories (Sprache/Genre) next to their selects already say what's
-    # being filtered; "Filter" itself only needs to reach a screen reader.
+    # The categories (Sprache/Genre/Gastgeber) next to their controls already
+    # say what's being filtered; "Filter" itself only needs to reach a screen
+    # reader.
     legend['class'] = 'visually-hidden'
     legend.content = 'Filter'
     fieldset.add_child(legend)
     fieldset.add_child(toc_filter_select(doc, id: 'toc-filter-sprache', label: 'Sprache', options: sprachen)) unless sprachen.empty?
     fieldset.add_child(toc_filter_select(doc, id: 'toc-filter-genre', label: 'Genre', options: genres)) unless genres.empty?
+    fieldset.add_child(toc_filter_checkboxes(doc, id: 'toc-filter-gastgeber', label: 'Gastgeber', options: gastgeber)) unless gastgeber.empty?
     reset = Nokogiri::XML::Node.new('button', doc)
     reset['type'] = 'button'
     reset['id'] = 'toc-filter-reset'
@@ -271,6 +291,42 @@ module BuildHelpers
     wrapper.add_child(lbl)
     wrapper.add_child(select)
     wrapper
+  end
+
+  # A checkbox group, for a category (Gastgeber) where more than one value can
+  # be active at once — unlike toc_filter_select's single-choice <select>. A
+  # plain `role="group"` <div> (not a nested <fieldset>/<legend>: Chrome and
+  # Firefox both still render a <legend> as a caption on its own line even
+  # inside a flex fieldset, which inflated the whole bar's height enough to
+  # collide with the sticky-near-end-of-scroll edge case — see
+  # decisions/2026-10-05-gastgeber-filter-uses-checkboxes-not-a-select.md)
+  # carries the group semantics instead, labelled by a visible <span> playing
+  # the same role Sprache/Genre's own <label> does. Each checkbox carries `id`
+  # solely so its <label for> can target it; the value, not the id, is what
+  # toc-filter.js reads.
+  def toc_filter_checkboxes(doc, id:, label:, options:)
+    group = Nokogiri::XML::Node.new('div', doc)
+    group['class'] = 'toc-filter-field toc-filter-checkboxes'
+    group['role'] = 'group'
+    group['aria-label'] = label
+    span = Nokogiri::XML::Node.new('span', doc)
+    span['class'] = 'toc-filter-checkboxes-label'
+    span.content = label
+    group.add_child(span)
+    options.each_with_index do |opt, i|
+      checkbox_id = "#{id}-#{i}"
+      lbl = Nokogiri::XML::Node.new('label', doc)
+      lbl['for'] = checkbox_id
+      checkbox = Nokogiri::XML::Node.new('input', doc)
+      checkbox['type'] = 'checkbox'
+      checkbox['id'] = checkbox_id
+      checkbox['class'] = id
+      checkbox['value'] = opt
+      lbl.add_child(checkbox)
+      lbl.add_child(Nokogiri::XML::Text.new(opt, doc))
+      group.add_child(lbl)
+    end
+    group
   end
 
   # Everything below is shared by `build` and spec/support/fixture_builder.rb,

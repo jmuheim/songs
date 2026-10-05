@@ -5,6 +5,7 @@
 - Capo: 4. Bund
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=pOL66P0FdPQ)
 
 ## Intro

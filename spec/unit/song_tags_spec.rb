@@ -50,4 +50,14 @@ RSpec.describe '#song_tags' do
   it 'matches the heading case-insensitively, and normalizes the tag keyword case' do
     expect(song_tags("# S\n\n## infos über das lied\n\n- genre: Pop\n\n## Verse 1\n")).to eq([%w[Genre Pop]])
   end
+
+  it 'extracts a single Gastgeber name as one pair' do
+    content = "# S\n\n## Infos über das Lied\n\n- Sprache: Deutsch\n- Genre: Pop\n- Gastgeber: Josua\n\n## Verse 1\n"
+    expect(song_tags(content)).to eq([%w[Sprache Deutsch], %w[Genre Pop], %w[Gastgeber Josua]])
+  end
+
+  it 'splits a comma-separated Gastgeber line into one pair per name, trimming whitespace' do
+    content = "# S\n\n## Infos über das Lied\n\n- Gastgeber: Josua,  Monika ,Daniel\n\n## Verse 1\n"
+    expect(song_tags(content)).to eq([%w[Gastgeber Josua], %w[Gastgeber Monika], %w[Gastgeber Daniel]])
+  end
 end

@@ -4,6 +4,7 @@
 
 - Sprache: Mundart
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=kinhpcXbTqA)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/polo-hofer/alperose-ukulele-4330988)
 

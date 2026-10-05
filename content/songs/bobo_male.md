@@ -4,6 +4,7 @@
 
 - Sprache: Deutsch
 - Genre: Traditionell
+- Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=GmFsmNCVO20)
 
 ## Chorus

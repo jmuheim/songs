@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=oKOtzIo-uYw)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/fugees/killing-me-softly-chords-50470)
 

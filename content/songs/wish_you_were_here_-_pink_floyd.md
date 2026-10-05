@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Rock
+- Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=IXdNnw99-Ic)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/pink-floyd/wish-you-were-here-chords-1088963)
 - [Guitar tutorial](https://www.youtube.com/watch?v=N2dQRYyaglk)

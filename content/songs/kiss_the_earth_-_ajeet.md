@@ -5,6 +5,7 @@
 - Capo: 3. Bund
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=VVWu6Q0mrlo)
 
 ## Verse 1

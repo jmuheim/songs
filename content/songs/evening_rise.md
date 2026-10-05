@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Traditionell
+- Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=3o1xu9MQcTA)
 
 ## Chorus

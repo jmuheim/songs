@@ -4,6 +4,7 @@
 
 - Sprache: Englisch
 - Genre: Pop
+- Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=Ib_eW9VSUwM)
 - [Source tab](https://tabs.ultimate-guitar.com/tab/ville-valo/summer-wine-chords-590088)
 
