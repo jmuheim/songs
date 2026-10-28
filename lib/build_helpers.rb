@@ -355,7 +355,7 @@ module BuildHelpers
     html = html.sub('<style>', %(<link rel="stylesheet" href="#{assets}fonts/fonts.css">\n  <style>) + style_file('night.css') + style_file('shared.css'))
     html = without_pandoc_plugins(html)
     html = html.sub('keyboard: true,', "keyboard: { 83: null }, // 's' disabled (was: speaker notes)")
-               .sub('controls: true,', 'controls: false,')
+               .sub("controlsLayout: 'bottom-right',", "controlsLayout: 'edges',")
                .sub("display: 'block',", "display: 'flex',")
     # body-controls.html goes in *after* the Reveal-config rewrites above: it
     # configures Reveal too (a `keyboard: true` when a session ends), and a

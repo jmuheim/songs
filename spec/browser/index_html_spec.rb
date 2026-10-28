@@ -220,6 +220,38 @@ RSpec.describe 'index.html', :js, type: :feature do
   end
 
   # -----------------------------------------------------------------------
+  # Reveal's chevrons (hidden on a touch screen: mobile_spec.rb)
+  # -----------------------------------------------------------------------
+  describe 'navigation chevrons' do
+    # Loaded straight onto the Introduction: no slide transition to wait out
+    # before measuring, and its title is wide enough to reach the screen edges.
+    before do
+      visit "#{FixtureBuilder::URL_PATH}#/introduction"
+      wait_for_reveal
+    end
+
+    it 'shows them at the screen edges on a desktop, fits the slide between them, and pages the deck on a click' do
+      expect(page).to have_css('.reveal .controls[data-controls-layout="edges"]')
+
+      # The content sits between the side chevrons, not under them (to within
+      # a pixel: the zoom is rounded to six digits; at full width it ran 44px in)
+      gaps = page.evaluate_script(<<~JS)
+        (function () {
+          var content = Reveal.getCurrentSlide().querySelector('.slide-content').getBoundingClientRect();
+          var prev = document.querySelector('.reveal .controls .navigate-left').getBoundingClientRect();
+          var next = document.querySelector('.reveal .controls .navigate-right').getBoundingClientRect();
+          return [content.left - prev.right, next.left - content.right];
+        })()
+      JS
+      expect(gaps).to all(be > -1)
+
+      find('.reveal .controls .navigate-right').click
+      wait_for_js("Reveal.getIndices().h === 3")
+      expect(slide_indices).to eq([3, 0])
+    end
+  end
+
+  # -----------------------------------------------------------------------
   # Keyboard shortcuts
   # -----------------------------------------------------------------------
   describe 'keyboard shortcuts' do
@@ -229,10 +261,6 @@ RSpec.describe 'index.html', :js, type: :feature do
       page.execute_script("window._openCount = 0; window.open = function() { window._openCount++; }")
       find('body').send_keys('s')
       expect(page.evaluate_script("window._openCount")).to eq(0)
-    end
-
-    it 'has built-in controls disabled' do
-      expect(page.evaluate_script("Reveal.getConfig().controls")).to be false
     end
 
     it 'sets display to flex' do
@@ -262,15 +290,18 @@ RSpec.describe 'index.html', :js, type: :feature do
         title_zoom = page.evaluate_script("parseFloat(document.querySelector('section.deck-title-slide .slide-content').style.zoom)")
         expect(title_zoom).to be_between(1.3, 1.7)
       else
-        expect(page).to have_css('section.deck-title-slide .slide-content[style="zoom: 1.41436;"]', visible: :all)
+        expect(page).to have_css('section.deck-title-slide .slide-content[style="zoom: 1.31713;"]', visible: :all)
       end
 
       page.evaluate_script("Reveal.slide(2, 1)")
-      expect(page).to have_css('section.present.level2 .slide-content[style="zoom: 0.763268;"]', visible: :all)
+      expect(page).to have_css('section.present.level2 .slide-content[style="zoom: 0.710793;"]', visible: :all)
 
       page.evaluate_script("Reveal.slide(0, 0)")
       page.driver.browser.resize(width: 480, height: 600)
       page.evaluate_script("window.dispatchEvent(new Event('resize'))") # Cuprite's resize doesn't fire the browser event
+      # Below 500px the chevrons are hidden (reveal.css has no edges layout
+      # there), so the title gets the whole width again
+      expect(page).to have_css('.reveal .controls', visible: :hidden)
       expect(page).to have_css('section.deck-title-slide .slide-content[style="zoom: 1;"]', visible: :all)
     ensure
       page.driver.browser.resize(width: 1280, height: 800)
@@ -544,6 +575,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           press(:space)
           sleep 0.3
           expect(slide_indices).to eq(before)
+          expect(page).to have_no_css('.reveal .controls') # no chevrons either
         end
 
         # The presenter scrolls down within the song; the client follows
@@ -638,6 +670,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(slide_indices).to eq([1, 0])
           expect(page).to have_link('Table of contents')
           expect(page).to have_no_css('#multiplex-status-button.multiplex-following')
+          expect(page).to have_css('.reveal .controls') # the chevrons are back
           find('body').send_keys(:right) # free to browse again
           wait_for_js("Reveal.getIndices().h === 2")
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(2)

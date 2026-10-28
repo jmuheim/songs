@@ -6,7 +6,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 
 ## Features
 
-- Swipe left/right to change songs, up/down to navigate song sections
+- Swipe left/right to change songs, up/down to navigate song sections; on a computer, click the chevrons at the screen edges or use the arrow keys
 - Colour-coded chords (each root letter gets its own colour)
 - Dark/bright theme and chord visibility, both in the ⚙️ Settings dialog
 - Tag songs (language, genre, …) and filter the table of contents by tag

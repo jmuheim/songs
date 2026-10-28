@@ -1,4 +1,16 @@
 (function () {
+  // Reveal's side chevrons (controlsLayout: 'edges') sit over the slide's left
+  // and right edges; fit the content between them, not under them — at full
+  // width, more than half the slides ran their lyrics into a chevron. Where the
+  // chevrons are hidden (a touch screen, a live-scroll session) the button
+  // measures 0 wide and the content gets the whole width. Layout offsets, not
+  // getBoundingClientRect: Reveal slides a chevron in and out with a transform,
+  // which would skew a measurement taken mid-way.
+  function chevronGutter() {
+    var next = document.querySelector('.reveal .controls .navigate-right');
+    return next && next.offsetWidth ? next.offsetParent.clientWidth - next.offsetLeft : 0;
+  }
+
   function fitSlide(section) {
     if (!section) return;
     var isSlide = section.classList.contains('deck-title-slide') || section.classList.contains('level1') || section.classList.contains('level2');
@@ -10,7 +22,7 @@
 
     var contentW = content.scrollWidth;
     var contentH = content.scrollHeight;
-    var availW   = window.innerWidth;
+    var availW   = window.innerWidth - 2 * chevronGutter();
     var availH   = window.innerHeight;
 
     if (!contentW || !contentH) return;

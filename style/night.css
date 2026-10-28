@@ -228,6 +228,21 @@ body.theme-bright #toc-filter {
   right: 1em;
 }
 
+/* Reveal's own chevrons sit at the screen edges (controlsLayout: 'edges', set
+   by post_process_index), clear of the four corner buttons. They are for a
+   mouse or a trackpad; a touch screen swipes, and there they would only cover
+   the lyrics' edges — so they are hidden wherever the primary pointer is a
+   finger. Not gated on (hover: hover) instead: headless Chrome on the Linux CI
+   runner reports no hover, and would hide them on the "desktop" the specs
+   test. Hidden below 500px too, where reveal.css drops the edges layout and
+   falls back to its bottom-right cluster, right on top of 🚀. !important,
+   because Reveal sets display on the element itself. */
+@media (pointer: coarse), (width < 500px) {
+  .reveal .controls {
+    display: none !important;
+  }
+}
+
 /* #multiplex-toast spans the full bottom edge while visible (below it in this
    file): lift the bottom controls clear of it so a toast's text never
    overlaps the rocket or the multiplex lamp. */

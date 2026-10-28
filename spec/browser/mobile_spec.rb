@@ -40,6 +40,19 @@ RSpec.describe 'mobile layout', :js, type: :feature do
     end
   end
 
+  # --- @media (pointer: coarse) { .reveal .controls { display: none } } ---
+
+  describe 'navigation chevrons' do
+    it 'hides them on a touch screen, where a swipe pages the deck' do
+      # Touch emulation is what makes Chrome report a coarse primary pointer;
+      # CDP's setEmulatedMedia cannot set the pointer feature.
+      page.driver.browser.page.command('Emulation.setTouchEmulationEnabled', enabled: true, maxTouchPoints: 5)
+      load_presentation
+      expect(page.evaluate_script("matchMedia('(pointer: coarse)').matches")).to be true # else this proves nothing
+      expect(page).to have_css('.reveal .controls', visible: :hidden)
+    end
+  end
+
   # --- section#TOC overflow / scroll behaviour ---
 
   describe '#TOC scroll behaviour' do
