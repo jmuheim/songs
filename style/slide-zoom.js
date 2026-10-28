@@ -16,8 +16,8 @@
 // Until its first fit, a slide's content stays invisible (night.css), so a
 // reload shows a blank slide for a moment rather than one at the wrong size.
 (function () {
-  var FITTED = 'section.deck-title-slide > .slide-content, ' +
-               'section.level1 > .slide-content, section.level2 > .slide-content';
+  var TITLES = 'section.deck-title-slide > .slide-content, section.level1 > .slide-content';
+  var FITTED = TITLES + ', section.level2 > .slide-content';
 
   // Reveal's chevrons (controlsLayout: 'edges') sit over the middle of each
   // screen edge; fit the content between them, not under them — at full width,
@@ -39,13 +39,41 @@
     };
   }
 
+  // A title slide (the deck's own, the Introduction's, every song's) holds
+  // lines of text and nothing else: a heading, an artist, an author. A title
+  // too long for one line wraps, and its box then takes the screen's whole
+  // width while its lines fall short of it. Measured by its box, a song's
+  // title on an iPad in portrait was never scaled up, its two lines a third
+  // short of the edges. So a title slide is measured by its widest line. The
+  // lines are centred in the box, so scaling the box about its centre takes
+  // them to the edges. Their rects come out transformed (by the fit already
+  // applied, and by Reveal's own scale in the overview), and are divided by
+  // the box's rendered-to-layout ratio to get layout pixels.
+  function naturalWidth(content) {
+    if (!content.matches(TITLES)) return content.scrollWidth;
+    var box = content.getBoundingClientRect();
+    if (!box.width) return 0;
+    var range = document.createRange(), left = Infinity, right = -Infinity;
+    Array.prototype.forEach.call(content.children, function (child) {
+      range.selectNodeContents(child);
+      Array.prototype.forEach.call(range.getClientRects(), function (r) {
+        left = Math.min(left, r.left);
+        right = Math.max(right, r.right);
+      });
+    });
+    if (right <= left) return content.scrollWidth;
+    var style = getComputedStyle(content);
+    return (right - left) * content.offsetWidth / box.width +
+           parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+  }
+
   // Measure all, then scale all: a write between two reads would make the
   // browser recompute styles before the second one.
   function fit(contents) {
     var gutters = chevronGutters();
     var availW = window.innerWidth - 2 * gutters.x;
     var availH = window.innerHeight - 2 * gutters.y;
-    var sizes = contents.map(function (c) { return [c.scrollWidth, c.scrollHeight]; });
+    var sizes = contents.map(function (c) { return [naturalWidth(c), c.scrollHeight]; });
     contents.forEach(function (content, i) {
       var w = sizes[i][0], h = sizes[i][1];
       if (!w || !h) return; // not rendered: fitted once Reveal shows it

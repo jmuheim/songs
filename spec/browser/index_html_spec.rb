@@ -316,7 +316,36 @@ RSpec.describe 'index.html', :js, type: :feature do
   describe 'slide zoom' do
     before { load_presentation }
 
-    it 'fits the slide on slide change and again on window resize' do
+    # How far the widest line of the current slide's title stops short of each
+    # screen edge, less the content's own padding at the scale it is shown at:
+    # [0, 0] for a title that fills the width. Measured on the text's own line
+    # boxes (a Range): a wrapped title's box spans the full width either way.
+    TITLE_FILL = <<~JS.freeze
+      (function () {
+        var content = Reveal.getCurrentSlide().querySelector('.slide-content');
+        var range = document.createRange(), left = Infinity, right = -Infinity, lines = 0;
+        Array.prototype.forEach.call(content.children, function (child) {
+          range.selectNodeContents(child);
+          Array.prototype.forEach.call(range.getClientRects(), function (r) {
+            lines++; left = Math.min(left, r.left); right = Math.max(right, r.right);
+          });
+        });
+        var padding = parseFloat(getComputedStyle(content).paddingLeft) *
+                      content.getBoundingClientRect().width / content.offsetWidth;
+        return { wrapped: lines > content.children.length,
+                 shortfall: [left - padding, innerWidth - right - padding] };
+      })()
+    JS
+
+    def expect_wrapped_title_to_fill_the_width
+      # The slide is fitted in a frame of its own after it appears; wait for it
+      wait_for_js("#{TITLE_FILL}.shortfall.every(function (s) { return Math.abs(s) < 1; })")
+      fill = page.evaluate_script(TITLE_FILL)
+      expect(fill['wrapped']).to be(true) # else this proves nothing
+      expect(fill['shortfall']).to all(be_within(1).of(0))
+    end
+
+    it 'fits the slide on slide change and again on window resize, and a wrapped title by its widest line' do
       # The verse and clamp values are exact on every platform (both are pure
       # text — the fonts are bundled, so they render identically). The title
       # slide carries emoji, which Chrome lays out differently across its own
@@ -330,7 +359,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         title_scale = page.evaluate_script("parseFloat(document.querySelector('section.deck-title-slide .slide-content').style.transform.replace('scale(', ''))")
         expect(title_scale).to be_between(1.1, 1.7)
       else
-        expect(page).to have_css('section.deck-title-slide .slide-content[style="transform: scale(1.31713);"]', visible: :all)
+        expect(page).to have_css('section.deck-title-slide .slide-content[style="transform: scale(1.31714);"]', visible: :all)
       end
 
       page.evaluate_script("Reveal.slide(2, 1)")
@@ -342,7 +371,14 @@ RSpec.describe 'index.html', :js, type: :feature do
       # Below 500px the chevrons are hidden (reveal.css has no edges layout
       # there), so the title gets the whole width again
       expect(page).to have_css('.reveal .controls', visible: :hidden)
-      expect(page).to have_css('section.deck-title-slide .slide-content[style="transform: scale(1);"]', visible: :all)
+      # Too long for one line at this width, the title wraps. Its box spans
+      # the width while its lines don't, so it is fitted by its widest line,
+      # which reaches the screen edges. Measured by the box, it stayed at
+      # scale(1), its lines short of the edges (a song's title on an iPad in
+      # portrait). The deck's own title, then a song's.
+      expect_wrapped_title_to_fill_the_width
+      page.evaluate_script("Reveal.slide(3, 0)") # 74-75 (The Connells)
+      expect_wrapped_title_to_fill_the_width
     ensure
       page.driver.browser.resize(width: 1280, height: 800)
     end
@@ -365,7 +401,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(unfitted).to eq(0)
       # The overview gives each slide the full screen height; the Introduction
       # still gets its own fit, not one capped at 1 by measuring that height
-      expect(page).to have_css('#introduction > .slide-content[style="transform: scale(2.30116);"]', visible: :all)
+      expect(page).to have_css('#introduction > .slide-content[style="transform: scale(2.30108);"]', visible: :all)
 
       press(:right, :right, :down, :enter) # pick "Welcome" (2, 1)
       expect(page).to have_no_css('.reveal.overview')
