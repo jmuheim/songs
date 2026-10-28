@@ -82,7 +82,10 @@ body.theme-bright .ctrl > .visually-hidden {
   color: #333;
 }
 
-body.chords-hidden .reveal code {
+/* The button too, not just its pill: an empty chord button would still be a
+   Tab stop. */
+body.chords-hidden .reveal code,
+body.chords-hidden .reveal button.chord {
   display: none;
 }
 
@@ -93,8 +96,16 @@ body.chords-hidden .reveal code {
 
 .reveal section h1,
 .reveal section h2,
-.reveal section em {
+.reveal section em,
+.reveal section .next-line-section {
   color: #e7ad52 !important;
+}
+
+/* The next-line preview keeps the lyrics' own colours, its heading the slide
+   titles' (above); it is dimmed by its opacity alone (shared.css). Only its
+   separating rule is grey. */
+.reveal section .next-line {
+  border-top-color: #999;
 }
 
 .reveal section p.song-artist {
@@ -540,8 +551,13 @@ dialog.overlay-modal::backdrop {
 
 body.theme-bright .reveal section h1,
 body.theme-bright .reveal section h2,
-body.theme-bright .reveal section em {
+body.theme-bright .reveal section em,
+body.theme-bright .reveal section .next-line-section {
   color: unset !important;
+}
+
+body.theme-bright .reveal section .next-line {
+  border-top-color: #666;
 }
 
 body.theme-bright .reveal section p.song-artist {

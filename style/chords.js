@@ -221,29 +221,15 @@
     var MARGIN = 12;
     var activeChord = null;
 
-    function isChord(node) {
-      return node && node.matches && node.matches('.reveal section code[class]') && /^[a-gx]$/.test(node.className.split(' ')[0]);
-    }
-
-    // Each chord is a button, reachable with Tab and opened with Enter or
-    // Space like one. Space is Reveal's page turn: keyboardCondition in
-    // body-controls.html leaves it to a chord focused from the keyboard.
-    Array.prototype.forEach.call(document.querySelectorAll('.reveal section code[class]'), function (chordEl) {
-      if (!isChord(chordEl)) return;
-      chordEl.setAttribute('role', 'button');
-      chordEl.setAttribute('tabindex', '0');
+    // Each chord is a real <button> (chord_buttons in lib/build_helpers.rb):
+    // Tab reaches it, Enter and Space press it, natively. Space is also
+    // Reveal's page turn: keyboardCondition in body-controls.html leaves it to
+    // a chord focused from the keyboard, and after a mouse click blurs the
+    // chord and turns the page instead.
+    var CHORD = '.reveal section button.chord';
+    Array.prototype.forEach.call(document.querySelectorAll(CHORD), function (chordEl) {
       chordEl.setAttribute('aria-expanded', 'false');
       chordEl.setAttribute('aria-controls', 'chord-tooltip');
-    });
-
-    // On window, so it runs after Reveal's handler on the document: a key
-    // Reveal acted on (defaultPrevented), or one after which Reveal moved the
-    // focus away, is not the chord's.
-    window.addEventListener('keydown', function (e) {
-      var chordEl = document.activeElement;
-      if (e.defaultPrevented || (e.key !== 'Enter' && e.key !== ' ') || !isChord(chordEl) || e.target !== chordEl) return;
-      e.preventDefault();
-      chordEl.click();
     });
 
     function hideTooltip() {
@@ -300,6 +286,11 @@
     function fitFontSize(chordEl) {
       var slideScale = chordEl.offsetHeight ? chordEl.getBoundingClientRect().height / chordEl.offsetHeight : 1;
       var desired = parseFloat(getComputedStyle(chordEl).fontSize) * slideScale;
+      // A chord in the slide's preview of its next line is set smaller than
+      // the lyrics (shared.css); its fingering reads at the lyrics' size all
+      // the same, as large as the next slide's own chord will show it.
+      var preview = chordEl.closest('.next-line');
+      if (preview) desired *= parseFloat(getComputedStyle(preview.parentElement).fontSize) / parseFloat(getComputedStyle(preview).fontSize);
       tooltipInner.style.fontSize = desired + 'px';
 
       var vp = viewportSize();
@@ -323,8 +314,8 @@
     }
 
     document.addEventListener('click', function (e) {
-      var chordEl = e.target.closest && e.target.closest('.reveal section code[class]');
-      if (isChord(chordEl)) {
+      var chordEl = e.target.closest && e.target.closest(CHORD);
+      if (chordEl) {
         e.preventDefault();
         e.stopPropagation();
         if (activeChord === chordEl) { hideTooltip(); return; }

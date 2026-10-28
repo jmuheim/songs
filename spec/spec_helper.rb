@@ -92,6 +92,17 @@ module BrowserHelpers
     page.evaluate_script("document.activeElement && document.activeElement.id")
   end
 
+  # A slide's next-line preview fades in only a few seconds after the slide is
+  # shown (shared.css), and Cuprite counts an element at opacity 0 as
+  # invisible. Run that fade to its end, as if the reader had waited.
+  def finish_next_line_fade
+    page.execute_script(<<~JS)
+      document.querySelectorAll('.reveal .next-line').forEach(function (preview) {
+        preview.getAnimations().forEach(function (animation) { animation.finish(); });
+      });
+    JS
+  end
+
   # Poll a JS expression instead of a fixed sleep, for state that Capybara's
   # have_css/have_text matchers can't observe directly (Reveal.js indices,
   # inline style values, etc).

@@ -270,6 +270,87 @@ module BuildHelpers
     doc.to_html
   end
 
+  NEXT_LINE_LABEL = 'Next:'
+  NEXT_LINE_END   = 'Ende des Lieds'
+
+  # Whoever scrolls a song is often a beat late, so every sub-slide of a song
+  # that is sung ends on a preview of what comes next: NEXT_LINE_LABEL, the
+  # next sub-slide's heading and its first line, or NEXT_LINE_END on the song's
+  # last one. A `<p class="next-line">` appended to each such `section.level2`,
+  # so must run before wrap_slide_content — it then sits in .slide-content,
+  # below the lyrics, and slide-zoom.js fits it together with them — and before
+  # chord_buttons, which turns its chords into buttons with the rest. Neither
+  # the song's own title slide (level1) nor its ABOUT_HEADING slide gets one:
+  # nothing is sung there yet. The first stack is the Introduction, which is no
+  # song (the same by-order skip inject_toc_filter does). See
+  # decisions/2026-10-28-each-song-slide-previews-the-next-line.md.
+  def inject_next_line_previews(html)
+    doc = Nokogiri::HTML(html)
+    stacks = doc.css('.slides > section').select { |s| s.at_css('> section.level1') }
+    stacks.drop(1).each do |stack|
+      slides = stack.css('> section.level2').reject { |slide| slide.at_css('> h2')&.text&.strip == ABOUT_HEADING }
+      slides.each_with_index do |slide, i|
+        preview = Nokogiri::XML::Node.new('p', doc)
+        preview['class'] = 'next-line'
+        if (upcoming = slides[i + 1])
+          preview.add_child(Nokogiri::XML::Text.new("#{NEXT_LINE_LABEL} ", doc))
+          heading = Nokogiri::XML::Node.new('span', doc)
+          heading['class'] = 'next-line-section'
+          heading.content = "#{upcoming.at_css('h2')&.text.to_s.strip}:"
+          preview.add_child(heading)
+          line = first_line(upcoming)
+          preview.add_child(Nokogiri::XML::Text.new(' ', doc)) unless line.empty?
+          line.each { |node| preview.add_child(node) }
+        else
+          preview['class'] = 'next-line next-line-end'
+          preview.content = NEXT_LINE_END
+        end
+        slide.add_child(preview)
+      end
+    end
+    doc.to_html
+  end
+
+  # A copy of a slide's first line: its first block after the heading, up to
+  # the first <br> (markdown+hard_line_breaks makes every source line break
+  # one). Pandoc's own soft wraps become plain spaces.
+  def first_line(slide)
+    block = slide.element_children.find { |el| !el.name.match?(/\Ah\d\z/) }
+    return [] unless block
+
+    block = block.at_css('li') || block if %w[ul ol].include?(block.name)
+    line = Nokogiri::XML::Node.new('span', slide.document)
+    if block.name == 'pre'
+      line.content = block.text.lines.first.to_s
+    else
+      block.children.take_while { |n| n.name != 'br' }.each { |n| line.add_child(n.dup) }
+    end
+    line.xpath('.//text()').each { |t| t.content = t.content.gsub(/\s+/, ' ') }
+    line.children.first.content = line.children.first.content.lstrip if line.children.first&.text?
+    line.children.last.content  = line.children.last.content.rstrip  if line.children.last&.text?
+    line.children.reject { |n| n.text? && n.content.empty? }
+  end
+
+  # A chord is a real <button> around Pandoc's `<code class="a">Am</code>`
+  # (transform_chords): the <code> keeps its coloured pill (and stays all
+  # print.html has), the button makes it pressable — focusable, Enter and Space
+  # natively — and chords.js opens its fingering on the click. Only the classes
+  # chords.js knows a fingering colour for (a–g, and x for a percussive hit).
+  # See decisions/2026-10-28-chords-are-real-button-elements.md.
+  def chord_buttons(html)
+    doc = Nokogiri::HTML(html)
+    doc.css('.slides section code[class]').each do |code|
+      next unless code['class'].match?(/\A[a-gx]\z/)
+
+      button = Nokogiri::XML::Node.new('button', doc)
+      button['type'] = 'button'
+      button['class'] = 'chord'
+      code.add_next_sibling(button)
+      button.add_child(code)
+    end
+    doc.to_html
+  end
+
   def toc_filter_select(doc, id:, label:, options:)
     wrapper = Nokogiri::XML::Node.new('div', doc)
     wrapper['class'] = 'toc-filter-field'
@@ -366,7 +447,7 @@ module BuildHelpers
     # from the relay's host) may hold up their first fit.
     scripts = ["#{assets}slide-zoom.js", "#{multiplex[:url]}/socket.io/socket.io.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}chords.js", "#{assets}toc-filter.js"]
     html = html.sub('</body>', scripts.map { |src| %(  <script src="#{src}"></script>\n) }.join + '</body>')
-    wrap_slide_content(inject_toc_filter(split_song_artist(html), tags: tags))
+    wrap_slide_content(chord_buttons(inject_next_line_previews(inject_toc_filter(split_song_artist(html), tags: tags))))
   end
 
   def post_process_print(html, assets:)

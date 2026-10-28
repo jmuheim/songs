@@ -43,16 +43,23 @@
 .reveal section code.f { background-color: #fb63f6; } /* Violet */
 .reveal section code.g { background-color: #c78430; } /* Brown */
 
-body.chords-clickable .reveal section code[class] {
+/* A chord is a <button> around its <code> (chord_buttons): the code is the
+   coloured pill, and the button shows nothing of its own — all: unset drops
+   the browser's border, background, padding, font and focus ring. */
+.reveal section button.chord {
+  all: unset;
+}
+
+body.chords-clickable .reveal section button.chord {
   cursor: pointer;
 }
 
-/* A chord is a button (chords.js): pointed at, focused from the keyboard or
-   open, it looks the same. The ring takes the theme's text colour — the chord's
-   own text colour is black and would vanish on the night background. */
-body.chords-clickable .reveal section code[class]:hover,
-.reveal section code[role="button"]:focus-visible,
-.reveal section code.chord-active {
+/* Pointed at, focused from the keyboard or open, a chord looks the same: a
+   ring around its pill. It takes the theme's text colour — the chord's own
+   text colour is black and would vanish on the night background. */
+body.chords-clickable .reveal section button.chord:hover > code,
+.reveal section button.chord:focus-visible > code,
+.reveal section button.chord.chord-active > code {
   outline: 3px solid var(--r-main-color);
   outline-offset: 2px;
 }
@@ -118,6 +125,58 @@ body.chords-clickable .reveal section code[class]:hover,
 
 .reveal section.slide.level2 .slide-content {
   white-space: nowrap;
+}
+
+/* The preview of the next slide's first line (inject_next_line_previews),
+   below the lyrics and smaller than them. Never wrapped, like the lyrics
+   (the nowrap above): a longer preview widens the slide instead, and
+   slide-zoom.js fits the whole slide to it.
+   It keeps the lyrics' own colours, its heading the slide titles' (night.css),
+   and is dimmed by its opacity alone: it never gets past 80%.
+   It is only needed toward the end of a slide, so it stays out of the way at
+   first: fully transparent when its slide becomes the current one (Reveal's
+   .present), then after a few seconds it fades in slowly. Leaving, it keeps
+   whatever it showed while Reveal moves and fades the whole slide out (0.8s,
+   transitionSpeed 'default'), and is reset unseen only after that — never
+   snapping away mid-transition. Transitions rather than an animation for
+   that reason: an animation would end the instant .present goes.
+   @starting-style covers a slide shown straight from display: none (a jump,
+   the first load), which has no earlier opacity to fade from. A chord in it
+   that takes the focus shows it at once, so the focus never sits on
+   something invisible. */
+.reveal section .next-line {
+  font-size: 0.6em;
+  margin: 1.2em 0 0;
+  padding-top: 0.5em;
+  /* Width and style only: the colour is the theme's (night.css), which the
+     border-top shorthand would reset to the text's */
+  border-top-width: 1px;
+  border-top-style: solid;
+  opacity: 0;
+  transition: opacity 0s linear 0.8s;
+}
+
+.reveal .slides section.present > .slide-content > .next-line {
+  opacity: 0.8;
+  transition: opacity 3s ease-in-out 3s;
+}
+
+@starting-style {
+  .reveal .slides section.present > .slide-content > .next-line {
+    opacity: 0;
+  }
+}
+
+.reveal .slides section.present > .slide-content > .next-line:focus-within {
+  transition: none;
+}
+
+.reveal section .next-line-section {
+  font-weight: bold;
+}
+
+.reveal section .next-line-end {
+  font-style: italic;
 }
 
 section.stack {

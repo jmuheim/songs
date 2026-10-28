@@ -8,6 +8,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 
 - Swipe left/right to change songs, up/down to navigate song sections; on a computer, click the chevrons at the screen edges or use the arrow keys
 - Colour-coded chords (each root letter gets its own colour)
+- Each song slide ends on a small „Next:" preview of the next slide's heading and first line (or „Ende des Lieds" on the last one), fading in a few seconds after the slide appears, so whoever scrolls can read ahead
 - Dark/bright theme and chord visibility, both in the ⚙️ Settings dialog
 - Tag songs (language, genre, …) and filter the table of contents by tag
 - **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)

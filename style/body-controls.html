@@ -44,7 +44,7 @@
         // excludes input/textarea from its own key handling; select needs
         // the same treatment here.
         if (el && el.tagName === 'SELECT') return false;
-        if (event.key !== ' ' || !el || !el.matches('button, [role="button"]')) return true;
+        if (event.key !== ' ' || !el || el.tagName !== 'BUTTON') return true;
         if (el !== unseenFocus) return false;
         el.blur();
         return true;

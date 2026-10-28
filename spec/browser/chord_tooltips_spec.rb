@@ -46,13 +46,15 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
   end
 
   # The Intro's section id is Pandoc-generated and depends on global heading
-  # order, so navigate to it by the one chord only it carries: [X].
+  # order, so navigate to it by the one chord only it carries: [X]. Not the
+  # copy in the Infos slide's preview of the Intro's first line (.next-line),
+  # which comes first in the document.
   def go_to_intro
     page.execute_script(<<~JS)
       (function () {
         var codes = document.querySelectorAll('.reveal code.x');
         for (var i = 0; i < codes.length; i++) {
-          if (codes[i].textContent.trim() === 'X') {
+          if (codes[i].textContent.trim() === 'X' && !codes[i].closest('.next-line')) {
             var idx = Reveal.getIndices(codes[i].closest('section.slide'));
             Reveal.slide(idx.h, idx.v);
             return;
@@ -81,14 +83,14 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
       # misaligned pipe or a wrong gap between them.
       click_chord('code.f', 'F#m')
       expect(page).to have_visible('#chord-tooltip')
-      expect(page).to have_css('code.f.chord-active', text: 'F#m')
+      expect(page).to have_css('button.chord-active > code.f', text: 'F#m')
       # The tab reads at the chord's size on screen — its font size times the
       # slide's fit, a transform that getComputedStyle leaves out — or smaller
       # only where it must shrink to fit chords.js's 70% x 45% of the screen,
       # which it then fills (as here: this slide's fit is large).
       on_screen, tab, fill = page.evaluate_script(<<~JS)
         (function () {
-          var chord = document.querySelector('code.f.chord-active');
+          var chord = document.querySelector('button.chord-active');
           var tooltip = document.getElementById('chord-tooltip');
           var scale = chord.getBoundingClientRect().height / chord.offsetHeight;
           return [parseFloat(getComputedStyle(chord).fontSize) * scale,
@@ -113,8 +115,8 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
       # Chord absent from the legend: falls back to the built-in dictionary
       # for both columns, and switching chords moves the active marker.
       click_chord('code.d', 'D')
-      expect(page).to have_css('code.d.chord-active', text: 'D')
-      expect(page).to have_no_css('code.f.chord-active')
+      expect(page).to have_css('button.chord-active > code.d', text: 'D')
+      expect(page).to have_no_css('button.chord-active > code.f')
       expect(tooltip_tab).to eq(
         "  Guitar:        Ukulele:\n" \
         "  |E A D G B e|  |G C E A|\n" \
@@ -122,26 +124,55 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
         "D |x x 0 2 3 2|  |2 2 2 0|"
       )
 
-      # From the keyboard a chord is a button: Tab reaches it, Enter opens it,
-      # Space closes it again — and does not turn the page
+      # A chord is a real <button>: Tab reaches it, Enter opens it, Space
+      # closes it again — and does not turn the page
       find("##{VERSE_ID} h2").click
       expect(page).not_to have_visible('#chord-tooltip')
-      chord_focused = "document.activeElement.matches('code[role=\"button\"]')"
+      chord_focused = "document.activeElement.matches('button.chord')"
       30.times { break if page.evaluate_script(chord_focused); press(:tab) }
       expect(page.evaluate_script(chord_focused)).to be true
-      # Its ring is the theme's white, not the chord's black text colour, and a
-      # chord under the mouse wears the same one.
+      # Its ring goes around its pill (the <code> inside the button) and is the
+      # theme's white, not the chord's black text colour; a chord under the
+      # mouse wears the same one.
       ring = "(function (el) { var s = getComputedStyle(el); return s.outlineStyle + ' ' + s.outlineColor; })"
-      focus_ring = page.evaluate_script("#{ring}(document.activeElement)")
+      focus_ring = page.evaluate_script("#{ring}(document.activeElement.querySelector('code'))")
       expect(focus_ring).to eq('solid rgb(255, 255, 255)')
-      all("##{VERSE_ID} code[role=\"button\"]").last.hover
-      expect(page.evaluate_script("#{ring}(document.querySelector('##{VERSE_ID} code[role=\"button\"]:hover'))")).to eq(focus_ring)
+      all("##{VERSE_ID} p:not(.next-line) button.chord").last.hover
+      expect(page.evaluate_script("#{ring}(document.querySelector('##{VERSE_ID} button.chord:hover > code'))")).to eq(focus_ring)
       press(:enter)
       expect(page).to have_visible('#chord-tooltip')
       expect(page.evaluate_script("document.activeElement.getAttribute('aria-expanded')")).to eq('true')
       press(:space)
       expect(page).not_to have_visible('#chord-tooltip')
       expect(page).to have_css('section.present#' + VERSE_ID)
+    end
+
+    it "treats the chords in the slide's next-line preview like any other, with the fingering at the lyrics' size" do
+      # The slide ends on a preview of the Chorus' first line, its D included.
+      # The preview is set at 0.6em; its chord's fingering must not be. On a
+      # desktop both fingerings are large enough to hit chords.js's cap (70% x
+      # 45% of the screen) and would come out the same either way; on a
+      # phone-sized screen the preview's would fall short of it.
+      fit = "document.querySelector('##{VERSE_ID} > .slide-content').style.transform"
+      desktop_fit = page.evaluate_script(fit)
+      page.driver.browser.resize(width: 400, height: 800)
+      wait_for_js("#{fit} !== #{desktop_fit.to_json}")
+      expect(page.evaluate_script(fit)).not_to eq(desktop_fit)
+      finish_next_line_fade
+
+      sizes = ['p:not(.next-line)', '.next-line'].map do |where|
+        chord = first("##{VERSE_ID} #{where} button.chord", text: 'D', exact_text: true)
+        chord.click
+        expect(page).to have_visible('#chord-tooltip')
+        expect(tooltip_tab).to end_with('D |x x 0 2 3 2|  |2 2 2 0|')
+        size = page.evaluate_script("parseFloat(document.querySelector('.chord-tooltip-inner').style.fontSize)")
+        chord.click
+        expect(page).not_to have_visible('#chord-tooltip')
+        size
+      end
+      expect(sizes.last).to be_within(0.5).of(sizes.first)
+    ensure
+      page.driver.browser.resize(width: 1280, height: 800)
     end
 
     it 'closes on re-click, outside click, Escape (without toggling Reveal overview), and slide change' do
