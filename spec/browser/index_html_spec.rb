@@ -345,7 +345,22 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(fill['shortfall']).to all(be_within(1).of(0))
     end
 
+    # The lines the current slide's heading is set on
+    HEADING_LINES = <<~JS.freeze
+      (function () {
+        var range = document.createRange();
+        range.selectNodeContents(Reveal.getCurrentSlide().querySelector('h1'));
+        return range.getClientRects().length;
+      })()
+    JS
+
     it 'fits the slide on slide change and again on window resize, and a wrapped title by its widest line' do
+      # A title that changes its wrapping changes its size after the observer
+      # reported it; slide-zoom.js must not let the observer report it again
+      # in the same frame ("ResizeObserver loop completed with undelivered
+      # notifications"). Cuprite doesn't fail on page errors, so collect them.
+      page.execute_script("window._errors = []; window.addEventListener('error', function (e) { window._errors.push(e.message); })")
+
       # The verse and clamp values are exact on every platform (both are pure
       # text — the fonts are bundled, so they render identically). The title
       # slide carries emoji, which Chrome lays out differently across its own
@@ -353,13 +368,16 @@ RSpec.describe 'index.html', :js, type: :feature do
       # chrome-builds.md); its exact scale therefore only holds locally, so on the
       # CI runner we assert only that the title is zoomed up to fill. The floor
       # sits at 1.1, well clear of 1 (no zoom, or the old stretch cap): fitted
-      # between the desktop chevrons, the runner's title came out at 1.24.
+      # between the desktop chevrons on one line, the runner's title came out
+      # at 1.24. Wrapped over two lines, as it is here, it comes out at 2.3, and
+      # the ceiling leaves room for the emoji to set those lines a little
+      # differently.
       if ENV['CI']
         expect(page).to have_css('section.deck-title-slide .slide-content[data-fitted]', visible: :all)
         title_scale = page.evaluate_script("parseFloat(document.querySelector('section.deck-title-slide .slide-content').style.transform.replace('scale(', ''))")
-        expect(title_scale).to be_between(1.1, 1.7)
+        expect(title_scale).to be_between(1.1, 3)
       else
-        expect(page).to have_css('section.deck-title-slide .slide-content[style="transform: scale(1.31714);"]', visible: :all)
+        expect(page).to have_css('section.deck-title-slide .slide-content[style="transform: scale(2.29866);"]', visible: :all)
       end
 
       page.evaluate_script("Reveal.slide(2, 1)")
@@ -392,6 +410,13 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(preview_overflow).to eq(0)
       expect(widest).to be true
 
+      # A song's title takes as many lines as make it largest. Here, that's
+      # three: on one line, it filled the width at scale(1.26673) and left most
+      # of the height empty.
+      page.evaluate_script("Reveal.slide(6, 0)") # Imagine (John Lennon)
+      expect(page).to have_css('section.present.level1 .slide-content[style="transform: scale(2.29221);"]', visible: :all)
+      expect(page.evaluate_script(HEADING_LINES)).to eq(3)
+
       page.evaluate_script("Reveal.slide(0, 0)")
       page.driver.browser.resize(width: 480, height: 600)
       page.evaluate_script("window.dispatchEvent(new Event('resize'))") # Cuprite's resize doesn't fire the browser event
@@ -406,6 +431,16 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect_wrapped_title_to_fill_the_width
       page.evaluate_script("Reveal.slide(3, 0)") # 74-75 (The Connells)
       expect_wrapped_title_to_fill_the_width
+
+      # On a screen as wide and short as a phone held sideways, the same title
+      # takes two: a third line would cost more height than it saves width
+      page.evaluate_script("Reveal.slide(6, 0)") # Imagine (John Lennon)
+      page.driver.browser.resize(width: 844, height: 390)
+      page.evaluate_script("window.dispatchEvent(new Event('resize'))")
+      expect(page).to have_css('section.present.level1 .slide-content[style="transform: scale(1.2772);"]', visible: :all)
+      expect(page.evaluate_script(HEADING_LINES)).to eq(2)
+
+      expect(page.evaluate_script('window._errors')).to eq([])
     ensure
       page.driver.browser.resize(width: 1280, height: 800)
     end

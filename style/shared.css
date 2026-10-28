@@ -218,6 +218,17 @@ section.deck-title-slide {
   align-items: center;
 }
 
+/* slide-zoom.js wraps a title slide's heading over as many lines as make the
+   slide largest, by setting its max-width. Centred, it stays under the artist
+   when that is the wider line, and balanced, its lines come out about even
+   rather than one full line and a short one. */
+section.deck-title-slide h1,
+section.level1 h1 {
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: balance;
+}
+
 /* TOC tag filter (toc-filter.js): a <fieldset> sitting at the top of #TOC with
    one <select> per category (Sprache, Genre) and a Reset button. Colours are
    theme-specific (night.css). Reset browser UA defaults for fieldset/legend
