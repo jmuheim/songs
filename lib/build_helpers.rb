@@ -361,7 +361,10 @@ module BuildHelpers
     # configures Reveal too (a `keyboard: true` when a session ends), and a
     # sub that ran first would clobber that line instead of Pandoc's init.
     html = html.sub('<body>', "<body><script>window.MULTIPLEX=#{multiplex.to_json};</script>" + style_file('body-controls.html').strip)
-    scripts = ["#{multiplex[:url]}/socket.io/socket.io.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}slide-zoom.js", "#{assets}chords.js", "#{assets}toc-filter.js"]
+    # slide-zoom.js first: the slides are already on screen once Reveal has
+    # initialised, and no script that waits on the network (socket.io comes
+    # from the relay's host) may hold up their first fit.
+    scripts = ["#{assets}slide-zoom.js", "#{multiplex[:url]}/socket.io/socket.io.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}chords.js", "#{assets}toc-filter.js"]
     html = html.sub('</body>', scripts.map { |src| %(  <script src="#{src}"></script>\n) }.join + '</body>')
     wrap_slide_content(inject_toc_filter(split_song_artist(html), tags: tags))
   end

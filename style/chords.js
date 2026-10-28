@@ -286,17 +286,20 @@
       tooltip.style.top = top + 'px';
     }
 
-    // The chord's own rendered font size already reflects the slide's
-    // auto-fit zoom (see slide-zoom.js), which is calibrated to fill the
-    // screen with THAT slide's content — on a sparse slide (few lines, small
-    // viewport) that zoom factor can be huge. Matching it 1:1 is a good
+    // Start from the chord's size as it appears on screen: its computed font
+    // size times the slide's auto-fit scale (see slide-zoom.js — a transform,
+    // so getComputedStyle doesn't include it; the rendered box over the
+    // layout box does). That scale is calibrated to fill the screen with THAT
+    // slide's content — on a sparse slide (few lines, small viewport) it can
+    // be huge. Matching it 1:1 is a good
     // starting point but can make the (much longer, ~18-character-wide) tab
     // text overflow, especially on a narrow phone. Shrink it back down to a
     // fraction of the viewport — not just barely-fits-full-screen — so it
     // reads as a compact tooltip next to the chord rather than a full-screen
     // panel, and so there's still room to position it near the chord.
     function fitFontSize(chordEl) {
-      var desired = parseFloat(getComputedStyle(chordEl).fontSize);
+      var slideScale = chordEl.offsetHeight ? chordEl.getBoundingClientRect().height / chordEl.offsetHeight : 1;
+      var desired = parseFloat(getComputedStyle(chordEl).fontSize) * slideScale;
       tooltipInner.style.fontSize = desired + 'px';
 
       var vp = viewportSize();
@@ -353,7 +356,7 @@
     // Close on any viewport change (orientation flip, Safari's toolbar
     // show/hide, browser resize) rather than trying to reposition/rescale a
     // stale tooltip — its position and font size were computed for the old
-    // viewport and slide-zoom.js will itself recompute the slide's zoom.
+    // viewport and slide-zoom.js will itself recompute the slide's scale.
     window.addEventListener('resize', hideTooltip);
     window.addEventListener('orientationchange', hideTooltip);
     if (window.visualViewport) window.visualViewport.addEventListener('resize', hideTooltip);

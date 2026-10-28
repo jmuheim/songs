@@ -144,8 +144,8 @@ section.deck-title-slide {
   justify-content: center;
   /* align-items: center (not the stretch default) keeps .slide-content at its
      natural shrink-to-fit width — slide-zoom.js measures that natural width to
-     compute how far it can zoom in, and a stretched-to-100% box would always
-     measure as already full width, capping the zoom at 1 instead of the ~1.4
+     compute how far it can scale up, and a stretched-to-100% box would always
+     measure as already full width, capping the scale at 1 instead of the ~1.4
      the title actually fits. */
   align-items: center;
 }

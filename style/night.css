@@ -243,6 +243,33 @@ body.theme-bright #toc-filter {
   }
 }
 
+/* Until slide-zoom.js has fitted it to the screen, a slide's content stays
+   invisible: a reload shows a blank slide for a moment, never one at the wrong
+   size. Should the fit never come (the script failed to load), it shows after
+   a second all the same, unfitted rather than missing. The selectors are the
+   slides slide-zoom.js fits (its FITTED). */
+section.deck-title-slide > .slide-content:not([data-fitted]),
+section.level1 > .slide-content:not([data-fitted]),
+section.level2 > .slide-content:not([data-fitted]) {
+  visibility: hidden;
+  animation: show-unfitted 0s 1s forwards;
+}
+
+@keyframes show-unfitted {
+  to { visibility: visible; }
+}
+
+/* slide-zoom.js scales a slide by its content's natural size. The overview
+   gives every slide the full screen height (reveal.css: .reveal.overview
+   .slides section { height: 100% }), and the flex default would stretch the
+   content to it — measured that tall, a slide was never scaled past 1.
+   Centred instead, the content keeps its natural height in the overview too. */
+section.deck-title-slide > .slide-content,
+section.level1 > .slide-content,
+section.level2 > .slide-content {
+  align-self: center;
+}
+
 /* #multiplex-toast spans the full bottom edge while visible (below it in this
    file): lift the bottom controls clear of it so a toast's text never
    overlaps the rocket or the multiplex lamp. */

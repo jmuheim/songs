@@ -1,6 +1,6 @@
 ---
 name: songs-browser-specs
-description: Conventions for this repo's Capybara/Cuprite browser specs (spec/browser/*_spec.rb) — prefer Capybara's waiting matchers and the repo's poll helpers over injected JavaScript, extend an existing example before adding one, make every new assertion able to fail, and the Cuprite/Reveal traps that have bitten here (the mouse stays where it clicked, real reloads need page.refresh, Reveal scales the slide so computed px are not CSS px, the fixed multiplex port, hover can't be CDP-emulated but a coarse pointer can, :focus-visible flips on focusin, wait_for_js never fails on its own). Use when writing or editing any browser spec.
+description: Conventions for this repo's Capybara/Cuprite browser specs (spec/browser/*_spec.rb) — prefer Capybara's waiting matchers and the repo's poll helpers over injected JavaScript, extend an existing example before adding one, make every new assertion able to fail, and the Cuprite/Reveal traps that have bitten here (the mouse stays where it clicked, real reloads need page.refresh, slides are scaled by a transform so computed px are not screen px, the fixed multiplex port, hover can't be CDP-emulated but a coarse pointer can, :focus-visible flips on focusin, wait_for_js never fails on its own). Use when writing or editing any browser spec.
 paths: "spec/browser/**"
 ---
 
@@ -11,7 +11,7 @@ The browser specs drive headless Chrome through Capybara → Cuprite → Ferrum 
 ## Reach for the waiting layer first
 
 - **Capybara matchers and actions** wait and retry: `have_css` / `have_no_css` / `have_text` (with `text:`, `count:`, `visible: :all/:hidden`), `find`, `click`, `hover`, `click_button`, `click_link`. The custom `have_visible` matcher is in `spec/spec_helper.rb`. Prefer these over reading the DOM yourself.
-- **For state Capybara can't see** — Reveal's indices, an inline `style="zoom: …"`, `document.activeElement` — poll with the helpers already in `spec/spec_helper.rb`: `wait_for_reveal`, `wait_for_js(condition)`, `press(*keys)`, `active_element_id`. Never a fixed `sleep`.
+- **For state Capybara can't see** — Reveal's indices, an inline `style="transform: scale(…)"`, `document.activeElement` — poll with the helpers already in `spec/spec_helper.rb`: `wait_for_reveal`, `wait_for_js(condition)`, `press(*keys)`, `active_element_id`. Never a fixed `sleep`.
 - **`press` types into whatever has focus** (`keyboard.type`). Do **not** use `send_keys` on a node to test key handling: Cuprite clicks the node first, which moves focus — `press` exists precisely to avoid that.
 - Drop to `page.driver.browser.mouse` / `.page.command('…')` (raw CDP) only for what Ferrum/Capybara can't express, and say why at the call.
 
@@ -30,7 +30,11 @@ A spec that stays green whether or not the behaviour works is worthless. After w
 ## Traps that have bitten here
 
 - **The mouse stays where it last clicked or hovered.** After a click the pointer sits on that element, so keys pressed next land on its hover state (e.g. dismiss its tooltip, or page the deck). Move it away first — `page.driver.browser.mouse.move(x: 640, y: 500)` — before a keyboard sub-test. See the 🎹 toggle example in `index_html_spec.rb` ("The mouse leaves first: keys pressed while it rested on 🎹 dismissed its tooltip").
-- **Reveal scales the slide, so computed px are not the CSS px.** A `3px` outline comes back as `2.58px`; font sizes are scaled too. Assert the **colour and style**, never the pixel width — `getComputedStyle(el).outlineStyle + ' ' + outlineColor` → `'solid rgb(255, 255, 255)'` in `chord_tooltips_spec.rb`. Where a number is unavoidable (`mobile_spec.rb`'s font size), compare with `be_within`, not `eq`. The one place an exact scaled value *is* pinned — the title slide's `zoom` — only holds locally; on CI it is range-checked, because colour-emoji layout differs across Chrome builds.
+- **`slide-zoom.js` scales each slide with a transform, so CSS px are not screen px.**
+  - **Two measures:** `getComputedStyle` gives the unscaled CSS values (a chord's font size, an outline's width), and `getBoundingClientRect` gives the scaled box on screen. Divide one by the other for a slide's scale (`rect.height / el.offsetHeight`, as `chords.js` does).
+  - **What to assert:** the **colour and style**, not pixel widths — `getComputedStyle(el).outlineStyle + ' ' + outlineColor` → `'solid rgb(255, 255, 255)'` in `chord_tooltips_spec.rb`. Where a number is unavoidable (`mobile_spec.rb`'s font size), compare with `be_within`, not `eq`.
+  - **Exact scales:** the one place an exact scale *is* pinned — the title slide's — only holds locally; on CI it is range-checked, because colour-emoji layout differs across Chrome builds.
+  - **Timing:** a slide that has just appeared (a slide change, the overview) is fitted in the next frame by a `ResizeObserver`. Wait for its `[data-fitted]` (or the exact `style`) before measuring it.
 - **A real reload is `page.refresh`, not `visit` on the same URL.** Visiting the same `#/…` only jumps within the loaded deck; it never re-runs page load. Use `page.refresh` (see the presenter-reload examples in `index_html_spec.rb`).
 - **Ports.** `spec/support/file_server.rb` serves the project on `127.0.0.1` on an **OS-picked free port**, so a second checkout's run doesn't collide. `spec/support/multiplex_server.rb` is **fixed on `127.0.0.1:18889` and refuses to start if that port is taken** — so the specs never quietly broadcast into a multiplex server left over from a manual test. Run manual multiplex tests on a different port.
 - **`:focus-visible` flips on `focusin`, not on the first keydown.** Chrome enables `:focus-visible` as soon as any key is pressed, so the page reads the ring's visibility on `focusin`; a mouse click leaves a focus with no ring. A spec asserting the ring must account for this (focus by keyboard to see it, by click not to).

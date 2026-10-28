@@ -82,6 +82,22 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
       click_chord('code.f', 'F#m')
       expect(page).to have_visible('#chord-tooltip')
       expect(page).to have_css('code.f.chord-active', text: 'F#m')
+      # The tab reads at the chord's size on screen — its font size times the
+      # slide's fit, a transform that getComputedStyle leaves out — or smaller
+      # only where it must shrink to fit chords.js's 70% x 45% of the screen,
+      # which it then fills (as here: this slide's fit is large).
+      on_screen, tab, fill = page.evaluate_script(<<~JS)
+        (function () {
+          var chord = document.querySelector('code.f.chord-active');
+          var tooltip = document.getElementById('chord-tooltip');
+          var scale = chord.getBoundingClientRect().height / chord.offsetHeight;
+          return [parseFloat(getComputedStyle(chord).fontSize) * scale,
+                  parseFloat(tooltip.querySelector('.chord-tooltip-inner').style.fontSize),
+                  Math.max(tooltip.offsetWidth / (innerWidth * 0.7 - 24), tooltip.offsetHeight / (innerHeight * 0.45 - 24))];
+        })()
+      JS
+      expect(tab).to be_within(0.5).of(on_screen).or(be < on_screen)
+      expect(fill).to be_within(0.03).of(1) if tab < on_screen - 0.5
       # Guitar column: the legend's barre voicing ("2=4=4=2=2=2"), not the
       # plain "2 4 4 2 2 2" fallback. Ukulele column (no chord name of its
       # own — the guitar column already carries it): no per-song legend

@@ -1,6 +1,9 @@
 require 'capybara/rspec'
 
 RSpec.describe 'index.html', :js, type: :feature do
+  # The slides slide-zoom.js fits (its FITTED): every one but the TOC
+  FITTED_CONTENT = 'section.deck-title-slide > .slide-content, section.level1 > .slide-content, section.level2 > .slide-content'.freeze
+
   before(:all) do
     FixtureBuilder.build!
     FileServer.start
@@ -223,8 +226,8 @@ RSpec.describe 'index.html', :js, type: :feature do
   # Reveal's chevrons (hidden on a touch screen: mobile_spec.rb)
   # -----------------------------------------------------------------------
   describe 'navigation chevrons' do
-    # Loaded straight onto the Introduction: no slide transition to wait out
-    # before measuring, and its title is wide enough to reach the screen edges.
+    # Loaded straight onto the Introduction, whose title is wide enough to
+    # reach the screen edges.
     before do
       visit "#{FixtureBuilder::URL_PATH}#/introduction"
       wait_for_reveal
@@ -241,6 +244,21 @@ RSpec.describe 'index.html', :js, type: :feature do
           var prev = document.querySelector('.reveal .controls .navigate-left').getBoundingClientRect();
           var next = document.querySelector('.reveal .controls .navigate-right').getBoundingClientRect();
           return [content.left - prev.right, next.left - content.right];
+        })()
+      JS
+      expect(gaps).to all(be > -1)
+
+      # The down chevron pages on, and on a slide that fills the height
+      # ("Basic chords") the content clears the up and down chevrons too
+      2.times { |i| find('.reveal .controls .navigate-down').click; wait_for_js("Reveal.getIndices().v === #{i + 1}") }
+      expect(slide_indices).to eq([2, 2])
+      expect(page).to have_css('section.present.level2 > .slide-content[data-fitted]')
+      gaps = page.evaluate_script(<<~JS)
+        (function () {
+          var content = Reveal.getCurrentSlide().querySelector('.slide-content').getBoundingClientRect();
+          var up = document.querySelector('.reveal .controls .navigate-up').getBoundingClientRect();
+          var down = document.querySelector('.reveal .controls .navigate-down').getBoundingClientRect();
+          return [content.top - up.bottom, down.top - content.bottom];
         })()
       JS
       expect(gaps).to all(be > -1)
@@ -278,25 +296,25 @@ RSpec.describe 'index.html', :js, type: :feature do
   describe 'slide zoom' do
     before { load_presentation }
 
-    it 'sets zoom on slide change and recalculates on window resize' do
+    it 'fits the slide on slide change and again on window resize' do
       # The verse and clamp values are exact on every platform (both are pure
       # text — the fonts are bundled, so they render identically). The title
       # slide carries emoji, which Chrome lays out differently across its own
       # builds (see decisions/2026-09-30-emoji-zoom-is-not-reproducible-across-
-      # chrome-builds.md); its exact zoom therefore only holds locally, so on the
+      # chrome-builds.md); its exact scale therefore only holds locally, so on the
       # CI runner we assert only that the title is zoomed up to fill. The floor
       # sits at 1.1, well clear of 1 (no zoom, or the old stretch cap): fitted
       # between the desktop chevrons, the runner's title came out at 1.24.
       if ENV['CI']
-        wait_for_js("document.querySelector('section.deck-title-slide .slide-content').style.zoom !== ''")
-        title_zoom = page.evaluate_script("parseFloat(document.querySelector('section.deck-title-slide .slide-content').style.zoom)")
-        expect(title_zoom).to be_between(1.1, 1.7)
+        expect(page).to have_css('section.deck-title-slide .slide-content[data-fitted]', visible: :all)
+        title_scale = page.evaluate_script("parseFloat(document.querySelector('section.deck-title-slide .slide-content').style.transform.replace('scale(', ''))")
+        expect(title_scale).to be_between(1.1, 1.7)
       else
-        expect(page).to have_css('section.deck-title-slide .slide-content[style="zoom: 1.31713;"]', visible: :all)
+        expect(page).to have_css('section.deck-title-slide .slide-content[style="transform: scale(1.31713);"]', visible: :all)
       end
 
       page.evaluate_script("Reveal.slide(2, 1)")
-      expect(page).to have_css('section.present.level2 .slide-content[style="zoom: 0.710793;"]', visible: :all)
+      expect(page).to have_css('section.present.level2 .slide-content[style="transform: scale(0.710793);"]', visible: :all)
 
       page.evaluate_script("Reveal.slide(0, 0)")
       page.driver.browser.resize(width: 480, height: 600)
@@ -304,9 +322,68 @@ RSpec.describe 'index.html', :js, type: :feature do
       # Below 500px the chevrons are hidden (reveal.css has no edges layout
       # there), so the title gets the whole width again
       expect(page).to have_css('.reveal .controls', visible: :hidden)
-      expect(page).to have_css('section.deck-title-slide .slide-content[style="zoom: 1;"]', visible: :all)
+      expect(page).to have_css('section.deck-title-slide .slide-content[style="transform: scale(1);"]', visible: :all)
     ensure
       page.driver.browser.resize(width: 1280, height: 800)
+    end
+
+    it 'fits every slide the overview shows, and the slide picked there as on a direct visit' do
+      press(:escape) # Reveal's overview
+      expect(page).to have_css('.reveal.overview')
+      # The slides the overview reveals are fitted in the next frame, before
+      # it paints; this check would otherwise run before that frame
+      shown_and_unfitted = <<~JS
+        (function () {
+          var shown = Array.prototype.filter.call(document.querySelectorAll('#{FITTED_CONTENT}'),
+                                                  function (c) { return c.offsetWidth; });
+          return [shown.length, shown.filter(function (c) { return !c.hasAttribute('data-fitted'); }).length];
+        })()
+      JS
+      wait_for_js("#{shown_and_unfitted}[1] === 0")
+      shown, unfitted = page.evaluate_script(shown_and_unfitted)
+      expect(shown).to be > 20 # far more than the current slide and its neighbours
+      expect(unfitted).to eq(0)
+      # The overview gives each slide the full screen height; the Introduction
+      # still gets its own fit, not one capped at 1 by measuring that height
+      expect(page).to have_css('#introduction > .slide-content[style="transform: scale(2.30116);"]', visible: :all)
+
+      press(:right, :right, :down, :enter) # pick "Welcome" (2, 1)
+      expect(page).to have_no_css('.reveal.overview')
+      expect(slide_indices).to eq([2, 1])
+      expect(page).to have_css('section.present.level2 .slide-content[style="transform: scale(0.710793);"]', visible: :all)
+    end
+  end
+
+  describe 'slide zoom, on load' do
+    it 'never shows a slide before it is fitted, and shows it anyway should the fit never come' do
+      # What each animation frame finds on the current slide, sampled from
+      # before the page's own scripts run. A frame's sample is taken before its
+      # ResizeObserver callbacks (the fit), so a slide Reveal shows unfitted
+      # for a single frame would be caught here.
+      page.driver.browser.page.command('Page.addScriptToEvaluateOnNewDocument', source: <<~JS)
+        window._frames = [];
+        (function sample() {
+          var section = document.querySelector('.reveal .slides section.present > section.present') ||
+                        document.querySelector('.reveal .slides > section.present');
+          var content = section && section.querySelector('.slide-content');
+          if (content && getComputedStyle(content).visibility === 'visible') {
+            window._frames.push(content.hasAttribute('data-fitted') ? 'fitted' : 'unfitted');
+          }
+          if (window._frames.length < 30) requestAnimationFrame(sample);
+        })();
+      JS
+      visit "#{FixtureBuilder::URL_PATH}#/2/1"
+      wait_for_reveal
+      wait_for_js('window._frames.length >= 30')
+      frames = page.evaluate_script('window._frames')
+      expect(frames.length).to eq(30)
+      expect(frames).to all(eq('fitted'))
+
+      # The script failed to load, say: the content shows unfitted after a
+      # second, rather than staying invisible
+      page.execute_script("Reveal.getCurrentSlide().querySelector('.slide-content').removeAttribute('data-fitted')")
+      expect(page).to have_css('section.present.level2 > .slide-content', visible: :hidden)
+      expect(page).to have_css('section.present.level2 > .slide-content:not([data-fitted])', visible: true)
     end
   end
 
@@ -339,7 +416,9 @@ RSpec.describe 'index.html', :js, type: :feature do
       click_button('⚙️ Settings')
     end
 
-    it 'toggles chord visibility from the settings dialog' do
+    it 'toggles chord visibility from the settings dialog, and fits the slide again' do
+      fitted = 'section.slide.present > .slide-content[style="transform: scale(3.56886);"]'
+      expect(page).to have_css(fitted, visible: :all)
       expect(page).to have_no_css('body.chords-hidden')
       within 'section.slide.present' do
         expect(page).to have_css('code')
@@ -353,6 +432,9 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_css('code', visible: :hidden)
         expect(page).to have_no_css('code')
       end
+      # Without its chords the slide's content is smaller, and fitted anew
+      expect(page).to have_no_css(fitted, visible: :all)
+      expect(page).to have_css('section.slide.present > .slide-content[style^="transform: scale("]', visible: :all)
 
       check('Akkorde anzeigen')
       expect(page).to have_no_css('body.chords-hidden')
@@ -360,6 +442,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_css('code')
         expect(page).to have_no_css('code', visible: :hidden)
       end
+      expect(page).to have_css(fitted, visible: :all)
 
       # check() leaves the checkbox itself focused (it's what was clicked). The
       # dialog stops a keydown before it ever reaches Reveal, so — unlike a
