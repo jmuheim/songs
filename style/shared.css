@@ -171,6 +171,12 @@ body.chords-clickable .reveal section button.chord:hover > code,
   transition: none;
 }
 
+/* „Ende des Lieds" holds nothing to read ahead, so it does not wait: it is
+   there, at the same opacity, the moment its slide is. */
+.reveal .slides section.present > .slide-content > .next-line.next-line-end {
+  transition: none;
+}
+
 .reveal section .next-line-section {
   font-weight: bold;
 }

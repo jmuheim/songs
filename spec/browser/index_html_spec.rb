@@ -443,7 +443,7 @@ RSpec.describe 'index.html', :js, type: :feature do
   describe 'next-line preview' do
     before { load_presentation }
 
-    it 'is transparent as its slide is shown and fades in slowly later, stays put while its slide leaves, starts over on every visit, and shows at once for a focused chord' do
+    it 'is transparent as its slide is shown and fades in slowly later, stays put while its slide leaves, starts over on every visit, and shows at once for a focused chord or the end of the song' do
       # Imagine's Verse 1, whose preview is the Bridge's first line. Not yet
       # rendered (display: none, beyond Reveal's view distance): the jump
       # there shows it with no earlier opacity to fade from (@starting-style)
@@ -485,6 +485,13 @@ RSpec.describe 'index.html', :js, type: :feature do
       # A chord in it that takes the focus shows it at once, mid-wait
       page.execute_script("#{preview}.querySelector('button.chord').focus()")
       expect(page.evaluate_script("getComputedStyle(#{preview}).opacity")).to eq('0.6')
+
+      # „Ende des Lieds" on the song's last slide has nothing to read ahead:
+      # it is there at once, with no wait and no fade
+      last = "Reveal.getSlide(6).querySelector('.next-line-end')"
+      page.evaluate_script("Reveal.slide(6, Reveal.getIndices(#{last}.closest('section.slide')).v)")
+      wait_for_js("Reveal.getCurrentSlide().contains(#{last})")
+      expect(page.evaluate_script("[getComputedStyle(#{last}).opacity, #{last}.getAnimations().length]")).to eq(['0.6', 0])
     end
   end
 
