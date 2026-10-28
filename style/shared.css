@@ -97,8 +97,11 @@ body.chords-clickable .reveal section code[class]:hover,
   font-weight: normal;
 }
 
+/* A block of its own: the theme makes a <ul> inline-block and every sub-slide
+   is white-space: nowrap, so an inline-block <pre> sat beside the Infos
+   slide's list instead of below it. text-align centres the code box in it. */
 .reveal section pre {
-  display: inline-block;
+  display: block;
   width: auto;
   text-align: center;
   box-shadow: none;

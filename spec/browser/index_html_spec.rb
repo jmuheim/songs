@@ -173,6 +173,26 @@ RSpec.describe 'index.html', :js, type: :feature do
       section_top, section_height, content_top, content_height = rects
       expect(content_top).to be_within(1).of(section_top + (section_height - content_height) / 2)
     end
+
+    it 'puts the alternate fingerings on the Infos slide below its list, not beside it' do
+      # The theme makes the <ul> inline-block and every sub-slide's content is
+      # white-space: nowrap, so an inline-block <pre> sat on the list's line.
+      # Only the fixture song with an Instructions section has a <pre> there.
+      page.execute_script(<<~JS)
+        var indices = Reveal.getIndices(document.querySelector('section[id^="infos-über-das-lied"] pre').closest('section'));
+        Reveal.slide(indices.h, indices.v);
+      JS
+      expect(page).to have_css('section.present[id^="infos-über-das-lied"] > .slide-content[data-fitted] pre', visible: :all)
+      # Which line each box sits on is a rendered position, out of Capybara's reach
+      list_bottom, pre_top = page.evaluate_script(<<~JS)
+        (function () {
+          var content = document.querySelector('section.present.level2 > .slide-content');
+          return [content.querySelector('ul').getBoundingClientRect().bottom,
+                  content.querySelector('pre').getBoundingClientRect().top];
+        })()
+      JS
+      expect(pre_top).to be >= list_bottom
+    end
   end
 
   # -----------------------------------------------------------------------
