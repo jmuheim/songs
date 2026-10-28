@@ -270,13 +270,15 @@ module BuildHelpers
     doc.to_html
   end
 
-  NEXT_LINE_LABEL = 'Next:'
-  NEXT_LINE_END   = 'Ende des Lieds'
+  NEXT_LINE_LABEL     = 'Next:'
+  NEXT_LINE_SEPARATOR = ' - '
+  NEXT_LINE_MORE      = '...'
+  NEXT_LINE_END       = 'Ende des Lieds'
 
   # Whoever scrolls a song is often a beat late, so every sub-slide of a song
   # that is sung ends on a preview of what comes next: NEXT_LINE_LABEL, the
-  # next sub-slide's heading and its first line, or NEXT_LINE_END on the song's
-  # last one. A `<p class="next-line">` appended to each such `section.level2`,
+  # next sub-slide's heading and its first line ("Next: Verse 1 - [D] Words
+  # are flowing out [Bm]..."), or NEXT_LINE_END on the song's last one. A `<p class="next-line">` appended to each such `section.level2`,
   # so must run before wrap_slide_content — it then sits in .slide-content,
   # below the lyrics, and slide-zoom.js fits it together with them — and before
   # chord_buttons, which turns its chords into buttons with the rest. Neither
@@ -296,11 +298,12 @@ module BuildHelpers
           preview.add_child(Nokogiri::XML::Text.new("#{NEXT_LINE_LABEL} ", doc))
           heading = Nokogiri::XML::Node.new('span', doc)
           heading['class'] = 'next-line-section'
-          heading.content = "#{upcoming.at_css('h2')&.text.to_s.strip}:"
+          heading.content = upcoming.at_css('h2')&.text.to_s.strip
           preview.add_child(heading)
           line = first_line(upcoming)
-          preview.add_child(Nokogiri::XML::Text.new(' ', doc)) unless line.empty?
+          preview.add_child(Nokogiri::XML::Text.new(NEXT_LINE_SEPARATOR, doc)) unless line.empty?
           line.each { |node| preview.add_child(node) }
+          preview.add_child(Nokogiri::XML::Text.new(NEXT_LINE_MORE, doc))
         else
           preview['class'] = 'next-line next-line-end'
           preview.content = NEXT_LINE_END

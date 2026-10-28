@@ -459,12 +459,12 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page.evaluate_script("getComputedStyle(#{verse}).display")).to eq('none')
       page.evaluate_script("Reveal.slide(6, 3)")
       wait_for_js("Reveal.getIndices().v === 3")
-      # Transparent, and a few seconds later it fades in slowly, up to 80%:
+      # Transparent, and a few seconds later it fades in slowly, up to 60%:
       # it keeps the lyrics' own colours (its heading the slide title's), its
       # opacity alone dims it
       expect(page.evaluate_script(fade)).to eq(['0', 'opacity', 3000, 3000])
       finish_next_line_fade
-      expect(page.evaluate_script("getComputedStyle(#{preview}).opacity")).to eq('0.8')
+      expect(page.evaluate_script("getComputedStyle(#{preview}).opacity")).to eq('0.6')
       colour = ->(el) { page.evaluate_script("getComputedStyle(#{el}).color") }
       expect(colour.(preview)).to eq(colour.("#{verse}.querySelector('p:not(.next-line)')"))
       expect(colour.("#{preview}.querySelector('.next-line-section')")).to eq(colour.("#{verse}.querySelector('h2')"))
@@ -473,7 +473,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       # (0.8s), rather than snapping away; only then is it reset
       page.evaluate_script("Reveal.slide(6, 4)")
       wait_for_js("Reveal.getIndices().v === 4")
-      expect(page.evaluate_script(fade)).to eq(['0.8', 'opacity', 800, 0])
+      expect(page.evaluate_script(fade)).to eq(['0.6', 'opacity', 800, 0])
       wait_for_js("getComputedStyle(#{preview}).opacity === '0'")
       expect(page.evaluate_script("getComputedStyle(#{preview}).opacity")).to eq('0')
 
@@ -484,7 +484,7 @@ RSpec.describe 'index.html', :js, type: :feature do
 
       # A chord in it that takes the focus shows it at once, mid-wait
       page.execute_script("#{preview}.querySelector('button.chord').focus()")
-      expect(page.evaluate_script("getComputedStyle(#{preview}).opacity")).to eq('0.8')
+      expect(page.evaluate_script("getComputedStyle(#{preview}).opacity")).to eq('0.6')
     end
   end
 
@@ -552,7 +552,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
 
     it 'toggles chord visibility from the settings dialog, and fits the slide again' do
-      fitted = 'section.slide.present > .slide-content[style="transform: scale(1.8831);"]'
+      fitted = 'section.slide.present > .slide-content[style="transform: scale(1.8088);"]'
       expect(page).to have_css(fitted, visible: :all)
       expect(page).to have_no_css('body.chords-hidden')
       within 'section.slide.present' do

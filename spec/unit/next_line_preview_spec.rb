@@ -40,7 +40,7 @@ RSpec.describe 'inject_next_line_previews' do
   it "ends each sub-slide on the next one's heading and its first line, up to the first <br>" do
     expect(preview('intro').size).to eq(1)
     expect(preview('intro').first.inner_html)
-      .to eq('Next: <span class="next-line-section">Verse 1:</span> I was <code class="a">Am</code> scared of <code class="g">G</code> dentists <em>(slowly)</em>')
+      .to eq('Next: <span class="next-line-section">Verse 1</span> - I was <code class="a">Am</code> scared of <code class="g">G</code> dentists <em>(slowly)</em>...')
   end
 
   it 'keeps the chords (as <code>, for their colours) and the emphasis of that line' do
@@ -50,11 +50,11 @@ RSpec.describe 'inject_next_line_previews' do
   end
 
   it "uses the next heading's text, without its markup" do
-    expect(preview('verse-1').first.at_css('.next-line-section').text).to eq('Chorus (2x):')
+    expect(preview('verse-1').first.at_css('.next-line-section').text).to eq('Chorus (2x)')
   end
 
   it 'joins the lines Pandoc soft-wrapped back into one, as they read' do
-    expect(preview('intro').first.text).to eq('Next: Verse 1: I was Am scared of G dentists (slowly)')
+    expect(preview('intro').first.text).to eq('Next: Verse 1 - I was Am scared of G dentists (slowly)...')
   end
 
   it "tells the song's last sub-slide that the song ends there" do
@@ -80,7 +80,7 @@ RSpec.describe 'inject_next_line_previews' do
     song = SONG.sub('<p>Lady, running down to the riptide</p>',
                     "<pre><code>e|--0--|\nB|--1--|</code></pre>")
     doc = Nokogiri::HTML(inject_next_line_previews(deck(INTRODUCTION, song)))
-    expect(doc.at_css('section#verse-1 > p.next-line').text).to eq('Next: Chorus (2x): e|--0--|')
+    expect(doc.at_css('section#verse-1 > p.next-line').text).to eq('Next: Chorus (2x) - e|--0--|...')
   end
 
   it 'puts the preview last, so wrap_slide_content carries it into .slide-content below the lyrics' do

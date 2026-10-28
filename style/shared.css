@@ -132,7 +132,7 @@ body.chords-clickable .reveal section button.chord:hover > code,
    (the nowrap above): a longer preview widens the slide instead, and
    slide-zoom.js fits the whole slide to it.
    It keeps the lyrics' own colours, its heading the slide titles' (night.css),
-   and is dimmed by its opacity alone: it never gets past 80%.
+   and is dimmed by its opacity alone: it never gets past 60%.
    It is only needed toward the end of a slide, so it stays out of the way at
    first: fully transparent when its slide becomes the current one (Reveal's
    .present), then after a few seconds it fades in slowly. Leaving, it keeps
@@ -157,7 +157,7 @@ body.chords-clickable .reveal section button.chord:hover > code,
 }
 
 .reveal .slides section.present > .slide-content > .next-line {
-  opacity: 0.8;
+  opacity: 0.6;
   transition: opacity 3s ease-in-out 3s;
 }
 
