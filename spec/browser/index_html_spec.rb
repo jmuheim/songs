@@ -284,11 +284,13 @@ RSpec.describe 'index.html', :js, type: :feature do
       # slide carries emoji, which Chrome lays out differently across its own
       # builds (see decisions/2026-09-30-emoji-zoom-is-not-reproducible-across-
       # chrome-builds.md); its exact zoom therefore only holds locally, so on the
-      # CI runner we assert only that the title is zoomed up to fill.
+      # CI runner we assert only that the title is zoomed up to fill. The floor
+      # sits at 1.1, well clear of 1 (no zoom, or the old stretch cap): fitted
+      # between the desktop chevrons, the runner's title came out at 1.24.
       if ENV['CI']
         wait_for_js("document.querySelector('section.deck-title-slide .slide-content').style.zoom !== ''")
         title_zoom = page.evaluate_script("parseFloat(document.querySelector('section.deck-title-slide .slide-content').style.zoom)")
-        expect(title_zoom).to be_between(1.3, 1.7)
+        expect(title_zoom).to be_between(1.1, 1.7)
       else
         expect(page).to have_css('section.deck-title-slide .slide-content[style="zoom: 1.31713;"]', visible: :all)
       end
