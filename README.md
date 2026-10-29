@@ -46,7 +46,7 @@ bundle exec rspec
 
 The browser specs run their own multiplex server on `127.0.0.1:18889`, so a spec that becomes presenter never moves anyone who has songs.josh.ch open.
 
-GitHub Actions runs the whole suite on every push and pull request (`.github/workflows/test.yml`).
+GitHub Actions runs the whole suite on every push to `master` and on every pull request (`.github/workflows/test.yml`). A green run on `master` then deploys to songs.josh.ch.
 
 ## Adding songs
 
