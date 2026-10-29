@@ -28,9 +28,13 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
     expect(page).to have_css('#TOC.present')
   end
 
-  # Titles of the TOC entries the filter leaves showing, whitespace-normalised.
+  # The TOC entries the filter leaves showing
+  VISIBLE_ENTRY = '#TOC nav li:not(.toc-hidden) a'.freeze
+
+  # Their titles, whitespace-normalised. Not for "none left": all() waits the
+  # full default_max_wait_time for a first match; use have_no_css(VISIBLE_ENTRY).
   def visible_entries
-    all('#TOC nav li:not(.toc-hidden) a', visible: :all).map { |a| a.text.gsub(/\s+/, ' ').strip }
+    all(VISIBLE_ENTRY, visible: :all).map { |a| a.text.gsub(/\s+/, ' ').strip }
   end
 
   it 'offers a Sprache and a Genre dropdown, both unset, under a visually-hidden "Filter" legend' do
@@ -116,7 +120,7 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
 
     select 'Rock', from: 'Genre'
     # Englisch ∩ Rock is empty — 74-75 (the only Rock song) is Deutsch, not Englisch.
-    expect(visible_entries).to be_empty
+    expect(page).to have_no_css(VISIBLE_ENTRY, visible: :all)
     expect(page).to have_css('#toc-filter-empty', text: 'Keine Ergebnisse, bitte Filter anpassen')
 
     select 'Pop', from: 'Genre'
