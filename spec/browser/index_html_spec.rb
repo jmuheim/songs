@@ -1054,7 +1054,9 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).to have_link('Table of contents')
           expect(page).to have_no_css('#multiplex-status-button.multiplex-following')
           expect(page).to have_css('.reveal .controls') # the chevrons are back
-          find('body').send_keys(:right) # free to browse again
+          # free to browse again. press, not send_keys on body: that clicks the
+          # middle of the page first, which on the TOC can be a song's link
+          press(:right)
           wait_for_js("Reveal.getIndices().h === 2")
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(2)
         end
