@@ -440,8 +440,8 @@ html.fullscreen-runway .reveal {
   height: auto;
 }
 
-/* The two things a finger may still scroll then (holdPage in
-   body-controls.html) keep a swipe past their ends to themselves: passed on,
+/* The things a finger may still scroll then (holdPage in body-controls.html;
+   the 🎉 below, too) keep a swipe past their ends to themselves: passed on,
    one down at the top scrolled the page up, and Safari's bars came back. */
 html.fullscreen-runway section#TOC,
 html.fullscreen-runway dialog {
@@ -548,19 +548,24 @@ html.fullscreen-runway dialog {
   margin-top: 1em;
 }
 
-/* 🎉, what happened, and OK. It covers the whole screen, and touch-action
-   keeps a swipe on it from scrolling the page back up, which would bring
-   Safari's bars right back. Hidden, not just transparent, until then: its OK
-   must not be a Tab stop no one sees. */
+/* 🎉, what happened, and OK. It covers the whole screen. Hidden, not just
+   transparent, until then: its OK must not be a Tab stop no one sees.
+   Should it not fit the screen after all (a larger text size, a small phone
+   held sideways), it scrolls in itself, like the table of contents: holdPage lets
+   a finger through only then, and a swipe past its ends stays with it rather
+   than scrolling the page back up, which would bring Safari's bars right back.
+   Centred by the two 1fr rows, not by align-content, which would push what
+   doesn't fit past the top too, where no scrolling reaches. */
 .runway-success {
   position: fixed;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0 1.5rem;
-  touch-action: none;
+  display: grid;
+  grid-template-areas: "." "emoji" "text" "tip" "image" "ok" ".";
+  grid-template-rows: 1fr repeat(5, auto) 1fr;
+  justify-items: center;
+  padding: 1rem 1.5rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0s 0.3s;
@@ -572,17 +577,24 @@ html.fullscreen-runway dialog {
 }
 
 .runway-success-emoji {
+  grid-area: emoji;
   font-size: 2.5em;
 }
 
+#runway-success-text {
+  grid-area: text;
+  outline: none;
+}
+
 .runway-success p.runway-tip {
+  grid-area: tip;
   margin-top: 1em;
   font-size: 0.75em;
   opacity: 0.8;
 }
 
-/* All of it must fit one screen: the panel can't scroll (touch-action) */
 .runway-tip-image {
+  grid-area: image;
   display: block;
   width: auto;
   height: auto;
@@ -593,12 +605,36 @@ html.fullscreen-runway dialog {
   border-radius: 0.5em;
 }
 
-#runway-success-text {
-  outline: none;
+#runway-ok {
+  grid-area: ok;
+  margin-top: 1em;
 }
 
-.runway-success button {
-  margin-top: 1em;
+/* A phone held sideways has the width, not the height: the picture goes
+   beside the text, as tall as the screen, and the 🎉 takes less room. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .runway-success {
+    grid-template-areas: ". image" "emoji image" "text image" "tip image" "ok image" ". image";
+    grid-template-rows: 1fr repeat(4, auto) 1fr;
+    grid-template-columns: minmax(0, 22em) auto;
+    justify-content: center;
+    column-gap: 1.5rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .runway-success p.runway-success-emoji {
+    font-size: 2em;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .runway-tip-image {
+    align-self: center;
+    max-width: none;
+    max-height: calc(100vh - 1.5rem);
+    max-height: calc(100svh - 1.5rem);
+    margin: 0;
+  }
 }
 
 #fullscreen-runway.runway-succeeded:not(.runway-done) .runway-success {

@@ -139,12 +139,12 @@
       // scrolls it up, and Safari brings its bars back. .reveal's touch-action
       // doesn't reach a code block (overflow: auto, a scroll container of its
       // own), nor the corner buttons beside the deck. Only the table of
-      // contents and a dialog still scroll, when they hold more than fits
-      // (night.css keeps them from passing a swipe on to the page). Two
+      // contents, a dialog and the 🎉 still scroll, when they hold more than
+      // fits (night.css keeps them from passing a swipe on to the page). Two
       // fingers are a pinch-zoom, which stays.
       function holdPage(e) {
         if (e.touches.length > 1) return;
-        var own = e.target.closest && e.target.closest('#TOC, dialog');
+        var own = e.target.closest && e.target.closest('#TOC, dialog, .runway-success');
         if (own && own.scrollHeight > own.clientHeight) return;
         e.preventDefault();
       }

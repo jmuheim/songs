@@ -1026,6 +1026,52 @@ RSpec.describe 'index.html', :js, type: :feature do
       page.driver.browser.resize(width: 1280, height: 800)
     end
 
+    it "on an iPhone held sideways, fits the 🎉 on the screen, and should it not fit after all, scrolls it in itself, not the page" do
+      # An iPhone X held sideways: 812 × 375 with Safari's bars gone, less with them
+      page.driver.browser.resize(width: 812, height: 325)
+      visit "#{FixtureBuilder::URL_PATH}?runway#/2/2"
+      wait_for_reveal
+      click_button('↕️ Vollbild')
+      expect(page).to have_visible('#fullscreen-runway')
+      page.scroll_to(0, 300)
+      page.driver.browser.resize(width: 812, height: 375)
+      page.execute_script("window.dispatchEvent(new Event('resize'))")
+      expect(page).to have_css('#runway-success-text', text: 'Gut gemacht!')
+      wait_for_js("document.querySelector('.runway-tip-image').complete")
+      expect(page.evaluate_script("document.querySelector('.runway-tip-image').complete")).to be true
+
+      # All of it on one screen, the picture beside the text: below it, the 🎉
+      # ran off the top and OK off the bottom, and a swipe couldn't reach them
+      top_gap = ->(selector) { page.evaluate_script("document.querySelector(#{selector.to_json}).getBoundingClientRect().top") }
+      left_of = ->(selector) { page.evaluate_script("document.querySelector(#{selector.to_json}).getBoundingClientRect().left") }
+      aggregate_failures do
+        expect(top_gap.('.runway-success-emoji')).to be >= 0
+        expect(bottom_gap('#runway-ok')).to be >= 0
+        expect(left_of.('.runway-tip-image')).to be > page.evaluate_script("document.getElementById('runway-success-text').getBoundingClientRect().right")
+      end
+
+      # A larger text size doesn't fit. It starts at its top all the same, the
+      # 🎉 in sight, and a finger scrolls it to OK. Past its top, a swipe down
+      # doesn't pass on to the page, where it would bring Safari's bars back.
+      page.execute_script("document.querySelector('.runway-success').style.fontSize = '2rem'")
+      wait_for_js("document.querySelector('.runway-success').scrollHeight > innerHeight")
+      expect(page.evaluate_script("document.querySelector('.runway-success').scrollHeight")).to be > page.evaluate_script('innerHeight')
+      expect(top_gap.('.runway-success-emoji')).to be >= 0
+      expect(bottom_gap('#runway-ok')).to be < 0
+      finger_swipe('.runway-success', 200)
+      expect(page.evaluate_script('scrollY')).to eq(300)
+      finger_swipe('.runway-success', -300)
+      wait_for_js("document.querySelector('.runway-success').scrollTop > 0")
+      expect(page.evaluate_script("document.querySelector('.runway-success').scrollTop")).to be > 0
+      expect(page.evaluate_script('scrollY')).to eq(300)
+      expect(bottom_gap('#runway-ok')).to be >= 0
+      click_button('OK')
+      expect(page).to have_css('#fullscreen-runway.runway-done', visible: :hidden)
+      expect(page.evaluate_script('scrollY')).to eq(300)
+    ensure
+      page.driver.browser.resize(width: 1280, height: 800)
+    end
+
     it 'stays out of the way when the song book runs from the home screen, without any bars to hide' do
       # Below Capybara: iOS sets navigator.standalone before any script runs
       page.driver.browser.page.command('Page.addScriptToEvaluateOnNewDocument',
