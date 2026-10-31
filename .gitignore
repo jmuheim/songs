@@ -13,7 +13,3 @@
 /print.html
 /spec/fixtures/index.html
 /spec/fixtures/print.html
-
-# Local multiplex credentials — a per-machine pair, created with
-# `bundle exec rake multiplex:token`. CI/deploy pass the pair in the environment.
-/multiplex-token.json

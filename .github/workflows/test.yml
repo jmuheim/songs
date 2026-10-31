@@ -80,15 +80,6 @@ jobs:
           wget -q https://github.com/jgm/pandoc/releases/download/3.9.0.2/pandoc-3.9.0.2-1-amd64.deb
           sudo dpkg -i pandoc-3.9.0.2-1-amd64.deb
 
-      # A fresh multiplex pair per deploy, passed in the environment — build
-      # reads it from there and never touches the network (the relay only checks
-      # sha256(secret) == socketId).
-      - name: Generate multiplex credentials
-        run: |
-          SECRET=$(openssl rand -hex 16)
-          echo "MULTIPLEX_SOCKET_ID=$(printf '%s' "$SECRET" | sha256sum | cut -d' ' -f1)" >> "$GITHUB_ENV"
-          echo "MULTIPLEX_SECRET=$SECRET" >> "$GITHUB_ENV"
-
       # `bundle exec`, not bare `./build`: bundler-cache above installs the gems
       # into vendor/bundle, which is only on the load path under bundler — a bare
       # `./build` fails with `cannot load such file -- nokogiri`.

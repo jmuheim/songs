@@ -284,27 +284,31 @@
   <div class="modal-box">
     <h2 id="multiplex-info-title" tabindex="-1" autofocus>Live-Scrollen</h2>
     <p id="multiplex-info-status"></p>
+    <p id="multiplex-info-join">Scanne den QR-Code eines Gastgebers, um mitzulesen.</p>
     <p id="multiplex-info-legend">●&nbsp;Du scrollst &nbsp;○&nbsp;Du folgst &nbsp;●&nbsp;Warte auf Gast &nbsp;⦸&nbsp;Keine Verbindung</p>
     <div class="modal-buttons modal-buttons-stacked">
-      <button id="master-mode" aria-haspopup="dialog" aria-pressed="false" aria-describedby="master-mode-hint"><span aria-hidden="true">🚀</span> <span id="master-mode-label">Live-Scrollen starten</span></button>
-      <p id="master-mode-hint" hidden>Live-Scrollen lässt sich nur auf einem Lied starten.</p>
-      <button id="show-qr" aria-haspopup="dialog"><span aria-hidden="true">🔗</span> QR-Code zeigen</button>
+      <button id="live-toggle" aria-haspopup="dialog" aria-pressed="false" aria-describedby="live-toggle-hint" hidden><span aria-hidden="true">🚀</span> <span id="live-toggle-label">Live-Scrollen starten</span></button>
+      <p id="live-toggle-hint" hidden>Live-Scrollen lässt sich nur auf einem Lied starten.</p>
+      <button id="show-qr" aria-haspopup="dialog" hidden><span aria-hidden="true">🔗</span> QR-Code zeigen</button>
+      <button id="host-login" aria-haspopup="dialog"><span aria-hidden="true">🔑</span> <span id="host-login-label">Als Gastgeber anmelden</span></button>
+      <button id="session-leave" hidden><span aria-hidden="true">🚪</span> Session verlassen</button>
+      <button id="session-end" hidden><span aria-hidden="true">🏁</span> Session beenden</button>
       <button id="multiplex-info-close">Schliessen</button>
     </div>
   </div>
 </dialog>
 
-<dialog id="master-modal" class="overlay-modal" aria-labelledby="master-title">
+<dialog id="host-modal" class="overlay-modal" aria-labelledby="host-title">
   <form class="modal-box" method="dialog">
-    <h2 id="master-title">Live-Scrollen starten</h2>
-    <div id="master-info">
-      <p>Gib das Passwort ein, um das Live-Scrollen zu leiten.</p>
+    <h2 id="host-title">Als Gastgeber anmelden</h2>
+    <div id="host-info">
+      <p>Gib das Passwort ein, um als Gastgeber durch den Abend zu führen.</p>
     </div>
-    <label for="master-pw">Passwort</label>
-    <input type="password" id="master-pw" autocomplete="off" autofocus>
+    <label for="host-pw">Passwort</label>
+    <input type="password" id="host-pw" autocomplete="off" autofocus>
     <div class="modal-buttons">
-      <button type="button" id="master-cancel">Abbrechen</button>
-      <button id="master-confirm">Weiter</button>
+      <button type="button" id="host-cancel">Abbrechen</button>
+      <button id="host-confirm">Weiter</button>
     </div>
   </form>
 </dialog>
@@ -346,17 +350,22 @@
 <script>
 window.addEventListener('load', function() {
   var cfg = window.MULTIPLEX;
-  if (!cfg || !window.io) return;
+  if (!cfg || !window.io || !window.sha256Hex) return;
 
-  // The presenter repeats the session, and the scroller its position, this
-  // often, so whoever joins late or comes back from a dead spot catches up
-  // without waiting for the next move. cfg.heartbeat lets the specs shorten it.
+  // The host repeats itself, and the scroller its position, this often, so
+  // whoever joins late or comes back from a dead spot catches up without
+  // waiting for the next move. cfg.heartbeat lets the specs shorten it.
   var HEARTBEAT_MS = 2000;
+  var LIVE_PARAM = 'live';  // the session's secret, in a QR code's address
+  var QR_JOIN_PARAM = 'qr'; // marks a link reached by scanning someone else's QR code
 
   // Stable across a reload of this tab (sessionStorage, not a fresh random
   // value every load): a guest who just became the scroller — or anyone just
   // following along — is still recognised as themselves afterwards, since the
-  // presenter's broadcast keeps naming this same id as scrollerId.
+  // host's broadcast keeps naming this same id as scrollerId. Per tab, not per
+  // device like the session (localStorage): two tabs sharing one id would
+  // each drop the other's messages as their own, and two host tabs could
+  // never settle which one leads.
   var senderId = (function() {
     var stored = null;
     try { stored = sessionStorage.getItem('multiplex-sender-id'); } catch (e) {}
@@ -365,50 +374,115 @@ window.addEventListener('load', function() {
     try { sessionStorage.setItem('multiplex-sender-id', id); } catch (e) {}
     return id;
   })();
-  var socket = io(cfg.url);
-  cfg.socket = socket; // a seam for the specs to simulate a real drop/reconnect (socket.disconnect()/.connect()) — nothing here is secret beyond what the page source already is (see the Token section in CLAUDE.md)
 
   // ---- Controls and dialogs ----
-  var masterBtn   = document.getElementById('master-mode');
-  var masterLabel = document.getElementById('master-mode-label');
-  var masterHint  = document.getElementById('master-mode-hint');
-  var masterModal = document.getElementById('master-modal');
-  var masterPw    = document.getElementById('master-pw');
+  var liveBtn     = document.getElementById('live-toggle');
+  var liveLabel   = document.getElementById('live-toggle-label');
+  var liveHint    = document.getElementById('live-toggle-hint');
+  var hostLoginBtn   = document.getElementById('host-login');
+  var hostLoginLabel = document.getElementById('host-login-label');
+  var sessionEndBtn  = document.getElementById('session-end');
+  var sessionLeaveBtn = document.getElementById('session-leave');
+  var hostModal   = document.getElementById('host-modal');
+  var hostTitle   = document.getElementById('host-title');
+  var hostPw      = document.getElementById('host-pw');
   var choiceModal = document.getElementById('scroll-choice-modal');
   var choiceSong  = document.getElementById('scroll-choice-song');
   var inviteModal = document.getElementById('guest-invite-modal');
   var inviteSong  = document.getElementById('guest-invite-song');
   var qrModal     = document.getElementById('qr-modal');
+  var showQrBtn   = document.getElementById('show-qr');
   var statusEl    = document.getElementById('multiplex-status');
   var toastEl     = document.getElementById('multiplex-toast');
   var goToTocLink = document.getElementById('go-to-toc');
   var multiplexBtn   = document.getElementById('multiplex-status-button');
   var multiplexModal = document.getElementById('multiplex-info-modal');
   var multiplexInfoStatus = document.getElementById('multiplex-info-status');
+  var multiplexInfoJoin   = document.getElementById('multiplex-info-join');
 
-  // ---- Role and session ----
-  // The presenter is the single authority: it alone opens and closes a session
-  // and names the scroller. The scroller — the presenter itself, or a guest who
-  // volunteered — moves the deck; everyone else in the session follows and
-  // cannot navigate. This tab scrolls when session.scrollerId === senderId.
-  var isPresenter = false;    // this tab leads
-  var authed = false;         // the password was entered in this tab
-  var presenterClaim = 0;     // orders presenters across reload / duplicate tab
-  var sessionClaim = 0;       // the claim of the session this client trusts
-  var session = null;         // { id, song, songTitle, mode, scrollerId } while live
+  // ---- Session, host and live scrolling ----
+  // A session is one evening. Whoever has its secret is in it, on the relay
+  // channel sha256(secret): the host's device generates it, and the others
+  // get it from the host's QR code (?live= in its address). Each device keeps
+  // it in its storage from then on. Without a secret there is no session and
+  // no socket: a plain visit to the song book is never locked to anybody's
+  // evening.
+  //
+  // Within a session the host is the single authority: it alone starts and
+  // ends live scrolling and names the scroller, and it repeats itself for as
+  // long as it hosts. Live scrolling is one song at a time: the scroller — the
+  // host itself, or a guest who volunteered — moves the deck, and everyone
+  // else follows and cannot navigate. This tab scrolls when
+  // live.scrollerId === senderId.
+  var SESSION_TTL_MS = 12 * 60 * 60 * 1000; // a session nothing was heard of for this long is a past evening
+  var secret = null;          // the session this device is in, or null
+  var socketId = null;        // sha256(secret): the session's relay channel
+  var socket = null;          // opened when this tab first joins a session
+  var pendingDisconnect = null;
+  var seenAt = 0;             // when this device last heard from the session, or spoke in it
+  var isHost = false;         // this device hosts the session
+  var authed = false;         // the password was entered on this device
+  var hostClaim = 0;          // this tab's claim while it hosts
+  var heardClaim = 0;         // the highest host claim heard in this session
+  var live = null;            // { id, song, songTitle, mode, scrollerId } while a song is live-scrolled
   var navMode = 'free';       // 'free' | 'scroller' | 'follower'
   var lastState = null;       // the scroller's position, as last received
-  var lastSessionAt = 0;      // last word from the session (heartbeat or move)
+  var lastLiveAt = 0;         // last word about the live scroll (heartbeat or move)
   var applyingRemote = false; // set while Reveal moves because the scroller did
-  var invitedFor = null;      // session id whose invite this tab already saw
-  var volunteeredFor = null;  // session id this tab last said "Ja, ich scrolle" to
-  var announcedFor = null;    // self-scroll session id this tab already announced to the room
+  var invitedFor = null;      // live id whose invite this tab already saw
+  var volunteeredFor = null;  // live id this tab last said "Ja, ich scrolle" to
+  var announcedFor = null;    // self-scroll live id this tab already announced to the room
   var heartbeat = null;
   var everConnected = false;
   var connectionLostShown = false; // a "Verbindung verloren" toast is owed a "Wieder verbunden" once it reconnects
-  var guestSilent = false;         // presenter only: the delegated guest has gone quiet
+  var scrollerSilent = false;      // host only: the device it handed the song to has gone quiet
 
-  function amScroller() { return !!session && session.scrollerId === senderId; }
+  function amScroller() { return !!live && live.scrollerId === senderId; }
+
+  // ?live= is only the way in, from a QR code: the session is in this
+  // device's storage from then on, and the address goes back to plain. So the
+  // song book reopened from the home screen, or in a new tab, is still in the
+  // session, and an address bookmarked or added to the home screen meanwhile
+  // carries no session. (Kept in the address, ?live= also got dropped again
+  // by a write Reveal had deferred, which carries the query string of the
+  // moment it was asked for.)
+  function stripAddress() {
+    var params = new URLSearchParams(location.search);
+    params.delete(LIVE_PARAM);
+    params.delete(QR_JOIN_PARAM);
+    var search = params.toString();
+    try {
+      history.replaceState(null, '', location.pathname + (search ? '?' + search : '') + location.hash);
+    } catch (e) {} // Safari's replaceState limit
+  }
+
+  function newSecret() {
+    var bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    return Array.prototype.map.call(bytes, function(b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+  }
+
+  // cfg.socket, cfg.secret and cfg.socketId are seams for the specs: they
+  // simulate a real drop/reconnect on the socket and feed it from sockets of
+  // their own. Nothing there is secret beyond what the address already is.
+  function join(newSecretValue) {
+    clearTimeout(pendingDisconnect);
+    if (socket && socketId) socket.off(socketId, onMessage);
+    secret = newSecretValue;
+    socketId = sha256Hex(secret);
+    cfg.secret = secret;
+    cfg.socketId = socketId;
+    if (!socket) {
+      socket = io(cfg.url);
+      cfg.socket = socket;
+      socket.on('connect', onConnect);
+      socket.on('disconnect', onDisconnect);
+    } else if (!socket.connected) {
+      socket.connect();
+    }
+    everConnected = socket.connected;
+    socket.on(socketId, onMessage);
+  }
 
   function sameState(a, b) {
     return a.indexh === b.indexh && a.indexv === b.indexv && a.indexf === b.indexf;
@@ -442,9 +516,9 @@ window.addEventListener('load', function() {
     return heading ? heading.textContent.trim() : '';
   }
 
-  // The title, the table of contents and the introduction are not songs. A live
-  // session only makes sense on a song, so 🚀 is disabled off these (see
-  // updateButton), and ending one drops everyone back onto the TOC (gotoToc).
+  // The title, the table of contents and the introduction are not songs. Live
+  // scrolling only makes sense on a song, so 🚀 is disabled off these (see
+  // updateControls), and ending it drops everyone back onto the TOC (gotoToc).
   // The title slide carries no id of its own any more (see build_helpers.rb's
   // rename_title_slide_id) — it's matched by its class below instead; TOC and
   // the introduction are still plain id lookups.
@@ -489,34 +563,33 @@ window.addEventListener('load', function() {
 
   function applyNavMode() {
     var mode = 'free';
-    if (session) {
-      if (session.scrollerId === senderId) mode = 'scroller';
-      else if (session.scrollerId) mode = 'follower';
+    if (live) {
+      if (live.scrollerId === senderId) mode = 'scroller';
+      else if (live.scrollerId) mode = 'follower';
     }
     if (mode === navMode) return;
     navMode = mode;
-    // A session locks navigation to the scroller's song; 📖 would otherwise
-    // still jump a locked device straight back to the table of contents (the
-    // slidechanged snap-back undoes it, but not before an unwanted flash).
+    // Live scrolling locks navigation to the scroller's song; 📖 would
+    // otherwise still jump a locked device straight back to the table of
+    // contents (the slidechanged snap-back undoes it, but not before an
+    // unwanted flash).
     goToTocLink.hidden = mode !== 'free';
     if (mode === 'free') {
       Reveal.configure({ keyboard: true, touch: true, controls: true });
     } else if (mode === 'scroller') {
       // Lock to the song: vertical keys keep working, horizontal ones don't.
-      if (Reveal.getIndices().h !== session.song) {
+      if (Reveal.getIndices().h !== live.song) {
         applyingRemote = true;
-        try { Reveal.slide(session.song, 0); } finally { applyingRemote = false; }
+        try { Reveal.slide(live.song, 0); } finally { applyingRemote = false; }
       }
       Reveal.configure({ keyboard: SCROLLER_KEYS, touch: true, controls: false });
       broadcastState();
     } else { // follower: no navigation at all, snapped to the scroller
-      // Entering follow restarts the silence grace period. The presenter becomes
-      // a follower too when it hands the song to a guest, and it never hears its
-      // own session heartbeats — so without this its lastSessionAt would still be
-      // 0 and the checker below would free it before the guest's first state
-      // arrived. Localhost won that race; the live relay's latency lost it, and
-      // the presenter dropped out of the session it had just opened.
-      lastSessionAt = Date.now();
+      // Entering follow restarts the silence grace period. The host becomes a
+      // follower too when it hands the song to a guest, and it never hears its
+      // own heartbeats — so without this its lastLiveAt would still be 0 and
+      // the checker below would flag the guest before its first state arrived.
+      lastLiveAt = Date.now();
       Reveal.configure({ keyboard: false, touch: false, controls: false });
       if (lastState) follow(lastState);
     }
@@ -564,84 +637,99 @@ window.addEventListener('load', function() {
   });
 
   // ---- Broadcasting (everything rides on the one relayed event) ----
-  function emit(payload) {
-    if (!socket.connected) return;
-    payload.secret = cfg.secret;
-    payload.socketId = cfg.socketId;
+  // Four types: `host` (the host's heartbeat), `state` (the scroller's
+  // position), `volunteer` (a guest's „Ja") and `end` (the session is over).
+  function message(payload) {
+    payload.secret = secret;
+    payload.socketId = socketId;
     payload.from = senderId;
-    socket.emit('multiplex-statechanged', payload);
+    return payload;
+  }
+  function send(payload) {
+    if (socket && socket.connected) socket.emit('multiplex-statechanged', payload);
+  }
+  function emit(payload) {
+    if (secret) send(message(payload));
   }
 
-  // `fresh` marks the session's opening broadcast (set only by startSession);
-  // the 2 s heartbeats that follow leave it off. That is how a client tells "the
-  // session just opened" from "it has been running" — a latecomer only ever
-  // hears heartbeats, so it follows without the self-scroll announcement.
-  function broadcastSession(fresh) {
-    if (!isPresenter || !session) return;
-    emit({ type: 'session', claim: presenterClaim, fresh: !!fresh, session: {
-      id: session.id, active: true, song: session.song, songTitle: session.songTitle,
-      mode: session.mode, scrollerId: session.scrollerId
+  // Who hosts (by claim) and what is live-scrolled, if anything, on every
+  // beat for as long as this tab hosts. A host that was offline while it was
+  // taken over learns of it within one beat, and the end of a live scroll is
+  // repeated with the rest, so one lost packet strands nobody. `fresh` marks a
+  // live scroll's opening broadcast (set only by startLive): a client tells
+  // "it just started" from "it has been running" by it, so a latecomer, who
+  // only ever hears heartbeats, follows without the self-scroll announcement.
+  function broadcastHost(fresh) {
+    if (!isHost) return;
+    emit({ type: 'host', claim: hostClaim, fresh: !!fresh, live: live && {
+      id: live.id, song: live.song, songTitle: live.songTitle, mode: live.mode, scrollerId: live.scrollerId
     }});
   }
 
   function broadcastState() {
     if (!amScroller()) return;
-    emit({ type: 'state', sessionId: session.id, state: stateToSend() });
+    emit({ type: 'state', liveId: live.id, state: stateToSend() });
   }
 
   function restartHeartbeat() {
     clearInterval(heartbeat);
     heartbeat = null;
-    if ((isPresenter && session) || amScroller()) {
+    if (isHost || amScroller()) {
       heartbeat = setInterval(function() {
-        broadcastSession(); // no-op unless presenter
-        broadcastState();   // no-op unless scroller
+        broadcastHost();  // no-op unless host
+        broadcastState(); // no-op unless scroller
+        touch();
       }, cfg.heartbeat || HEARTBEAT_MS);
     }
   }
 
   // ---- Receiving ----
-  socket.on(cfg.socketId, function(data) {
+  function onMessage(data) {
     if (!data || data.from === senderId) return; // the relay never echoes, but guard
-    if (data.type === 'session') onSessionMessage(data);
+    touch();
+    if (data.type === 'host') onHostMessage(data);
     else if (data.type === 'state') onStateMessage(data);
     else if (data.type === 'volunteer') onVolunteerMessage(data);
-  });
-
-  function onSessionMessage(data) {
-    if (isPresenter) {
-      // Another presenter: the higher claim leads; an equal one is a duplicated
-      // tab, settled by the sender id. A lower claim is an old presenter that
-      // steps down once it hears this tab — ignore it.
-      var outranked = data.claim > presenterClaim ||
-                      (data.claim === presenterClaim && data.from > senderId);
-      if (!outranked) return;
-      stepDown(); // someone newer leads; fall through and follow them
-    }
-    if (session && data.claim < sessionClaim) return; // a stale presenter
-    sessionClaim = data.claim;
-    lastSessionAt = Date.now();
-    if (!data.session.active) { concludeSession(); return; }
-    reconcileSession(data.session, data.fresh);
+    else if (data.type === 'end') onEndMessage(data);
   }
 
-  function reconcileSession(s, fresh) {
-    // Caught before the overwrite below: whether *this* session already had a
-    // scroller the last time this tab heard of it, and whether this tab was
-    // among the invited (only those ever see a resolution toast at all).
-    var hadScrollerAlready = !!(session && session.id === s.id && session.scrollerId);
+  function onHostMessage(data) {
+    if (isHost) {
+      // Another host: the higher claim leads; an equal one is a duplicated
+      // tab, settled by the sender id. A lower claim is an old host that steps
+      // down once it hears this tab — ignore it.
+      var outranked = data.claim > hostClaim ||
+                      (data.claim === hostClaim && data.from > senderId);
+      if (!outranked) return;
+      stepDown(); // taken over; fall through and follow the new host
+    }
+    if (data.claim < heardClaim) return; // an old host that hasn't heard yet that it was taken over
+    heardClaim = data.claim;
+    if (!data.live) {
+      if (live) concludeLive(); else persistSession();
+      return;
+    }
+    lastLiveAt = Date.now();
+    reconcileLive(data.live, data.fresh);
+  }
+
+  function reconcileLive(s, fresh) {
+    // Caught before the overwrite below: whether *this* live scroll already
+    // had a scroller the last time this tab heard of it, and whether this tab
+    // was among the invited (only those ever see a resolution toast at all).
+    var hadScrollerAlready = !!(live && live.id === s.id && live.scrollerId);
     var wasInvited = invitedFor === s.id;
     var hadVolunteered = volunteeredFor === s.id;
-    session = { id: s.id, song: s.song, songTitle: s.songTitle, mode: s.mode, scrollerId: s.scrollerId };
+    live = { id: s.id, song: s.song, songTitle: s.songTitle, mode: s.mode, scrollerId: s.scrollerId };
     if (s.mode === 'guest' && !s.scrollerId) {
-      // Awaiting a volunteer: offer it once per session.
+      // Awaiting a volunteer: offer it once per live scroll.
       if (invitedFor !== s.id) {
         invitedFor = s.id;
         inviteSong.textContent = s.songTitle;
         if (!inviteModal.open) inviteModal.showModal();
       }
     } else {
-      if (inviteModal.open) inviteModal.close(); // a scroller was chosen, or this is a self session
+      if (inviteModal.open) inviteModal.close(); // a scroller was chosen, or the host scrolls itself
       // A guest scroller was just named (not merely re-heard on a heartbeat):
       // tell whoever we'd invited how it went for them — the winner, a
       // volunteer who lost the race, or just everyone else waiting on an
@@ -657,8 +745,8 @@ window.addEventListener('load', function() {
         }
       }
     }
-    // Self-scroll: the presenter drives, so there is nothing to volunteer for —
-    // tell the room which song is coming, but only those here as it opens
+    // Self-scroll: the host drives, so there is nothing to volunteer for —
+    // tell the room which song is coming, but only those here as it starts
     // (`fresh`): a latecomer that catches up on a heartbeat just follows.
     if (fresh && s.mode === 'self' && !amScroller() && announcedFor !== s.id) {
       announcedFor = s.id;
@@ -666,70 +754,77 @@ window.addEventListener('load', function() {
     }
     persistSession();
     applyNavMode();
-    updateButton();
+    updateControls();
     updateStatus();
     restartHeartbeat();
   }
 
-  function concludeSession() {
-    var wasIn = !!session;
-    var wasScroller = amScroller();
+  function forgetLive() {
     if (inviteModal.open) inviteModal.close();
-    session = null;
-    sessionClaim = 0;
+    live = null;
     invitedFor = null;
     volunteeredFor = null;
     announcedFor = null;
+    scrollerSilent = false;
+  }
+
+  // The host ended the live scroll: everyone lands back on the table of
+  // contents, and the guest who scrolled is thanked.
+  function concludeLive() {
+    var wasIn = !!live;
+    var wasScroller = amScroller();
+    forgetLive();
     persistSession();
     applyNavMode();
-    updateButton();
+    updateControls();
     updateStatus();
     restartHeartbeat();
     if (wasIn) {
-      gotoToc(); // the presenter ended it: everyone lands back on the table of contents
+      gotoToc();
       var lines = ['Du kannst jetzt wieder frei navigieren'];
       if (wasScroller) lines.push('Vielen Dank fürs Scrollen!');
       showToast(lines);
     }
   }
 
-  // The presenter went quiet (tab closed, crashed, or a lasting dropout): a
-  // follower frees itself rather than stay frozen. The presenter's next
-  // heartbeat, if it returns, locks it again.
+  // The live scroll went quiet (host and scroller gone, or a lasting dropout):
+  // a follower frees itself where it stands rather than stay frozen. The
+  // host's next heartbeat, if it returns, locks it again.
   function releaseSilently() {
-    if (inviteModal.open) inviteModal.close();
-    session = null;
-    sessionClaim = 0;
-    invitedFor = null;
-    volunteeredFor = null;
-    announcedFor = null;
+    forgetLive();
     persistSession();
     applyNavMode();
-    updateButton();
+    updateControls();
     restartHeartbeat();
   }
 
   function onStateMessage(data) {
-    if (!session || data.sessionId !== session.id || amScroller()) return;
-    lastSessionAt = Date.now();
+    if (!live || data.liveId !== live.id || amScroller()) return;
+    lastLiveAt = Date.now();
     lastState = data.state;
     if (navMode === 'follower') follow(lastState);
   }
 
   function onVolunteerMessage(data) {
-    // First volunteer wins. The presenter alone decides, so two near-simultaneous
+    // First volunteer wins. The host alone decides, so two near-simultaneous
     // „Ja"s cannot both become scroller.
-    if (!isPresenter || !session || session.mode !== 'guest' || session.scrollerId) return;
-    if (data.sessionId !== session.id) return;
-    session.scrollerId = data.from;
-    guestSilent = false; // fresh delegate: the silence clock restarts clean
-    persistPresenter();
-    broadcastSession();
-    applyNavMode();   // the presenter now follows the guest
-    updateButton();
+    if (!isHost || !live || live.mode !== 'guest' || live.scrollerId) return;
+    if (data.liveId !== live.id) return;
+    live.scrollerId = data.from;
+    scrollerSilent = false; // fresh delegate: the silence clock restarts clean
+    persistSession();
+    broadcastHost();
+    applyNavMode();   // the host now follows the guest
+    updateControls();
     updateStatus();
     restartHeartbeat();
     showToast(['Jemand hat sich bereit erklärt, es geht gleich los']);
+  }
+
+  // Only the session's current host ends it, not one that was taken over.
+  function onEndMessage(data) {
+    if (data.claim < heardClaim) return;
+    leaveSession(['Die Session ist beendet'], true);
   }
 
   // The scroller leads and snaps back if it ever leaves its song; a follower
@@ -738,9 +833,9 @@ window.addEventListener('load', function() {
     Reveal.on(ev, function() {
       if (applyingRemote) return;
       if (amScroller()) {
-        if (Reveal.getIndices().h !== session.song) {
+        if (Reveal.getIndices().h !== live.song) {
           applyingRemote = true;
-          try { Reveal.slide(session.song, Reveal.getIndices().v); } finally { applyingRemote = false; }
+          try { Reveal.slide(live.song, Reveal.getIndices().v); } finally { applyingRemote = false; }
         }
         broadcastState();
       } else if (navMode === 'follower' && lastState) {
@@ -749,67 +844,69 @@ window.addEventListener('load', function() {
     });
   });
 
-  // ---- Status line ----
+  // ---- Status ----
   var statusIntervalHb = function() { return cfg.heartbeat || HEARTBEAT_MS; };
   function statusText() {
-    if (!socket.connected) return (everConnected && session) ? 'Keine Verbindung' : 'Kein Live-Scrollen aktiv';
-    if (session) {
-      if (session.scrollerId === senderId) return isPresenter ? 'Du scrollst live' : 'Du scrollst für alle';
-      if (session.scrollerId) return isPresenter ? 'Gast scrollt' : 'Folgt';
-      if (isPresenter) return 'Warte auf Gast …';
+    if (!secret) return 'Keine Session';
+    if (!socket.connected) return everConnected ? 'Keine Verbindung' : 'Verbinde …';
+    if (live) {
+      if (live.scrollerId === senderId) return isHost ? 'Du scrollst live' : 'Du scrollst für alle';
+      if (live.scrollerId) return isHost ? 'Gast scrollt' : 'Folgt';
+      if (isHost) return 'Warte auf Gast …';
     }
-    return 'Kein Live-Scrollen aktiv';
+    return isHost ? 'Du bist Gastgeber' : 'Kein Live-Scrollen aktiv';
   }
 
   // The bottom-left button's shape/colour double the status text
   // graphically: a filled dot when this device drives the scroll (self-scroll
-  // presenter or a guest scrolling for everyone), a ring when it follows
-  // someone else's (an ordinary follower, or a presenter who delegated to a
-  // guest), amber while a presenter waits for a guest to volunteer, and a
-  // diagonal strike — layered on top of whichever shape applies — whenever
-  // the socket itself is disconnected. Colour alone is never the only signal
-  // (style/night.css draws the shapes).
+  // host or a guest scrolling for everyone), a ring when it follows someone
+  // else's (an ordinary follower, or a host who handed the song to a guest),
+  // amber while a host waits for a guest to volunteer, and a diagonal strike —
+  // layered on top of whichever shape applies — whenever this device is in a
+  // session but its socket is disconnected. Colour alone is never the only
+  // signal (style/night.css draws the shapes).
   function updateStatus() {
     var text = statusText();
     if (statusEl.textContent !== text) statusEl.textContent = text;
     if (multiplexModal.open) multiplexInfoStatus.textContent = text;
 
-    multiplexBtn.classList.toggle('multiplex-driving', !!session && session.scrollerId === senderId);
-    multiplexBtn.classList.toggle('multiplex-following', !!session && !!session.scrollerId && session.scrollerId !== senderId);
-    multiplexBtn.classList.toggle('multiplex-waiting', isPresenter && !!session && !session.scrollerId);
-    multiplexBtn.classList.toggle('multiplex-disconnected', !socket.connected);
+    multiplexBtn.classList.toggle('multiplex-driving', !!live && live.scrollerId === senderId);
+    multiplexBtn.classList.toggle('multiplex-following', !!live && !!live.scrollerId && live.scrollerId !== senderId);
+    multiplexBtn.classList.toggle('multiplex-waiting', isHost && !!live && !live.scrollerId);
+    multiplexBtn.classList.toggle('multiplex-disconnected', !!secret && !socket.connected);
   }
   // Fixed at 500ms — unlike HEARTBEAT_MS, not scaled by cfg.heartbeat. A spec
   // shortening the heartbeat to test staleness must keep 3x it comfortably
   // above this tick, or "fresh again" can never be observed: by the time the
   // next tick runs, more time than a too-short threshold has already passed.
   setInterval(function() {
-    // Not the presenter: a regular follower (or the presenter's own guest
-    // delegate) has no other way back to free navigation if the session it
-    // was following goes quiet, so it frees itself. The presenter is excluded
-    // — it is the one actor with a deliberate way to end the session (🚀), and
-    // must keep that even while silently "following" a guest it delegated to:
-    // a dropout on the *guest's* end (flaky phone, bad wifi) used to silently
-    // eject the presenter from its own session, taking the ❌ with it, while
+    // Not the host: a regular follower (or the host's own guest delegate) has
+    // no other way back to free navigation if the live scroll it was
+    // following goes quiet, so it frees itself. The host is excluded — it is
+    // the one actor with a deliberate way to end it (🚀), and must keep that
+    // even while silently "following" the guest it handed the song to: a
+    // dropout on the *guest's* end (flaky phone, bad wifi) used to silently
+    // eject the host from its own live scroll, taking the ❌ with it, while
     // the guest — and everyone else still locked to it — carried right on.
-    var stale = session && socket.connected && navMode === 'follower' &&
-                Date.now() - lastSessionAt > 3 * statusIntervalHb();
-    if (stale && !isPresenter) {
+    var stale = live && socket && socket.connected && navMode === 'follower' &&
+                Date.now() - lastLiveAt > 3 * statusIntervalHb();
+    if (stale && !isHost) {
       releaseSilently();
-    } else if (stale && isPresenter && !guestSilent) {
-      // The presenter no longer frees itself here (see above), but it still
+    } else if (stale && isHost && !scrollerSilent) {
+      // The host no longer frees itself here (see above), but it still
       // deserves to know *why* the view has stopped moving, and that ending
-      // the session is an option rather than just waiting it out blind.
-      guestSilent = true;
-      showToast(['Keine Rückmeldung vom Gast mehr – du kannst die Sitzung bei Bedarf beenden']);
-    } else if (!stale && guestSilent) {
-      guestSilent = false;
-      if (session) showToast(['Der Gast ist wieder verbunden']);
+      // the live scroll is an option rather than just waiting it out blind.
+      // Neutral about who scrolls: after a takeover it can be the old host.
+      scrollerSilent = true;
+      showToast(['Keine Rückmeldung mehr vom scrollenden Gerät – du kannst das Live-Scrollen bei Bedarf beenden']);
+    } else if (!stale && scrollerSilent) {
+      scrollerSilent = false;
+      if (live) showToast(['Das scrollende Gerät ist wieder verbunden']);
     }
     updateStatus();
   }, 500);
 
-  // ---- End-of-session toast ----
+  // ---- Toast ----
   var toastTimer = null;
   function showToast(lines) {
     toastEl.innerHTML = '';
@@ -823,201 +920,286 @@ window.addEventListener('load', function() {
     toastTimer = setTimeout(function() { toastEl.classList.remove('visible'); }, 6000);
   }
 
-  // ---- Presenter: start, choose, end ----
-  function newId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
-
-  // The password, once entered in this tab, survives a reload regardless of
-  // whether a session is live right now — only the live session itself (and
-  // isPresenter with it) is forgotten once it ends or this tab steps down.
-  function persistPresenter() {
-    try { sessionStorage.setItem('multiplex-presenter', JSON.stringify({ authed: authed, claim: presenterClaim, session: session })); } catch (e) {}
-  }
-
-  // The last session any tab — presenter or not — knows about, so a guest who
-  // is scrolling or just following survives a reload too, instead of coming
-  // back to free navigation until the next heartbeat sorts it out.
+  // ---- Persistence ----
+  // The session, the role and the song being live-scrolled live in this
+  // device's storage (localStorage), so they outlast a reload, a discarded
+  // tab and the song book reopened from the home screen. Only the sender id
+  // stays per tab (see senderId): two tabs on one device are two senders,
+  // or each would take the other's messages for its own. `scrolling` says
+  // this tab was the one scrolling, for a host coming back under a new id.
+  // The heard claim goes with it, so an old host is still recognised as one.
   function persistSession() {
     try {
-      if (session) sessionStorage.setItem('multiplex-session', JSON.stringify({ claim: sessionClaim, session: session }));
-      else sessionStorage.removeItem('multiplex-session');
+      if (secret) {
+        localStorage.setItem('multiplex-session', JSON.stringify({
+          secret: secret, seenAt: seenAt, heardClaim: heardClaim,
+          hostClaim: isHost ? hostClaim : 0, live: live, scrolling: amScroller()
+        }));
+      } else {
+        localStorage.removeItem('multiplex-session');
+      }
     } catch (e) {}
   }
 
-  function startSession(mode) {
-    var song = Reveal.getIndices().h;
-    presenterClaim = Math.max(Date.now(), presenterClaim + 1); // above every claim heard
-    isPresenter = true;
-    session = {
-      id: newId(), song: song, songTitle: songTitleAt(song),
-      mode: mode, scrollerId: mode === 'self' ? senderId : null
-    };
-    persistPresenter();
-    applyNavMode();      // 'self' locks the presenter to the song; 'guest' waits
-    broadcastSession(true); // fresh: whoever is here now gets the self-scroll announcement
-    updateButton();
-    updateStatus();
-    restartHeartbeat();
+  // Anything heard from the session, or said in it, keeps it from expiring
+  function touch() {
+    seenAt = Date.now();
+    persistSession();
   }
 
-  function endSession() {
-    if (!isPresenter || !session) return;
-    var endMessage = { type: 'session', claim: presenterClaim, session: {
-      id: session.id, active: false, song: session.song, songTitle: session.songTitle,
-      mode: session.mode, scrollerId: session.scrollerId
-    }};
-    // The relay is fire-and-forget with no delivery guarantee, and this is the
-    // one message that is never repeated by a heartbeat (there is no more
-    // session to heartbeat once we think we're done) — so a single dropped
-    // packet used to strand everyone else, still locked to a session that, as
-    // far as they ever heard, is still running. Sending it a few more times
-    // over the next second costs nothing and covers a brief connection blip.
-    emit(endMessage);
-    setTimeout(function() { emit(endMessage); }, 400);
-    setTimeout(function() { emit(endMessage); }, 1000);
-    session = null;
-    persistPresenter(); // keep authed and the claim; forget the ended session
-    applyNavMode();
-    gotoToc(); // the song is over: drop everyone back onto the table of contents
-    updateButton();
+  // ---- Host: log in or take over, live-scroll, end ----
+  function newId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+
+  // Without a session, logging in opens a new one: a fresh secret, generated
+  // here (the relay only checks sha256(secret) == socketId), into the address.
+  // In a session, it takes it over: the claim is above every claim heard in
+  // it, not just this phone's clock, which may run behind the old host's. The
+  // old host steps down as it hears this tab's first heartbeat. A song being
+  // live-scrolled carries on as it is, the scroller included.
+  function becomeHost() {
+    if (!secret) join(newSecret());
+    hostClaim = Math.max(Date.now(), heardClaim + 1, hostClaim + 1);
+    heardClaim = hostClaim;
+    isHost = true;
+    scrollerSilent = false;
+    touch();
+    broadcastHost();
+    updateControls();
     updateStatus();
     restartHeartbeat();
-    showToast(['Du kannst jetzt wieder frei navigieren']); // the presenter is no guest, so no thanks
+    showToast(['Du bist jetzt Gastgeber']);
   }
 
   function stepDown() {
-    isPresenter = false;
-    session = null;
-    persistPresenter(); // keep authed; this tab's own (now stale) session is gone
-    updateButton();
-    // the winning presenter's session drives this tab from here
+    isHost = false;
+    persistSession();
+    updateControls();
+    restartHeartbeat();
+    showToast(['Jemand anderes ist jetzt Gastgeber']);
   }
 
-  function updateButton() {
-    var active = isPresenter && !!session;
-    masterBtn.classList.toggle('session-active', active);
-    masterBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
-    masterLabel.textContent = active ? 'Live-Scrollen beenden' : 'Live-Scrollen starten';
+  function startLive(mode) {
+    var song = Reveal.getIndices().h;
+    live = {
+      id: newId(), song: song, songTitle: songTitleAt(song),
+      mode: mode, scrollerId: mode === 'self' ? senderId : null
+    };
+    scrollerSilent = false;
+    persistSession();
+    applyNavMode();      // 'self' locks the host to the song; 'guest' waits
+    broadcastHost(true); // fresh: whoever is here now gets the self-scroll announcement
+    updateControls();
+    updateStatus();
+    restartHeartbeat();
+  }
+
+  // Said once now, and again on every heartbeat that follows (live: null).
+  function endLive() {
+    if (!isHost || !live) return;
+    forgetLive();
+    persistSession();
+    broadcastHost();
+    applyNavMode();
+    gotoToc(); // the song is over: drop everyone back onto the table of contents
+    updateControls();
+    updateStatus();
+    restartHeartbeat();
+    showToast(['Du kannst jetzt wieder frei navigieren']); // the host is no guest, so no thanks
+  }
+
+  // Leaving a session: the host ended it (everyone who was live-scrolling
+  // lands on the table of contents), or this device left it of its own accord
+  // (and stays where it is).
+  function leaveSession(lines, toToc) {
+    var wasLive = !!live;
+    var wasScroller = amScroller();
+    forgetLive();
+    isHost = false;
+    if (socket && socketId) socket.off(socketId, onMessage);
+    secret = null;
+    socketId = null;
+    heardClaim = 0;
+    seenAt = 0;
+    persistSession();
+    // Not right away: the host's last words are still being repeated.
+    clearTimeout(pendingDisconnect);
+    pendingDisconnect = setTimeout(function() { if (!secret) socket.disconnect(); }, 1200);
+    applyNavMode();
+    updateControls();
+    updateStatus();
+    restartHeartbeat();
+    if (wasLive && toToc) {
+      gotoToc();
+      lines = lines.concat(['Du kannst jetzt wieder frei navigieren']);
+      if (wasScroller) lines.push('Vielen Dank fürs Scrollen!');
+    }
+    showToast(lines);
+  }
+
+  // There is no heartbeat left to carry this one, so it is repeated twice
+  // over the next second instead: a single dropped packet would otherwise
+  // leave everyone else in a session nobody hosts any more.
+  function endSession() {
+    if (!isHost) return;
+    var end = message({ type: 'end', claim: hostClaim });
+    send(end);
+    setTimeout(function() { send(end); }, 400);
+    setTimeout(function() { send(end); }, 1000);
+    leaveSession(['Die Session ist beendet'], true);
+  }
+
+  // What the 📡 dialog offers depends on the role: 🚀 and „Session beenden"
+  // to the host, 🔗 to anyone in a session, „Session verlassen" to anyone in
+  // it but the host, the login to anyone but the host.
+  function updateControls() {
+    var inSession = !!secret;
+    var active = isHost && !!live;
+    liveBtn.hidden = !isHost;
+    liveBtn.classList.toggle('live-active', active);
+    liveBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    liveLabel.textContent = active ? 'Live-Scrollen beenden' : 'Live-Scrollen starten';
     // 🚀 only makes sense on a song: disabled elsewhere, with the hint saying
-    // why. While a session is active onSong() is always true anyway — the
-    // scroller can't leave the song and every follower is snapped to it — so
-    // this one check covers both starting and ending.
-    masterBtn.disabled = !onSong();
-    masterHint.hidden = onSong();
+    // why. While live scrolling, onSong() is always true anyway — the scroller
+    // can't leave the song and every follower is snapped to it — so this one
+    // check covers both starting and ending.
+    liveBtn.disabled = !onSong();
+    liveHint.hidden = !isHost || onSong();
+    showQrBtn.hidden = !inSession;
+    hostLoginBtn.hidden = isHost;
+    hostLoginLabel.textContent = inSession ? 'Gastgeber übernehmen' : 'Als Gastgeber anmelden';
+    sessionLeaveBtn.hidden = !inSession || isHost;
+    sessionEndBtn.hidden = !isHost;
+    multiplexInfoJoin.hidden = inSession;
   }
 
   // ---- Buttons and dialogs ----
-  // 🚀 and 🔗 sit in the 📡 dialog: it closes first, so the next one returns
-  // the focus to 📡 when it closes in turn.
-  masterBtn.addEventListener('click', function() {
+  // Everything here sits in the 📡 dialog: it closes first, so the next one
+  // returns the focus to 📡 when it closes in turn.
+  hostLoginBtn.addEventListener('click', function() {
     multiplexModal.close();
-    if (isPresenter && session) { endSession(); return; }
-    if (authed) { openChoice(); return; }
-    masterModal.showModal();
+    if (authed) { becomeHost(); return; }
+    hostTitle.textContent = hostLoginLabel.textContent;
+    hostModal.showModal();
   });
 
-  function openChoice() {
-    choiceSong.textContent = songTitleAt(Reveal.getIndices().h);
-    choiceModal.showModal();
-  }
-
-  document.getElementById('master-cancel').addEventListener('click', function() { masterModal.close(); });
+  document.getElementById('host-cancel').addEventListener('click', function() { hostModal.close(); });
 
   // Weiter and Enter submit; method="dialog" closes the dialog unless we stop it
-  masterModal.querySelector('form').addEventListener('submit', function(e) {
-    if (masterPw.value === cfg.password) {
+  hostModal.querySelector('form').addEventListener('submit', function(e) {
+    if (hostPw.value === cfg.password) {
       authed = true;
-      persistPresenter(); // survives a reload: no re-entering the password on this tab
-      masterModal.close();
-      openChoice();
+      try { localStorage.setItem('multiplex-authed', 'yes'); } catch (e) {} // asked once per device
+      hostModal.close();
+      becomeHost();
       return;
     }
     e.preventDefault();
-    masterPw.classList.add('shake');
-    setTimeout(function() { masterPw.classList.remove('shake'); }, 500);
-    masterPw.value = '';
-    masterPw.focus();
+    hostPw.classList.add('shake');
+    setTimeout(function() { hostPw.classList.remove('shake'); }, 500);
+    hostPw.value = '';
+    hostPw.focus();
   });
-  masterModal.addEventListener('close', function() { masterPw.value = ''; });
+  hostModal.addEventListener('close', function() { hostPw.value = ''; });
 
-  document.getElementById('scroll-self').addEventListener('click', function() { choiceModal.close(); startSession('self'); });
-  document.getElementById('scroll-guest').addEventListener('click', function() { choiceModal.close(); startSession('guest'); });
+  liveBtn.addEventListener('click', function() {
+    multiplexModal.close();
+    if (!isHost) return;
+    if (live) { endLive(); return; }
+    choiceSong.textContent = songTitleAt(Reveal.getIndices().h);
+    choiceModal.showModal();
+  });
+
+  sessionEndBtn.addEventListener('click', function() {
+    multiplexModal.close();
+    endSession();
+  });
+
+  sessionLeaveBtn.addEventListener('click', function() {
+    multiplexModal.close();
+    leaveSession(['Du hast die Session verlassen'], false);
+  });
+
+  document.getElementById('scroll-self').addEventListener('click', function() { choiceModal.close(); startLive('self'); });
+  document.getElementById('scroll-guest').addEventListener('click', function() { choiceModal.close(); startLive('guest'); });
   document.getElementById('scroll-choice-cancel').addEventListener('click', function() { choiceModal.close(); });
 
   document.getElementById('guest-accept').addEventListener('click', function() {
-    if (session) {
-      volunteeredFor = session.id;
-      emit({ type: 'volunteer', sessionId: session.id });
+    if (live) {
+      volunteeredFor = live.id;
+      emit({ type: 'volunteer', liveId: live.id });
     }
     inviteModal.close(); // wait to hear whether this tab was the one chosen
   });
   document.getElementById('guest-decline').addEventListener('click', function() { inviteModal.close(); });
 
   // ---- Connection ----
-  socket.on('connect', function() {
+  function onConnect() {
     everConnected = true;
-    broadcastSession(); // no-op unless presenter
-    broadcastState();   // no-op unless scroller
+    broadcastHost();  // no-op unless host
+    broadcastState(); // no-op unless scroller
     if (connectionLostShown) {
       connectionLostShown = false;
-      if (session) showToast(['Wieder verbunden']);
+      if (live) showToast(['Wieder verbunden']);
     }
     updateStatus();
-  });
-  socket.on('disconnect', function() {
+  }
+  function onDisconnect() {
     // Only while something was actually riding on the connection — a drop
     // while just browsing freely is nobody's concern. The multiplex status
     // button already shows "Keine Verbindung" for as long as it lasts; this
     // toast is only the one-off "something changed" moment, on both ends of it.
-    if (session) {
+    if (live) {
       connectionLostShown = true;
       showToast(['Verbindung verloren']);
     }
     updateStatus();
-  });
+  }
 
-  // ---- Restore a reloaded tab: auth, role, claim and the live session ----
-  // The password survives on its own, independent of whether a session is
-  // live right now — entering it once per tab is the point, not once per page
-  // load. If this tab was presenting, that takes priority for the session
-  // itself; otherwise fall back to the last session any role heard of, so a
-  // guest scroller or a follower resumes without a flash of free navigation
-  // while waiting for the next heartbeat.
-  var storedPresenter = null;
-  try { storedPresenter = JSON.parse(sessionStorage.getItem('multiplex-presenter')); } catch (e) {}
-  if (storedPresenter && storedPresenter.authed) {
-    authed = true;
-    presenterClaim = storedPresenter.claim || Date.now();
-  }
-  if (storedPresenter && storedPresenter.session) {
-    isPresenter = true;
-    session = storedPresenter.session;
-  } else {
-    var storedSession = null;
-    try { storedSession = JSON.parse(sessionStorage.getItem('multiplex-session')); } catch (e) {}
-    if (storedSession && storedSession.session) {
-      session = storedSession.session;
-      sessionClaim = storedSession.claim || 0;
+  // ---- Restore: auth, session, role and live scroll ----
+  // From this device's storage, so a reload, a discarded tab or the song book
+  // reopened from the home screen is back where it was: a guest scroller or a
+  // follower without a flash of free navigation while waiting for the next
+  // heartbeat, a host as host. A session nothing was heard of for twelve
+  // hours is a past evening, and forgotten. A QR code's ?live= names the
+  // session to be in, a new one included.
+  var stored = null;
+  try { stored = JSON.parse(localStorage.getItem('multiplex-session')); } catch (e) {}
+  try { authed = localStorage.getItem('multiplex-authed') === 'yes'; } catch (e) {}
+  if (stored && !(Date.now() - (stored.seenAt || 0) < SESSION_TTL_MS)) stored = null;
+  var addressParams = new URLSearchParams(location.search);
+  var addressSecret = addressParams.get(LIVE_PARAM);
+  if (addressSecret && !(stored && stored.secret === addressSecret)) stored = { secret: addressSecret };
+  if (stored && stored.secret) {
+    join(stored.secret);
+    heardClaim = stored.heardClaim || 0;
+    live = stored.live || null;
+    if (stored.hostClaim) {
+      isHost = true;
+      hostClaim = stored.hostClaim;
+      heardClaim = Math.max(heardClaim, hostClaim);
+      // The sender id is per tab, so a host reopened in a new one comes back
+      // under a new id: if it was the one scrolling, it names itself again,
+      // and its next heartbeat tells the room. (A guest scroller can't — the
+      // host names the scroller — and the host is told it went quiet.)
+      if (live && stored.scrolling) live.scrollerId = senderId;
     }
+    touch();
+  } else {
+    persistSession(); // nothing, or a past evening: forget it
   }
-  if (session) {
-    applyNavMode();
-    restartHeartbeat();
-  }
-  updateButton();
+  if (live) applyNavMode();
+  restartHeartbeat();
+  updateControls();
   updateStatus();
 
-  // 🚀 is only live on a song: set it now and re-check whenever the slide moves.
-  Reveal.on('slidechanged', updateButton);
-  updateButton();
+  // 🚀 is only live on a song: re-check whenever the slide moves.
+  Reveal.on('slidechanged', updateControls);
 
   // ---- QR code ----
-  var showQrBtn = document.getElementById('show-qr');
-  var QR_JOIN_PARAM = 'qr'; // marks a link reached by scanning someone else's QR code
-
+  // The session's address, with the join marker: whoever scans it is in.
   function showQrModal() {
-    if (!window.QRCode) return;
-    var url = window.location.href.split('#')[0];
-    url += (url.indexOf('?') === -1 ? '?' : '&') + QR_JOIN_PARAM + '=1';
+    if (!window.QRCode || !secret) return;
+    var url = location.origin + location.pathname + '?' + LIVE_PARAM + '=' + secret + '&' + QR_JOIN_PARAM + '=1';
     var container = document.getElementById('qr-canvas');
     container.innerHTML = '';
     new QRCode(container, { text: url, width: 400, height: 400, colorDark: '#000000', colorLight: '#ffffff' });
@@ -1050,23 +1232,23 @@ window.addEventListener('load', function() {
   });
   document.getElementById('multiplex-info-close').addEventListener('click', function() { multiplexModal.close(); });
 
-  // A scanned QR code's URL carries the marker: show this device's own QR
-  // right away, so whoever joins this way can pass the song book on too. The
-  // marker is stripped first, so this QR — and the URL after a reload — stays
-  // a plain link instead of growing one "qr=1" longer with every scan. The
-  // setTimeout defers both past the load event itself: a replaceState() called
-  // from inside it hung headless Chrome under the browser-spec driver.
-  if (window.location.search === '?' + QR_JOIN_PARAM + '=1') {
+  // A scanned QR code's address: the session is stored by now, so ?live=
+  // goes from the address (see stripAddress), and with it the join marker,
+  // which shows this device's own QR right away, so whoever joins this way
+  // can let the next one in too. The setTimeout defers both past the load
+  // event itself: a replaceState() called from inside it hung headless Chrome
+  // under the browser-spec driver.
+  if (addressParams.has(LIVE_PARAM) || addressParams.has(QR_JOIN_PARAM)) {
     setTimeout(function() {
-      history.replaceState(null, '', window.location.pathname + window.location.hash);
-      showQrModal();
+      stripAddress();
+      if (addressParams.has(QR_JOIN_PARAM)) showQrModal();
     }, 0);
   }
 
   // showModal() makes the page behind inert and Esc closes natively. What is
   // left: Reveal listens for keys on the document, where they still arrive from
   // inside the dialog, and a click on the backdrop lands on the dialog itself.
-  [masterModal, qrModal, choiceModal, inviteModal, multiplexModal].forEach(function(dialog) {
+  [hostModal, qrModal, choiceModal, inviteModal, multiplexModal].forEach(function(dialog) {
     dialog.addEventListener('keydown', function(e) { e.stopPropagation(); });
     dialog.addEventListener('keypress', function(e) { e.stopPropagation(); });
     dialog.addEventListener('click', function(e) { if (e.target === dialog) dialog.close(); });

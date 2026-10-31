@@ -1,22 +1,12 @@
 require 'nokogiri'
 require 'json'
 require 'open3'
-require 'digest'
-require 'securerandom'
 
 module BuildHelpers
   module_function
 
   CHORD_REGEX = /\[([A-Z][^\]]*)\](?!\()/
   STYLE_DIR   = File.expand_path('../style', __dir__)
-
-  # A self-consistent multiplex pair generated offline: the relay only verifies
-  # sha256(secret) == socketId, so there is no need to fetch one from it. Used by
-  # the `multiplex:token` rake task; CI/deploy generate the pair inline instead.
-  def generate_multiplex_token
-    secret = SecureRandom.hex(16)
-    { 'socketId' => Digest::SHA256.hexdigest(secret), 'secret' => secret }
-  end
 
   FRONTMATTER = <<~MD
     ---
@@ -451,7 +441,7 @@ module BuildHelpers
     # slide-zoom.js first: the slides are already on screen once Reveal has
     # initialised, and no script that waits on the network (socket.io comes
     # from the relay's host) may hold up their first fit.
-    scripts = ["#{assets}slide-zoom.js", "#{multiplex[:url]}/socket.io/socket.io.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}chords.js", "#{assets}toc-filter.js"]
+    scripts = ["#{assets}slide-zoom.js", "#{multiplex[:url]}/socket.io/socket.io.js", "#{assets}sha256.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}chords.js", "#{assets}toc-filter.js"]
     html = html.sub('</body>', scripts.map { |src| %(  <script src="#{src}"></script>\n) }.join + '</body>')
     wrap_slide_content(chord_buttons(inject_next_line_previews(inject_toc_filter(split_song_artist(html), tags: tags))))
   end

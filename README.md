@@ -26,13 +26,12 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 ## Build
 
 ```bash
-bundle exec rake multiplex:token   # once per clone: create local multiplex credentials
-./build                            # Build index.html and print.html
-./build --deploy                   # HTML + deploy to songs.josh.ch (manual fallback)
-./dev                              # Watch, rebuild, and live-reload on every change (local only)
+./build           # Build index.html and print.html
+./build --deploy  # HTML + deploy to songs.josh.ch (manual fallback)
+./dev             # Watch, rebuild, and live-reload on every change (local only)
 ```
 
-`build` refuses to run without multiplex credentials; `rake multiplex:token` writes a gitignored `multiplex-token.json` for local use (see [Live sync](#live-sync-multiplex)). The usual way to publish is **not** `--deploy`: a push to `master` deploys to songs.josh.ch from CI once the tests pass (`.github/workflows/test.yml`).
+The usual way to publish is **not** `--deploy`: a push to `master` deploys to songs.josh.ch from CI once the tests pass (`.github/workflows/test.yml`).
 
 > Song files contain non-ASCII characters; `build` sets `LANG` and the UTF-8 encoding itself, so no `LANG=…` prefix is needed.
 
@@ -45,7 +44,7 @@ npm install --prefix multiplex-server   # once
 bundle exec rspec
 ```
 
-The browser specs run their own multiplex server on `127.0.0.1:18889`, so a spec that becomes presenter never moves anyone who has songs.josh.ch open.
+The browser specs run their own multiplex server on `127.0.0.1:18889`, so a spec that logs in as host never broadcasts through the relay songs.josh.ch uses.
 
 GitHub Actions runs the whole suite on every push to `master` and on every pull request (`.github/workflows/test.yml`). A green run on `master` then deploys to songs.josh.ch.
 
@@ -75,29 +74,36 @@ Nothing but blank lines may sit between the H1 and the first H2 — a capo note 
 
 ## Live sync (multiplex)
 
-The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multiplex/) so everyone in the room can follow along on their own device — song by song, led by the presenter or by a volunteer.
+The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multiplex/) so everyone in the room can follow along on their own device — song by song, led by the evening's host or by a volunteer.
+
+Each evening is a **session** of its own. Whoever leads it taps 📡 › 🔑 „Als Gastgeber anmelden" and enters the password: that opens a new session. The others join by scanning its QR code (📡 › 🔗). Anyone already in the session can show that code too, so a neighbour can let a latecomer in. Each device then keeps the session in its own storage — reloading, a new tab or the song book reopened from the home screen stay in it — until the host ends it (🏁), a guest leaves it (🚪), or nothing has been heard of it for 12 hours. A device that never scanned a code is in no session, and nobody's evening ever moves its screen; two evenings at the same time never touch each other.
 
 | Button | Position | Function |
 |--------|----------|----------|
 | 📖 | Top left | Jump to the table of contents (hidden while a live-scroll session locks your navigation) |
 | ↕️ | Top right | Full screen, and back |
-| 📡 | Bottom left | Live scrolling: a badge shows your connection/role at a glance; tap for the details, 🚀 and 🔗 |
+| 📡 | Bottom left | Live scrolling: a badge shows your connection/role at a glance; tap for the details, the login, 🚀 and 🔗 |
 | ⚙️ | Bottom right | Settings — theme, chord visibility |
 
 In the 📡 dialog:
 
 | Button | Function |
 |--------|----------|
-| 🚀 | Start a live-scroll session on the current song (asks for the password once; songs only), or end the running one |
-| 🔗 | Show QR code — scan to open the song book |
+| 🔑 | „Als Gastgeber anmelden" (asks for the password once per device), or, in a session, „Gastgeber übernehmen" |
+| 🚀 | Host only: start live scrolling on the current song (songs only), or end it |
+| 🔗 | In a session: show its QR code — scan to join |
+| 🚪 | Guests: „Session verlassen" — this device leaves the session |
+| 🏁 | Host only: „Session beenden" — everyone leaves the session |
 
-Navigate to a song, then tap 📡 › 🚀 and choose **„Ich selber möchte scrollen"** to scroll it yourself, or **„Ein Gast soll scrollen"** to let someone in the audience take over. In guest mode everyone with the page open is asked whether they want to scroll; the first to accept leads, and the rest follow. Whoever scrolls can only move up and down within that song.
+Navigate to a song, then tap 📡 › 🚀 and choose **„Ich selber möchte scrollen"** to scroll it yourself, or **„Ein Gast soll scrollen"** to let someone in the audience take over. In guest mode everyone in the session is asked whether they want to scroll; the first to accept leads, and the rest follow. Whoever scrolls can only move up and down within that song.
 
-While a session runs, followers are held on the scroller's slide — their own navigation is off. The scroller repeats its position every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap 📡 › 🚀 „Live-Scrollen beenden" to end the session: everyone is told they can navigate freely again, and a guest who scrolled is thanked.
+While a song is live-scrolled, followers are held on the scroller's slide — their own navigation is off. The host and the scroller repeat themselves every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap 📡 › 🚀 „Live-Scrollen beenden" to end it: everyone lands on the table of contents, is told they can navigate freely again, and a guest who scrolled is thanked.
 
-The badge on 📡 shows at a glance who's driving — a filled dot for you, a ring while you follow someone else, amber while waiting for a guest, a strike through it if the connection drops — and a tap opens a dialog spelling it out in words: „Du scrollst live", „Warte auf Gast …", „Gast scrollt", „Du scrollst für alle", „Folgt", or „Keine Verbindung".
+There is one host at a time. Another device in the session can take the role over with 📡 › 🔑 „Gastgeber übernehmen" (and the password) — no need for the old host to hand anything on, which a phone with a flat battery couldn't. The old host stays in the session as a participant, and a song being live-scrolled carries on, its scroller included.
 
-The presenter's tab stays presenter — and keeps its live session — when it reloads.
+The badge on 📡 shows at a glance who's driving — a filled dot for you, a ring while you follow someone else, amber while waiting for a guest, a strike through it if the connection drops — and a tap opens a dialog spelling it out in words: „Du scrollst live", „Warte auf Gast …", „Gast scrollt", „Du scrollst für alle", „Folgt", „Du bist Gastgeber", „Kein Live-Scrollen aktiv", „Keine Session" or „Keine Verbindung".
+
+Every role survives a reload: the host stays host, and whoever scrolls or follows is back in place at once.
 
 Default password: `guitar`. Change it with:
 
@@ -105,4 +111,4 @@ Default password: `guitar`. Change it with:
 MASTER_PASSWORD=yourpassword ./build
 ```
 
-The `socketId`/`secret` pair the sync uses is generated offline (the relay only checks `sha256(secret) == socketId`) — never fetched. Create your local pair once with `bundle exec rake multiplex:token`; it lands in a gitignored `multiplex-token.json`, so your local builds get their own session and never share the live songs.josh.ch channel. The CI deploy generates a fresh pair per run.
+The build carries no multiplex credentials. The host's browser generates each session's secret when it logs in, and every device derives the relay channel from it (`sha256(secret)`, `style/sha256.js`) — the relay only checks that the two match.

@@ -105,9 +105,9 @@ RSpec.describe 'HTML golden files' do
     expect(section.to_html + "\n").to eq(golden('infos_ueber_das_lied.html'))
   end
 
-  it 'master modal HTML matches golden' do
-    dialog = doc.at_css('dialog#master-modal')
-    expect(dialog.to_html + "\n").to eq(golden('master_modal.html'))
+  it 'host modal HTML matches golden' do
+    dialog = doc.at_css('dialog#host-modal')
+    expect(dialog.to_html + "\n").to eq(golden('host_modal.html'))
   end
 
   it 'Imagine Verse 1 HTML matches golden' do

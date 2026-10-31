@@ -30,8 +30,7 @@ module FixtureBuilder
       pandoc!(md_path, index_path, theme: 'night', revealjs_url: '/style/revealjs')
       pandoc!(md_path, print_path, theme: 'serif', revealjs_url: '/style/revealjs')
 
-      multiplex = { url: MultiplexServer.url, socketId: MultiplexServer::SOCKET_ID,
-                    secret: MultiplexServer::SECRET, password: 'guitar' }
+      multiplex = { url: MultiplexServer.url, password: 'guitar' }
 
       tags = song_files.map { |file| song_tags(File.read(file, encoding: 'UTF-8')) }
 

@@ -326,7 +326,7 @@ section.level2 > .slide-content {
   height: 1.1em;
   border-radius: 50%;
   border: 0.15em solid var(--r-background-color); /* a rim that sets it off the 📡 */
-  background: #888; /* idle: no session running */
+  background: #888; /* idle: no song being live-scrolled */
 }
 
 #multiplex-status-button.multiplex-driving::before {
@@ -638,9 +638,10 @@ dialog.overlay-modal::backdrop {
   margin-bottom: 0.3em;
 }
 
-#master-info,
+#host-info,
 #qr-info,
-#master-mode-hint,
+#live-toggle-hint,
+#multiplex-info-join,
 #multiplex-info-legend {
   font-size: 0.8em;
   opacity: 0.6;

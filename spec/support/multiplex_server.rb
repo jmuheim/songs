@@ -1,4 +1,3 @@
-require 'digest'
 require 'json'
 require 'net/http'
 require 'socket'
@@ -6,15 +5,13 @@ require 'tempfile'
 require 'timeout'
 
 # The browser specs' own reveal-multiplex (multiplex-server/, the package the
-# public Railway server runs), so a spec that becomes master never broadcasts
-# on the channel songs.josh.ch listens to. Port and token are fixed because
-# the fixture carries them, and the committed fixture must stay the same run
-# to run.
+# public Railway server runs), so a spec that logs in as host never broadcasts
+# through the relay songs.josh.ch uses. The port is fixed because the fixture
+# carries the server's URL; the sessions' secrets come from the page itself,
+# like on the live site.
 module MultiplexServer
   PORT            = 18_889
   DIR             = File.expand_path('../../multiplex-server', __dir__)
-  SECRET          = 'songs-spec'
-  SOCKET_ID       = Digest::SHA256.hexdigest(SECRET) # the server checks sha256(secret) == socketId
   STARTUP_TIMEOUT = 10
 
   @mutex = Mutex.new

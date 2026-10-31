@@ -1,4 +1,5 @@
 require 'capybara/rspec'
+require 'digest'
 
 RSpec.describe 'index.html', :js, type: :feature do
   # The slides slide-zoom.js fits (its FITTED): every one but the TOC
@@ -28,82 +29,109 @@ RSpec.describe 'index.html', :js, type: :feature do
     page.execute_script("document.getElementById('#{id}').click()") # e.target must be the overlay, not a child
   end
 
-  # 🚀 and 🔗 sit in the live-scroll dialog behind 📡 (bottom left)
+  # 🚀, 🔗 and the host login sit in the live-scroll dialog behind 📡 (bottom left)
   def open_live_scroll_dialog
+    # A toast that just appeared lifts the bottom corners clear of it over
+    # 0.3s (night.css), and a click computed at the start of that slide lands
+    # where 📡 used to be
+    wait_for_js("document.getElementById('bottom-left-controls').getAnimations().length === 0")
     find('#multiplex-status-button').click
     expect(page).to have_visible('#multiplex-info-modal')
   end
 
-  # 🚀 starts or ends a session; label is what it reads right now
-  def press_master_mode(label)
+  # The session this device is in: its secret, in its storage
+  def session_secret
+    page.evaluate_script("(JSON.parse(localStorage.getItem('multiplex-session')) || {}).secret || null")
+  end
+
+  # Joins a session by the address of the host's QR code, as scanning it does
+  def join_session(secret)
+    visit "#{FixtureBuilder::URL_PATH}?live=#{secret}"
+    wait_for_reveal
+  end
+
+  # Logs in as host from the 📡 dialog: opens a session, or takes over the one
+  # this tab is in. `label` is what the login button reads. The heartbeat is
+  # shortened first, so whoever joins late and the end of a live scroll
+  # arrive quickly. The password is asked only the first time on a device.
+  def log_in_as_host(heartbeat: 200, label: 'Als Gastgeber anmelden')
+    page.execute_script("window.MULTIPLEX.heartbeat = #{heartbeat}")
+    open_live_scroll_dialog
+    within('#multiplex-info-modal') { click_button("🔑 #{label}") }
+    if page.has_css?('#host-modal[open]', wait: 0.5)
+      within('#host-modal') do
+        find('#host-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
+        click_button('Weiter')
+      end
+    end
+    expect(page).to have_css('#host-login[hidden]', visible: :all)
+  end
+
+  # 🚀 starts or ends live scrolling; label is what it reads right now
+  def press_live(label)
     open_live_scroll_dialog
     within('#multiplex-info-modal') { click_button("🚀 #{label}") }
   end
 
-  # Enter the password, then pick who scrolls. The heartbeat is shortened so
-  # late joiners and the end-of-session notice arrive quickly. Presenter tabs.
-  def start_scroll_session(mode:, heartbeat: 200)
-    page.execute_script("window.MULTIPLEX.heartbeat = #{heartbeat}")
-    press_master_mode('Live-Scrollen starten')
-    within('#master-modal') do
-      find('#master-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
-      click_button('Weiter')
-    end
+  # Picks who scrolls the current song. Host tabs.
+  def start_live(mode:)
+    press_live('Live-Scrollen starten')
     within('#scroll-choice-modal') do
       click_button(mode == :self ? 'Ich selber möchte scrollen' : 'Ein Gast soll scrollen')
     end
   end
 
-  # A second socket (forceNew, so the relay sees it as another client) that learns
-  # the live session id from the presenter's own heartbeat and then, on demand,
-  # volunteers under an id no real tab owns. The named scroller therefore never
-  # sends any state — exactly the live moment just after a guest takes over, its
-  # first state still crossing the network. Real localhost tabs can't reproduce
-  # it: their state arrives in milliseconds, before the release checker's next tick.
+  # A second socket (forceNew, so the relay sees it as another client) in this
+  # tab's session that learns the live scroll's id from the host's own
+  # heartbeat and then, on demand, volunteers under an id no real tab owns. The
+  # named scroller therefore never sends any state — exactly the live moment
+  # just after a guest takes over, its first state still crossing the network.
+  # Real localhost tabs can't reproduce it: their state arrives in
+  # milliseconds, before the release checker's next tick.
   def install_phantom_guest
     page.execute_script(<<~JS)
-      window._phantom = { connected: false, sessionId: null };
+      window._phantom = { connected: false, liveId: null };
       var cfg = window.MULTIPLEX;
       var spy = io(cfg.url, { forceNew: true });
       spy.on('connect', function() { window._phantom.connected = true; });
       spy.on(cfg.socketId, function(data) {
-        if (data && data.type === 'session' && data.session && data.session.active &&
-            data.session.mode === 'guest' && !data.session.scrollerId) {
-          window._phantom.sessionId = data.session.id;
+        if (data && data.type === 'host' && data.live && data.live.mode === 'guest' && !data.live.scrollerId) {
+          window._phantom.liveId = data.live.id;
         }
       });
       window._phantomVolunteer = function() {
         spy.emit('multiplex-statechanged', {
-          type: 'volunteer', sessionId: window._phantom.sessionId, from: 'phantom-guest',
+          type: 'volunteer', liveId: window._phantom.liveId, from: 'phantom-guest',
           secret: cfg.secret, socketId: cfg.socketId
         });
       };
       // Simulates the phantom guest resuming after a silence — a state
-      // message is all it takes to refresh lastSessionAt on the receiving end.
+      // message is all it takes to refresh lastLiveAt on the receiving end.
       window._phantomState = function() {
         spy.emit('multiplex-statechanged', {
-          type: 'state', sessionId: window._phantom.sessionId, state: { indexh: 4, indexv: 0 },
+          type: 'state', liveId: window._phantom.liveId, state: { indexh: 4, indexv: 0 },
           from: 'phantom-guest', secret: cfg.secret, socketId: cfg.socketId
         });
       };
     JS
   end
 
-  # A second socket (forceNew) that feeds a lone tab fabricated `session`
-  # broadcasts, standing in for a presenter. Driving a real two-guest race to
-  # test the *losing* side's feedback doesn't work: the relay resolves it in
+  # A second socket (forceNew) in this tab's session that feeds it fabricated
+  # `host` broadcasts, standing in for a host. Driving a real two-guest race
+  # to test the *losing* side's feedback doesn't work: the relay resolves it in
   # milliseconds, well before a second real tab could still have its invite
   # open to lose from (see install_phantom_guest above for the same problem
-  # from the presenter's side).
+  # from the host's side).
   def install_spy
     page.execute_script("window._spy = io(window.MULTIPLEX.url, { forceNew: true });")
     wait_for_js("window._spy.connected")
+    expect(page.evaluate_script("window._spy.connected")).to be true
   end
 
-  def spy_send_session(session, claim: 1, fresh: false)
+  def spy_send_host(live, claim: 1, fresh: false)
     page.execute_script(<<~JS)
       window._spy.emit('multiplex-statechanged', Object.assign({
-        type: 'session', claim: #{claim}, fresh: #{fresh}, session: #{session.to_json}
+        type: 'host', claim: #{claim}, fresh: #{fresh}, live: #{live.to_json}
       }, { secret: window.MULTIPLEX.secret, socketId: window.MULTIPLEX.socketId, from: 'spy' }));
     JS
   end
@@ -158,12 +186,18 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
       within('#bottom-right-controls') { expect(page).to have_button('⚙️ Settings') }
       # 🚀 and 🔗 sit in the 📡 dialog, out of sight until it opens
-      expect(page).to have_css('#multiplex-info-modal #master-mode', visible: :hidden)
+      expect(page).to have_css('#multiplex-info-modal #live-toggle', visible: :hidden)
       expect(page).to have_css('#multiplex-info-modal #show-qr', visible: :hidden)
 
-      socket_id = page.evaluate_script("window.MULTIPLEX && window.MULTIPLEX.socketId")
-      expect(socket_id).not_to be_nil
-      expect(socket_id).not_to be_empty
+      # In no session (nothing stored, no ?live= from a QR code): not even a socket is opened
+      expect(page.evaluate_script("window.MULTIPLEX.socket === undefined")).to be true
+
+      # Every device derives the relay channel from the session's secret, with
+      # sha256.js. The relay only forwards when its own SHA-256 agrees, so it
+      # must match Ruby's: across several blocks, and in UTF-8 too.
+      ['songs-spec', 'x' * 56, 'Über den Wolken – 🎸' * 5].each do |text|
+        expect(page.evaluate_script("sha256Hex(#{text.to_json})")).to eq(Digest::SHA256.hexdigest(text))
+      end
 
       # title-slide + TOC + Introduction + fixture songs
       expect(all('.slides > section', visible: :all).size).to eq(3 + song_count)
@@ -897,94 +931,122 @@ RSpec.describe 'index.html', :js, type: :feature do
   # Multiplex
   # -----------------------------------------------------------------------
   describe 'multiplex' do
-    describe 'start dialog' do
+    describe 'logging in as host' do
       before { load_presentation }
 
-      it 'the password gates the choice dialog, which opens no session by itself' do
-        page.evaluate_script("Reveal.slide(3, 0)") # 🚀 only starts a session from a song
-        wait_for_js("Reveal.getIndices().h === 3")
-        expect(page).not_to have_visible('#master-modal')
-        expect(page).to have_css('#master-mode[aria-pressed="false"]', text: /🚀\s+Live-Scrollen starten/, visible: :all)
+      it 'the password makes this device host of a new session, kept in its storage across a reload, until 🏁' do
+        open_live_scroll_dialog
+        within('#multiplex-info-modal') do
+          expect(page).to have_css('#multiplex-info-status', text: 'Keine Session')
+          expect(page).to have_css('#multiplex-info-join', text: 'Scanne den QR-Code eines Gastgebers')
+          # A plain visitor has nothing to start, show or end
+          expect(page).to have_no_button('🚀 Live-Scrollen starten', disabled: :all)
+          expect(page).to have_no_button('🔗 QR-Code zeigen')
+          expect(page).to have_no_button('🏁 Session beenden')
+          click_button('🔑 Als Gastgeber anmelden')
+        end
+        expect(page).to have_visible('#host-modal')
+        expect(page).to have_css('#host-title', text: 'Als Gastgeber anmelden')
+        expect(active_element_id).to eq('host-pw')
+        backdrop_click('host-modal')
+        expect(page).not_to have_visible('#host-modal')
 
-        press_master_mode('Live-Scrollen starten')
-        expect(page).to have_visible('#master-modal')
-        expect(active_element_id).to eq('master-pw')
-        backdrop_click('master-modal')
-        expect(page).not_to have_visible('#master-modal')
-
-        press_master_mode('Live-Scrollen starten')
-        within('#master-modal') do
-          find('#master-pw').set('something')
+        open_live_scroll_dialog
+        within('#multiplex-info-modal') { click_button('🔑 Als Gastgeber anmelden') }
+        within('#host-modal') do
+          find('#host-pw').set('something')
           click_button('Abbrechen')
         end
-        expect(page).not_to have_visible('#master-modal')
-        expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
+        expect(page).not_to have_visible('#host-modal')
+        expect(page.evaluate_script("document.getElementById('host-pw').value")).to be_empty
 
-        press_master_mode('Live-Scrollen starten')
-        within('#master-modal') do
-          find('#master-pw').set('wrongpassword')
+        open_live_scroll_dialog
+        within('#multiplex-info-modal') { click_button('🔑 Als Gastgeber anmelden') }
+        within('#host-modal') do
+          find('#host-pw').set('wrongpassword')
           click_button('Weiter')
-          expect(page).to have_css('#master-pw.shake')
-          expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
+          expect(page).to have_css('#host-pw.shake')
+          expect(page.evaluate_script("document.getElementById('host-pw').value")).to be_empty
         end
-        expect(page).to have_visible('#master-modal')
+        expect(page).to have_visible('#host-modal')
+        expect(session_secret).to be_nil # no session for a wrong password
 
-        within('#master-modal') do
-          find('#master-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
+        within('#host-modal') do
+          find('#host-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
           click_button('Weiter')
         end
-        expect(page).not_to have_visible('#master-modal')
-        # The choice dialog opens; no session is live yet.
-        expect(page).to have_visible('#scroll-choice-modal')
-        expect(page).to have_no_css('#master-mode.session-active', visible: :all)
+        expect(page).not_to have_visible('#host-modal')
+        expect(page).to have_css('#multiplex-toast.visible', text: 'Du bist jetzt Gastgeber')
+        expect(page).to have_css('#multiplex-status', text: 'Du bist Gastgeber')
+        # A fresh secret, generated here, is the session — kept on the device,
+        # not in the address, and hashed into the relay channel
+        secret = session_secret
+        expect(secret).to match(/\A\h{32}\z/)
+        expect(page.evaluate_script("window.MULTIPLEX.socketId")).to eq(Digest::SHA256.hexdigest(secret))
+        expect(page.evaluate_script("location.search")).to eq('')
+        open_live_scroll_dialog
+        within('#multiplex-info-modal') do
+          expect(page).to have_button('🚀 Live-Scrollen starten', disabled: true) # the title slide is no song
+          expect(page).to have_button('🔗 QR-Code zeigen')
+          expect(page).to have_button('🏁 Session beenden')
+          expect(page).to have_no_css('#multiplex-info-join', visible: true)
+          expect(page).to have_no_button('🔑 Als Gastgeber anmelden')
+        end
+        press(:escape)
 
-        within('#scroll-choice-modal') { click_button('Abbrechen') }
-        expect(page).not_to have_visible('#scroll-choice-modal')
-        expect(page).to have_no_css('#master-mode.session-active', visible: :all)
-
-        # Already authenticated: 🚀 goes straight to the choice, no password.
-        press_master_mode('Live-Scrollen starten')
-        expect(page).to have_visible('#scroll-choice-modal')
-        expect(page).not_to have_visible('#master-modal')
-        within('#scroll-choice-modal') { click_button('Abbrechen') }
-
-        # The password survives a reload too, even with no session live —
-        # authentication isn't tied to a particular session.
+        # A reload keeps the session and the role
         page.refresh
         wait_for_reveal
-        page.evaluate_script("Reveal.slide(3, 0)")
-        wait_for_js("Reveal.getIndices().h === 3")
-        press_master_mode('Live-Scrollen starten')
-        expect(page).to have_visible('#scroll-choice-modal')
-        expect(page).not_to have_visible('#master-modal')
-        within('#scroll-choice-modal') { click_button('Abbrechen') }
+        expect(session_secret).to eq(secret)
+        expect(page).to have_css('#multiplex-status', text: 'Du bist Gastgeber')
+
+        # 🏁 leaves the session: the device forgets it, and with it what only a session offers
+        open_live_scroll_dialog
+        within('#multiplex-info-modal') { click_button('🏁 Session beenden') }
+        expect(page).to have_css('#multiplex-toast.visible', text: 'Die Session ist beendet')
+        expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+        expect(session_secret).to be_nil
+        open_live_scroll_dialog
+        within('#multiplex-info-modal') { expect(page).to have_no_button('🔗 QR-Code zeigen') }
+        press(:escape)
+
+        # The password is asked once per device: the next login opens a new session straight away
+        open_live_scroll_dialog
+        within('#multiplex-info-modal') { click_button('🔑 Als Gastgeber anmelden') }
+        expect(page).to have_css('#multiplex-status', text: 'Du bist Gastgeber')
+        expect(page).not_to have_visible('#host-modal')
+        expect(session_secret).to match(/\A\h{32}\z/)
+        expect(session_secret).not_to eq(secret)
       end
     end
 
     describe '🚀 on a song only' do
-      before { load_presentation }
+      before do
+        load_presentation
+        log_in_as_host
+      end
 
       it 'enables 🚀 only on a song — disabled, with the hint saying why, on the title, the TOC and the introduction' do
-        master_disabled_at = lambda do |h|
+        live_disabled_at = lambda do |h|
           page.evaluate_script("Reveal.slide(#{h}, 0)")
           wait_for_js("Reveal.getIndices().h === #{h}")
-          page.evaluate_script("document.getElementById('master-mode').disabled")
+          page.evaluate_script("document.getElementById('live-toggle').disabled")
         end
 
-        wait_for_js("document.getElementById('master-mode').disabled === true") # title slide on load
+        wait_for_js("document.getElementById('live-toggle').disabled === true") # title slide on load
         open_live_scroll_dialog
         within('#multiplex-info-modal') do
           expect(page).to have_button('🚀 Live-Scrollen starten', disabled: true)
-          expect(page).to have_css('#master-mode-hint', text: 'nur auf einem Lied')
+          expect(page).to have_css('#live-toggle-hint', text: 'nur auf einem Lied')
         end
         press(:escape)
-        expect(master_disabled_at.call(1)).to be true  # TOC
-        expect(master_disabled_at.call(2)).to be true  # Introduction (a stack; its slug sits on the first sub-slide)
-        expect(master_disabled_at.call(3)).to be false # the first song
+        expect(live_disabled_at.call(1)).to be true  # TOC
+        expect(live_disabled_at.call(2)).to be true  # Introduction (a stack; its slug sits on the first sub-slide)
+        expect(live_disabled_at.call(3)).to be false # the first song
         open_live_scroll_dialog
-        expect(page).to have_no_css('#master-mode-hint', visible: true)
+        expect(page).to have_no_css('#live-toggle-hint', visible: true)
         press(:escape)
-        expect(master_disabled_at.call(1)).to be true  # back off a song
+        expect(live_disabled_at.call(1)).to be true  # back off a song
       end
     end
 
@@ -992,20 +1054,27 @@ RSpec.describe 'index.html', :js, type: :feature do
       after { Capybara.reset_sessions! }
 
       it 'self-scroll: the room is snapped and locked, vertical moves propagate, the song is a wall, ending frees everyone' do
-        using_session(:client) do
+        secret = nil
+        using_session(:presenter) do
           load_presentation
+          log_in_as_host
+          secret = session_secret
+        end
+
+        using_session(:client) do
+          join_session(secret)
           expect(page).to have_css('section.deck-title-slide.present')
+          expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv') # connected
         end
 
         using_session(:presenter) do
-          load_presentation
           page.evaluate_script("Reveal.slide(3, 0)") # the first song
           wait_for_js("Reveal.getIndices().h === 3")
-          start_scroll_session(mode: :self)
-          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/, visible: :all)
+          start_live(mode: :self)
+          expect(page).to have_css('#live-toggle.live-active', text: /🚀\s+Live-Scrollen beenden/, visible: :all)
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
           expect(page).to have_css('#multiplex-status-button.multiplex-driving')
-          expect(page).not_to have_css('#multiplex-toast.visible', text: 'Es geht gleich los!') # the presenter announces to the room, not to itself
+          expect(page).not_to have_css('#multiplex-toast.visible', text: 'Es geht gleich los!') # the host announces to the room, not to itself
           # Locked to the song: 📖 would otherwise jump straight back to the TOC
           expect(page).to have_css('#go-to-toc', visible: false)
         end
@@ -1080,18 +1149,25 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(slide_indices).to eq([3, 1])
         end
 
-        # A reload mid-session restores the role on both sides: no password
-        # prompt again for the presenter, and no flash of free navigation for
-        # the client while waiting for the next heartbeat to re-establish it.
-        # The song (h) is guaranteed by the session restore itself; the exact
+        # The song book reopened mid-song restores the role on both sides,
+        # from the device's storage (the address carries no session): no
+        # password prompt again for the presenter, and no flash of free
+        # navigation for the client while waiting for the next heartbeat to
+        # re-establish it. The presenter comes back as a new tab would — the
+        # home screen's app restarted, say: a plain address, and a new sender
+        # id (sessionStorage is per tab), under which it names itself scroller
+        # again. The song (h) is guaranteed by the restore itself; the exact
         # sub-slide (v) depends on reveal.js's own hash write, which is
         # debounced up to a second behind rapid moves — not asserted here.
         using_session(:presenter) do
-          page.refresh
+          page.execute_script("sessionStorage.clear()")
+          visit FixtureBuilder::URL_PATH
           wait_for_reveal
-          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/, visible: :all)
+          expect(page).to have_css('#live-toggle.live-active', text: /🚀\s+Live-Scrollen beenden/, visible: :all)
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
+          wait_for_js("Reveal.getIndices().h === 3")
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
+          page.execute_script("window.MULTIPLEX.heartbeat = 200") # a new page: the spec's short heartbeat again
         end
         using_session(:client) do
           page.refresh
@@ -1103,16 +1179,27 @@ RSpec.describe 'index.html', :js, type: :feature do
           sleep 0.3
           expect(slide_indices).to eq(before)
         end
+        # And the room still follows the presenter under its new id
+        using_session(:presenter) do
+          find('body').send_keys(:down)
+          wait_for_js("Reveal.getIndices().v === 1")
+          expect(slide_indices).to eq([3, 1])
+        end
+        using_session(:client) do
+          wait_for_js("Reveal.getIndices().v === 1")
+          expect(slide_indices).to eq([3, 1])
+        end
 
         # Ending drops everyone back on the TOC, frees them, and shows the notice
         using_session(:presenter) do
-          press_master_mode('Live-Scrollen beenden')
-          expect(page).to have_no_css('#master-mode.session-active', visible: :all)
+          press_live('Live-Scrollen beenden')
+          expect(page).to have_no_css('#live-toggle.live-active', visible: :all)
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
           wait_for_js("Reveal.getIndices().h === 1") # sent to the table of contents
           expect(slide_indices).to eq([1, 0])
           expect(page).to have_link('Table of contents') # free again: 📖 is back
           expect(page).to have_no_css('#multiplex-status-button.multiplex-driving')
+          expect(page).to have_css('#multiplex-status', text: 'Du bist Gastgeber') # still, for the next song
         end
         using_session(:client) do
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
@@ -1130,15 +1217,23 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
 
       it 'guest-scroll: the first volunteer leads the room, is walled into the song, and is thanked when it starts and when it ends' do
+        secret = nil
+        using_session(:presenter) do
+          load_presentation
+          log_in_as_host
+          secret = session_secret
+        end
         [:guest_a, :guest_b].each do |s|
-          using_session(s) { load_presentation; expect(page).to have_css('section.deck-title-slide.present') }
+          using_session(s) do
+            join_session(secret)
+            expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv') # connected
+          end
         end
 
         using_session(:presenter) do
-          load_presentation
           page.evaluate_script("Reveal.slide(4, 0)") # Across the universe
           wait_for_js("Reveal.getIndices().h === 4")
-          start_scroll_session(mode: :guest)
+          start_live(mode: :guest)
           expect(page).to have_css('#multiplex-status', text: 'Warte auf Gast …')
           expect(page).to have_css('#multiplex-status-button.multiplex-waiting')
         end
@@ -1165,7 +1260,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
         using_session(:presenter) do
           expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
-          # Delegated to the guest: the presenter now follows too (ring, not dot)
+          # Handed to the guest: the presenter now follows too (ring, not dot)
           expect(page).to have_css('#multiplex-status-button.multiplex-following')
           # A quick heads-up that someone stepped up, instead of a silent status-line change
           expect(page).to have_css('#multiplex-toast.visible', text: 'Jemand hat sich bereit erklärt, es geht gleich los')
@@ -1187,7 +1282,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
 
         # A reload keeps the guest recognised as the same scroller — senderId
-        # is stable across a reload, so the presenter's session (still naming
+        # is stable across a reload, so the host's broadcast (still naming
         # that id) locks this tab back in immediately, not just a stray follower.
         # Only h is asserted: v depends on reveal.js's own debounced hash write.
         using_session(:guest_a) do
@@ -1202,7 +1297,7 @@ RSpec.describe 'index.html', :js, type: :feature do
 
         # Ending thanks the guest, frees the room, and sends everyone to the TOC
         using_session(:presenter) do
-          press_master_mode('Live-Scrollen beenden')
+          press_live('Live-Scrollen beenden')
           wait_for_js("Reveal.getIndices().h === 1")
           expect(slide_indices).to eq([1, 0])
         end
@@ -1220,85 +1315,233 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
       end
 
+      it 'another device takes the host role over: the old host steps down but keeps scrolling, and the new host ends the song' do
+        secret = nil
+        using_session(:josua) do
+          load_presentation
+          log_in_as_host
+          secret = session_secret
+        end
+        using_session(:monika) do
+          join_session(secret)
+          expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv') # connected
+        end
+        using_session(:josua) do
+          page.evaluate_script("Reveal.slide(3, 0)")
+          wait_for_js("Reveal.getIndices().h === 3")
+          start_live(mode: :self)
+          expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
+        end
+
+        using_session(:monika) do
+          expect(page).to have_css('#multiplex-status', text: 'Folgt')
+          # Her phone's clock runs an hour behind Josua's. The takeover wins
+          # all the same: its claim is above every claim heard in the session.
+          page.execute_script("var realNow = Date.now; Date.now = function() { return realNow() - 3600000; };")
+          log_in_as_host(label: 'Gastgeber übernehmen')
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Du bist jetzt Gastgeber')
+          expect(session_secret).to eq(secret) # the same session, not a new one
+          # The song carries on as it was: Josua still scrolls it
+          expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
+          expect(page).to have_css('#live-toggle.live-active', text: /🚀\s+Live-Scrollen beenden/, visible: :all)
+        end
+
+        using_session(:josua) do
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Jemand anderes ist jetzt Gastgeber')
+          expect(page).to have_css('#multiplex-status', text: 'Du scrollst für alle')
+          open_live_scroll_dialog
+          within('#multiplex-info-modal') do
+            expect(page).to have_no_button('🚀 Live-Scrollen beenden')
+            expect(page).to have_no_button('🏁 Session beenden')
+            expect(page).to have_button('🔗 QR-Code zeigen') # still in the session
+            expect(page).to have_button('🔑 Gastgeber übernehmen') # and may take it back
+          end
+          press(:escape)
+          find('body').send_keys(:down)
+          wait_for_js("Reveal.getIndices().v === 1")
+        end
+        using_session(:monika) do
+          wait_for_js("Reveal.getIndices().v === 1") # following Josua
+          expect(slide_indices).to eq([3, 1])
+          press_live('Live-Scrollen beenden')
+          wait_for_js("Reveal.getIndices().h === 1")
+          expect(slide_indices).to eq([1, 0])
+        end
+        using_session(:josua) do
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Vielen Dank fürs Scrollen!')
+          wait_for_js("Reveal.getIndices().h === 1")
+          expect(slide_indices).to eq([1, 0])
+          expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv')
+        end
+      end
+
+      it 'keeps two sessions apart and a plain visitor out of both; 🏁 sends a session home, 🚪 lets a guest out' do
+        secret_a = secret_b = nil
+        using_session(:host_a) do
+          load_presentation
+          log_in_as_host
+          secret_a = session_secret
+        end
+        using_session(:host_b) do
+          load_presentation
+          log_in_as_host
+          secret_b = session_secret
+        end
+        expect(secret_b).not_to eq(secret_a)
+        using_session(:client_a) do
+          join_session(secret_a)
+          expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv') # connected
+        end
+        using_session(:client_b) do
+          join_session(secret_b)
+          expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv')
+        end
+        using_session(:visitor) do
+          load_presentation
+          expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+        end
+
+        using_session(:host_b) do
+          page.evaluate_script("Reveal.slide(4, 0)")
+          wait_for_js("Reveal.getIndices().h === 4")
+          start_live(mode: :self)
+        end
+        # The control: B's own client follows. By then A's would have too.
+        using_session(:client_b) do
+          wait_for_js("Reveal.getIndices().h === 4")
+          expect(page).to have_css('#multiplex-status', text: 'Folgt')
+        end
+        using_session(:client_a) do
+          expect(slide_indices).to eq([0, 0])
+          expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv')
+        end
+        using_session(:visitor) { expect(slide_indices).to eq([0, 0]) }
+        using_session(:host_a) do
+          # Not stepped down by a host of another session
+          expect(page).to have_css('#multiplex-status', text: 'Du bist Gastgeber')
+          page.evaluate_script("Reveal.slide(3, 0)")
+          wait_for_js("Reveal.getIndices().h === 3")
+          start_live(mode: :self)
+          open_live_scroll_dialog
+          within('#multiplex-info-modal') { click_button('🏁 Session beenden') }
+          expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+        end
+        # Ending a session mid-song frees its devices, takes them to the TOC
+        # and out of the session: the address loses ?live=
+        using_session(:client_a) do
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Die Session ist beendet')
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
+          expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+          expect(session_secret).to be_nil
+          wait_for_js("Reveal.getIndices().h === 1")
+          expect(slide_indices).to eq([1, 0])
+        end
+        using_session(:client_b) do
+          expect(page).to have_css('#multiplex-status', text: 'Folgt') # the other session runs on
+          expect(session_secret).to eq(secret_b)
+
+          # A guest may leave of its own accord, even mid-song: free where it stands
+          open_live_scroll_dialog
+          within('#multiplex-info-modal') do
+            expect(page).to have_no_button('🏁 Session beenden') # the host's
+            click_button('🚪 Session verlassen')
+          end
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Du hast die Session verlassen')
+          expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+          expect(session_secret).to be_nil
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
+          press(:right)
+          wait_for_js("Reveal.getIndices().h === 5")
+          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(5)
+        end
+        using_session(:host_b) do
+          open_live_scroll_dialog
+          within('#multiplex-info-modal') { expect(page).to have_no_button('🚪 Session verlassen') } # the host ends it instead
+        end
+      end
+
       it 'a guest who volunteers but loses the race is told someone else is already scrolling' do
         using_session(:guest) do
-          load_presentation
+          join_session('spec-race')
           page.evaluate_script("Reveal.slide(4, 0)") # Across the universe
           wait_for_js("Reveal.getIndices().h === 4")
           install_spy
-          spy_send_session({ id: 'spy-1', active: true, song: 4, songTitle: 'Across the universe', mode: 'guest', scrollerId: nil }, fresh: true)
+          spy_send_host({ id: 'spy-1', song: 4, songTitle: 'Across the universe', mode: 'guest', scrollerId: nil }, fresh: true)
           expect(page).to have_visible('#guest-invite-modal')
 
           within('#guest-invite-modal') { click_button('Ja, ich scrolle') }
           expect(page).not_to have_visible('#guest-invite-modal')
 
-          spy_send_session({ id: 'spy-1', active: true, song: 4, songTitle: 'Across the universe', mode: 'guest', scrollerId: 'someone-else' })
+          spy_send_host({ id: 'spy-1', song: 4, songTitle: 'Across the universe', mode: 'guest', scrollerId: 'someone-else' })
           expect(page).to have_css('#multiplex-toast.visible', text: 'Oh, das wäre nett gewesen – aber jemand anderes scrollt bereits!')
           expect(page).to have_css('#multiplex-status', text: 'Folgt') # the room still runs; this guest just isn't the one scrolling
         end
       end
 
-      it 'the presenter stays in the session after handing off, before the guest has sent any state' do
+      it 'the host stays in the live scroll after handing off, before the guest has sent any state' do
         using_session(:presenter) do
           load_presentation
+          log_in_as_host(heartbeat: 3000)
           page.evaluate_script("Reveal.slide(4, 0)") # Across the universe
           wait_for_js("Reveal.getIndices().h === 4")
           install_phantom_guest
           wait_for_js("window._phantom && window._phantom.connected")
 
-          start_scroll_session(mode: :guest, heartbeat: 3000)
+          start_live(mode: :guest)
           expect(page).to have_css('#multiplex-status', text: 'Warte auf Gast …')
 
-          # The guest takes over but sends no state yet. The presenter becomes a
-          # follower and must stay in the session — it used to free itself at the
-          # next release tick, because at hand-off its own lastSessionAt was still 0.
-          wait_for_js("window._phantom.sessionId !== null")
+          # The guest takes over but sends no state yet. The host becomes a
+          # follower and must stay in the live scroll — it used to free itself
+          # at the next release tick, because at hand-off its own lastSessionAt
+          # was still 0.
+          wait_for_js("window._phantom.liveId !== null")
           page.execute_script("window._phantomVolunteer()")
           expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
           sleep 0.8 # well past the 500ms release-checker tick
-          expect(page).to have_css('#master-mode.session-active', visible: :all)
+          expect(page).to have_css('#live-toggle.live-active', visible: :all)
           expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
         end
       end
 
-      it 'the presenter keeps the ability to end the session even if the delegated guest goes silent for a while' do
+      it 'the host keeps the ability to end the live scroll even if the guest it handed off to goes silent for a while' do
         using_session(:presenter) do
           load_presentation
-          page.evaluate_script("Reveal.slide(4, 0)") # Across the universe
-          wait_for_js("Reveal.getIndices().h === 4")
-          install_phantom_guest
-          wait_for_js("window._phantom && window._phantom.connected")
-
           # heartbeat: 300, not the usual fast 100/200ms other specs use: the
           # release-checker ticks on a fixed 500ms, independent of cfg.heartbeat
           # (see body-controls.html) — a staleness threshold shorter than that
           # tick (3 * 100 = 300ms < 500ms) can never be observed as "fresh"
           # again, since by the time the next tick runs more than 300ms has
           # always already passed. 3 * 300 = 900ms comfortably clears it.
-          start_scroll_session(mode: :guest, heartbeat: 300)
-          wait_for_js("window._phantom.sessionId !== null")
+          log_in_as_host(heartbeat: 300)
+          page.evaluate_script("Reveal.slide(4, 0)") # Across the universe
+          wait_for_js("Reveal.getIndices().h === 4")
+          install_phantom_guest
+          wait_for_js("window._phantom && window._phantom.connected")
+
+          start_live(mode: :guest)
+          wait_for_js("window._phantom.liveId !== null")
           page.execute_script("window._phantomVolunteer()")
           expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
 
           # The phantom guest never sends any state at all. Past three missed
           # heartbeats (900ms here) an ordinary follower frees itself — and
-          # before the presenter was exempted from that, so did the presenter:
-          # the ❌ vanished and 🚀 reverted to "Live-Scrollen starten", even
-          # though the guest — and everyone else still locked to it — carried
-          # on regardless. A flaky connection to the guest must not cost the
-          # presenter its own ability to end the session.
+          # before the host was exempted from that, so did the host: the ❌
+          # vanished and 🚀 reverted to "Live-Scrollen starten", even though
+          # the guest — and everyone else still locked to it — carried on
+          # regardless. A flaky connection to the guest must not cost the
+          # host its own ability to end the live scroll.
           sleep 1.1
-          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/, visible: :all)
+          expect(page).to have_css('#live-toggle.live-active', text: /🚀\s+Live-Scrollen beenden/, visible: :all)
           # Told why the view has stopped moving, instead of silently wondering
           expect(page).to have_css('#multiplex-toast.visible',
-            text: 'Keine Rückmeldung vom Gast mehr – du kannst die Sitzung bei Bedarf beenden')
+            text: 'Keine Rückmeldung mehr vom scrollenden Gerät – du kannst das Live-Scrollen bei Bedarf beenden')
 
           # The guest comes back: told so, once
           page.execute_script("window._phantomState()")
-          expect(page).to have_css('#multiplex-toast.visible', text: 'Der Gast ist wieder verbunden')
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Das scrollende Gerät ist wieder verbunden')
 
-          press_master_mode('Live-Scrollen beenden')
-          expect(page).to have_no_css('#master-mode.session-active', visible: :all)
+          press_live('Live-Scrollen beenden')
+          expect(page).to have_no_css('#live-toggle.live-active', visible: :all)
           wait_for_js("Reveal.getIndices().h === 1")
           expect(slide_indices).to eq([1, 0])
         end
@@ -1307,9 +1550,10 @@ RSpec.describe 'index.html', :js, type: :feature do
       it 'shows a toast when the connection drops and when it comes back, on top of the persistent status line' do
         using_session(:presenter) do
           load_presentation
+          log_in_as_host
           page.evaluate_script("Reveal.slide(3, 0)")
           wait_for_js("Reveal.getIndices().h === 3")
-          start_scroll_session(mode: :self)
+          start_live(mode: :self)
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
 
           # window.MULTIPLEX.socket is a seam for exactly this: Chrome's CDP
@@ -1328,44 +1572,53 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
       end
 
-      it 'ending a session repeats the broadcast, so one dropped packet does not strand the room' do
+      it 'repeats the end of a live scroll on every heartbeat, and the end of the session twice more, so one dropped packet strands nobody' do
         using_session(:presenter) do
           load_presentation
+          log_in_as_host
           page.evaluate_script("Reveal.slide(4, 0)") # Across the universe
           wait_for_js("Reveal.getIndices().h === 4")
-          start_scroll_session(mode: :self)
+          start_live(mode: :self)
           install_spy
           page.execute_script(<<~JS)
-            window._endMessages = [];
+            window._liveEnded = 0;
+            window._sessionEnded = 0;
             window._spy.on(window.MULTIPLEX.socketId, function(data) {
-              if (data && data.type === 'session' && data.session && data.session.active === false) {
-                window._endMessages.push(Date.now());
-              }
+              if (data && data.type === 'host' && data.live === null) window._liveEnded++;
+              if (data && data.type === 'end') window._sessionEnded++;
             });
           JS
 
-          press_master_mode('Live-Scrollen beenden')
-          sleep 1.2 # past the retries' 1s spread
-          expect(page.evaluate_script('window._endMessages.length')).to be >= 2
+          press_live('Live-Scrollen beenden')
+          wait_for_js("window._liveEnded >= 3") # the heartbeat is 200ms here
+          expect(page.evaluate_script('window._liveEnded')).to be >= 3
+
+          open_live_scroll_dialog
+          within('#multiplex-info-modal') { click_button('🏁 Session beenden') }
+          wait_for_js("window._sessionEnded >= 3") # now, and again over the next second
+          expect(page.evaluate_script('window._sessionEnded')).to be >= 3
         end
       end
 
-      it 'a device that joins mid-session follows straight away, without an invite' do
+      it 'a device that joins mid-song follows straight away, without an invite' do
+        secret = nil
         using_session(:presenter) do
           load_presentation
+          log_in_as_host
+          secret = session_secret
           page.evaluate_script("Reveal.slide(5, 0)") # I Have a Dream
           wait_for_js("Reveal.getIndices().h === 5")
-          start_scroll_session(mode: :self)
+          start_live(mode: :self)
           find('body').send_keys(:down)
           wait_for_js("Reveal.getIndices().v === 1")
         end
 
         using_session(:latecomer) do
-          load_presentation
+          join_session(secret)
           wait_for_js("Reveal.getIndices().h === 5 && Reveal.getIndices().v === 1", timeout: 5)
           expect(slide_indices).to eq([5, 1])
           expect(page).not_to have_visible('#guest-invite-modal')
-          expect(page).not_to have_css('#multiplex-toast.visible', text: 'Es geht gleich los!') # joined mid-session: no announcement
+          expect(page).not_to have_css('#multiplex-toast.visible', text: 'Es geht gleich los!') # joined mid-song: no announcement
           expect(page).to have_css('#multiplex-status', text: 'Folgt')
         end
       end
@@ -1381,10 +1634,10 @@ RSpec.describe 'index.html', :js, type: :feature do
         find('#multiplex-status-button').click
         expect(page).to have_visible('#multiplex-info-modal')
         expect(active_element_id).to eq('multiplex-info-title')
-        expect(page).to have_css('#multiplex-info-status', text: 'Kein Live-Scrollen aktiv')
-        within('#multiplex-info-modal') do # what used to be corner buttons of their own
-          expect(page).to have_button('🚀 Live-Scrollen starten', disabled: :all)
-          expect(page).to have_button('🔗 QR-Code zeigen')
+        expect(page).to have_css('#multiplex-info-status', text: 'Keine Session')
+        within('#multiplex-info-modal') do # outside a session, only the way in
+          expect(page).to have_button('🔑 Als Gastgeber anmelden')
+          expect(page).to have_no_button('🔗 QR-Code zeigen')
         end
 
         # Reveal listens on the document: nothing pressed inside the dialog reaches it
@@ -1430,7 +1683,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           JS
         )
       end
-      before { load_presentation }
+      before { join_session('spec-qr') } # anyone in a session may show its code, not only the host
 
       # 🔗 sits in the 📡 dialog, which closes as the QR opens
       def open_qr
@@ -1439,7 +1692,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).not_to have_visible('#multiplex-info-modal')
       end
 
-      it 'keeps the keys to itself, and closes on Esc, close button and outside click' do
+      it 'carries the session, keeps the keys to itself, and closes on Esc, close button and outside click' do
         expect(page).not_to have_visible('#qr-modal')
         expect(page).to have_css('#show-qr[aria-haspopup="dialog"]', visible: :all)
         # A corner button's label is its tooltip, on hover
@@ -1450,7 +1703,8 @@ RSpec.describe 'index.html', :js, type: :feature do
         open_qr
         expect(page).to have_visible('#qr-modal')
         expect(active_element_id).to eq('qr-title')
-        expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"]', visible: :all)
+        # Whoever scans it is in the session, and shows their own code right away
+        expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"][alt$="?live=spec-qr&qr=1"]', visible: :all)
 
         # Wide viewports (this spec's default window is 1280x800, past the
         # 769px breakpoint night.css switches on): the QR sits beside the text
@@ -1508,15 +1762,37 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
 
     describe 'QR modal, joined via a scanned code' do
-      it 'shows its own QR right away, with the join marker stripped from the address bar' do
-        visit FixtureBuilder::URL_PATH + '?qr=1'
+      it 'shows its own QR right away, keeps the session on the device instead of the address, and forgets it after twelve silent hours' do
+        visit FixtureBuilder::URL_PATH + '?live=spec-qr&qr=1'
         wait_for_reveal
         expect(page).to have_visible('#qr-modal')
         expect(active_element_id).to eq('qr-title')
-        # The marker is re-added to the freshly generated code (so the chain of
-        # scans keeps going), but removed from the address bar itself.
-        expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"][alt$="?qr=1"]', visible: :all)
+        # The session and the marker are put into the freshly generated code
+        # (so the chain of scans keeps going), but removed from the address
+        # bar itself: the session is in the device's storage now.
+        expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"][alt$="?live=spec-qr&qr=1"]', visible: :all)
+        wait_for_js("window.location.search === ''")
         expect(page.evaluate_script('window.location.search')).to eq('')
+        expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv') # in the session
+        expect(session_secret).to eq('spec-qr')
+
+        # Nobody hosts this one, so nothing keeps it alive: eleven hours since
+        # it was last heard of, it is still this evening's…
+        age = ->(hours) { page.execute_script(<<~JS) }
+          var s = JSON.parse(localStorage.getItem('multiplex-session'));
+          s.seenAt = Date.now() - #{hours} * 3600 * 1000;
+          localStorage.setItem('multiplex-session', JSON.stringify(s));
+        JS
+        age.call(11)
+        page.refresh
+        wait_for_reveal
+        expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv')
+        # …thirteen hours, and it is a past evening, forgotten
+        age.call(13)
+        page.refresh
+        wait_for_reveal
+        expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+        expect(session_secret).to be_nil
       end
     end
 
