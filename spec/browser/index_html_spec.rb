@@ -174,6 +174,30 @@ RSpec.describe 'index.html', :js, type: :feature do
     JS
   end
 
+  def center_of(selector)
+    page.evaluate_script(<<~JS)
+      (function(r) { return [r.left + r.width / 2, r.top + r.height / 2]; })(document.querySelector(#{selector.to_json}).getBoundingClientRect())
+    JS
+  end
+
+  # A finger dragged +dy+ px down (negative: up) from the middle of +selector+.
+  # Unlike `swipe`, real touches through Chrome's input pipeline (CDP), for
+  # what the browser itself does with them: scroll the page, hit-test, click.
+  def finger_swipe(selector, dy)
+    x, y = center_of(selector)
+    cdp = page.driver.browser.page
+    cdp.command('Input.dispatchTouchEvent', type: 'touchStart', touchPoints: [{ x: x, y: y }])
+    (1..10).each { |i| cdp.command('Input.dispatchTouchEvent', type: 'touchMove', touchPoints: [{ x: x, y: y + dy * i / 10.0 }]) }
+    cdp.command('Input.dispatchTouchEvent', type: 'touchEnd', touchPoints: [])
+  end
+
+  # A finger's tap at (+x+, +y+), the same way
+  def finger_tap(x, y)
+    cdp = page.driver.browser.page
+    cdp.command('Input.dispatchTouchEvent', type: 'touchStart', touchPoints: [{ x: x, y: y }])
+    cdp.command('Input.dispatchTouchEvent', type: 'touchEnd', touchPoints: [])
+  end
+
   # -----------------------------------------------------------------------
   # Structure & initial state
   # -----------------------------------------------------------------------
@@ -336,6 +360,98 @@ RSpec.describe 'index.html', :js, type: :feature do
       find('.reveal .controls .navigate-right').click
       wait_for_js("Reveal.getIndices().h === 3")
       expect(slide_indices).to eq([3, 0])
+    end
+  end
+
+  # -----------------------------------------------------------------------
+  # Fading controls
+  # -----------------------------------------------------------------------
+  describe 'fading controls' do
+    # Everywhere else they stay (CONTROLS_STAY, spec_helper.rb); here they
+    # fade, sooner than for real, and at once rather than over a second
+    before do
+      page.driver.browser.page.command('Page.addScriptToEvaluateOnNewDocument',
+                                       source: 'window.CONTROLS_STAY = false; window.CONTROLS_MS = { first: 1500, again: 600 };')
+      load_presentation
+      page.execute_script(<<~JS)
+        var style = document.createElement('style');
+        style.textContent = '.ctrl, .reveal .controls { transition: none !important }';
+        document.head.appendChild(style);
+      JS
+    end
+
+    def idle?
+      page.evaluate_script("document.body.classList.contains('controls-idle')")
+    end
+
+    # Faded out: the class comes after the delay, the opacity after its fade
+    def wait_until_idle
+      wait_for_js("document.body.classList.contains('controls-idle')", timeout: 4)
+      expect(page).to have_no_css('#open-settings')
+    end
+
+    it 'shows them with their labels at first, fades them out, and brings them back on a tap anywhere, a moving mouse or the focus, but not on a swipe or a tap on a chord' do
+      # At first with their labels, to say what they are
+      expect(page).to have_visible('#open-settings')
+      expect(tooltip_shown?('go-to-toc')).to be true
+      expect(tooltip_shown?('open-settings')).to be true
+
+      # Then they fade, the chevrons with them, and the labels are gone for good
+      wait_until_idle
+      expect(page).to have_no_css('#go-to-toc')
+      expect(page).to have_no_css('.reveal .controls')
+      expect(tooltip_shown?('go-to-toc')).to be false
+
+      # A tap where ⚙️ was only brings them back: faded, it lets the tap
+      # through to the slide. The next one opens it.
+      x, y = center_of('#open-settings')
+      finger_tap(x, y)
+      expect(page).to have_visible('#open-settings')
+      expect(page).not_to have_visible('#settings-modal')
+      expect(tooltip_shown?('go-to-toc')).to be false
+      finger_tap(x, y)
+      expect(page).to have_visible('#settings-modal')
+      click_button('Schliessen')
+      page.execute_script('document.activeElement.blur()') # back on ⚙️, which would keep it up
+
+      # A swipe doesn't: it pages, and they would be up on every slide
+      wait_until_idle
+      page.execute_script('Reveal.slide(2, 0)')
+      finger_swipe('.reveal', -200)
+      wait_for_js('Reveal.getIndices().v === 1')
+      expect(idle?).to be true
+
+      # A mouse that moves does
+      page.driver.browser.mouse.move(x: 600, y: 400)
+      page.driver.browser.mouse.move(x: 620, y: 420)
+      expect(page).to have_visible('#open-settings')
+      expect(page).to have_visible('.reveal .controls')
+
+      # 📡 stays while its connection is down, or nobody would notice
+      wait_until_idle
+      expect(page).to have_no_css('#multiplex-status-button')
+      page.execute_script("document.getElementById('multiplex-status-button').classList.add('multiplex-disconnected')")
+      expect(page).to have_visible('#multiplex-status-button')
+      page.execute_script("document.getElementById('multiplex-status-button').classList.remove('multiplex-disconnected')")
+
+      # The keyboard's focus brings them back, and keeps its own one up.
+      # Shift+Tab: back from ⚙️, where the focus was last
+      expect(page).to have_no_css('#multiplex-status-button')
+      press([:shift, :tab])
+      expect(active_element_id).to eq('multiplex-status-button')
+      expect(idle?).to be false
+      wait_until_idle
+      expect(page).to have_visible('#multiplex-status-button')
+
+      # A tap that does something of its own doesn't bring them back: one on
+      # a chord, for its fingering, and the one elsewhere that closes it again
+      go_to_first_song
+      x, y = center_of('section.present button.chord')
+      finger_tap(x, y)
+      expect(page).to have_css('#chord-tooltip.visible')
+      finger_tap(640, 700) # below the fingering, which is large
+      expect(page).to have_no_css('#chord-tooltip.visible')
+      expect(idle?).to be true
     end
   end
 
@@ -786,19 +902,6 @@ RSpec.describe 'index.html', :js, type: :feature do
     # How far +selector+'s bottom edge sits above the window's
     def bottom_gap(selector)
       page.evaluate_script("innerHeight - document.querySelector(#{selector.to_json}).getBoundingClientRect().bottom")
-    end
-
-    # A finger dragged +dy+ px down (negative: up) from the middle of +selector+.
-    # Unlike `swipe`, real touches through Chrome's input pipeline (CDP), since
-    # what's under test is whether the browser scrolls the page.
-    def finger_swipe(selector, dy)
-      x, y = page.evaluate_script(<<~JS)
-        (function(r) { return [r.left + r.width / 2, r.top + r.height / 2]; })(document.querySelector(#{selector.to_json}).getBoundingClientRect())
-      JS
-      cdp = page.driver.browser.page
-      cdp.command('Input.dispatchTouchEvent', type: 'touchStart', touchPoints: [{ x: x, y: y }])
-      (1..10).each { |i| cdp.command('Input.dispatchTouchEvent', type: 'touchMove', touchPoints: [{ x: x, y: y + dy * i / 10.0 }]) }
-      cdp.command('Input.dispatchTouchEvent', type: 'touchEnd', touchPoints: [])
     end
 
     it 'uses the Fullscreen API where there is one, and leaves it again on a second press' do

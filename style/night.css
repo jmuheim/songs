@@ -1,15 +1,19 @@
+/* The group lets a tap through, only its buttons take one: faded out, they
+   don't either (controls-idle, below). */
 .controls-group {
   position: fixed;
   z-index: 100;
   display: flex;
   align-items: center;
   gap: 0.75em;
+  pointer-events: none;
 }
 
 /* The controls wear the same pill as the TOC tag chips (.toc-tag): a rounded
    border over the page background. */
 .ctrl {
   position: relative;
+  pointer-events: auto;
   display: inline-flex;
   align-items: center;
   opacity: 0.75;
@@ -36,10 +40,12 @@
   display: none;
 }
 
-/* The label, shown as a tooltip (body-controls.html says when). A transparent
+/* The label, shown as a tooltip (body-controls.html says when), and on every
+   button the first time they show (controls-intro, see below). A transparent
    top border bridges the gap to the button, so the pointer can move onto it. */
 .ctrl.tooltip-hover:not(.tooltip-dismissed) > .visually-hidden,
-.ctrl:focus-visible:not(.tooltip-dismissed) > .visually-hidden {
+.ctrl:focus-visible:not(.tooltip-dismissed) > .visually-hidden,
+body.controls-intro .ctrl > .visually-hidden {
   top: 100%;
   width: auto;
   height: auto;
@@ -70,7 +76,8 @@
 #bottom-left-controls .ctrl.tooltip-hover:not(.tooltip-dismissed) > .visually-hidden,
 #bottom-left-controls .ctrl:focus-visible:not(.tooltip-dismissed) > .visually-hidden,
 #bottom-right-controls .ctrl.tooltip-hover:not(.tooltip-dismissed) > .visually-hidden,
-#bottom-right-controls .ctrl:focus-visible:not(.tooltip-dismissed) > .visually-hidden {
+#bottom-right-controls .ctrl:focus-visible:not(.tooltip-dismissed) > .visually-hidden,
+body.controls-intro .controls-bottom .ctrl > .visually-hidden {
   top: auto;
   bottom: 100%;
   border-top: none;
@@ -80,6 +87,27 @@
 body.theme-bright .ctrl > .visually-hidden {
   background-color: #f4f4f4;
   color: #333;
+}
+
+/* A few seconds after they last showed, the buttons and the chevrons fade
+   out (body-controls.html), slowly, and come back quickly. Faded, they let a
+   tap through to the slide, which brings them back. One the mouse is on, or
+   the keyboard's focus, stays; so does 📡 while its connection is down, or
+   nobody would notice. */
+.ctrl,
+.reveal .controls {
+  transition: opacity 0.2s ease;
+}
+
+body.controls-idle .ctrl:not(.tooltip-hover, :focus-visible, .multiplex-disconnected),
+body.controls-idle .reveal .controls {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+}
+
+body.controls-idle .reveal .controls button {
+  pointer-events: none;
 }
 
 /* The button too, not just its pill: an empty chord button would still be a

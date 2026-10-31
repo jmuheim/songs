@@ -222,8 +222,10 @@
   (function() {
     var hoverable = window.matchMedia('(hover: hover)');
     Array.prototype.forEach.call(document.querySelectorAll('.ctrl'), function(ctrl) {
-      ctrl.addEventListener('mouseenter', function() { if (hoverable.matches) ctrl.classList.add('tooltip-hover'); });
-      ctrl.addEventListener('mouseleave', function() { ctrl.classList.remove('tooltip-hover', 'tooltip-dismissed'); });
+      // A mouse's, not the one a browser makes up after a tap: on a touch
+      // screen that hovers too, it never left, and held the button up
+      ctrl.addEventListener('pointerenter', function(e) { if (hoverable.matches && e.pointerType === 'mouse') ctrl.classList.add('tooltip-hover'); });
+      ctrl.addEventListener('pointerleave', function() { ctrl.classList.remove('tooltip-hover', 'tooltip-dismissed'); });
       ctrl.addEventListener('blur', function() { ctrl.classList.remove('tooltip-dismissed'); });
     });
     document.addEventListener('keydown', function(e) {
@@ -232,6 +234,56 @@
       shown.classList.add('tooltip-dismissed');
       if (e.key === 'Escape') { e.stopPropagation(); e.preventDefault(); }
     }, true);
+  })();
+
+  // The corner buttons, and a desktop's chevrons, fade out a few seconds after
+  // the page loads, the first time with their labels shown. A tap anywhere, a
+  // mouse that moves or the keyboard's focus on one brings them back, to fade
+  // again (night.css). A swipe or a key that pages doesn't: they would be up
+  // on every slide. Nor does a tap that does something of its own, on a
+  // chord, a link or the TOC's filter, or one that closes a chord's fingering
+  // (chords.js closes it on any click). Faded, they let a tap through to the
+  // slide, so one on an invisible ⚙️ only brings them back.
+  (function() {
+    if (window.CONTROLS_STAY) return; // the specs, but the one about this
+    var ms = window.CONTROLS_MS || { first: 5000, again: 3000 }; // which shortens these
+    var ACTS = 'a, button, select, input, label, #chord-tooltip';
+    var body = document.body, timer = null, down = null, downOn = null, acts = false, mouse = null;
+    function wake(delay) {
+      body.classList.remove('controls-idle');
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        body.classList.remove('controls-intro');
+        body.classList.add('controls-idle');
+      }, delay || ms.again);
+    }
+    body.classList.add('controls-intro');
+    wake(ms.first);
+    // Capture phase, on window: before Reveal or a live scroll's swipe guard
+    window.addEventListener('pointerdown', function(e) {
+      down = { x: e.clientX, y: e.clientY };
+      downOn = e.target;
+      acts = !!(e.target.closest(ACTS) || document.querySelector('#chord-tooltip.visible'));
+    }, true);
+    window.addEventListener('pointerup', function(e) {
+      var tap = down && Math.abs(e.clientX - down.x) < 10 && Math.abs(e.clientY - down.y) < 10;
+      if ((tap || e.pointerType === 'mouse') && !acts) wake();
+      down = null;
+    }, true);
+    // The tap that brings them back mustn't press the one it landed on: the
+    // browser picks the click's target only after pointerup, when that one is
+    // back. So a click on a button the pointer didn't come down on is dropped.
+    window.addEventListener('click', function(e) {
+      var ctrl = e.detail > 0 && e.target.closest('.ctrl, .reveal .controls');
+      if (ctrl && downOn && !ctrl.contains(downOn)) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+    // A mouse that moved, not one Chrome reports again as the page moves under it
+    window.addEventListener('pointermove', function(e) {
+      if (e.pointerType !== 'mouse') return;
+      if (mouse && (mouse.x !== e.screenX || mouse.y !== e.screenY)) wake();
+      mouse = { x: e.screenX, y: e.screenY };
+    }, true);
+    document.addEventListener('focusin', function(e) { if (e.target.closest('.controls-group')) wake(); });
   })();
 </script>
 

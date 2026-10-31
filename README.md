@@ -10,6 +10,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - Colour-coded chords (each root letter gets its own colour)
 - Each song slide ends on a small „Next: …" preview of the next slide's heading and first line (or „Ende des Lieds" on the last one), fading in a few seconds after the slide appears, so whoever scrolls can read ahead
 - Dark/bright theme and chord visibility, both in the ⚙️ Settings dialog
+- The four corner buttons (📖 ↕️ 📡 ⚙️) fade out a few seconds after the page opens, the first time with their labels. Tap anywhere, move the mouse or tab to one to bring them back; a swipe doesn't, nor does a tap on a chord. 📡 stays while its connection is down
 - Full screen with ↕️, top right, and back with another press. On an iPhone, where Safari has no full-screen mode for a web page, it asks for one swipe down instead: that makes Safari hide its bars, and they stay hidden while you page through the songs. Added to the home screen (Share › „Add to Home Screen"), the song book opens without any bars at all
 - Tag songs (language, genre, …) and filter the table of contents by tag
 - **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)
@@ -84,6 +85,8 @@ Each evening is a **session** of its own. Whoever leads it taps 📡 › 🔑 �
 | ↕️ | Top right | Full screen, and back |
 | 📡 | Bottom left | Live scrolling: a badge shows your connection/role at a glance; tap for the details, the login, 🚀 and 🔗 |
 | ⚙️ | Bottom right | Settings — theme, chord visibility |
+
+They fade out while they aren't needed: tap anywhere to bring them back.
 
 In the 📡 dialog:
 

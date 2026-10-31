@@ -52,7 +52,12 @@ Capybara.register_driver(:cuprite) do |app|
     # reddened an otherwise-green run, blocking the deploy. 30s absorbs that; it
     # only bounds the browser launch, so it costs nothing on a fast local start.
     process_timeout: 30,
-    browser_options: { 'no-sandbox': nil }
+    browser_options: { 'no-sandbox': nil },
+    # The corner buttons fade out a few seconds after a page loads
+    # (body-controls.html), and Cuprite counts a faded one as invisible. In the
+    # specs they stay, on every page of every session; the spec of the fading
+    # turns it back on (`fading_controls`).
+    extensions: [{ source: 'window.CONTROLS_STAY = true;' }]
   )
 end
 
