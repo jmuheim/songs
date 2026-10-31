@@ -183,6 +183,7 @@
         runway.hidden = true;
         runway.classList.remove('runway-succeeded', 'runway-done');
         root.classList.remove('fullscreen-runway');
+        root.style.removeProperty('--runway-lift');
         window.scrollTo(0, 0);
         if (wasOpen) button.focus({ preventScroll: true });
       }
@@ -191,6 +192,10 @@
         if (window.innerWidth !== base.w) reset();
         else if (state === 'open' && barsHidden()) succeed();
         else if (state === 'kept' && !barsHidden()) reset();
+        // A tap where Safari's bottom bar was brings the bars back: the bottom
+        // corners rise out of there, by as much as the window grew (night.css).
+        // Measurable is only the top and bottom bars together, so a bit more.
+        if (state === 'kept') root.style.setProperty('--runway-lift', (window.innerHeight - base.h) + 'px');
       }
 
       button.addEventListener('click', function() { if (state === 'off') open(); else reset(); });

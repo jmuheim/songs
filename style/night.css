@@ -229,13 +229,17 @@ body.theme-bright #toc-filter {
   right: 1em;
 }
 
+/* --runway-lift: in the iPhone's Vollbild, a tap in the strip Safari's bottom
+   bar left behind brings the bars back, and the button there never hears it.
+   So the bottom corners rise by as much as the window grew (body-controls.html
+   sets it). */
 #bottom-left-controls {
-  bottom: 1em;
+  bottom: calc(1em + var(--runway-lift, 0px));
   left: 1em;
 }
 
 #bottom-right-controls {
-  bottom: 1em;
+  bottom: calc(1em + var(--runway-lift, 0px));
   right: 1em;
 }
 
@@ -285,7 +289,7 @@ section.level2 > .slide-content {
    file): lift the bottom controls clear of it so a toast's text never
    overlaps the rocket or the multiplex lamp. */
 #multiplex-toast.visible ~ .controls-bottom {
-  bottom: 4.5em;
+  bottom: max(4.5em, 1em + var(--runway-lift, 0px));
   transition: bottom 0.3s ease;
 }
 

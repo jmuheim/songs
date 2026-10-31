@@ -743,6 +743,11 @@ RSpec.describe 'index.html', :js, type: :feature do
       page.evaluate_script("Reveal.getCurrentSlide().querySelector('.slide-content').style.transform")
     end
 
+    # How far +selector+'s bottom edge sits above the window's
+    def bottom_gap(selector)
+      page.evaluate_script("innerHeight - document.querySelector(#{selector.to_json}).getBoundingClientRect().bottom")
+    end
+
     # A finger dragged +dy+ px down (negative: up) from the middle of +selector+.
     # Unlike `swipe`, real touches through Chrome's input pipeline (CDP), since
     # what's under test is whether the browser scrolls the page.
@@ -787,6 +792,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         style.textContent = '.runway-step { min-height: 800px } #fullscreen-runway { padding-bottom: 8000px }';
         document.head.appendChild(style);
       JS
+      gear_gap = bottom_gap('#open-settings')
 
       # Like a dialog: it starts at its title, keeps the keys from Reveal, and
       # Esc closes it without opening the overview
@@ -831,6 +837,9 @@ RSpec.describe 'index.html', :js, type: :feature do
       # The runway keeps its room: a page back to one screen would scroll to
       # the top, which brings Safari's bars right back
       expect(page.evaluate_script('scrollY')).to eq(300)
+      # The bottom corners rose out of the strip Safari's bottom bar left
+      # behind, where a tap brings the bars back: by as much as the window grew
+      expect(bottom_gap('#open-settings')).to be_within(0.5).of(gear_gap + 80)
       # The deck grew with the room, and fitted its slide to it, though <html> didn't
       wait_for_js("Reveal.getCurrentSlide().querySelector('.slide-content').style.transform !== #{fitted_with_bars.to_json}")
       expect(current_scale).not_to eq(fitted_with_bars)
@@ -869,6 +878,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page.evaluate_script("document.documentElement.classList.contains('fullscreen-runway')")).to be false
       expect(page.evaluate_script('scrollY')).to eq(0)
       expect(page).not_to have_visible('#fullscreen-runway')
+      expect(bottom_gap('#open-settings')).to be_within(0.5).of(gear_gap)
     ensure
       page.driver.browser.resize(width: 1280, height: 800)
     end
