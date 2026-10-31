@@ -501,7 +501,7 @@ window.addEventListener('load', function() {
   var live = null;            // { id, song, songTitle, mode, scrollerId } while a song is live-scrolled
   var present = [];           // the Gastgeber present this evening, as the host set them (none: no filter)
   var navMode = 'free';       // 'free' | 'scroller' | 'follower'
-  var lastState = null;       // the scroller's position, as last received
+  var lastState = null;       // { liveId, state }: the scroller's position, as last received
   var lastLiveAt = 0;         // last word about the live scroll (heartbeat or move)
   var applyingRemote = false; // set while Reveal moves because the scroller did
   var invitedFor = null;      // live id whose invite this tab already saw
@@ -556,8 +556,15 @@ window.addEventListener('load', function() {
     return { indexh: s.indexh, indexv: s.indexv, indexf: s.indexf };
   }
 
+  // Where the scroller is in the live scroll under way, if it was heard yet.
+  // Never one from the song before: a follower would jump back to where that
+  // one ended before it heard where the next one starts.
+  function scrollerState() {
+    return live && lastState && lastState.liveId === live.id ? lastState.state : null;
+  }
+
   function follow(state) {
-    if (sameState(state, Reveal.getState())) return; // a repeat changes nothing
+    if (!state || sameState(state, Reveal.getState())) return; // a repeat changes nothing
     applyingRemote = true;
     try { Reveal.setState(state); } finally { applyingRemote = false; }
   }
@@ -649,7 +656,7 @@ window.addEventListener('load', function() {
       // the checker below would flag the guest before its first state arrived.
       lastLiveAt = Date.now();
       Reveal.configure({ keyboard: false, touch: false, controls: false });
-      if (lastState) follow(lastState);
+      follow(scrollerState());
     }
     updateStatus();
   }
@@ -864,8 +871,8 @@ window.addEventListener('load', function() {
   function onStateMessage(data) {
     if (!live || data.liveId !== live.id || amScroller()) return;
     lastLiveAt = Date.now();
-    lastState = data.state;
-    if (navMode === 'follower') follow(lastState);
+    lastState = { liveId: data.liveId, state: data.state };
+    if (navMode === 'follower') follow(data.state);
   }
 
   function onVolunteerMessage(data) {
@@ -901,8 +908,8 @@ window.addEventListener('load', function() {
           try { Reveal.slide(live.song, Reveal.getIndices().v); } finally { applyingRemote = false; }
         }
         broadcastState();
-      } else if (navMode === 'follower' && lastState) {
-        follow(lastState);
+      } else if (navMode === 'follower') {
+        follow(scrollerState());
       }
     });
   });
@@ -1070,8 +1077,11 @@ window.addEventListener('load', function() {
     };
     scrollerSilent = false;
     persistSession();
-    applyNavMode();      // 'self' locks the host to the song; 'guest' waits
+    // The live scroll first, then where the host scrolls it from (applyNavMode
+    // sends that in 'self' mode): a state for a live scroll it hasn't heard of
+    // yet is dropped, and the room would wait a heartbeat for the next one.
     broadcastHost(true); // fresh: whoever is here now gets the self-scroll announcement
+    applyNavMode();      // 'self' locks the host to the song; 'guest' waits
     updateControls();
     updateStatus();
     restartHeartbeat();

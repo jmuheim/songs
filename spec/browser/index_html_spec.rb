@@ -1214,7 +1214,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     describe 'live sync' do
       after { Capybara.reset_sessions! }
 
-      it 'self-scroll: the room is snapped and locked, vertical moves propagate, the song is a wall, ending frees everyone' do
+      it 'self-scroll: the room is snapped and locked, vertical moves propagate, the song is a wall, ending frees everyone, and the next song takes them straight there' do
         secret = nil
         using_session(:presenter) do
           load_presentation
@@ -1374,6 +1374,22 @@ RSpec.describe 'index.html', :js, type: :feature do
           press(:right)
           wait_for_js("Reveal.getIndices().h === 2")
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(2)
+          page.execute_script("window._visited = []; Reveal.on('slidechanged', function(e) { window._visited.push([e.indexh, e.indexv]); })")
+        end
+
+        # The next song: the room goes straight to it, not first back to [3, 1],
+        # where the last one ended. The heartbeat is stretched far past every
+        # wait below, so the live scroll's opening messages alone must get it there.
+        using_session(:presenter) do
+          page.execute_script("window.MULTIPLEX.heartbeat = 10000")
+          page.evaluate_script("Reveal.slide(5, 0)") # I Have a Dream
+          wait_for_js("Reveal.getIndices().h === 5")
+          start_live(mode: :self)
+        end
+        using_session(:client) do
+          wait_for_js("Reveal.getIndices().h === 5")
+          expect(slide_indices).to eq([5, 0])
+          expect(page.evaluate_script("window._visited")).to eq([[5, 0]])
         end
       end
 
@@ -1876,6 +1892,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).to have_css('#multiplex-status', text: 'Folgt')
         end
       end
+
     end
 
     describe 'multiplex status dialog' do
