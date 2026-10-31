@@ -447,6 +447,7 @@ window.addEventListener('load', function() {
   var hostClaim = 0;          // this tab's claim while it hosts
   var heardClaim = 0;         // the highest host claim heard in this session
   var live = null;            // { id, song, songTitle, mode, scrollerId } while a song is live-scrolled
+  var present = [];           // the Gastgeber present this evening, as the host set them (none: no filter)
   var navMode = 'free';       // 'free' | 'scroller' | 'follower'
   var lastState = null;       // the scroller's position, as last received
   var lastLiveAt = 0;         // last word about the live scroll (heartbeat or move)
@@ -657,8 +658,8 @@ window.addEventListener('load', function() {
     if (secret) send(message(payload));
   }
 
-  // Who hosts (by claim) and what is live-scrolled, if anything, on every
-  // beat for as long as this tab hosts. A host that was offline while it was
+  // Who hosts (by claim), who is present and what is live-scrolled, if
+  // anything, on every beat for as long as this tab hosts. A host that was offline while it was
   // taken over learns of it within one beat, and the end of a live scroll is
   // repeated with the rest, so one lost packet strands nobody. `fresh` marks a
   // live scroll's opening broadcast (set only by startLive): a client tells
@@ -666,7 +667,7 @@ window.addEventListener('load', function() {
   // only ever hears heartbeats, follows without the self-scroll announcement.
   function broadcastHost(fresh) {
     if (!isHost) return;
-    emit({ type: 'host', claim: hostClaim, fresh: !!fresh, live: live && {
+    emit({ type: 'host', claim: hostClaim, fresh: !!fresh, present: present, live: live && {
       id: live.id, song: live.song, songTitle: live.songTitle, mode: live.mode, scrollerId: live.scrollerId
     }});
   }
@@ -710,6 +711,11 @@ window.addEventListener('load', function() {
     }
     if (data.claim < heardClaim) return; // an old host that hasn't heard yet that it was taken over
     heardClaim = data.claim;
+    var heardPresent = data.present || [];
+    if (heardPresent.join(',') !== present.join(',')) {
+      present = heardPresent;
+      applyPresent();
+    }
     if (!data.live) {
       if (live) concludeLive(); else persistSession();
       return;
@@ -938,12 +944,27 @@ window.addEventListener('load', function() {
       if (secret) {
         localStorage.setItem('multiplex-session', JSON.stringify({
           secret: secret, seenAt: seenAt, heardClaim: heardClaim,
-          hostClaim: isHost ? hostClaim : 0, live: live, scrolling: amScroller()
+          hostClaim: isHost ? hostClaim : 0, present: present, live: live, scrolling: amScroller()
         }));
       } else {
         localStorage.removeItem('multiplex-session');
       }
     } catch (e) {}
+  }
+
+  // In a session the table of contents' Gastgeber checkboxes say who is
+  // present, set by the host for everyone (style/toc-filter.js); outside one
+  // they are a filter of one's own again.
+  function applyPresent() {
+    if (window.tocFilter) tocFilter.setPresent(secret ? present : null, isHost);
+  }
+  if (window.tocFilter) {
+    tocFilter.onPresentChange(function(names) {
+      if (!isHost) return;
+      present = names;
+      persistSession();
+      broadcastHost();
+    });
   }
 
   // Anything heard from the session, or said in it, keeps it from expiring
@@ -969,6 +990,7 @@ window.addEventListener('load', function() {
     scrollerSilent = false;
     touch();
     broadcastHost();
+    applyPresent(); // who is present: the host's to set now (taken over: as it was)
     updateControls();
     updateStatus();
     restartHeartbeat();
@@ -978,6 +1000,7 @@ window.addEventListener('load', function() {
   function stepDown() {
     isHost = false;
     persistSession();
+    applyPresent();
     updateControls();
     restartHeartbeat();
     showToast(['Jemand anderes ist jetzt Gastgeber']);
@@ -1025,7 +1048,9 @@ window.addEventListener('load', function() {
     socketId = null;
     heardClaim = 0;
     seenAt = 0;
+    present = [];
     persistSession();
+    applyPresent();
     // Not right away: the host's last words are still being repeated.
     clearTimeout(pendingDisconnect);
     pendingDisconnect = setTimeout(function() { if (!secret) socket.disconnect(); }, 1200);
@@ -1176,6 +1201,7 @@ window.addEventListener('load', function() {
   if (stored && stored.secret) {
     join(stored.secret);
     heardClaim = stored.heardClaim || 0;
+    present = stored.present || [];
     live = stored.live || null;
     if (stored.hostClaim) {
       isHost = true;
@@ -1192,6 +1218,7 @@ window.addEventListener('load', function() {
     persistSession(); // nothing, or a past evening: forget it
   }
   if (live) applyNavMode();
+  applyPresent();
   restartHeartbeat();
   updateControls();
   updateStatus();

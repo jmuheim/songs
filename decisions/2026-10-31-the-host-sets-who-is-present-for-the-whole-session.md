@@ -1,0 +1,11 @@
+## 2026-10-31 — The host sets who is present, for the whole session
+
+**Context:** Every song names the Gastgeber who can lead it (`- Gastgeber: Josua, Monika`), and the table of contents already filters by them with checkboxes, each client on its own. On an evening, though, the question is not what one guest wants to see, but which songs can be played at all: only those of the Gastgeber who are actually here. The host should be able to set that for everyone.
+
+**Decision:** In a session ([each evening is its own session, led by a host](2026-10-31-each-evening-is-its-own-session-led-by-a-host.md)), the Gastgeber checkboxes in the table of contents say who is present and are labelled „Anwesend". The host ticks them. The choice (`present`) rides on the host's heartbeat and is stored with the session on every device, so every list in the session shows only those hosts' songs. Guests see the boxes ticked but disabled. Sprache and Genre stay each guest's own filter, and Reset leaves the present hosts alone. Outside a session, the checkboxes are the plain filter they were before, and leaving a session gives them back unchecked.
+
+**Reasoning:**
+- **It belongs to the evening, not to the view.** Who is here is a fact about the session, so it is set once, by the one who leads it, and holds for everyone. A guest who could untick it would only see songs nobody can play. The table-of-contents filter stayed local on purpose ([Gastgeber filter uses checkboxes](2026-10-05-gastgeber-filter-uses-checkboxes-not-a-select.md)). This is the one exception, and only inside a session.
+- **The same checkboxes, not a second control.** They already list every Gastgeber and already combine with OR. That is exactly "songs any present host can lead". A separate „Anwesend" control next to them would have offered two answers to one question.
+- **Reset stays the guest's.** Reset clears what a client chose for itself. Clearing the host's choice from there would have reset everyone's list, so it doesn't touch it.
+- **Not a hard lock on songs.** 🚀 still works on any song, and the arrows still reach every song. The present hosts narrow down what the list *offers*, they don't forbid anything: an extra song of someone who just left should still be possible.

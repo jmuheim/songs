@@ -1464,6 +1464,95 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
       end
 
+      # The fixture's Gastgeber: Josua = {74-75, Across}, Monika = {Across,
+      # I Have a Dream}, Daniel = {Imagine}; Riptide names none.
+      it 'the host picks who is present in the table of contents, and every list in the session shows only their songs' do
+        toc_entries = lambda do
+          page.evaluate_script(<<~'JS')
+            Array.prototype.map.call(document.querySelectorAll('#TOC nav li:not(.toc-hidden) a'),
+              function(a) { return a.textContent.replace(/\s+/g, ' ').trim(); })
+          JS
+        end
+        gastgeber_checkboxes = '#toc-filter .toc-filter-checkboxes input'
+
+        secret = nil
+        using_session(:presenter) do
+          load_presentation
+          log_in_as_host
+          secret = session_secret
+          click_link 'Table of contents'
+          expect(page).to have_css('#TOC.present')
+          # In a session the checkboxes say who is present, and they are the host's to set
+          within('#toc-filter .toc-filter-checkboxes') do
+            expect(page).to have_css('.toc-filter-checkboxes-label', text: 'Anwesend')
+            check 'Daniel'
+          end
+          wait_for_js("document.querySelectorAll('#TOC nav li:not(.toc-hidden)').length === 1")
+          expect(toc_entries.call).to eq(['Imagine (John Lennon)'])
+        end
+
+        using_session(:guest) do
+          join_session(secret)
+          click_link 'Table of contents'
+          expect(page).to have_css('#TOC.present')
+          # The host's choice arrives with its heartbeat, and is not the guest's to change
+          expect(page).to have_css('.toc-filter-checkboxes-label', text: 'Anwesend')
+          expect(page).to have_checked_field('Daniel', disabled: true)
+          expect(page).to have_unchecked_field('Monika', disabled: true)
+          expect(toc_entries.call).to eq(['Imagine (John Lennon)'])
+          # Sprache and Genre stay the guest's own, on top of it
+          select 'Deutsch', from: 'Sprache'
+          expect(page).to have_css('#toc-filter-empty', text: 'Keine Ergebnisse')
+          select 'Alle', from: 'Sprache'
+        end
+
+        using_session(:presenter) do
+          check 'Monika'
+        end
+        using_session(:guest) do
+          expect(page).to have_checked_field('Monika', disabled: true)
+          expect(toc_entries.call).to contain_exactly(
+            'Across the universe (Beatles)', 'I Have a Dream (ABBA)', 'Imagine (John Lennon)'
+          )
+          # Reset clears the guest's own filters, not who is present
+          select 'Englisch', from: 'Sprache'
+          click_button 'Reset'
+          expect(page).to have_select('Sprache', selected: 'Alle')
+          expect(page).to have_checked_field('Daniel', disabled: true)
+          expect(toc_entries.call.size).to eq(3)
+
+        end
+
+        # The host keeps who is present across a reload: it never hears its
+        # own heartbeat, so it has them from its storage alone — without
+        # them, its next beat would clear every list in the session. (Which
+        # slide the reload lands on depends on Reveal's hash write, up to a
+        # second behind the jump to the table of contents, so jump again.)
+        using_session(:presenter) do
+          page.refresh
+          wait_for_reveal
+          click_link 'Table of contents'
+          expect(page).to have_css('#TOC.present')
+          expect(page).to have_checked_field('Daniel')
+          expect(page).to have_checked_field('Monika')
+          check 'Josua'
+        end
+        using_session(:guest) do
+          expect(page).to have_checked_field('Josua', disabled: true)
+          expect(page).to have_checked_field('Daniel', disabled: true)
+          expect(page).to have_checked_field('Monika', disabled: true)
+          expect(toc_entries.call.size).to eq(4) # Josua adds 74-75
+
+          # Out of the session, the checkboxes are a filter of the guest's own again
+          open_live_scroll_dialog
+          within('#multiplex-info-modal') { click_button('🚪 Session verlassen') }
+          expect(page).to have_css('.toc-filter-checkboxes-label', text: 'Gastgeber')
+          expect(page).to have_unchecked_field('Daniel')
+          expect(page).to have_no_css("#{gastgeber_checkboxes}[disabled]")
+          expect(toc_entries.call.size).to eq(5)
+        end
+      end
+
       it 'a guest who volunteers but loses the race is told someone else is already scrolling' do
         using_session(:guest) do
           join_session('spec-race')

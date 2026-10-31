@@ -12,7 +12,8 @@
 // control. The selects, checkboxes and the button are real form controls, so
 // the keyboardCondition in body-controls.html already keeps their keys from
 // reaching Reveal. The selection is local to this client and not synced over
-// multiplex.
+// multiplex — except, in a session, the Gastgeber checkboxes (setPresent
+// below).
 (function () {
   function init() {
     var bar = document.getElementById('toc-filter');
@@ -24,6 +25,10 @@
     var reset     = document.getElementById('toc-filter-reset');
     var items     = Array.prototype.slice.call(document.querySelectorAll('#TOC nav li'));
     var empty     = document.getElementById('toc-filter-empty');
+    var group     = bar.querySelector('.toc-filter-checkboxes');
+    var groupName = group && group.querySelector('.toc-filter-checkboxes-label');
+    var inSession = false;
+    var onPresentChange = null;
 
     function matches(li, select, attr) {
       if (!select || !select.value) return true; // that category has no filter active
@@ -52,17 +57,47 @@
       if (select) select.addEventListener('change', render);
     });
     gastgeber.forEach(function (checkbox) {
-      checkbox.addEventListener('change', render);
+      checkbox.addEventListener('change', function () {
+        render();
+        if (inSession && onPresentChange) {
+          onPresentChange(gastgeber.filter(function (cb) { return cb.checked; }).map(function (cb) { return cb.value; }));
+        }
+      });
     });
 
     if (reset) {
       reset.addEventListener('click', function () {
         if (sprache) sprache.value = '';
         if (genre) genre.value = '';
-        gastgeber.forEach(function (checkbox) { checkbox.checked = false; });
+        // In a session they are who is present, not this client's filter
+        if (!inSession) gastgeber.forEach(function (checkbox) { checkbox.checked = false; });
         render();
       });
     }
+
+    // In a session the Gastgeber checkboxes stop being a filter of one's own:
+    // they say who is present this evening („Anwesend"), so that every list
+    // in the session shows only the songs that can be played. The host sets
+    // them for everyone — body-controls.html carries them in its heartbeat —
+    // and only the host can change them (`editable`). `present` null: no
+    // session, and the checkboxes are one's own again, unchecked.
+    window.tocFilter = {
+      setPresent: function (present, editable) {
+        inSession = !!present;
+        gastgeber.forEach(function (checkbox) {
+          checkbox.checked = inSession && present.indexOf(checkbox.value) !== -1;
+          checkbox.disabled = inSession && !editable;
+        });
+        if (group) {
+          var name = inSession ? 'Anwesend' : 'Gastgeber';
+          groupName.textContent = name;
+          group.setAttribute('aria-label', name);
+        }
+        render();
+      },
+      // The host's own changes, to pass on to the session
+      onPresentChange: function (fn) { onPresentChange = fn; }
+    };
 
     render();
   }

@@ -99,6 +99,8 @@ Navigate to a song, then tap 📡 › 🚀 and choose **„Ich selber möchte sc
 
 While a song is live-scrolled, followers are held on the scroller's slide — their own navigation is off. The host and the scroller repeat themselves every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap 📡 › 🚀 „Live-Scrollen beenden" to end it: everyone lands on the table of contents, is told they can navigate freely again, and a guest who scrolled is thanked.
 
+As host, tick in the table of contents which Gastgeber are here tonight („Anwesend"): every list in the session then shows only the songs that can be played. Guests see the host's choice but cannot change it; Sprache and Genre stay theirs to filter.
+
 There is one host at a time. Another device in the session can take the role over with 📡 › 🔑 „Gastgeber übernehmen" (and the password) — no need for the old host to hand anything on, which a phone with a flat battery couldn't. The old host stays in the session as a participant, and a song being live-scrolled carries on, its scroller included.
 
 The badge on 📡 shows at a glance who's driving — a filled dot for you, a ring while you follow someone else, amber while waiting for a guest, a strike through it if the connection drops — and a tap opens a dialog spelling it out in words: „Du scrollst live", „Warte auf Gast …", „Gast scrollt", „Du scrollst für alle", „Folgt", „Du bist Gastgeber", „Kein Live-Scrollen aktiv", „Keine Session" or „Keine Verbindung".
