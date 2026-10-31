@@ -197,13 +197,18 @@
   }
 
   var all = Array.prototype.slice.call(document.querySelectorAll(FITTED));
+  var deck = document.querySelector('.reveal');
   var chevron = null;
 
   // A slide's own entry means its content changed size: fit that one. The
-  // page's or the chevron's means the room to fit into changed: fit them all.
+  // deck's or the chevron's means the room to fit into changed: fit them all.
+  // The deck, not <html>: they are one and the same box, except while
+  // ↕️ „Vollbild" lends the page its runway (body-controls.html). <html> is
+  // then many screens tall, in vh, which iPhone Safari never changes as its
+  // bars come and go, while the deck, pinned to the screen, does.
   var observer = new ResizeObserver(function (entries) {
     var roomChanged = entries.some(function (e) {
-      return e.target === document.documentElement || e.target === chevron;
+      return e.target === deck || e.target === chevron;
     });
     fit(roomChanged ? all : entries.map(function (e) { return e.target; }));
   });
@@ -216,7 +221,7 @@
   }
 
   all.forEach(function (content) { observer.observe(content); });
-  observer.observe(document.documentElement);
+  observer.observe(deck);
   watchChevron();
   if (window.Reveal) Reveal.on('ready', watchChevron); // in case Reveal builds its controls later
 })();

@@ -10,6 +10,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - Colour-coded chords (each root letter gets its own colour)
 - Each song slide ends on a small „Next: …" preview of the next slide's heading and first line (or „Ende des Lieds" on the last one), fading in a few seconds after the slide appears, so whoever scrolls can read ahead
 - Dark/bright theme and chord visibility, both in the ⚙️ Settings dialog
+- Full screen with ↕️, next to ⚙️, and back with another press. On an iPhone, where Safari has no full-screen mode for a web page, it asks for one swipe down instead: that makes Safari hide its bars, and they stay hidden while you page through the songs. Added to the home screen (Share › „Add to Home Screen"), the song book opens without any bars at all
 - Tag songs (language, genre, …) and filter the table of contents by tag
 - **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)
 - Print-friendly version: open `print.html?print-pdf` in Chrome and print

@@ -142,6 +142,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_link('📖 Table of contents')
       end
       within('#top-right-controls') do
+        expect(page).to have_button('↕️ Vollbild')
         expect(page).to have_button('⚙️ Settings')
       end
       within('#bottom-left-controls') do
@@ -714,6 +715,123 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page).to have_visible('#settings-modal')
       backdrop_click('settings-modal')
       expect(page).not_to have_visible('#settings-modal')
+    end
+  end
+
+  # -----------------------------------------------------------------------
+  # Vollbild (↕️)
+  # -----------------------------------------------------------------------
+  describe 'Vollbild' do
+    def toggle_pressed
+      find('#fullscreen-toggle')['aria-pressed']
+    end
+
+    def current_scale
+      page.evaluate_script("Reveal.getCurrentSlide().querySelector('.slide-content').style.transform")
+    end
+
+    it 'uses the Fullscreen API where there is one, and leaves it again on a second press' do
+      load_presentation
+      expect(toggle_pressed).to eq('false')
+
+      click_button('↕️ Vollbild')
+      wait_for_js('document.fullscreenElement === document.documentElement')
+      expect(page.evaluate_script('document.fullscreenElement === document.documentElement')).to be true
+      expect(toggle_pressed).to eq('true')
+      expect(page).to have_css('#fullscreen-runway', visible: :hidden) # that one is for the iPhone
+
+      click_button('↕️ Vollbild')
+      wait_for_js('!document.fullscreenElement')
+      expect(page.evaluate_script('document.fullscreenElement')).to be_nil
+      expect(toggle_pressed).to eq('false')
+    ensure
+      page.execute_script('if (document.fullscreenElement) document.exitFullscreen()')
+    end
+
+    it "on an iPhone, lends the page a runway to swipe Safari's bars away, keeps them away while the deck pages, and gives the room back on a second press" do
+      # ?runway: as on an iPhone, which has no Fullscreen API for a page. Basic
+      # chords (2, 2) is fitted by its height, so it grows with the room.
+      visit "#{FixtureBuilder::URL_PATH}?runway#/2/2"
+      wait_for_reveal
+      # Safari's vh never follows its bars, so the runway's height stays put as
+      # they go, while in Chrome it would grow with the window. Pinned in px,
+      # only the deck, pinned to the screen, changes size, as on the iPhone.
+      page.execute_script(<<~JS)
+        var style = document.createElement('style');
+        style.textContent = '.runway-step { min-height: 800px } #fullscreen-runway { padding-bottom: 8000px }';
+        document.head.appendChild(style);
+      JS
+
+      # Like a dialog: it starts at its title, keeps the keys from Reveal, and
+      # Esc closes it without opening the overview
+      click_button('↕️ Vollbild')
+      expect(page).to have_visible('#fullscreen-runway')
+      expect(active_element_id).to eq('runway-title')
+      expect(page).not_to have_visible('.runway-tip') # only once the bars are gone
+      press(:right)
+      expect(slide_indices).to eq([2, 2])
+      press(:escape)
+      expect(page).not_to have_visible('#fullscreen-runway')
+      expect(page.evaluate_script('Reveal.isOverview()')).to be false
+      expect(page.evaluate_script("document.documentElement.classList.contains('fullscreen-runway')")).to be false
+
+      # Open, the page itself scrolls, while the deck stays pinned to the screen
+      click_button('↕️ Vollbild')
+      expect(page).to have_visible('#fullscreen-runway')
+      expect(page.evaluate_script('document.scrollingElement.scrollHeight > innerHeight * 5')).to be true
+      expect(page.evaluate_script("getComputedStyle(document.querySelector('.reveal')).position")).to eq('fixed')
+      fitted_with_bars = current_scale
+      page.scroll_to(0, 300) # the finger's swipe down
+
+      # Safari's bars going away make the window taller. Chrome has none, so a
+      # taller window stands in for them; Cuprite's resize doesn't fire the
+      # browser's event (see 'slide zoom').
+      page.driver.browser.resize(width: 1280, height: 880)
+      page.execute_script("window.dispatchEvent(new Event('resize'))")
+      # It says so, and waits for OK; Esc would do the same
+      expect(page).to have_css('#runway-success-text', text: 'Gut gemacht!')
+      expect(active_element_id).to eq('runway-success-text')
+      # Then the alternative, with a picture of Safari's menu: post_process_index
+      # gave its src the assets path the page is served with, so it loads
+      expect(page).to have_css('.runway-tip', text: 'Teilen → Zum Home-Bildschirm')
+      expect(page).to have_css('img.runway-tip-image[src="/style/zum-home-bildschirm.png"]')
+      wait_for_js("document.querySelector('.runway-tip-image').complete")
+      expect(page.evaluate_script("document.querySelector('.runway-tip-image').naturalWidth")).to eq(598)
+      expect(toggle_pressed).to eq('true')
+      expect(page).to have_no_css('#fullscreen-runway.runway-done', visible: :all)
+      click_button('OK')
+      expect(page).to have_css('#fullscreen-runway.runway-done', visible: :hidden)
+      expect(page).not_to have_visible('#runway-ok')
+      # The runway keeps its room: a page back to one screen would scroll to
+      # the top, which brings Safari's bars right back
+      expect(page.evaluate_script('scrollY')).to eq(300)
+      # The deck grew with the room, and fitted its slide to it, though <html> didn't
+      wait_for_js("Reveal.getCurrentSlide().querySelector('.slide-content').style.transform !== #{fitted_with_bars.to_json}")
+      expect(current_scale).not_to eq(fitted_with_bars)
+
+      # The deck pages as ever, and its keys don't scroll the page
+      page.driver.browser.mouse.move(x: 640, y: 500)
+      press(:up)
+      expect(slide_indices).to eq([2, 1])
+      expect(page.evaluate_script('scrollY')).to eq(300)
+
+      # A second press gives the room back
+      click_button('↕️ Vollbild')
+      expect(toggle_pressed).to eq('false')
+      expect(page.evaluate_script("document.documentElement.classList.contains('fullscreen-runway')")).to be false
+      expect(page.evaluate_script('scrollY')).to eq(0)
+      expect(page).not_to have_visible('#fullscreen-runway')
+    ensure
+      page.driver.browser.resize(width: 1280, height: 800)
+    end
+
+    it 'stays out of the way when the song book runs from the home screen, without any bars to hide' do
+      # Below Capybara: iOS sets navigator.standalone before any script runs
+      page.driver.browser.page.command('Page.addScriptToEvaluateOnNewDocument',
+                                       source: "Object.defineProperty(navigator, 'standalone', { value: true });")
+      load_presentation
+      expect(page).to have_button('⚙️ Settings')
+      expect(page).to have_css('#fullscreen-toggle', visible: :hidden)
     end
   end
 

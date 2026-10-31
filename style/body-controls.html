@@ -3,6 +3,7 @@
   <a href="#/1" id="go-to-toc" class="ctrl"><span aria-hidden="true">📖</span> <span class="visually-hidden">Table of contents</span></a>
 </div>
 <div id="top-right-controls" class="controls-group">
+  <button id="fullscreen-toggle" class="ctrl" aria-pressed="false" hidden><span aria-hidden="true">↕️</span> <span class="visually-hidden">Vollbild</span></button>
   <button id="open-settings" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">⚙️</span> <span class="visually-hidden">Settings</span></button>
 </div>
 <div id="multiplex-toast" role="status" aria-live="polite"></div>
@@ -93,6 +94,107 @@
     });
   })();
 
+  // ↕️ „Vollbild", a toggle: the real Fullscreen API wherever there is one
+  // (desktop, Android, iPad). iPhone Safari only has it for <video>, but it
+  // hides its own bars once a finger scrolls the page — which Reveal never lets
+  // happen (touch-action on .reveal, preventDefault on every touchmove). So
+  // there the runway makes the page itself a few screens tall for a moment,
+  // over the deck (pinned in place meanwhile), and asks for a swipe. Once the
+  // bars are gone it fades away but keeps that room and the scroll position: a
+  // page that shrank back to one screen would scroll to 0, and Safari would
+  // bring its bars right back. Back in the deck, Reveal again keeps every swipe
+  // from scrolling the page, so the bars stay hidden until ↕️ is pressed again
+  // (which does exactly that shrinking) or a tap on Safari's address strip.
+  (function() {
+    var root = document.documentElement;
+    var standalone = navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+    var nativeFullscreen = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+
+    window.addEventListener('load', function() {
+      var button = document.getElementById('fullscreen-toggle');
+      var runway = document.getElementById('fullscreen-runway');
+      // ?runway forces the runway, to try it (and spec it) in a desktop browser.
+      var forceRunway = /[?&]runway\b/.test(location.search);
+      if (standalone && !forceRunway) return; // from the home screen: no bars to hide
+      button.hidden = false;
+      function setPressed(on) { button.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+
+      if (nativeFullscreen && !forceRunway) {
+        var fullscreenElement = function() { return document.fullscreenElement || document.webkitFullscreenElement; };
+        var update = function() { setPressed(!!fullscreenElement()); };
+        button.addEventListener('click', function() {
+          if (fullscreenElement()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+          else (root.requestFullscreen || root.webkitRequestFullscreen).call(root);
+        });
+        document.addEventListener('fullscreenchange', update);
+        document.addEventListener('webkitfullscreenchange', update);
+        return;
+      }
+
+      var state = 'off'; // 'off' | 'open' (asking for the swipe) | 'kept' (bars gone, room kept)
+      var base = null;   // the window's size as the runway opened, Safari's bars still shown
+
+      function zoomed() { return window.visualViewport && window.visualViewport.scale > 1.01; }
+      function barsHidden() { return window.innerHeight > base.h + 20; }
+
+      function open() {
+        base = { w: window.innerWidth, h: window.innerHeight };
+        state = 'open';
+        runway.classList.remove('runway-succeeded', 'runway-done');
+        runway.hidden = false;
+        root.classList.add('fullscreen-runway');
+        window.scrollTo(0, 0);
+        document.getElementById('runway-title').focus({ preventScroll: true });
+      }
+      // The bars are gone. Say so, and wait for OK: a 🎉 that came and went on
+      // its own left the reader wondering what had happened.
+      function succeed() {
+        state = 'kept';
+        setPressed(true);
+        runway.classList.add('runway-succeeded');
+        document.getElementById('runway-success-text').focus({ preventScroll: true });
+      }
+      // OK: the runway fades out, its room stays (see above).
+      function dismiss() {
+        runway.classList.add('runway-done');
+        button.focus({ preventScroll: true });
+      }
+      // ↕️ pressed again, cancelled, given up, the bars came back (a tap on the
+      // address strip), or the phone was turned: back to a page of one screen.
+      function reset() {
+        if (state === 'off') return;
+        var wasOpen = state === 'open';
+        state = 'off';
+        setPressed(false);
+        runway.hidden = true;
+        runway.classList.remove('runway-succeeded', 'runway-done');
+        root.classList.remove('fullscreen-runway');
+        window.scrollTo(0, 0);
+        if (wasOpen) button.focus({ preventScroll: true });
+      }
+      function check() {
+        if (state === 'off' || zoomed()) return; // pinching shrinks innerHeight, too
+        if (window.innerWidth !== base.w) reset();
+        else if (state === 'open' && barsHidden()) succeed();
+        else if (state === 'kept' && !barsHidden()) reset();
+      }
+
+      button.addEventListener('click', function() { if (state === 'off') open(); else reset(); });
+      document.getElementById('runway-cancel').addEventListener('click', reset);
+      document.getElementById('runway-giveup').addEventListener('click', reset);
+      // Like the dialogs: keys stay out of Reveal's reach, Esc closes.
+      document.getElementById('runway-ok').addEventListener('click', dismiss);
+      runway.addEventListener('keydown', function(e) {
+        e.stopPropagation();
+        if (e.key === 'Escape') { if (state === 'kept') dismiss(); else reset(); }
+      });
+      runway.addEventListener('keypress', function(e) { e.stopPropagation(); });
+      window.addEventListener('resize', check);
+      window.addEventListener('scroll', check, { passive: true });
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', check);
+    });
+  })();
+
   // The buttons' labels double as tooltips, on hover (where there is one) and
   // on keyboard focus. Esc dismisses a tooltip without opening Reveal's
   // overview, and any other key dismisses it too, so a focused button does not
@@ -128,6 +230,36 @@
     <button id="settings-close">Schliessen</button>
   </div>
 </dialog>
+
+<!-- iPhone Safari has no Fullscreen API outside <video>; it only hides its bars
+     when the page itself is scrolled by a finger. Reveal never lets the page
+     scroll, so the runway lends it a few screens of room to swipe through. -->
+<div id="fullscreen-runway" role="dialog" aria-modal="true" aria-labelledby="runway-title" hidden>
+  <div class="runway-header">
+    <h2 id="runway-title" tabindex="-1">Vollbild</h2>
+    <button id="runway-cancel" aria-label="Abbrechen"><span aria-hidden="true">✕</span></button>
+  </div>
+  <div class="runway-step runway-start">
+    <p>Safari erlaubt kein Vollbild per Knopfdruck: Die Browser-Leisten bleiben sichtbar. Aber beim Wischen nach unten werden sie ausgeblendet, deshalb:</p>
+    <p class="runway-arrow" aria-hidden="true">👇</p>
+    <p>Wisch mal runter!</p>
+  </div>
+  <div class="runway-step" aria-hidden="true"><p>Weiter so …</p><p class="runway-arrow">👇</p></div>
+  <div class="runway-step" aria-hidden="true"><p>Fast da …</p><p class="runway-arrow">👇</p></div>
+  <div class="runway-step runway-goal">
+    <p><span aria-hidden="true">🤷</span> Die Leisten sind noch da – dein Browser mag das wohl nicht.</p>
+    <button id="runway-giveup">Zurück zu den Liedern</button>
+  </div>
+  <div class="runway-success">
+    <p class="runway-success-emoji" aria-hidden="true">🎉</p>
+    <p id="runway-success-text" tabindex="-1">Gut gemacht! Jetzt sollten die Browser-Leisten verschwunden sein (oder zumindest kleiner dargestellt werden).</p>
+    <p class="runway-tip">Alternative: Die Seite zum Home-Bildschirm hinzufügen (Teilen → Zum Home-Bildschirm) und von dort öffnen.</p>
+    <!-- lazy: the runway is display: none until ↕️ opens it, so only those who
+         ask for full screen load the picture -->
+    <img class="runway-tip-image" src="{{assets}}zum-home-bildschirm.png" width="598" height="760" loading="lazy" alt="Safaris Teilen-Menü, darin „Zum Home-Bildschirm" eingekreist">
+    <button id="runway-ok">OK</button>
+  </div>
+</div>
 
 <dialog id="multiplex-info-modal" class="overlay-modal" aria-labelledby="multiplex-info-title">
   <div class="modal-box">

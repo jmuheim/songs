@@ -444,7 +444,10 @@ module BuildHelpers
     # body-controls.html goes in *after* the Reveal-config rewrites above: it
     # configures Reveal too (a `keyboard: true` when a session ends), and a
     # sub that ran first would clobber that line instead of Pandoc's init.
-    html = html.sub('<body>', "<body><script>window.MULTIPLEX=#{multiplex.to_json};</script>" + style_file('body-controls.html').strip)
+    # {{assets}}: an image there lives under style/ like everything else, but
+    # at another path for the build than for the spec fixtures.
+    controls = style_file('body-controls.html').strip.gsub('{{assets}}', assets)
+    html = html.sub('<body>', "<body><script>window.MULTIPLEX=#{multiplex.to_json};</script>" + controls)
     # slide-zoom.js first: the slides are already on screen once Reveal has
     # initialised, and no script that waits on the network (socket.io comes
     # from the relay's host) may hold up their first fit.

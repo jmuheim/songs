@@ -298,7 +298,10 @@ section.level2 > .slide-content {
   color: #bb0000;
 }
 
-#master-mode.session-active::after {
+/* ❌ over a control that is on, to say a press now switches it off: 🚀 during
+   a live-scroll session, ↕️ in Vollbild. */
+#master-mode.session-active::after,
+#fullscreen-toggle[aria-pressed="true"]::after {
   font-size: 3em;
   content: '❌';
   position: absolute;
@@ -379,6 +382,190 @@ body.theme-bright #multiplex-status-button.multiplex-following::before {
 #multiplex-toast.visible {
   opacity: 0.95;
   visibility: visible;
+}
+
+/* ↕️ „Vollbild" on iPhone Safari (body-controls.html): while the runway is up,
+   and for as long as Safari's bars stay hidden after it, the page is several
+   screens tall and scrolls, instead of being exactly one screen that never
+   does. The deck is pinned to the screen meanwhile, so it stays put. */
+html.reveal-full-page.fullscreen-runway {
+  height: auto;
+  overflow: visible;
+}
+
+html.fullscreen-runway body.reveal-viewport {
+  height: auto;
+  overflow: visible;
+}
+
+html.fullscreen-runway .reveal {
+  position: fixed;
+  inset: 0;
+  width: auto;
+  height: auto;
+}
+
+/* No `display` here: that would override the `hidden` attribute. The room
+   below the last step is deliberate: a flick's momentum must not reach the
+   page's end, where Safari shows its bars again. */
+#fullscreen-runway {
+  position: relative;
+  z-index: 200;
+  padding: 0 1.5rem 1000vh;
+  background: rgba(17, 17, 17, 0.96);
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  text-align: center;
+  transition: opacity 0.4s ease, visibility 0s 0.4s;
+}
+
+#fullscreen-runway.runway-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.runway-step {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The title on top, ✕ beside it. Sticky, so ✕ stays at hand while the page
+   scrolls; a child of the runway itself, not of a step, to stick all the way. */
+.runway-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4.5rem;
+  margin: 0 -1.5rem;
+  padding: 0 4rem;
+  background: #111;
+}
+
+/* The first screen, less the header's 4.5rem, is read with Safari's bars
+   still shown: svh, the height with them, or its last lines end up under the
+   bottom bar. */
+.runway-start {
+  min-height: calc(100vh - 4.5rem);
+  min-height: calc(100svh - 4.5rem);
+}
+
+.runway-step p {
+  margin: 0.3em 0;
+  max-width: 22em;
+}
+
+#runway-title {
+  margin: 0;
+  font-size: 1.6em;
+  outline: none;
+}
+
+.runway-arrow {
+  font-size: 3em;
+  animation: runway-bounce 1.2s ease-in-out infinite;
+}
+
+@keyframes runway-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(0.25em); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .runway-arrow { animation: none; }
+}
+
+#fullscreen-runway button {
+  padding: 0.4em 1.2em;
+  font-size: 1em;
+  border-radius: 0.3em;
+  border: 1px solid #888;
+  background: #444;
+  color: #fff;
+  cursor: pointer;
+}
+
+#fullscreen-runway #runway-cancel {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  padding: 0.2em 0.6em;
+}
+
+.runway-goal button {
+  margin-top: 1em;
+}
+
+/* 🎉, what happened, and OK. It covers the whole screen, and touch-action
+   keeps a swipe on it from scrolling the page back up, which would bring
+   Safari's bars right back. Hidden, not just transparent, until then: its OK
+   must not be a Tab stop no one sees. */
+.runway-success {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+  touch-action: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+
+.runway-success p {
+  margin: 0.3em 0;
+  max-width: 22em;
+}
+
+.runway-success-emoji {
+  font-size: 2.5em;
+}
+
+.runway-success p.runway-tip {
+  margin-top: 1em;
+  font-size: 0.75em;
+  opacity: 0.8;
+}
+
+/* All of it must fit one screen: the panel can't scroll (touch-action) */
+.runway-tip-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(80%, 300px);
+  max-height: 26vh;
+  max-height: 26svh;
+  margin-top: 0.5em;
+  border-radius: 0.5em;
+}
+
+#runway-success-text {
+  outline: none;
+}
+
+.runway-success button {
+  margin-top: 1em;
+}
+
+#fullscreen-runway.runway-succeeded:not(.runway-done) .runway-success {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease;
+}
+
+#fullscreen-runway.runway-succeeded > :not(.runway-success) {
+  visibility: hidden;
 }
 
 /* showModal() puts the dialog in the top layer, centred; .modal-box is its face */
@@ -608,6 +795,21 @@ body.theme-bright .modal-box button {
 
 body.theme-bright .modal-box button:hover {
   background: #ccc;
+}
+
+body.theme-bright #fullscreen-runway {
+  background: rgba(255, 250, 213, 0.97);
+  color: #333;
+}
+
+body.theme-bright .runway-header {
+  background: #fffad5;
+}
+
+body.theme-bright #fullscreen-runway button {
+  background: #ddd;
+  border-color: #bbb;
+  color: #333;
 }
 
 body.theme-bright .chord-tooltip-inner {
