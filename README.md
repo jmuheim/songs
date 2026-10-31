@@ -10,7 +10,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - Colour-coded chords (each root letter gets its own colour)
 - Each song slide ends on a small „Next: …" preview of the next slide's heading and first line (or „Ende des Lieds" on the last one), fading in a few seconds after the slide appears, so whoever scrolls can read ahead
 - Dark/bright theme and chord visibility, both in the ⚙️ Settings dialog
-- Full screen with ↕️, next to ⚙️, and back with another press. On an iPhone, where Safari has no full-screen mode for a web page, it asks for one swipe down instead: that makes Safari hide its bars, and they stay hidden while you page through the songs. Added to the home screen (Share › „Add to Home Screen"), the song book opens without any bars at all
+- Full screen with ↕️, top right, and back with another press. On an iPhone, where Safari has no full-screen mode for a web page, it asks for one swipe down instead: that makes Safari hide its bars, and they stay hidden while you page through the songs. Added to the home screen (Share › „Add to Home Screen"), the song book opens without any bars at all
 - Tag songs (language, genre, …) and filter the table of contents by tag
 - **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)
 - Print-friendly version: open `print.html?print-pdf` in Chrome and print
@@ -79,17 +79,23 @@ The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multipl
 
 | Button | Position | Function |
 |--------|----------|----------|
-| 🔗 | Top left | Show QR code — scan to open the song book |
 | 📖 | Top left | Jump to the table of contents (hidden while a live-scroll session locks your navigation) |
-| ⚙️ | Top right | Settings — theme, chord visibility |
-| Status dot | Bottom left | Shows your live-scroll connection/role at a glance; tap for details |
-| 🚀 | Bottom right, song slides only | Start a live-scroll session on the current song (asks for the password once); ❌ while active, tap again to end it |
+| ↕️ | Top right | Full screen, and back |
+| 📡 | Bottom left | Live scrolling: a badge shows your connection/role at a glance; tap for the details, 🚀 and 🔗 |
+| ⚙️ | Bottom right | Settings — theme, chord visibility |
 
-Navigate to a song, then tap 🚀 and choose **„Ich selber möchte scrollen"** to scroll it yourself, or **„Ein Gast soll scrollen"** to let someone in the audience take over. In guest mode everyone with the page open is asked whether they want to scroll; the first to accept leads, and the rest follow. Whoever scrolls can only move up and down within that song.
+In the 📡 dialog:
 
-While a session runs, followers are held on the scroller's slide — their own navigation is off. The scroller repeats its position every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap ❌ on 🚀 to end the session: everyone is told they can navigate freely again, and a guest who scrolled is thanked.
+| Button | Function |
+|--------|----------|
+| 🚀 | Start a live-scroll session on the current song (asks for the password once; songs only), or end the running one |
+| 🔗 | Show QR code — scan to open the song book |
 
-The bottom-left status button shows at a glance who's driving — a filled dot for you, a ring while you follow someone else, amber while waiting for a guest, a strike through it if the connection drops — and a tap opens a dialog spelling it out in words: „Du scrollst live", „Warte auf Gast …", „Gast scrollt", „Du scrollst für alle", „Folgt", or „Keine Verbindung".
+Navigate to a song, then tap 📡 › 🚀 and choose **„Ich selber möchte scrollen"** to scroll it yourself, or **„Ein Gast soll scrollen"** to let someone in the audience take over. In guest mode everyone with the page open is asked whether they want to scroll; the first to accept leads, and the rest follow. Whoever scrolls can only move up and down within that song.
+
+While a session runs, followers are held on the scroller's slide — their own navigation is off. The scroller repeats its position every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap 📡 › 🚀 „Live-Scrollen beenden" to end the session: everyone is told they can navigate freely again, and a guest who scrolled is thanked.
+
+The badge on 📡 shows at a glance who's driving — a filled dot for you, a ring while you follow someone else, amber while waiting for a guest, a strike through it if the connection drops — and a tap opens a dialog spelling it out in words: „Du scrollst live", „Warte auf Gast …", „Gast scrollt", „Du scrollst für alle", „Folgt", or „Keine Verbindung".
 
 The presenter's tab stays presenter — and keeps its live session — when it reloads.
 

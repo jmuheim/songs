@@ -1,17 +1,15 @@
 <div id="top-left-controls" class="controls-group">
-  <button id="show-qr" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">🔗</span> <span class="visually-hidden">Show QR code</span></button>
   <a href="#/1" id="go-to-toc" class="ctrl"><span aria-hidden="true">📖</span> <span class="visually-hidden">Table of contents</span></a>
 </div>
 <div id="top-right-controls" class="controls-group">
   <button id="fullscreen-toggle" class="ctrl" aria-pressed="false" hidden><span aria-hidden="true">↕️</span> <span class="visually-hidden">Vollbild</span></button>
-  <button id="open-settings" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">⚙️</span> <span class="visually-hidden">Settings</span></button>
 </div>
 <div id="multiplex-toast" role="status" aria-live="polite"></div>
 <div id="bottom-left-controls" class="controls-group controls-bottom">
-  <button id="multiplex-status-button" class="ctrl" aria-haspopup="dialog"><span class="visually-hidden" id="multiplex-status" role="status">Kein Live-Scrollen aktiv</span></button>
+  <button id="multiplex-status-button" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">📡</span> <span class="visually-hidden" id="multiplex-status" role="status">Kein Live-Scrollen aktiv</span></button>
 </div>
 <div id="bottom-right-controls" class="controls-group controls-bottom">
-  <button id="master-mode" class="ctrl" aria-haspopup="dialog" aria-pressed="false" hidden><span aria-hidden="true">🚀</span> <span class="visually-hidden" id="master-mode-label">Live-Scrollen starten</span></button>
+  <button id="open-settings" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">⚙️</span> <span class="visually-hidden">Settings</span></button>
 </div>
 <script>
   // Space on a focused button (or chord, see chords.js) presses it, and Reveal must not turn the page
@@ -263,10 +261,15 @@
 
 <dialog id="multiplex-info-modal" class="overlay-modal" aria-labelledby="multiplex-info-title">
   <div class="modal-box">
-    <h2 id="multiplex-info-title" tabindex="-1" autofocus>Multiplex</h2>
+    <h2 id="multiplex-info-title" tabindex="-1" autofocus>Live-Scrollen</h2>
     <p id="multiplex-info-status"></p>
     <p id="multiplex-info-legend">●&nbsp;Du scrollst &nbsp;○&nbsp;Du folgst &nbsp;●&nbsp;Warte auf Gast &nbsp;⦸&nbsp;Keine Verbindung</p>
-    <button id="multiplex-info-close">Schliessen</button>
+    <div class="modal-buttons modal-buttons-stacked">
+      <button id="master-mode" aria-haspopup="dialog" aria-pressed="false" aria-describedby="master-mode-hint"><span aria-hidden="true">🚀</span> <span id="master-mode-label">Live-Scrollen starten</span></button>
+      <p id="master-mode-hint" hidden>Live-Scrollen lässt sich nur auf einem Lied starten.</p>
+      <button id="show-qr" aria-haspopup="dialog"><span aria-hidden="true">🔗</span> QR-Code zeigen</button>
+      <button id="multiplex-info-close">Schliessen</button>
+    </div>
   </div>
 </dialog>
 
@@ -347,6 +350,7 @@ window.addEventListener('load', function() {
   // ---- Controls and dialogs ----
   var masterBtn   = document.getElementById('master-mode');
   var masterLabel = document.getElementById('master-mode-label');
+  var masterHint  = document.getElementById('master-mode-hint');
   var masterModal = document.getElementById('master-modal');
   var masterPw    = document.getElementById('master-pw');
   var choiceModal = document.getElementById('scroll-choice-modal');
@@ -418,7 +422,7 @@ window.addEventListener('load', function() {
   }
 
   // The title, the table of contents and the introduction are not songs. A live
-  // session only makes sense on a song, so 🚀 is hidden off these (see
+  // session only makes sense on a song, so 🚀 is disabled off these (see
   // updateButton), and ending one drops everyone back onto the TOC (gotoToc).
   // The title slide carries no id of its own any more (see build_helpers.rb's
   // rename_title_slide_id) — it's matched by its class below instead; TOC and
@@ -872,15 +876,19 @@ window.addEventListener('load', function() {
     masterBtn.classList.toggle('session-active', active);
     masterBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
     masterLabel.textContent = active ? 'Live-Scrollen beenden' : 'Live-Scrollen starten';
-    // 🚀 only makes sense on a song: hidden elsewhere, not just disabled. While
-    // a session is active onSong() is always true anyway — the scroller can't
-    // leave the song and every follower is snapped to it — so this one check
-    // covers both starting and ending.
-    masterBtn.hidden = !onSong();
+    // 🚀 only makes sense on a song: disabled elsewhere, with the hint saying
+    // why. While a session is active onSong() is always true anyway — the
+    // scroller can't leave the song and every follower is snapped to it — so
+    // this one check covers both starting and ending.
+    masterBtn.disabled = !onSong();
+    masterHint.hidden = onSong();
   }
 
   // ---- Buttons and dialogs ----
+  // 🚀 and 🔗 sit in the 📡 dialog: it closes first, so the next one returns
+  // the focus to 📡 when it closes in turn.
   masterBtn.addEventListener('click', function() {
+    multiplexModal.close();
     if (isPresenter && session) { endSession(); return; }
     if (authed) { openChoice(); return; }
     masterModal.showModal();
@@ -1000,7 +1008,7 @@ window.addEventListener('load', function() {
     qrModal.showModal();
   }
 
-  showQrBtn.addEventListener('click', showQrModal);
+  showQrBtn.addEventListener('click', function() { multiplexModal.close(); showQrModal(); });
   document.getElementById('qr-close').addEventListener('click', function() { qrModal.close(); });
 
   // ---- Multiplex status dialog ----

@@ -28,11 +28,23 @@ RSpec.describe 'index.html', :js, type: :feature do
     page.execute_script("document.getElementById('#{id}').click()") # e.target must be the overlay, not a child
   end
 
+  # 🚀 and 🔗 sit in the live-scroll dialog behind 📡 (bottom left)
+  def open_live_scroll_dialog
+    find('#multiplex-status-button').click
+    expect(page).to have_visible('#multiplex-info-modal')
+  end
+
+  # 🚀 starts or ends a session; label is what it reads right now
+  def press_master_mode(label)
+    open_live_scroll_dialog
+    within('#multiplex-info-modal') { click_button("🚀 #{label}") }
+  end
+
   # Enter the password, then pick who scrolls. The heartbeat is shortened so
   # late joiners and the end-of-session notice arrive quickly. Presenter tabs.
   def start_scroll_session(mode:, heartbeat: 200)
     page.execute_script("window.MULTIPLEX.heartbeat = #{heartbeat}")
-    click_button('🚀 Live-Scrollen starten')
+    press_master_mode('Live-Scrollen starten')
     within('#master-modal') do
       find('#master-pw').set(page.evaluate_script("window.MULTIPLEX.password"))
       click_button('Weiter')
@@ -137,20 +149,17 @@ RSpec.describe 'index.html', :js, type: :feature do
     it 'has the correct DOM structure and initial state' do
       expect(page).to have_css('section.deck-title-slide.present')
       expect(page.evaluate_script("document.documentElement.lang")).to eq('de-CH')
-      within('#top-left-controls') do
-        expect(page).to have_button('🔗 Show QR code')
-        expect(page).to have_link('📖 Table of contents')
-      end
-      within('#top-right-controls') do
-        expect(page).to have_button('↕️ Vollbild')
-        expect(page).to have_button('⚙️ Settings')
-      end
+      # One control per corner, nothing more
+      expect(page).to have_css('.controls-group .ctrl', count: 4)
+      within('#top-left-controls') { expect(page).to have_link('📖 Table of contents') }
+      within('#top-right-controls') { expect(page).to have_button('↕️ Vollbild') }
       within('#bottom-left-controls') do
-        expect(page).to have_css('#multiplex-status-button[aria-haspopup="dialog"]')
+        expect(page).to have_css('#multiplex-status-button[aria-haspopup="dialog"]', text: '📡')
       end
-      # 🚀 only shows on a song — hidden on the title slide (see '🚀 visibility' below)
-      expect(page).not_to have_button('🚀 Live-Scrollen starten')
-      expect(page).to have_css('#master-mode', visible: :hidden)
+      within('#bottom-right-controls') { expect(page).to have_button('⚙️ Settings') }
+      # 🚀 and 🔗 sit in the 📡 dialog, out of sight until it opens
+      expect(page).to have_css('#multiplex-info-modal #master-mode', visible: :hidden)
+      expect(page).to have_css('#multiplex-info-modal #show-qr', visible: :hidden)
 
       socket_id = page.evaluate_script("window.MULTIPLEX && window.MULTIPLEX.socketId")
       expect(socket_id).not_to be_nil
@@ -846,15 +855,15 @@ RSpec.describe 'index.html', :js, type: :feature do
         page.evaluate_script("Reveal.slide(3, 0)") # 🚀 only starts a session from a song
         wait_for_js("Reveal.getIndices().h === 3")
         expect(page).not_to have_visible('#master-modal')
-        expect(page).to have_css('#master-mode[aria-pressed="false"]', text: /🚀\s+Live-Scrollen starten/)
+        expect(page).to have_css('#master-mode[aria-pressed="false"]', text: /🚀\s+Live-Scrollen starten/, visible: :all)
 
-        click_button('🚀 Live-Scrollen starten')
+        press_master_mode('Live-Scrollen starten')
         expect(page).to have_visible('#master-modal')
         expect(active_element_id).to eq('master-pw')
         backdrop_click('master-modal')
         expect(page).not_to have_visible('#master-modal')
 
-        click_button('🚀 Live-Scrollen starten')
+        press_master_mode('Live-Scrollen starten')
         within('#master-modal') do
           find('#master-pw').set('something')
           click_button('Abbrechen')
@@ -862,7 +871,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).not_to have_visible('#master-modal')
         expect(page.evaluate_script("document.getElementById('master-pw').value")).to be_empty
 
-        click_button('🚀 Live-Scrollen starten')
+        press_master_mode('Live-Scrollen starten')
         within('#master-modal') do
           find('#master-pw').set('wrongpassword')
           click_button('Weiter')
@@ -878,14 +887,14 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).not_to have_visible('#master-modal')
         # The choice dialog opens; no session is live yet.
         expect(page).to have_visible('#scroll-choice-modal')
-        expect(page).to have_no_css('#master-mode.session-active')
+        expect(page).to have_no_css('#master-mode.session-active', visible: :all)
 
         within('#scroll-choice-modal') { click_button('Abbrechen') }
         expect(page).not_to have_visible('#scroll-choice-modal')
-        expect(page).to have_no_css('#master-mode.session-active')
+        expect(page).to have_no_css('#master-mode.session-active', visible: :all)
 
         # Already authenticated: 🚀 goes straight to the choice, no password.
-        click_button('🚀 Live-Scrollen starten')
+        press_master_mode('Live-Scrollen starten')
         expect(page).to have_visible('#scroll-choice-modal')
         expect(page).not_to have_visible('#master-modal')
         within('#scroll-choice-modal') { click_button('Abbrechen') }
@@ -896,28 +905,37 @@ RSpec.describe 'index.html', :js, type: :feature do
         wait_for_reveal
         page.evaluate_script("Reveal.slide(3, 0)")
         wait_for_js("Reveal.getIndices().h === 3")
-        click_button('🚀 Live-Scrollen starten')
+        press_master_mode('Live-Scrollen starten')
         expect(page).to have_visible('#scroll-choice-modal')
         expect(page).not_to have_visible('#master-modal')
         within('#scroll-choice-modal') { click_button('Abbrechen') }
       end
     end
 
-    describe '🚀 visibility' do
+    describe '🚀 on a song only' do
       before { load_presentation }
 
-      it 'shows 🚀 only on a song — hidden on the title, the TOC and the introduction' do
-        master_hidden_at = lambda do |h|
+      it 'enables 🚀 only on a song — disabled, with the hint saying why, on the title, the TOC and the introduction' do
+        master_disabled_at = lambda do |h|
           page.evaluate_script("Reveal.slide(#{h}, 0)")
           wait_for_js("Reveal.getIndices().h === #{h}")
-          page.evaluate_script("document.getElementById('master-mode').hidden")
+          page.evaluate_script("document.getElementById('master-mode').disabled")
         end
 
-        wait_for_js("document.getElementById('master-mode').hidden === true") # title slide on load
-        expect(master_hidden_at.call(1)).to be true  # TOC
-        expect(master_hidden_at.call(2)).to be true  # Introduction (a stack; its slug sits on the first sub-slide)
-        expect(master_hidden_at.call(3)).to be false # the first song
-        expect(master_hidden_at.call(1)).to be true  # back off a song
+        wait_for_js("document.getElementById('master-mode').disabled === true") # title slide on load
+        open_live_scroll_dialog
+        within('#multiplex-info-modal') do
+          expect(page).to have_button('🚀 Live-Scrollen starten', disabled: true)
+          expect(page).to have_css('#master-mode-hint', text: 'nur auf einem Lied')
+        end
+        press(:escape)
+        expect(master_disabled_at.call(1)).to be true  # TOC
+        expect(master_disabled_at.call(2)).to be true  # Introduction (a stack; its slug sits on the first sub-slide)
+        expect(master_disabled_at.call(3)).to be false # the first song
+        open_live_scroll_dialog
+        expect(page).to have_no_css('#master-mode-hint', visible: true)
+        press(:escape)
+        expect(master_disabled_at.call(1)).to be true  # back off a song
       end
     end
 
@@ -935,7 +953,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           page.evaluate_script("Reveal.slide(3, 0)") # the first song
           wait_for_js("Reveal.getIndices().h === 3")
           start_scroll_session(mode: :self)
-          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/)
+          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/, visible: :all)
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
           expect(page).to have_css('#multiplex-status-button.multiplex-driving')
           expect(page).not_to have_css('#multiplex-toast.visible', text: 'Es geht gleich los!') # the presenter announces to the room, not to itself
@@ -1022,7 +1040,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         using_session(:presenter) do
           page.refresh
           wait_for_reveal
-          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/)
+          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/, visible: :all)
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
         end
@@ -1039,8 +1057,8 @@ RSpec.describe 'index.html', :js, type: :feature do
 
         # Ending drops everyone back on the TOC, frees them, and shows the notice
         using_session(:presenter) do
-          click_button('🚀 Live-Scrollen beenden')
-          expect(page).to have_no_css('#master-mode.session-active')
+          press_master_mode('Live-Scrollen beenden')
+          expect(page).to have_no_css('#master-mode.session-active', visible: :all)
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
           wait_for_js("Reveal.getIndices().h === 1") # sent to the table of contents
           expect(slide_indices).to eq([1, 0])
@@ -1135,7 +1153,7 @@ RSpec.describe 'index.html', :js, type: :feature do
 
         # Ending thanks the guest, frees the room, and sends everyone to the TOC
         using_session(:presenter) do
-          click_button('🚀 Live-Scrollen beenden')
+          press_master_mode('Live-Scrollen beenden')
           wait_for_js("Reveal.getIndices().h === 1")
           expect(slide_indices).to eq([1, 0])
         end
@@ -1189,7 +1207,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           page.execute_script("window._phantomVolunteer()")
           expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
           sleep 0.8 # well past the 500ms release-checker tick
-          expect(page).to have_css('#master-mode.session-active')
+          expect(page).to have_css('#master-mode.session-active', visible: :all)
           expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
         end
       end
@@ -1221,7 +1239,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           # on regardless. A flaky connection to the guest must not cost the
           # presenter its own ability to end the session.
           sleep 1.1
-          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/)
+          expect(page).to have_css('#master-mode.session-active', text: /🚀\s+Live-Scrollen beenden/, visible: :all)
           # Told why the view has stopped moving, instead of silently wondering
           expect(page).to have_css('#multiplex-toast.visible',
             text: 'Keine Rückmeldung vom Gast mehr – du kannst die Sitzung bei Bedarf beenden')
@@ -1230,8 +1248,8 @@ RSpec.describe 'index.html', :js, type: :feature do
           page.execute_script("window._phantomState()")
           expect(page).to have_css('#multiplex-toast.visible', text: 'Der Gast ist wieder verbunden')
 
-          click_button('🚀 Live-Scrollen beenden')
-          expect(page).to have_no_css('#master-mode.session-active')
+          press_master_mode('Live-Scrollen beenden')
+          expect(page).to have_no_css('#master-mode.session-active', visible: :all)
           wait_for_js("Reveal.getIndices().h === 1")
           expect(slide_indices).to eq([1, 0])
         end
@@ -1277,7 +1295,7 @@ RSpec.describe 'index.html', :js, type: :feature do
             });
           JS
 
-          click_button('🚀 Live-Scrollen beenden')
+          press_master_mode('Live-Scrollen beenden')
           sleep 1.2 # past the retries' 1s spread
           expect(page.evaluate_script('window._endMessages.length')).to be >= 2
         end
@@ -1315,6 +1333,10 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_visible('#multiplex-info-modal')
         expect(active_element_id).to eq('multiplex-info-title')
         expect(page).to have_css('#multiplex-info-status', text: 'Kein Live-Scrollen aktiv')
+        within('#multiplex-info-modal') do # what used to be corner buttons of their own
+          expect(page).to have_button('🚀 Live-Scrollen starten', disabled: :all)
+          expect(page).to have_button('🔗 QR-Code zeigen')
+        end
 
         # Reveal listens on the document: nothing pressed inside the dialog reaches it
         before = slide_indices
@@ -1361,14 +1383,22 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
       before { load_presentation }
 
+      # 🔗 sits in the 📡 dialog, which closes as the QR opens
+      def open_qr
+        open_live_scroll_dialog
+        within('#multiplex-info-modal') { click_button('🔗 QR-Code zeigen') }
+        expect(page).not_to have_visible('#multiplex-info-modal')
+      end
+
       it 'keeps the keys to itself, and closes on Esc, close button and outside click' do
         expect(page).not_to have_visible('#qr-modal')
-        expect(page).to have_css('#show-qr[aria-haspopup="dialog"]')
-        expect(tooltip_shown?('show-qr')).to be false
-        find('#show-qr').hover
-        expect(tooltip_shown?('show-qr')).to be true
+        expect(page).to have_css('#show-qr[aria-haspopup="dialog"]', visible: :all)
+        # A corner button's label is its tooltip, on hover
+        expect(tooltip_shown?('multiplex-status-button')).to be false
+        find('#multiplex-status-button').hover
+        expect(tooltip_shown?('multiplex-status-button')).to be true
 
-        click_button('Show QR code')
+        open_qr
         expect(page).to have_visible('#qr-modal')
         expect(active_element_id).to eq('qr-title')
         expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"]', visible: :all)
@@ -1415,13 +1445,13 @@ RSpec.describe 'index.html', :js, type: :feature do
         press(:escape)
         expect(page).not_to have_visible('#qr-modal')
         expect(page.evaluate_script("Reveal.isOverview()")).to be false
-        expect(active_element_id).to eq('show-qr')
+        expect(active_element_id).to eq('multiplex-status-button') # back where the way in began
 
-        click_button('Show QR code')
+        open_qr
         within(find('#qr-modal', visible: :all)) { click_button('Schliessen') }
         expect(page).not_to have_visible('#qr-modal')
 
-        click_button('Show QR code')
+        open_qr
         expect(page).to have_visible('#qr-modal')
         backdrop_click('qr-modal')
         expect(page).not_to have_visible('#qr-modal')
