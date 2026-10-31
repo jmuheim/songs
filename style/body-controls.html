@@ -549,13 +549,10 @@ window.addEventListener('load', function() {
     return a.indexh === b.indexh && a.indexv === b.indexv && a.indexf === b.indexf;
   }
 
-  // The scroller sends where it is, not how it got there: while it browses the
-  // overview, the slide it opened it on is repeated instead of a stray jump.
-  var presented = null;
-  Reveal.on('overviewshown', function() { if (amScroller()) presented = Reveal.getState(); });
-  Reveal.on('overviewhidden', function() { presented = null; });
+  // The scroller sends the slide it is on, never a pause of its own screen
+  // (nor the overview, which it has none of while it scrolls: applyNavMode).
   function stateToSend() {
-    var s = presented || Reveal.getState();
+    var s = Reveal.getState();
     return { indexh: s.indexh, indexv: s.indexv, indexf: s.indexf };
   }
 
@@ -642,15 +639,24 @@ window.addEventListener('load', function() {
     // contents (the slidechanged snap-back undoes it, but not before an
     // unwanted flash).
     goToTocLink.hidden = mode !== 'free';
+    // Nor is there an overview while a song is live-scrolled: the scroller's
+    // would show neighbouring songs it can't reach, and a click on one jumped
+    // there and was snapped back. One already open closes first, unheard by
+    // the snap-back below, and before overview: false, which leaves Reveal
+    // unable to close it.
+    if (mode !== 'free' && Reveal.isOverview()) {
+      applyingRemote = true;
+      try { Reveal.toggleOverview(false); } finally { applyingRemote = false; }
+    }
     if (mode === 'free') {
-      Reveal.configure({ keyboard: true, touch: true, controls: true });
+      Reveal.configure({ keyboard: true, touch: true, controls: true, overview: true });
     } else if (mode === 'scroller') {
       // Lock to the song: vertical keys keep working, horizontal ones don't.
       if (Reveal.getIndices().h !== live.song) {
         applyingRemote = true;
         try { Reveal.slide(live.song, 0); } finally { applyingRemote = false; }
       }
-      Reveal.configure({ keyboard: SCROLLER_KEYS, touch: true, controls: false });
+      Reveal.configure({ keyboard: SCROLLER_KEYS, touch: true, controls: false, overview: false });
       broadcastState();
     } else { // follower: no navigation at all, snapped to the scroller
       // Entering follow restarts the silence grace period. The host becomes a
@@ -658,7 +664,7 @@ window.addEventListener('load', function() {
       // own heartbeats — so without this its lastLiveAt would still be 0 and
       // the checker below would flag the guest before its first state arrived.
       lastLiveAt = Date.now();
-      Reveal.configure({ keyboard: false, touch: false, controls: false });
+      Reveal.configure({ keyboard: false, touch: false, controls: false, overview: false });
       follow(scrollerState());
     }
     updateStatus();
@@ -903,7 +909,7 @@ window.addEventListener('load', function() {
 
   // The scroller leads and snaps back if it ever leaves its song; a follower
   // cannot wander off — not even by clicking a link.
-  ['slidechanged', 'fragmentshown', 'fragmenthidden', 'overviewhidden'].forEach(function(ev) {
+  ['slidechanged', 'fragmentshown', 'fragmenthidden'].forEach(function(ev) {
     Reveal.on(ev, function() {
       if (applyingRemote) return;
       if (amScroller()) {

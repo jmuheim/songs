@@ -1332,6 +1332,15 @@ RSpec.describe 'index.html', :js, type: :feature do
           press([:shift, :space])
           wait_for_js("Reveal.getIndices().v === 1")
           expect(slide_indices).to eq([3, 1])
+
+          # No overview either, by Esc or O: it showed the neighbouring songs,
+          # and a click on one jumped there and was snapped back. One key at a
+          # time, since a second press would close what the first opened.
+          press(:escape)
+          expect(page).to have_no_css('.reveal.overview')
+          press('o')
+          expect(page).to have_no_css('.reveal.overview')
+          expect(slide_indices).to eq([3, 1])
         end
 
         # The song book reopened mid-song restores the role on both sides,
@@ -1408,7 +1417,14 @@ RSpec.describe 'index.html', :js, type: :feature do
           page.execute_script("window.MULTIPLEX.heartbeat = 10000")
           page.evaluate_script("Reveal.slide(5, 0)") # I Have a Dream
           wait_for_js("Reveal.getIndices().h === 5")
+          # Free again, the overview is back. Left open as the live scroll
+          # starts, it closes: switched off while open, Reveal couldn't close it.
+          # O, not Esc: the focus is back on 📡, where Esc hides its tooltip.
+          press('o')
+          expect(page).to have_css('.reveal.overview')
           start_live(mode: :self)
+          expect(page).to have_no_css('.reveal.overview')
+          expect(slide_indices).to eq([5, 0])
         end
         using_session(:client) do
           wait_for_js("Reveal.getIndices().h === 5")

@@ -98,7 +98,7 @@ In the 📡 dialog:
 | 🚪 | Guests: „Session verlassen" — this device leaves the session |
 | 🏁 | Host only: „Session beenden" — everyone leaves the session |
 
-Navigate to a song, then tap 📡 › 🚀 and choose **„Ich selber möchte scrollen"** to scroll it yourself, or **„Ein Gast soll scrollen"** to let someone in the audience take over. In guest mode everyone in the session is asked whether they want to scroll; the first to accept leads, and the rest follow. Whoever scrolls can only move up and down within that song.
+Navigate to a song, then tap 📡 › 🚀 and choose **„Ich selber möchte scrollen"** to scroll it yourself, or **„Ein Gast soll scrollen"** to let someone in the audience take over. In guest mode everyone in the session is asked whether they want to scroll; the first to accept leads, and the rest follow. Whoever scrolls can only move up and down within that song, and has no overview (Esc/O) meanwhile.
 
 While a song is live-scrolled, followers are held on the scroller's slide — their own navigation is off. The host and the scroller repeat themselves every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap 📡 › 🚀 „Live-Scrollen beenden" to end it: everyone lands on the table of contents, is told they can navigate freely again, and a guest who scrolled is thanked.
 
