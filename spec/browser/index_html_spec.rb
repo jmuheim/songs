@@ -164,7 +164,10 @@ RSpec.describe 'index.html', :js, type: :feature do
   # emits pointerType 'mouse', which both Reveal and the song-book's swipe guard
   # ignore. We drive the very events they listen to — pointer events with
   # pointerType 'touch' where the browser has them (Chrome does), touch events
-  # otherwise.
+  # otherwise. Each swipe is a new finger with a pointerId of its own, as on a
+  # real touch screen: Reveal keeps every finger down in a map by that id, and
+  # with one id for all, a finger it never heard come up was overwritten by
+  # the next instead of lingering as a second one.
   def swipe(dx:, dy:)
     page.execute_script(<<~JS, dx, dy)
       var dx = arguments[0], dy = arguments[1];
@@ -172,8 +175,9 @@ RSpec.describe 'index.html', :js, type: :feature do
       var el = Reveal.getCurrentSlide();
       var r = el.getBoundingClientRect();
       var x0 = Math.round(r.left + r.width / 2), y0 = Math.round(r.top + r.height / 2);
+      var id = window.swipePointerId = (window.swipePointerId || 1) + 1;
       function fire(type, x, y) {
-        el.dispatchEvent(new PointerEvent(type, { pointerId: 1, pointerType: 'touch',
+        el.dispatchEvent(new PointerEvent(type, { pointerId: id, pointerType: 'touch',
           clientX: Math.round(x), clientY: Math.round(y), bubbles: true, cancelable: true }));
       }
       if (!usePointer) throw new Error('swipe helper assumes pointer events');
@@ -1298,6 +1302,9 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(slide_indices).to eq([3, 1])
 
           # A vertical swipe still scrolls the song: the scroller needs it.
+          # Right after the horizontal one, too: the guard used to swallow
+          # that finger's pointerup, Reveal counted it as still down, and
+          # took every later swipe for a two-finger pinch.
           swipe(dx: 0, dy: 250) # finger down → previous sub-slide
           wait_for_js("Reveal.getIndices().v === 0")
           expect(slide_indices).to eq([3, 0])

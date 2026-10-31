@@ -673,6 +673,10 @@ window.addEventListener('load', function() {
   // swipes fall through untouched. Without this a left/right swipe navigated to
   // the neighbouring song and the slidechanged snap-back returned to the song at
   // v = 0 — the title slide — instead of leaving the scroller where it was.
+  // Only the moves are swallowed, never the finger coming up: Reveal keeps
+  // every finger down in a map until it hears it lift, and counts them. One it
+  // never heard lift stayed in that map for good, every later swipe counted
+  // two fingers, a pinch, and the deck took no more swipes until a reload.
   var usePointer = ('onpointerdown' in window);
   var swipe = null; // { x, y, axis } for the active scroller gesture, else null
   function swipeIsTouch(e) { return usePointer ? e.pointerType === 'touch' : true; }
@@ -690,10 +694,7 @@ window.addEventListener('load', function() {
     }
     if (swipe.axis === 'x') { e.preventDefault(); e.stopPropagation(); }
   }
-  function onSwipeEnd(e) {
-    if (swipe && swipe.axis === 'x') e.stopPropagation();
-    swipe = null;
-  }
+  function onSwipeEnd() { swipe = null; }
   (usePointer ? ['pointerdown'] : ['touchstart']).forEach(function(ev) {
     document.addEventListener(ev, onSwipeStart, true);
   });
