@@ -1027,6 +1027,17 @@ window.addEventListener('load', function() {
   showQrBtn.addEventListener('click', function() { multiplexModal.close(); showQrModal(); });
   document.getElementById('qr-close').addEventListener('click', function() { qrModal.close(); });
 
+  // ---- 📖 ----
+  // Reveal's jump, not the link's: following #/1 is a navigation, and on an
+  // iPhone in Vollbild Safari showed its bars again after it. Paging writes
+  // the URL with replaceState, which it lets be. The href stays, for a new tab
+  // (a modifier key, left alone) and for when this script never ran.
+  goToTocLink.addEventListener('click', function(e) {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    gotoToc();
+  });
+
   // ---- Multiplex status dialog ----
   multiplexBtn.addEventListener('click', function() {
     multiplexInfoStatus.textContent = statusText();

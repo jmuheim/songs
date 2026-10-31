@@ -584,8 +584,12 @@ RSpec.describe 'index.html', :js, type: :feature do
       # The Introduction isn't a song and isn't listed.
       expect(all('#TOC a', visible: :all).size).to eq(song_count)
 
+      # By Reveal's jump, not by following the link: a navigation leaves an
+      # entry in the history, and makes an iPhone's Safari show its bars again
+      history_length = page.evaluate_script('history.length')
       click_link('Table of contents')
       expect(page).to have_css('#TOC.present')
+      expect(page.evaluate_script('history.length')).to eq(history_length)
 
       click_link 'Imagine (John Lennon)'
       expect(page).to have_css('#imagine-john-lennon.present')
