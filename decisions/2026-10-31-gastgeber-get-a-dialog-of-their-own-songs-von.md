@@ -1,0 +1,14 @@
+## 2026-10-31 — The Gastgeber get a dialog of their own, „Songs von"
+
+**Context:** The Gastgeber checkboxes sat in the table of contents' filter bar, next to the two selects. With more than two or three hosts they burst the bar's width. And in a session they were relabelled „Anwesend", which a visitor who has never heard of Gastgeber, sessions or live scrolling would not understand; the book is also browsed outside any Singkreis. The host, on the other hand, had to find the checkboxes on their own after logging in.
+
+**Decision:** The checkboxes move into a `<dialog id="gastgeber-modal">` titled „Songs von", built into `<body>` by `inject_toc_filter`. The bar keeps one button, „Songs von: Alle" (or the ticked names, shortened with „…"), that opens it — for everyone, in or out of a session. The label stays „Songs von" in a session too; an info line says what the boxes mean there (the host's to set, or the host's choice for the guests). When a host has logged in or taken over, the dialog opens at once; for a new session the QR code follows once it is confirmed with „OK". The toast hint added for the same purpose is dropped.
+
+**Reasoning:**
+- **A button always fits.** The bar's width is all the screen has; the number of hosts is not ours to limit.
+- **One neutral word for both uses.** „Songs von" says what the control does for a plain visitor and for a guest in an evening alike; „Anwesend" described the session's reason for it, which is for the host to explain, in the dialog's info line.
+- **Asking beats hinting.** A hint in a toast needs the host to find the checkboxes afterwards, and the QR dialog covered it. A dialog right after login puts the question where the host is looking, and the QR code, which the guests need next, follows it. The host can still skip it with „OK" and change it later from the table of contents.
+- **Outside the slides.** reveal.js keeps every slide but the current one `inert`, and the host logs in on any slide, so the dialog is a child of `<body>` like the others.
+- **All checked at first.** The dialog asks who is *here*, and the usual answer is everyone; unticking the absent is quicker than ticking the present, and a plain visitor sees nothing narrowed down until they narrow it. With every host checked there is no filter at all, so a song without a Gastgeber (who could be played by anyone) stays on the list; unchecking any host brings back the OR over the checked ones, where such a song hides, as before. With none checked, nothing matches and the list says so, rather than quietly showing everything. A session's `present` therefore starts as every Gastgeber, not as an empty list.
+
+Supersedes the placement (not the OR/AND semantics) in [Gastgeber filter uses checkboxes](2026-10-05-gastgeber-filter-uses-checkboxes-not-a-select.md) and the „Anwesend" label in [the host sets who is present for the whole session](2026-10-31-the-host-sets-who-is-present-for-the-whole-session.md).

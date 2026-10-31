@@ -499,7 +499,10 @@ window.addEventListener('load', function() {
   var hostClaim = 0;          // this tab's claim while it hosts
   var heardClaim = 0;         // the highest host claim heard in this session
   var live = null;            // { id, song, songTitle, mode, scrollerId } while a song is live-scrolled
-  var present = [];           // the Gastgeber present this evening, as the host set them (none: no filter)
+  // The Gastgeber whose songs this evening has, as the host ticked them: all of
+  // them until the host says otherwise (and, for a guest, until it has heard)
+  function allHosts() { return window.tocFilter ? tocFilter.allHosts() : []; }
+  var present = allHosts();
   var navMode = 'free';       // 'free' | 'scroller' | 'follower'
   var lastState = null;       // { liveId, state }: the scroller's position, as last received
   var lastLiveAt = 0;         // last word about the live scroll (heartbeat or move)
@@ -770,7 +773,7 @@ window.addEventListener('load', function() {
     }
     if (data.claim < heardClaim) return; // an old host that hasn't heard yet that it was taken over
     heardClaim = data.claim;
-    var heardPresent = data.present || [];
+    var heardPresent = data.present || allHosts();
     if (heardPresent.join(',') !== present.join(',')) {
       present = heardPresent;
       applyPresent();
@@ -1055,10 +1058,22 @@ window.addEventListener('load', function() {
     updateStatus();
     restartHeartbeat();
     showToast(['Du bist jetzt Gastgeber']);
-    // A new session has nobody in it yet: its QR code is the next thing the
-    // host needs, so the guests can join. A taken-over one has them already.
-    if (opened) showQrModal();
+    // First, whose songs the evening has (the guests then see only those): the
+    // dialog opens at once. A new session has nobody in it yet: its QR code is
+    // the next thing the host needs, so the guests can join, and it follows
+    // once the dialog is confirmed. A taken-over session has them already.
+    if (opened) qrPending = true;
+    if (!(window.tocFilter && tocFilter.openDialog()) && opened) showQrAfterHosts();
   }
+
+  var qrPending = false;
+  function showQrAfterHosts() {
+    if (!qrPending) return;
+    qrPending = false;
+    if (secret) showQrModal();
+  }
+  var gastgeberModal = document.getElementById('gastgeber-modal');
+  if (gastgeberModal) gastgeberModal.addEventListener('close', showQrAfterHosts);
 
   function stepDown() {
     isHost = false;
@@ -1114,7 +1129,7 @@ window.addEventListener('load', function() {
     socketId = null;
     heardClaim = 0;
     seenAt = 0;
-    present = [];
+    present = allHosts();
     persistSession();
     applyPresent();
     // Not right away: the host's last words are still being repeated.
@@ -1267,7 +1282,7 @@ window.addEventListener('load', function() {
   if (stored && stored.secret) {
     join(stored.secret);
     heardClaim = stored.heardClaim || 0;
-    present = stored.present || [];
+    present = stored.present || allHosts();
     live = stored.live || null;
     if (stored.hostClaim) {
       isHost = true;

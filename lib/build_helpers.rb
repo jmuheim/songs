@@ -242,7 +242,7 @@ module BuildHelpers
     fieldset.add_child(legend)
     fieldset.add_child(toc_filter_select(doc, id: 'toc-filter-sprache', label: 'Sprache', options: sprachen)) unless sprachen.empty?
     fieldset.add_child(toc_filter_select(doc, id: 'toc-filter-genre', label: 'Genre', options: genres)) unless genres.empty?
-    fieldset.add_child(toc_filter_checkboxes(doc, id: 'toc-filter-gastgeber', label: 'Gastgeber', options: gastgeber)) unless gastgeber.empty?
+    fieldset.add_child(toc_filter_gastgeber_button(doc)) unless gastgeber.empty?
     reset = Nokogiri::XML::Node.new('button', doc)
     reset['type'] = 'button'
     reset['id'] = 'toc-filter-reset'
@@ -250,6 +250,10 @@ module BuildHelpers
     fieldset.add_child(reset)
 
     toc.prepend_child(fieldset)
+    # The Gastgeber live in a dialog of their own, outside the slides: it is
+    # opened from any slide (a host logging in on a song), and reveal.js keeps
+    # every slide but the current one inert.
+    doc.at_css('body')&.add_child(toc_filter_gastgeber_dialog(doc, options: gastgeber)) unless gastgeber.empty?
 
     empty_message = Nokogiri::XML::Node.new('p', doc)
     empty_message['id'] = 'toc-filter-empty'
@@ -367,40 +371,75 @@ module BuildHelpers
     wrapper
   end
 
-  # A checkbox group, for a category (Gastgeber) where more than one value can
-  # be active at once — unlike toc_filter_select's single-choice <select>. A
-  # plain `role="group"` <div> (not a nested <fieldset>/<legend>: Chrome and
-  # Firefox both still render a <legend> as a caption on its own line even
-  # inside a flex fieldset, which inflated the whole bar's height enough to
-  # collide with the sticky-near-end-of-scroll edge case — see
-  # decisions/2026-10-05-gastgeber-filter-uses-checkboxes-not-a-select.md)
-  # carries the group semantics instead, labelled by a visible <span> playing
-  # the same role Sprache/Genre's own <label> does. Each checkbox carries `id`
-  # solely so its <label for> can target it; the value, not the id, is what
-  # toc-filter.js reads.
-  def toc_filter_checkboxes(doc, id:, label:, options:)
+  # The bar's one control for Gastgeber: a button that opens the dialog below
+  # and names the selection (toc-filter.js keeps the name current). A row of
+  # checkboxes did not fit the bar, whose width is all the screen has, once a
+  # book names more than two or three hosts.
+  def toc_filter_gastgeber_button(doc)
+    button = Nokogiri::XML::Node.new('button', doc)
+    button['type'] = 'button'
+    button['id'] = 'toc-filter-gastgeber-open'
+    button['aria-haspopup'] = 'dialog'
+    button.add_child(Nokogiri::XML::Text.new('Songs von: ', doc))
+    selection = Nokogiri::XML::Node.new('span', doc)
+    selection['class'] = 'toc-filter-selection'
+    selection.content = 'Alle'
+    button.add_child(selection)
+    button
+  end
+
+  # The Gastgeber, as checkboxes in a dialog of their own — a category where
+  # more than one value can be active at once, unlike toc_filter_select's
+  # single-choice <select> (see
+  # decisions/2026-10-05-gastgeber-filter-uses-checkboxes-not-a-select.md).
+  # Everyone can open it: outside a session it is a filter of one's own, in a
+  # session the host says whose songs the evening has, and the guests see it
+  # (toc-filter.js sets the text and the checkboxes' state). The dialog's title
+  # names the group. Each checkbox carries `id` solely so its <label for> can
+  # target it; the value, not the id, is what toc-filter.js reads.
+  def toc_filter_gastgeber_dialog(doc, options:)
+    dialog = Nokogiri::XML::Node.new('dialog', doc)
+    dialog['id'] = 'gastgeber-modal'
+    dialog['class'] = 'overlay-modal'
+    dialog['aria-labelledby'] = 'gastgeber-title'
+    box = Nokogiri::XML::Node.new('div', doc)
+    box['class'] = 'modal-box'
+    dialog.add_child(box)
+    title = Nokogiri::XML::Node.new('h2', doc)
+    title['id'] = 'gastgeber-title'
+    title['tabindex'] = '-1'
+    title['autofocus'] = 'autofocus'
+    title.content = 'Songs von'
+    box.add_child(title)
+    info = Nokogiri::XML::Node.new('p', doc)
+    info['id'] = 'gastgeber-info'
+    info.content = 'Zeigt nur Lieder dieser Gastgeber.'
+    box.add_child(info)
     group = Nokogiri::XML::Node.new('div', doc)
-    group['class'] = 'toc-filter-field toc-filter-checkboxes'
+    group['class'] = 'toc-filter-checkboxes'
     group['role'] = 'group'
-    group['aria-label'] = label
-    span = Nokogiri::XML::Node.new('span', doc)
-    span['class'] = 'toc-filter-checkboxes-label'
-    span.content = label
-    group.add_child(span)
+    group['aria-labelledby'] = 'gastgeber-title'
+    box.add_child(group)
     options.each_with_index do |opt, i|
-      checkbox_id = "#{id}-#{i}"
+      checkbox_id = "toc-filter-gastgeber-#{i}"
       lbl = Nokogiri::XML::Node.new('label', doc)
       lbl['for'] = checkbox_id
       checkbox = Nokogiri::XML::Node.new('input', doc)
       checkbox['type'] = 'checkbox'
       checkbox['id'] = checkbox_id
-      checkbox['class'] = id
+      checkbox['class'] = 'toc-filter-gastgeber'
       checkbox['value'] = opt
+      checkbox['checked'] = 'checked' # every host, until it is narrowed down
       lbl.add_child(checkbox)
       lbl.add_child(Nokogiri::XML::Text.new(opt, doc))
       group.add_child(lbl)
     end
-    group
+    ok = Nokogiri::XML::Node.new('button', doc)
+    ok['type'] = 'button'
+    ok['id'] = 'gastgeber-ok'
+    ok.content = 'OK'
+    box.add_child(ok)
+    dialog
   end
 
   # Everything below is shared by `build` and spec/support/fixture_builder.rb,

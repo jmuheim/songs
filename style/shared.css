@@ -230,7 +230,7 @@ section.level1 h1 {
 }
 
 /* TOC tag filter (toc-filter.js): a <fieldset> sitting at the top of #TOC with
-   one <select> per category (Sprache, Genre) and a Reset button. Colours are
+   one <select> per category (Sprache, Genre), a „Songs von" button and a Reset button. Colours are
    theme-specific (night.css). Reset browser UA defaults for fieldset/legend
    first, then lay the fields and the button out in a row. */
 #toc-filter {
@@ -255,29 +255,29 @@ section.level1 h1 {
   font-size: 1.5rem;
 }
 
-/* The Gastgeber checkbox group reuses .toc-filter-field's flex layout (a
-   plain role="group" <div>, not a <fieldset>/<legend> — both Chrome and
-   Firefox still render a <legend> as its own line even inside a flex
-   fieldset, which inflated the whole bar's height enough to collide with
-   the sticky-near-end-of-scroll edge case). Its label span is visible, not
-   .visually-hidden — there is no label sitting next to it on screen the way
-   "Sprache" and "Genre" sit next to their selects. */
-.toc-filter-checkboxes {
-  gap: .6em;
+/* „Songs von: …", the bar's one control for the Gastgeber (the checkboxes are
+   in a dialog of their own). The names it lists end in „…" rather than
+   widening the bar. */
+.toc-filter-selection {
+  display: inline-block;
+  max-width: 9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
 }
 
-.toc-filter-checkboxes-label {
-  font-family: sans-serif;
-  font-size: 1.5rem;
+/* The Gastgeber checkboxes, in #gastgeber-modal */
+.toc-filter-checkboxes {
+  margin-bottom: 1.5em;
 }
 
 .toc-filter-checkboxes label {
-  display: flex;
-  align-items: center;
-  gap: .3em;
-  font-family: sans-serif;
-  font-size: 1.5rem;
   cursor: pointer;
+}
+
+.toc-filter-checkboxes input {
+  margin-right: 0.5em;
 }
 
 #toc-filter select,

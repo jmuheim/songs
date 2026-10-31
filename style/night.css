@@ -208,10 +208,6 @@ section#TOC::-webkit-scrollbar-thumb {
   color: var(--r-main-color);
 }
 
-.toc-filter-checkboxes-label {
-  color: var(--r-main-color);
-}
-
 .toc-filter-checkboxes input:focus-visible {
   outline: 3px solid var(--r-main-color);
   outline-offset: 2px;
@@ -703,6 +699,7 @@ dialog.overlay-modal::backdrop {
 }
 
 #host-info,
+#gastgeber-info,
 #qr-info,
 #live-toggle-hint,
 #multiplex-info-join,

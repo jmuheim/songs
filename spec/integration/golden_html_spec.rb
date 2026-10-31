@@ -76,14 +76,22 @@ RSpec.describe 'HTML golden files' do
     expect(doc.at_css('#toc-filter-reset').text.strip).to eq('Reset')
   end
 
-  it 'builds a sorted Gastgeber checkbox group, unlike the single-select Sprache/Genre dropdowns' do
-    group = doc.at_css('#toc-filter div.toc-filter-checkboxes')
+  it 'puts the Gastgeber in a dialog of their own, opened by a "Songs von" button in the bar' do
+    button = doc.at_css('#toc-filter #toc-filter-gastgeber-open')
+    expect(button['aria-haspopup']).to eq('dialog')
+    expect(button.text.strip).to eq('Songs von: Alle')
+    expect(doc.at_css('#toc-filter input[type="checkbox"]')).to be_nil # nothing in the bar to overflow it
+
+    dialog = doc.at_css('body > dialog#gastgeber-modal') # outside the slides, which reveal.js makes inert
+    expect(dialog['aria-labelledby']).to eq('gastgeber-title')
+    expect(dialog.at_css('#gastgeber-title').text.strip).to eq('Songs von')
+    group = dialog.at_css('div.toc-filter-checkboxes')
     expect(group['role']).to eq('group')
-    expect(group['aria-label']).to eq('Gastgeber')
-    expect(group.at_css('span.toc-filter-checkboxes-label').text.strip).to eq('Gastgeber')
+    expect(group['aria-labelledby']).to eq('gastgeber-title')
     checkboxes = group.css('input[type="checkbox"]')
-    expect(checkboxes.map { |cb| cb['value'] }).to eq(%w[Daniel Josua Monika])
-    expect(checkboxes).to all(satisfy { |cb| cb['checked'].nil? }) # none pre-checked
+    expect(checkboxes.map { |cb| cb['value'] }).to eq(%w[Daniel Josua Monika]) # sorted, unlike the single-select dropdowns
+    expect(checkboxes).to all(satisfy { |cb| cb['checked'] }) # every host, until narrowed down
+    expect(dialog.at_css('#gastgeber-ok').text.strip).to eq('OK')
   end
 
   it 'renders a hidden "no results" message after the TOC list, for the filter to reveal' do

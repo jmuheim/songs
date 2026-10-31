@@ -58,17 +58,47 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
     end
   end
 
-  it 'offers a Gastgeber checkbox group, all unchecked, under its own visible label' do
-    within '#toc-filter div.toc-filter-checkboxes' do
-      expect(page).to have_css('span.toc-filter-checkboxes-label', text: 'Gastgeber')
-      expect(page).to have_unchecked_field('Daniel')
-      expect(page).to have_unchecked_field('Josua')
-      expect(page).to have_unchecked_field('Monika')
+  # The Gastgeber are a „Songs von" button in the bar, whose dialog holds the
+  # checkboxes; they filter at once, so the dialog can stay open or be closed
+  def open_gastgeber
+    click_button 'Songs von'
+    expect(page).to have_css('#gastgeber-modal[open]')
+  end
+
+  def close_gastgeber
+    within('#gastgeber-modal') { click_button 'OK' }
+    expect(page).to have_no_css('#gastgeber-modal[open]')
+  end
+
+  it 'offers the Gastgeber in a dialog of their own, all checked, with "Alle" on the button' do
+    expect(page).to have_css('#toc-filter #toc-filter-gastgeber-open', text: 'Songs von: Alle')
+    expect(page).to have_no_css('#toc-filter input[type="checkbox"]') # nothing in the bar to overflow it
+    expect(page).to have_no_css('#gastgeber-modal[open]')
+    open_gastgeber
+    within '#gastgeber-modal' do
+      expect(page).to have_css('h2', text: 'Songs von')
+      expect(page).to have_checked_field('Daniel')
+      expect(page).to have_checked_field('Josua')
+      expect(page).to have_checked_field('Monika')
+      expect(page).to have_no_css('input[disabled]') # a filter of one's own, outside a session
     end
   end
 
+  it 'names the checked Gastgeber on the button' do
+    open_gastgeber
+    uncheck 'Daniel'
+    close_gastgeber
+    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Songs von: Josua, Monika')
+    open_gastgeber
+    check 'Daniel'
+    close_gastgeber
+    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Songs von: Alle')
+  end
+
   it 'filters to songs naming any checked Gastgeber (OR), ANDed with Sprache/Genre' do
-    check 'Josua'
+    open_gastgeber
+    uncheck 'Daniel'
+    uncheck 'Monika'
     # Josua = {74-75, Across the universe}
     expect(visible_entries).to contain_exactly('74-75 (The Connells)', 'Across the universe (Beatles)')
     expect(page).to have_css('#TOC.present') # a checkbox change must not navigate the deck
@@ -78,24 +108,43 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
     expect(visible_entries).to contain_exactly(
       '74-75 (The Connells)', 'Across the universe (Beatles)', 'I Have a Dream (ABBA)'
     )
+    close_gastgeber # a modal dialog makes the bar behind it inert
 
     select 'Englisch', from: 'Sprache'
     # ANDed with Sprache: Englisch drops 74-75 (Deutsch), leaving the two Englisch hosts of Josua/Monika.
     expect(visible_entries).to contain_exactly('Across the universe (Beatles)', 'I Have a Dream (ABBA)')
 
-    uncheck 'Josua'
-    uncheck 'Monika'
     select 'Alle', from: 'Sprache'
+    open_gastgeber
+    check 'Daniel'
+    check 'Josua'
+    check 'Monika'
+    close_gastgeber
     expect(visible_entries).to include('74-75 (The Connells)') # filters cleared, back to everything
   end
 
-  it 'hides untagged entries while a Gastgeber filter is active, and clears checkboxes on Reset' do
-    check 'Daniel'
+  it 'hides untagged entries while a Gastgeber is unchecked, and checks every Gastgeber again on Reset' do
+    open_gastgeber
+    uncheck 'Josua'
+    uncheck 'Monika'
+    close_gastgeber
     expect(visible_entries).to eq(['Imagine (John Lennon)']) # Riptide has no Gastgeber at all
 
     click_button 'Reset'
     expect(visible_entries).to include('Riptide - Vance Joy')
-    expect(page).to have_unchecked_field('Daniel')
+    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Songs von: Alle')
+    open_gastgeber
+    expect(page).to have_checked_field('Josua')
+    expect(page).to have_checked_field('Monika')
+  end
+
+  it 'shows nothing, and says so, with no Gastgeber checked' do
+    open_gastgeber
+    %w[Daniel Josua Monika].each { |name| uncheck name }
+    close_gastgeber
+    expect(page).to have_no_css(VISIBLE_ENTRY)
+    expect(page).to have_css('#toc-filter-empty', text: 'Keine Ergebnisse')
+    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Songs von: Niemand')
   end
 
   it 'filters to the selected Sprache, and restores everything on "Alle", without paging the deck' do

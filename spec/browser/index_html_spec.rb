@@ -54,8 +54,10 @@ RSpec.describe 'index.html', :js, type: :feature do
   # this tab is in. `label` is what the login button reads. The heartbeat is
   # shortened first, so whoever joins late and the end of a live scroll
   # arrive quickly. The password is asked only the first time on a device.
-  # A new session shows its QR code right away; it is closed again here.
-  def log_in_as_host(heartbeat: 200, label: 'Als Gastgeber anmelden')
+  # Right after, the „Songs von" dialog asks whose songs the evening has
+  # (`only`: the Gastgeber to leave ticked, all by default); it is confirmed
+  # here. A new session then shows its QR code; it is closed again here.
+  def log_in_as_host(heartbeat: 200, label: 'Als Gastgeber anmelden', only: nil)
     page.execute_script("window.MULTIPLEX.heartbeat = #{heartbeat}")
     open_live_scroll_dialog
     within('#multiplex-info-modal') { click_button("🔑 #{label}") }
@@ -66,6 +68,13 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
     end
     expect(page).to have_css('#host-login[hidden]', visible: :all)
+    expect(page).to have_visible('#gastgeber-modal')
+    within('#gastgeber-modal') do
+      if only
+        all('input[type=checkbox]').each { |box| box.set(only.include?(box.value)) }
+      end
+      click_button('OK')
+    end
     if label == 'Als Gastgeber anmelden'
       within('#qr-modal') { click_button('Schliessen') }
     else
@@ -1139,7 +1148,13 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(secret).to match(/\A\h{32}\z/)
         expect(page.evaluate_script("window.MULTIPLEX.socketId")).to eq(Digest::SHA256.hexdigest(secret))
         expect(page.evaluate_script("location.search")).to eq('')
-        # Nobody is in it yet: its QR code opens right away, for the guests to join
+        # First, whose songs the evening has (the fixture names Gastgeber), and
+        # the dialog says it is the host's to set. The QR code waits for it.
+        expect(page).to have_visible('#gastgeber-modal')
+        expect(page).to have_css('#gastgeber-info', text: 'Wer ist heute Abend dabei?')
+        expect(page).not_to have_visible('#qr-modal')
+        within('#gastgeber-modal') { click_button('OK') }
+        # Nobody is in the session yet: its QR code opens, for the guests to join
         expect(page).to have_visible('#qr-modal')
         expect(page).to have_css("#qr-canvas img[alt$='?live=#{secret}&qr=1']", visible: :all)
         expect(page).to have_css('#qr-info', text: 'Scanne den Code') # for those reading it off this screen
@@ -1175,7 +1190,9 @@ RSpec.describe 'index.html', :js, type: :feature do
         within('#multiplex-info-modal') { click_button('🔑 Als Gastgeber anmelden') }
         expect(page).to have_css('#multiplex-status', text: 'Du bist Gastgeber')
         expect(page).not_to have_visible('#host-modal')
-        expect(page).to have_visible('#qr-modal') # and with it, its QR code
+        expect(page).to have_visible('#gastgeber-modal') # again first,
+        within('#gastgeber-modal') { click_button('OK') }
+        expect(page).to have_visible('#qr-modal') # and then its QR code
         expect(session_secret).to match(/\A\h{32}\z/)
         expect(session_secret).not_to eq(secret)
       end
@@ -1643,29 +1660,26 @@ RSpec.describe 'index.html', :js, type: :feature do
 
       # The fixture's Gastgeber: Josua = {74-75, Across}, Monika = {Across,
       # I Have a Dream}, Daniel = {Imagine}; Riptide names none.
-      it 'the host picks who is present in the table of contents, and every list in the session shows only their songs' do
+      it 'the host picks whose songs the evening has, at login, and every list in the session shows only those' do
         toc_entries = lambda do
           page.evaluate_script(<<~'JS')
             Array.prototype.map.call(document.querySelectorAll('#TOC nav li:not(.toc-hidden) a'),
               function(a) { return a.textContent.replace(/\s+/g, ' ').trim(); })
           JS
         end
-        gastgeber_checkboxes = '#toc-filter .toc-filter-checkboxes input'
+        button = '#toc-filter-gastgeber-open'
 
         secret = nil
         using_session(:presenter) do
           load_presentation
-          log_in_as_host
+          # Logging in asks who is present, in the dialog that opens right away
+          log_in_as_host(only: ['Daniel'])
           secret = session_secret
           click_link 'Table of contents'
           expect(page).to have_css('#TOC.present')
-          # In a session the checkboxes say who is present, and they are the host's to set
-          within('#toc-filter .toc-filter-checkboxes') do
-            expect(page).to have_css('.toc-filter-checkboxes-label', text: 'Anwesend')
-            check 'Daniel'
-          end
           wait_for_js("document.querySelectorAll('#TOC nav li:not(.toc-hidden)').length === 1")
           expect(toc_entries.call).to eq(['Imagine (John Lennon)'])
+          expect(page).to have_css(button, text: 'Songs von: Daniel')
         end
 
         using_session(:guest) do
@@ -1673,10 +1687,15 @@ RSpec.describe 'index.html', :js, type: :feature do
           click_link 'Table of contents'
           expect(page).to have_css('#TOC.present')
           # The host's choice arrives with its heartbeat, and is not the guest's to change
-          expect(page).to have_css('.toc-filter-checkboxes-label', text: 'Anwesend')
-          expect(page).to have_checked_field('Daniel', disabled: true)
-          expect(page).to have_unchecked_field('Monika', disabled: true)
+          expect(page).to have_css(button, text: 'Songs von: Daniel')
           expect(toc_entries.call).to eq(['Imagine (John Lennon)'])
+          click_button('Songs von')
+          within('#gastgeber-modal') do
+            expect(page).to have_css('#gastgeber-info', text: 'Der Gastgeber hat gewählt')
+            expect(page).to have_checked_field('Daniel', disabled: true)
+            expect(page).to have_unchecked_field('Monika', disabled: true)
+            click_button('OK')
+          end
           # Sprache and Genre stay the guest's own, on top of it
           select 'Deutsch', from: 'Sprache'
           expect(page).to have_css('#toc-filter-empty', text: 'Keine Ergebnisse')
@@ -1684,48 +1703,60 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
 
         using_session(:presenter) do
-          check 'Monika'
+          click_button('Songs von')
+          within('#gastgeber-modal') do
+            check 'Monika'
+            click_button('OK')
+          end
         end
         using_session(:guest) do
-          expect(page).to have_checked_field('Monika', disabled: true)
+          expect(page).to have_css(button, text: 'Songs von: Daniel, Monika')
           expect(toc_entries.call).to contain_exactly(
             'Across the universe (Beatles)', 'I Have a Dream (ABBA)', 'Imagine (John Lennon)'
           )
-          # Reset clears the guest's own filters, not who is present
+          # Reset clears the guest's own filters, not whose songs the evening has
           select 'Englisch', from: 'Sprache'
           click_button 'Reset'
           expect(page).to have_select('Sprache', selected: 'Alle')
-          expect(page).to have_checked_field('Daniel', disabled: true)
+          expect(page).to have_css(button, text: 'Songs von: Daniel, Monika')
           expect(toc_entries.call.size).to eq(3)
-
         end
 
-        # The host keeps who is present across a reload: it never hears its
-        # own heartbeat, so it has them from its storage alone — without
-        # them, its next beat would clear every list in the session. (Which
-        # slide the reload lands on depends on Reveal's hash write, up to a
-        # second behind the jump to the table of contents, so jump again.)
+        # The host keeps it across a reload: it never hears its own heartbeat,
+        # so it has it from its storage alone — without it, its next beat
+        # would clear every list in the session. (Which slide the reload lands
+        # on depends on Reveal's hash write, up to a second behind the jump to
+        # the table of contents, so jump again.)
         using_session(:presenter) do
           page.refresh
           wait_for_reveal
           click_link 'Table of contents'
           expect(page).to have_css('#TOC.present')
-          expect(page).to have_checked_field('Daniel')
-          expect(page).to have_checked_field('Monika')
-          check 'Josua'
+          expect(page).to have_css(button, text: 'Songs von: Daniel, Monika')
+          click_button('Songs von')
+          within('#gastgeber-modal') do
+            expect(page).to have_checked_field('Daniel')
+            expect(page).to have_checked_field('Monika')
+            expect(page).to have_unchecked_field('Josua')
+            check 'Josua'
+            click_button('OK')
+          end
         end
         using_session(:guest) do
-          expect(page).to have_checked_field('Josua', disabled: true)
-          expect(page).to have_checked_field('Daniel', disabled: true)
-          expect(page).to have_checked_field('Monika', disabled: true)
-          expect(toc_entries.call.size).to eq(4) # Josua adds 74-75
+          expect(page).to have_css(button, text: 'Songs von: Alle') # all of them: no filter, and Riptide, who has no Gastgeber, is back
+          expect(toc_entries.call.size).to eq(5)
 
-          # Out of the session, the checkboxes are a filter of the guest's own again
+          # Out of the session, the checkboxes are a filter of the guest's own again, all checked
           open_live_scroll_dialog
           within('#multiplex-info-modal') { click_button('🚪 Session verlassen') }
-          expect(page).to have_css('.toc-filter-checkboxes-label', text: 'Gastgeber')
-          expect(page).to have_unchecked_field('Daniel')
-          expect(page).to have_no_css("#{gastgeber_checkboxes}[disabled]")
+          expect(page).to have_css(button, text: 'Songs von: Alle')
+          click_button('Songs von')
+          within('#gastgeber-modal') do
+            expect(page).to have_css('#gastgeber-info', text: 'Zeigt die Lieder der angehakten Gastgeber')
+            expect(page).to have_checked_field('Josua')
+            expect(page).to have_no_css('input[disabled]')
+            click_button('OK')
+          end
           expect(toc_entries.call.size).to eq(5)
         end
       end
