@@ -408,6 +408,14 @@ html.fullscreen-runway .reveal {
   height: auto;
 }
 
+/* The two things a finger may still scroll then (holdPage in
+   body-controls.html) keep a swipe past their ends to themselves: passed on,
+   one down at the top scrolled the page up, and Safari's bars came back. */
+html.fullscreen-runway section#TOC,
+html.fullscreen-runway dialog {
+  overscroll-behavior: contain;
+}
+
 /* No `display` here: that would override the `hidden` attribute. The room
    below the last step is deliberate: a flick's momentum must not reach the
    page's end, where Safari shows its bars again. */

@@ -739,6 +739,19 @@ RSpec.describe 'index.html', :js, type: :feature do
       page.evaluate_script("Reveal.getCurrentSlide().querySelector('.slide-content').style.transform")
     end
 
+    # A finger dragged +dy+ px down (negative: up) from the middle of +selector+.
+    # Unlike `swipe`, real touches through Chrome's input pipeline (CDP), since
+    # what's under test is whether the browser scrolls the page.
+    def finger_swipe(selector, dy)
+      x, y = page.evaluate_script(<<~JS)
+        (function(r) { return [r.left + r.width / 2, r.top + r.height / 2]; })(document.querySelector(#{selector.to_json}).getBoundingClientRect())
+      JS
+      cdp = page.driver.browser.page
+      cdp.command('Input.dispatchTouchEvent', type: 'touchStart', touchPoints: [{ x: x, y: y }])
+      (1..10).each { |i| cdp.command('Input.dispatchTouchEvent', type: 'touchMove', touchPoints: [{ x: x, y: y + dy * i / 10.0 }]) }
+      cdp.command('Input.dispatchTouchEvent', type: 'touchEnd', touchPoints: [])
+    end
+
     it 'uses the Fullscreen API where there is one, and leaves it again on a second press' do
       load_presentation
       expect(toggle_pressed).to eq('false')
@@ -818,10 +831,32 @@ RSpec.describe 'index.html', :js, type: :feature do
       wait_for_js("Reveal.getCurrentSlide().querySelector('.slide-content').style.transform !== #{fitted_with_bars.to_json}")
       expect(current_scale).not_to eq(fitted_with_bars)
 
+      # Nor does a finger scroll the page, where .reveal's touch-action doesn't
+      # reach: a corner button beside the deck, or a code block (overflow: auto,
+      # a scroll container of its own). A swipe down there scrolled the page up,
+      # and Safari brings its bars back on that. On the code block, Reveal pages
+      # instead, as anywhere else on the slide.
+      finger_swipe('#open-settings', 200)
+      finger_swipe('section.present pre code', 200)
+      wait_for_js('Reveal.getIndices().v === 1')
+      expect(slide_indices).to eq([2, 1])
+      expect(page.evaluate_script('scrollY')).to eq(300)
+
       # The deck pages as ever, and its keys don't scroll the page
       page.driver.browser.mouse.move(x: 640, y: 500)
       press(:up)
-      expect(slide_indices).to eq([2, 1])
+      expect(slide_indices).to eq([2, 0])
+      expect(page.evaluate_script('scrollY')).to eq(300)
+
+      # The table of contents still scrolls under a finger, but at its top a
+      # swipe down doesn't pass on to the page. Padded, so the fixture's few
+      # songs reach past the screen.
+      page.execute_script("Reveal.slide(1); document.querySelector('#TOC nav ol').style.paddingBottom = '2000px'")
+      expect(page).to have_css('#TOC.present')
+      finger_swipe('#TOC nav li a', 200)
+      finger_swipe('#TOC nav li a', -200)
+      wait_for_js("document.getElementById('TOC').scrollTop > 0")
+      expect(page.evaluate_script("document.getElementById('TOC').scrollTop")).to be > 0
       expect(page.evaluate_script('scrollY')).to eq(300)
 
       # A second press gives the room back

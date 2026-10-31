@@ -94,15 +94,15 @@
 
   // ↕️ „Vollbild", a toggle: the real Fullscreen API wherever there is one
   // (desktop, Android, iPad). iPhone Safari only has it for <video>, but it
-  // hides its own bars once a finger scrolls the page — which Reveal never lets
-  // happen (touch-action on .reveal, preventDefault on every touchmove). So
+  // hides its own bars once a finger scrolls the page — which never happens in
+  // the deck (touch-action on .reveal, and the page is one screen tall). So
   // there the runway makes the page itself a few screens tall for a moment,
   // over the deck (pinned in place meanwhile), and asks for a swipe. Once the
   // bars are gone it fades away but keeps that room and the scroll position: a
   // page that shrank back to one screen would scroll to 0, and Safari would
-  // bring its bars right back. Back in the deck, Reveal again keeps every swipe
-  // from scrolling the page, so the bars stay hidden until ↕️ is pressed again
-  // (which does exactly that shrinking) or a tap on Safari's address strip.
+  // bring its bars right back. Back in the deck, no finger scrolls the page
+  // (holdPage), so the bars stay hidden until ↕️ is pressed again (which does
+  // exactly that shrinking) or a tap on Safari's address strip.
   (function() {
     var root = document.documentElement;
     var standalone = navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
@@ -135,6 +135,20 @@
       function zoomed() { return window.visualViewport && window.visualViewport.scale > 1.01; }
       function barsHidden() { return window.innerHeight > base.h + 20; }
 
+      // While the room is kept, no finger may scroll the page: a swipe down
+      // scrolls it up, and Safari brings its bars back. .reveal's touch-action
+      // doesn't reach a code block (overflow: auto, a scroll container of its
+      // own), nor the corner buttons beside the deck. Only the table of
+      // contents and a dialog still scroll, when they hold more than fits
+      // (night.css keeps them from passing a swipe on to the page). Two
+      // fingers are a pinch-zoom, which stays.
+      function holdPage(e) {
+        if (e.touches.length > 1) return;
+        var own = e.target.closest && e.target.closest('#TOC, dialog');
+        if (own && own.scrollHeight > own.clientHeight) return;
+        e.preventDefault();
+      }
+
       function open() {
         base = { w: window.innerWidth, h: window.innerHeight };
         state = 'open';
@@ -149,6 +163,7 @@
       function succeed() {
         state = 'kept';
         setPressed(true);
+        document.addEventListener('touchmove', holdPage, { passive: false });
         runway.classList.add('runway-succeeded');
         document.getElementById('runway-success-text').focus({ preventScroll: true });
       }
@@ -164,6 +179,7 @@
         var wasOpen = state === 'open';
         state = 'off';
         setPressed(false);
+        document.removeEventListener('touchmove', holdPage, { passive: false });
         runway.hidden = true;
         runway.classList.remove('runway-succeeded', 'runway-done');
         root.classList.remove('fullscreen-runway');
