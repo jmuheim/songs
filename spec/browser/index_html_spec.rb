@@ -1453,6 +1453,10 @@ RSpec.describe 'index.html', :js, type: :feature do
           press(:right)
           wait_for_js("Reveal.getIndices().h === 5")
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(5)
+          # And stays out, across a reload too
+          page.refresh
+          wait_for_reveal
+          expect(page).to have_css('#multiplex-status', text: 'Keine Session')
         end
         using_session(:host_b) do
           open_live_scroll_dialog
@@ -1763,15 +1767,30 @@ RSpec.describe 'index.html', :js, type: :feature do
 
     describe 'QR modal, joined via a scanned code' do
       it 'shows its own QR right away, keeps the session on the device instead of the address, and forgets it after twelve silent hours' do
+        # Every address written, from the very start of the page
+        page.driver.browser.page.command('Page.addScriptToEvaluateOnNewDocument', source: <<~'JS')
+          window._addresses = [];
+          var replaceState = history.replaceState.bind(history);
+          history.replaceState = function(state, title, url) {
+            window._addresses.push(String(url));
+            return replaceState(state, title, url);
+          };
+        JS
         visit FixtureBuilder::URL_PATH + '?live=spec-qr&qr=1'
         wait_for_reveal
+        # Reveal writes the address itself, at most once a second, and a write
+        # it deferred carries the query string of the moment it was asked
+        # for: had it ever seen ?live=, it could put it back a second after it
+        # was dropped — and after „Session verlassen", a reload joined again.
+        # So ?live= is gone before Reveal starts, and no write carries it.
+        expect(page.evaluate_script("window._addresses.length")).to be > 0 # Reveal's own, at least
+        expect(page.evaluate_script("window._addresses.filter(function(a) { return /[?&]live=/.test(a); })")).to eq([])
         expect(page).to have_visible('#qr-modal')
         expect(active_element_id).to eq('qr-title')
         # The session and the marker are put into the freshly generated code
         # (so the chain of scans keeps going), but removed from the address
         # bar itself: the session is in the device's storage now.
         expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"][alt$="?live=spec-qr&qr=1"]', visible: :all)
-        wait_for_js("window.location.search === ''")
         expect(page.evaluate_script('window.location.search')).to eq('')
         expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv') # in the session
         expect(session_secret).to eq('spec-qr')

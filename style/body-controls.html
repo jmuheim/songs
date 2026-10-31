@@ -348,6 +348,28 @@
 </dialog>
 
 <script>
+// A QR code's address brings the session in: ?live=<secret>, and the qr
+// marker. It is read and dropped from the address right here, as the page is
+// parsed, before Reveal starts — the session goes into this device's storage
+// on load, and the address stays plain, so the song book reopened from the
+// home screen or in a new tab is still in the session, and an address
+// bookmarked or added to the home screen meanwhile carries none. Not later:
+// Reveal writes the address at most once a second, and a write it deferred
+// carries the query string of the moment it was asked for, so ?live= dropped
+// on load came back a second later, and with it the session after leaving.
+(function() {
+  if (!window.MULTIPLEX) return;
+  var params = new URLSearchParams(location.search);
+  window.MULTIPLEX.join = { secret: params.get('live'), showQr: params.has('qr') };
+  if (!params.has('live') && !params.has('qr')) return;
+  params.delete('live');
+  params.delete('qr');
+  var search = params.toString();
+  try {
+    history.replaceState(null, '', location.pathname + (search ? '?' + search : '') + location.hash);
+  } catch (e) {} // Safari's replaceState limit
+})();
+
 window.addEventListener('load', function() {
   var cfg = window.MULTIPLEX;
   if (!cfg || !window.io || !window.sha256Hex) return;
@@ -356,7 +378,7 @@ window.addEventListener('load', function() {
   // whoever joins late or comes back from a dead spot catches up without
   // waiting for the next move. cfg.heartbeat lets the specs shorten it.
   var HEARTBEAT_MS = 2000;
-  var LIVE_PARAM = 'live';  // the session's secret, in a QR code's address
+  var LIVE_PARAM = 'live';  // the session's secret, in a QR code's address (read above)
   var QR_JOIN_PARAM = 'qr'; // marks a link reached by scanning someone else's QR code
 
   // Stable across a reload of this tab (sessionStorage, not a fresh random
@@ -438,23 +460,6 @@ window.addEventListener('load', function() {
   var scrollerSilent = false;      // host only: the device it handed the song to has gone quiet
 
   function amScroller() { return !!live && live.scrollerId === senderId; }
-
-  // ?live= is only the way in, from a QR code: the session is in this
-  // device's storage from then on, and the address goes back to plain. So the
-  // song book reopened from the home screen, or in a new tab, is still in the
-  // session, and an address bookmarked or added to the home screen meanwhile
-  // carries no session. (Kept in the address, ?live= also got dropped again
-  // by a write Reveal had deferred, which carries the query string of the
-  // moment it was asked for.)
-  function stripAddress() {
-    var params = new URLSearchParams(location.search);
-    params.delete(LIVE_PARAM);
-    params.delete(QR_JOIN_PARAM);
-    var search = params.toString();
-    try {
-      history.replaceState(null, '', location.pathname + (search ? '?' + search : '') + location.hash);
-    } catch (e) {} // Safari's replaceState limit
-  }
 
   function newSecret() {
     var bytes = new Uint8Array(16);
@@ -1166,8 +1171,7 @@ window.addEventListener('load', function() {
   try { stored = JSON.parse(localStorage.getItem('multiplex-session')); } catch (e) {}
   try { authed = localStorage.getItem('multiplex-authed') === 'yes'; } catch (e) {}
   if (stored && !(Date.now() - (stored.seenAt || 0) < SESSION_TTL_MS)) stored = null;
-  var addressParams = new URLSearchParams(location.search);
-  var addressSecret = addressParams.get(LIVE_PARAM);
+  var addressSecret = cfg.join && cfg.join.secret;
   if (addressSecret && !(stored && stored.secret === addressSecret)) stored = { secret: addressSecret };
   if (stored && stored.secret) {
     join(stored.secret);
@@ -1232,18 +1236,9 @@ window.addEventListener('load', function() {
   });
   document.getElementById('multiplex-info-close').addEventListener('click', function() { multiplexModal.close(); });
 
-  // A scanned QR code's address: the session is stored by now, so ?live=
-  // goes from the address (see stripAddress), and with it the join marker,
-  // which shows this device's own QR right away, so whoever joins this way
-  // can let the next one in too. The setTimeout defers both past the load
-  // event itself: a replaceState() called from inside it hung headless Chrome
-  // under the browser-spec driver.
-  if (addressParams.has(LIVE_PARAM) || addressParams.has(QR_JOIN_PARAM)) {
-    setTimeout(function() {
-      stripAddress();
-      if (addressParams.has(QR_JOIN_PARAM)) showQrModal();
-    }, 0);
-  }
+  // A scanned QR code's address carried the join marker: show this device's
+  // own QR right away, so whoever joins this way can let the next one in too.
+  if (cfg.join && cfg.join.showQr) showQrModal();
 
   // showModal() makes the page behind inert and Esc closes natively. What is
   // left: Reveal listens for keys on the document, where they still arrive from
