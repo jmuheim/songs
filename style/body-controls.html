@@ -977,13 +977,14 @@ window.addEventListener('load', function() {
   function newId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
 
   // Without a session, logging in opens a new one: a fresh secret, generated
-  // here (the relay only checks sha256(secret) == socketId), into the address.
+  // here (the relay only checks sha256(secret) == socketId), and its QR code.
   // In a session, it takes it over: the claim is above every claim heard in
   // it, not just this phone's clock, which may run behind the old host's. The
   // old host steps down as it hears this tab's first heartbeat. A song being
   // live-scrolled carries on as it is, the scroller included.
   function becomeHost() {
-    if (!secret) join(newSecret());
+    var opened = !secret;
+    if (opened) join(newSecret());
     hostClaim = Math.max(Date.now(), heardClaim + 1, hostClaim + 1);
     heardClaim = hostClaim;
     isHost = true;
@@ -995,6 +996,9 @@ window.addEventListener('load', function() {
     updateStatus();
     restartHeartbeat();
     showToast(['Du bist jetzt Gastgeber']);
+    // A new session has nobody in it yet: its QR code is the next thing the
+    // host needs, so the guests can join. A taken-over one has them already.
+    if (opened) showQrModal();
   }
 
   function stepDown() {
@@ -1228,8 +1232,17 @@ window.addEventListener('load', function() {
 
   // ---- QR code ----
   // The session's address, with the join marker: whoever scans it is in.
-  function showQrModal() {
+  // `joined`: this device just scanned someone else's code. Its own pops up
+  // at once, so the chain of scans goes on — and says so, or a guest who has
+  // just arrived would wonder what it is for. Otherwise, for those reading it
+  // off this screen.
+  var qrTitle = document.getElementById('qr-title');
+  var qrInfo  = document.getElementById('qr-info');
+  var QR_TEXT = { title: qrTitle.textContent, info: qrInfo.textContent };
+  function showQrModal(joined) {
     if (!window.QRCode || !secret) return;
+    qrTitle.textContent = joined ? 'Du bist dabei!' : QR_TEXT.title;
+    qrInfo.textContent = joined ? 'Lass weitere Gäste diesen QR-Code scannen, damit auch sie mitlesen können.' : QR_TEXT.info;
     var url = location.origin + location.pathname + '?' + LIVE_PARAM + '=' + secret + '&' + QR_JOIN_PARAM + '=1';
     var container = document.getElementById('qr-canvas');
     container.innerHTML = '';
@@ -1265,7 +1278,7 @@ window.addEventListener('load', function() {
 
   // A scanned QR code's address carried the join marker: show this device's
   // own QR right away, so whoever joins this way can let the next one in too.
-  if (cfg.join && cfg.join.showQr) showQrModal();
+  if (cfg.join && cfg.join.showQr) showQrModal(true);
 
   // showModal() makes the page behind inert and Esc closes natively. What is
   // left: Reveal listens for keys on the document, where they still arrive from

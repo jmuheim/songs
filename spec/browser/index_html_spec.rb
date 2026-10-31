@@ -54,6 +54,7 @@ RSpec.describe 'index.html', :js, type: :feature do
   # this tab is in. `label` is what the login button reads. The heartbeat is
   # shortened first, so whoever joins late and the end of a live scroll
   # arrive quickly. The password is asked only the first time on a device.
+  # A new session shows its QR code right away; it is closed again here.
   def log_in_as_host(heartbeat: 200, label: 'Als Gastgeber anmelden')
     page.execute_script("window.MULTIPLEX.heartbeat = #{heartbeat}")
     open_live_scroll_dialog
@@ -65,6 +66,11 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
     end
     expect(page).to have_css('#host-login[hidden]', visible: :all)
+    if label == 'Als Gastgeber anmelden'
+      within('#qr-modal') { click_button('Schliessen') }
+    else
+      expect(page).not_to have_visible('#qr-modal') # taken over: the guests are in already
+    end
   end
 
   # 🚀 starts or ends live scrolling; label is what it reads right now
@@ -984,6 +990,11 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(secret).to match(/\A\h{32}\z/)
         expect(page.evaluate_script("window.MULTIPLEX.socketId")).to eq(Digest::SHA256.hexdigest(secret))
         expect(page.evaluate_script("location.search")).to eq('')
+        # Nobody is in it yet: its QR code opens right away, for the guests to join
+        expect(page).to have_visible('#qr-modal')
+        expect(page).to have_css("#qr-canvas img[alt$='?live=#{secret}&qr=1']", visible: :all)
+        expect(page).to have_css('#qr-info', text: 'Scanne den Code') # for those reading it off this screen
+        within('#qr-modal') { click_button('Schliessen') }
         open_live_scroll_dialog
         within('#multiplex-info-modal') do
           expect(page).to have_button('🚀 Live-Scrollen starten', disabled: true) # the title slide is no song
@@ -1015,6 +1026,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         within('#multiplex-info-modal') { click_button('🔑 Als Gastgeber anmelden') }
         expect(page).to have_css('#multiplex-status', text: 'Du bist Gastgeber')
         expect(page).not_to have_visible('#host-modal')
+        expect(page).to have_visible('#qr-modal') # and with it, its QR code
         expect(session_secret).to match(/\A\h{32}\z/)
         expect(session_secret).not_to eq(secret)
       end
@@ -1796,6 +1808,8 @@ RSpec.describe 'index.html', :js, type: :feature do
         open_qr
         expect(page).to have_visible('#qr-modal')
         expect(active_element_id).to eq('qr-title')
+        expect(page).to have_css('#qr-title', text: 'Song Book öffnen')
+        expect(page).to have_css('#qr-info', text: 'Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.')
         # Whoever scans it is in the session, and shows their own code right away
         expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"][alt$="?live=spec-qr&qr=1"]', visible: :all)
 
@@ -1876,6 +1890,9 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page.evaluate_script("window._addresses.filter(function(a) { return /[?&]live=/.test(a); })")).to eq([])
         expect(page).to have_visible('#qr-modal')
         expect(active_element_id).to eq('qr-title')
+        # Told why a code pops up: it is for the next guests to scan
+        expect(page).to have_css('#qr-title', text: 'Du bist dabei!')
+        expect(page).to have_css('#qr-info', text: 'Lass weitere Gäste diesen QR-Code scannen, damit auch sie mitlesen können.')
         # The session and the marker are put into the freshly generated code
         # (so the chain of scans keeps going), but removed from the address
         # bar itself: the session is in the device's storage now.
@@ -1883,6 +1900,14 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page.evaluate_script('window.location.search')).to eq('')
         expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv') # in the session
         expect(session_secret).to eq('spec-qr')
+
+        # Shown later through 🔗, it is the usual code again, for those reading it off this screen
+        within('#qr-modal') { click_button('Schliessen') }
+        open_live_scroll_dialog
+        within('#multiplex-info-modal') { click_button('🔗 QR-Code zeigen') }
+        expect(page).to have_css('#qr-title', text: 'Song Book öffnen')
+        expect(page).to have_css('#qr-info', text: 'Scanne den Code')
+        within('#qr-modal') { click_button('Schliessen') }
 
         # Nobody hosts this one, so nothing keeps it alive: eleven hours since
         # it was last heard of, it is still this evening's…
