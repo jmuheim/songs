@@ -14,12 +14,17 @@ namespace :golden do
 
     FixtureBuilder.build!
     doc = Nokogiri::HTML(File.read(FixtureBuilder::OUTPUT, encoding: 'UTF-8'))
+    # Parsed as golden_html_spec.rb parses it, or the snapshot would differ
+    print_doc = Nokogiri::HTML(File.read(FixtureBuilder::PRINT_OUTPUT, encoding: 'UTF-8'), nil, 'UTF-8')
 
     golden_dir = File.join(__dir__, 'spec', 'fixtures', 'golden')
     FileUtils.mkdir_p(golden_dir)
 
     imagine_title = doc.at_css('section#imagine-john-lennon')
     raise 'section#imagine-john-lennon not found' unless imagine_title
+
+    print_imagine_title = print_doc.at_css('section#imagine-john-lennon')
+    raise 'section#imagine-john-lennon not found in print.html' unless print_imagine_title
 
     across_title = doc.at_css('section#across-the-universe-beatles')
     raise 'section#across-the-universe-beatles not found' unless across_title
@@ -29,6 +34,9 @@ namespace :golden do
       'toc.html'           => doc.at_css('section#TOC'),
       'host_modal.html'    => doc.at_css('dialog#host-modal'),
       'imagine_verse1.html' => imagine_title
+                                .xpath('following-sibling::section[.//h2[normalize-space()="Verse 1"]][1]')
+                                .first,
+      'imagine_verse1_print.html' => print_imagine_title
                                 .xpath('following-sibling::section[.//h2[normalize-space()="Verse 1"]][1]')
                                 .first,
       'infos_ueber_das_lied.html' => across_title
