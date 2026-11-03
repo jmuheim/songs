@@ -6,31 +6,31 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=wyPKRcBTsFQ)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/otis-redding/sittin-on-the-dock-of-the-bay-chords-1088518)
-- [Guitar tutorial](https://www.youtube.com/watch?v=WNvoNPbmREY)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/otis-redding/sittin-on-the-dock-of-the-bay-chords-1088518)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=WNvoNPbmREY)
 
-## Verse 1
+## Strophe 1
 
 [G] Sittin' in the mornin' sun [B7]
 I'll be [C] sittin' when the evenin' comes [A]
 [G] Watching the ships roll in [B7]
 And then I [C] watch 'em roll away again [A] yeah
 
-## Chorus
+## Refrain
 
 I'm [G] sittin' on the dock of the [E] bay
 Watching the [G] tide roll [E]away, ooo
 I'm just [G] sittin' on the dock of the [A] bay
 Wastin' [G] time [E]
 
-## Verse 2
+## Strophe 2
 
 I [G] left my home in [B7] Georgia
 [C] Headed for the 'Frisco Bay [A]
 [G] 'Cause I've had nothing to [B7] live for
 And look like [C] nothin's gonna come my [A] way
 
-## Chorus
+## Refrain
 
 ~~I'm sittin'~~ **So I'm just gonna [G] sit** on the dock of the [E] bay
 Watching the [G] tide roll [E]away, ooh
@@ -44,14 +44,14 @@ Wastin' [G] time [E]
 [G] I can't [D] do what [C] ten people [G] tell me to do
 So I [F] guess I'll remain the [D] same, yes
 
-## Verse 3
+## Strophe 3
 
 [G] Sittin' here restin' my [B7] bones
 And this [C] loneliness won't leave me [A] alone
 This two [G] thousand miles I [B7] roamed
 Just to [C] make this dock my [A] home
 
-## Chorus
+## Refrain
 
 **Now** I'm [G] sitting on the dock of the [E] bay
 Watching the [G] tide roll [E]away, ooh

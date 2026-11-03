@@ -6,7 +6,7 @@
 - Genre: Traditionell
 - Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=Hdshwr1hDX8)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/rumpelstilz/stets-in-truure-chords-4407716)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/rumpelstilz/stets-in-truure-chords-4407716)
 
 ## Strophe 1
 

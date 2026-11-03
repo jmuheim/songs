@@ -6,11 +6,11 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=icZHj6DG7ms)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/something-stupid-chords-1186829)
-- [Guitar tutorial](https://www.youtube.com/watch?v=pXuxL7pMb7c)
-- [Sing in harmony tutorial](https://www.youtube.com/watch?v=eet2ETbsRwU)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/robbie-williams/something-stupid-chords-1186829)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=pXuxL7pMb7c)
+- [Tutorial: mehrstimmig singen](https://www.youtube.com/watch?v=eet2ETbsRwU)
 
-## Instructions
+## Spielhinweise
 
 ```
 Sounds best with some barre chords:
@@ -33,7 +33,7 @@ And some more chords:
 D+ |x x 0 3 3 2| To switch from D, point pinky on G string
 ```
 
-## Verse 1
+## Strophe 1
 
 I [G6] know I stand in line
 until you think you have the time
@@ -63,7 +63,7 @@ And [A7] though it's just a line to you
 For me it's true and
 never seemed so [D] right before [D+]
 
-## Verse 2
+## Strophe 2
 
 I [G6] practice every day
 to find some clever lines to say to make
@@ -91,7 +91,7 @@ _(Instrumental, maybe add whistling)_
 [G] [G7] [C]
 [A7] [D] [D+]
 
-## Verse 2
+## Strophe 2
 
 I [G6] practice every day
 to find some clever lines to say to make

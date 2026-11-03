@@ -6,11 +6,11 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=90M60PzmxEE)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/the-beatles/across-the-universe-chords-202167)
-- [Guitar tutorial](https://www.youtube.com/watch?v=CQ1P8IQc8AY)
-- [Interpretation by Fiona Apple](https://www.youtube.com/watch?v=RhMEKiIb86I)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/the-beatles/across-the-universe-chords-202167)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=CQ1P8IQc8AY)
+- [Interpretation von Fiona Apple](https://www.youtube.com/watch?v=RhMEKiIb86I)
 
-## Instructions
+## Spielhinweise
 
 ```
        |E A D G B e|
@@ -23,7 +23,7 @@ F#m    |2=4=4=2=2=2|
 
 _(Riff)_
 
-## Verse 1
+## Strophe 1
 
 [D] Words are flowing out [Bm]
 like endless [F#m] rain into a paper cup
@@ -34,14 +34,14 @@ a[A]cross the uni[A7]verse
 are [F#m] drifting through my opened mind
 Poss[Em7]essing and car[Gm]essing me
 
-## Chorus
+## Refrain
 
 [D] Jai guru deva om [A7sus4]
 
 [A] Nothing's gonna change my world [A7]
 [G] Nothing's gonna change my world [D] _(x2)_
 
-## Verse 2
+## Strophe 2
 
 [D] Images of [Bm] broken light which
 [F#m] dance before me like a million [Em7] eyes
@@ -54,14 +54,14 @@ They [Em7] tumble blindly
 as they make their [A] way
 across the uni[A7]verse
 
-## Chorus
+## Refrain
 
 [D] Jai guru deva om [A7sus4]
 
 [A] Nothing's gonna change my world [A7]
 [G] Nothing's gonna change my world [D] _(x2)_
 
-## Verse 3
+## Strophe 3
 
 [D] Sounds of laughter, [Bm] shades of life
 are [F#m] ringing through my opened ears
@@ -72,7 +72,7 @@ which [F#m] shines around me like
 a million [Em7] suns and calls me on and on
 a[A]cross the uni[A7]verse
 
-## Chorus
+## Refrain
 
 [D] Jai guru deva om [A7sus4]
 

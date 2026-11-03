@@ -29,8 +29,9 @@ Put an `## Infos über das Lied` section **first** (before the song's own sectio
 - **Genre** from the artist/style: `Pop`, `Rock`, `Mantra`, …
 - Resource links, same as always — only ever link a URL you actually found (on the tab page, via a real web search you ran, or one the user gave you), never a fabricated-looking one:
   - `[Lied auf YouTube](<official or lyric video>)` — if you can't confidently find one, omit this line rather than guess
-  - `[Source tab](<the URL you were given>)` — required, that's the URL you were given
-  - `[Guitar tutorial](<optional>)`
+  - `[Tab-Quelle](<the URL you were given>)` — required, that's the URL you were given
+  - `[Gitarren-Tutorial](<optional>)`
+  - Any other link gets a German label too, like the rest of the slide (`Gitarren-Cover`, `Interpretation von <artist>`).
 - If the tab page gives a capo position, add it too: `- Capo: 3. Bund`. Nothing may sit between the H1 and this section — `validate_song!` aborts on a stray capo line left outside the list.
 
 ```markdown
@@ -39,16 +40,28 @@ Put an `## Infos über das Lied` section **first** (before the song's own sectio
 - Sprache: Englisch
 - Genre: Pop
 - [Lied auf YouTube](<official or lyric video>)
-- [Source tab](<the URL you were given>)
+- [Tab-Quelle](<the URL you were given>)
 ```
 
 The source tab won't list Sprache/Genre, so infer them and keep the repo's vocabulary consistent. Make your best call on genre even if unsure — an incomplete section fails the build — and name the tags you chose in your final summary so the user can adjust.
 
-If the song also gets an `## Instructions` section (alternate fingerings), it goes right after `## Infos über das Lied` — at build time `merge_about_section` splices it in automatically (`lib/build_helpers.rb`).
+If the song also gets an `## Spielhinweise` section (alternate fingerings, riffs, playing notes), it goes right after `## Infos über das Lied` — at build time `merge_about_section` splices it in automatically (`lib/build_helpers.rb`).
 
 ## Step 4 — Convert sections
 
-Each bracketed section label in the tab (`[Verse 1]`, `[Chorus]`, `[Bridge]`, `[Intro]`, etc.) becomes an `## H2` heading. **Keep the tab's own section names and language** — don't translate "Chorus" to "Refrain" or renumber things; just carry over what the source uses.
+Each bracketed section label in the tab (`[Verse 1]`, `[Chorus]`, `[Bridge]`, `[Intro]`, etc.) becomes an `## H2` heading, **in German**, like the rest of the song book's own words — keep the source's numbering and its order, just translate the name:
+
+| Tab | Heading |
+|---|---|
+| Verse 1 | Strophe 1 |
+| Chorus | Refrain |
+| Pre-Chorus | Vor-Refrain |
+| Interlude | Zwischenspiel |
+| Transition | Überleitung |
+| Middle Eight | Mittelteil |
+| Intro, Outro, Bridge, Solo, Instrumental, Coda, Fill | unchanged |
+
+A qualifier keeps its shape: `[Chorus 2]` → `## Refrain 2`, `[Verse 1 (Men)]` → `## Strophe 1 _(Männer)_`. Playing directions in the lyrics (`_(x2)_`, `_(Repeat and fade)_`, `Barre chords`, a fingering hint) are **not** translated: musicians who don't speak German play along too, and they read those.
 
 ## Step 5 — Convert chords: the core algorithm
 

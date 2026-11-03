@@ -6,9 +6,9 @@
 - Genre: Traditionell
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=-Qtp0EC2P4M)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/1911563)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/1911563)
 
-## Verse 1
+## Strophe 1
 
 Si [C] hei der Willhelm Täll ufgfüehrt
 Im [G7] Löie z'Nottis[C]wil
@@ -20,7 +20,7 @@ Die [E7] andri Hälfti [Am] isch im Saal gsy
 Als [F] publikum, het [C] zuegluegt
 Und isch [G7] gschpannt gsy, was pas[C]sier
 
-## Verse 2
+## Strophe 2
 
 Am [C] Aafang isch es schön gsy
 Do het [G7] als Schtouffache[C]rin
@@ -32,7 +32,7 @@ Und [E7] alls isch grüert gsy, [Am] sy het dasmal
 Und [F] är het guet uf[C]passt
 Das är der [G7] Fade nid ver[C]lüür
 
-## Verse 3
+## Strophe 3
 
 Uf [C] z'Mal, churz vor em Öpfelschuss
 Dr [G7] Lehrer chunnt als [C] Täll
@@ -44,7 +44,7 @@ Wo [E7] und'rem Huet als [Am] Wach isch gschtande
 Wi[F]so fragt dä so [C] dumm
 Het dä ir [G7] Schuel de nüt rächts [C] glehrt
 
-## Verse 4
+## Strophe 4
 
 E [C] Fründ vom Täll, e Maa us Altdorf
 [G7] Zwickt em eis uf ds [C] Muul
@@ -56,7 +56,7 @@ Und [E7] stosst ihm mit syr [Am] Helebarde
 Da [F] chunnt scho s'Volk vo [C] Uri z'springe
 [G7] Donner jetzt geits [C] ruuch
 
-## Verse 5
+## Strophe 5
 
 Die [C] einte, die vo Öschterrich
 [G7] Die näh für d'Wach Par[C]tei
@@ -68,7 +68,7 @@ Mit [E7] Helebarde, [Am] Kartonschwärt
 [F] Der Täll liit und'rem [C] Gessler scho
 Da [G7] mischt der Saal sech [C] y
 
-## Verse 6
+## Strophe 6
 
 Jitz [C] chöme Gläser z'flüge
 Jede [G7] stillt sy gheimi Wuet [C]
@@ -80,7 +80,7 @@ D'Frou schinet [G7] brochni glider y [C]
 Zwo [F] Stund lang het das duu[C]ret
 Do isch [G7] Öschtrich gschlage [C] gsy
 
-## Verse 7
+## Strophe 7
 
 Si [C] hei der Willhelm Täll ufgfüehrt
 Im [G7] Löie z'Nottis[C]wil

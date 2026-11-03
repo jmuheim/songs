@@ -6,14 +6,14 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=6Ucp1IxujUg)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/1018193)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/1018193)
 
 ## Intro
 
 [Am] [Dm] [F] [G]
 [C] [E] [Am]
 
-## Verse 1
+## Strophe 1
 
 Es war schon [Am] dunkel, als ich durch
 Vorstadtstrassen [F] heim[G]wärts [C] ging
@@ -33,7 +33,7 @@ die fremd und süd[F]lich [G] war
 Als man mich sah [Am], stand einer auf [E]
 und lud mich ein [Am]
 
-## Chorus 1
+## Refrain 1
 
 [F] Griechischer Wein ist so wie das Blut der Erde
 [C] Komm schenk dir ein
@@ -52,7 +52,7 @@ Denn ich fühl die Sehnsucht wieder
 werd' ich immer nur ein Fremder [Am] sein
 [E] und al[Am]lein
 
-## Verse 2
+## Strophe 2
 
 Und dann er[Am]zählten sie mir von grünen Hügeln
 [F] Meer [G] und [C] Wind
@@ -71,7 +71,7 @@ für ein klei[F]nes [G] Glück
 Und bald denkt [Am] keiner mehr da[E]ran
 wie es hier [Am] war
 
-## Chorus 2
+## Refrain 2
 
 [F] Griechischer Wein ist so wie das Blut der Erde
 [C] Komm schenk dir ein

@@ -54,7 +54,7 @@ RSpec.describe 'index.html', :js, type: :feature do
   # this tab is in. `label` is what the login button reads. The heartbeat is
   # shortened first, so whoever joins late and the end of a live scroll
   # arrive quickly. The password is asked only the first time on a device.
-  # Right after, the „Songs von" dialog asks whose songs the evening has
+  # Right after, the „Lieder von" dialog asks whose songs the evening has
   # (`only`: the Gastgeber to leave ticked, all by default); it is confirmed
   # here. A new session then shows its QR code; it is closed again here.
   def log_in_as_host(heartbeat: 200, label: 'Als Gastgeber anmelden', only: nil)
@@ -222,12 +222,12 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page.evaluate_script("document.documentElement.lang")).to eq('de-CH')
       # One control per corner, nothing more
       expect(page).to have_css('.controls-group .ctrl', count: 4)
-      within('#top-left-controls') { expect(page).to have_link('📖 Table of contents') }
+      within('#top-left-controls') { expect(page).to have_link('📖 Inhaltsverzeichnis') }
       within('#top-right-controls') { expect(page).to have_button('↕️ Vollbild') }
       within('#bottom-left-controls') do
         expect(page).to have_css('#multiplex-status-button[aria-haspopup="dialog"]', text: '📡')
       end
-      within('#bottom-right-controls') { expect(page).to have_button('⚙️ Settings') }
+      within('#bottom-right-controls') { expect(page).to have_button('⚙️ Einstellungen') }
       # 🚀 and 🔗 sit in the 📡 dialog, out of sight until it opens
       expect(page).to have_css('#multiplex-info-modal #live-toggle', visible: :hidden)
       expect(page).to have_css('#multiplex-info-modal #show-qr', visible: :hidden)
@@ -264,7 +264,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     it 'puts the alternate fingerings on the Infos slide below its list, not beside it' do
       # The theme makes the <ul> inline-block and every sub-slide's content is
       # white-space: nowrap, so an inline-block <pre> sat on the list's line.
-      # Only the fixture song with an Instructions section has a <pre> there.
+      # Only the fixture song with a Spielhinweise section has a <pre> there.
       page.execute_script(<<~JS)
         var indices = Reveal.getIndices(document.querySelector('section[id^="infos-über-das-lied"] pre').closest('section'));
         Reveal.slide(indices.h, indices.v);
@@ -293,10 +293,10 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page).to have_css('#TOC.present')
 
       find('body').send_keys(:right)
-      expect(page).to have_css('#introduction.present')
+      expect(page).to have_css('#einleitung.present')
 
       find('body').send_keys(:down)
-      expect(page).to have_css('section.present h2', text: 'Welcome')
+      expect(page).to have_css('section.present h2', text: 'Willkommen')
 
       # Reveal writes the URL at most once a second; hiding the page (a phone
       # switching apps) writes it at once
@@ -336,7 +336,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     # Loaded straight onto the Introduction, whose title is wide enough to
     # reach the screen edges.
     before do
-      visit "#{FixtureBuilder::URL_PATH}#/introduction"
+      visit "#{FixtureBuilder::URL_PATH}#/einleitung"
       wait_for_reveal
     end
 
@@ -356,7 +356,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(gaps).to all(be > -1)
 
       # The down chevron pages on, and on a slide that fills the height
-      # ("Basic chords") the content clears the up and down chevrons too
+      # ("Grundakkorde") the content clears the up and down chevrons too
       2.times { |i| find('.reveal .controls .navigate-down').click; wait_for_js("Reveal.getIndices().v === #{i + 1}") }
       expect(slide_indices).to eq([2, 2])
       expect(page).to have_css('section.present.level2 > .slide-content[data-fitted]')
@@ -547,25 +547,25 @@ RSpec.describe 'index.html', :js, type: :feature do
       # chrome-builds.md); its exact scale therefore only holds locally, so on the
       # CI runner we assert only that the title is zoomed up to fill. The floor
       # sits at 1.1, well clear of 1 (no zoom, or the old stretch cap): fitted
-      # between the desktop chevrons on one line, the runner's title came out
-      # at 1.24. Wrapped over two lines, as it is here, it comes out at 2.3, and
-      # the ceiling leaves room for the emoji to set those lines a little
-      # differently.
+      # between the desktop chevrons on one line, the runner's old, longer
+      # title („Lieblings-Songs 🔥🎶🌛") came out at 1.24. „Liedli 🔥🎶🌛" fits
+      # one line here and comes out at 2.46, and the ceiling leaves room for
+      # the emoji to set that line a little differently.
       if ENV['CI']
         expect(page).to have_css('section.deck-title-slide .slide-content[data-fitted]', visible: :all)
         title_scale = page.evaluate_script("parseFloat(document.querySelector('section.deck-title-slide .slide-content').style.transform.replace('scale(', ''))")
         expect(title_scale).to be_between(1.1, 3)
       else
-        expect(page).to have_css('section.deck-title-slide .slide-content[style="transform: scale(2.29866);"]', visible: :all)
+        expect(page).to have_css('section.deck-title-slide .slide-content[style="transform: scale(2.45772);"]', visible: :all)
       end
 
       page.evaluate_script("Reveal.slide(2, 1)")
-      expect(page).to have_css('section.present.level2 .slide-content[style="transform: scale(0.710793);"]', visible: :all)
+      expect(page).to have_css('section.present.level2 .slide-content[style="transform: scale(0.823204);"]', visible: :all)
 
       # A song's slide ends on a preview of the next one's first line
       # (.next-line), fitted along with the lyrics. It never wraps, like the
       # lyrics: on the first song's Intro (four chords) its preview of a whole
-      # line of Verse 1 is the widest thing on the slide, and the slide is
+      # line of Strophe 1 is the widest thing on the slide, and the slide is
       # fitted to it, not cut off at the chords' width
       page.evaluate_script("Reveal.slide(3, 2)")
       expect(page).to have_css('section.present.level2 > .slide-content[data-fitted] .next-line', visible: :all)
@@ -642,12 +642,12 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(unfitted).to eq(0)
       # The overview gives each slide the full screen height; the Introduction
       # still gets its own fit, not one capped at 1 by measuring that height
-      expect(page).to have_css('#introduction > .slide-content[style="transform: scale(2.30108);"]', visible: :all)
+      expect(page).to have_css('#einleitung > .slide-content[style="transform: scale(2.77854);"]', visible: :all)
 
-      press(:right, :right, :down, :enter) # pick "Welcome" (2, 1)
+      press(:right, :right, :down, :enter) # pick "Willkommen" (2, 1)
       expect(page).to have_no_css('.reveal.overview')
       expect(slide_indices).to eq([2, 1])
-      expect(page).to have_css('section.present.level2 .slide-content[style="transform: scale(0.710793);"]', visible: :all)
+      expect(page).to have_css('section.present.level2 .slide-content[style="transform: scale(0.823204);"]', visible: :all)
     end
   end
 
@@ -658,7 +658,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     before { load_presentation }
 
     it 'is transparent as its slide is shown and fades in slowly later, stays put while its slide leaves, starts over on every visit, and shows at once for a focused chord or the end of the song' do
-      # Imagine's Verse 1, whose preview is the Bridge's first line. Not yet
+      # Imagine's Strophe 1, whose preview is the Bridge's first line. Not yet
       # rendered (display: none, beyond Reveal's view distance): the jump
       # there shows it with no earlier opacity to fade from (@starting-style)
       verse = 'Reveal.getSlide(6, 3)'
@@ -756,7 +756,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       # By Reveal's jump, not by following the link: a navigation leaves an
       # entry in the history, and makes an iPhone's Safari show its bars again
       history_length = page.evaluate_script('history.length')
-      click_link('Table of contents')
+      click_link('Inhaltsverzeichnis')
       expect(page).to have_css('#TOC.present')
       expect(page.evaluate_script('history.length')).to eq(history_length)
 
@@ -773,11 +773,11 @@ RSpec.describe 'index.html', :js, type: :feature do
       load_presentation
       go_to_first_song
       finish_next_line_fade # its chords count among the slide's visible ones
-      click_button('⚙️ Settings')
+      click_button('⚙️ Einstellungen')
     end
 
     it 'toggles chord visibility from the settings dialog, and fits the slide again' do
-      fitted = 'section.slide.present > .slide-content[style="transform: scale(1.8088);"]'
+      fitted = 'section.slide.present > .slide-content[style="transform: scale(1.65786);"]'
       expect(page).to have_css(fitted, visible: :all)
       expect(page).to have_no_css('body.chords-hidden')
       within 'section.slide.present' do
@@ -833,7 +833,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page).to have_no_css('body.theme-bright')
       expect(body_background_color).to eq('#111')
 
-      click_button('⚙️ Settings')
+      click_button('⚙️ Einstellungen')
       expect(page).to have_select('theme-select', selected: 'Dunkel')
 
       select('Hell', from: 'theme-select')
@@ -844,7 +844,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       load_presentation
       expect(page).to have_css('body.theme-bright')
 
-      click_button('⚙️ Settings')
+      click_button('⚙️ Einstellungen')
       expect(page).to have_select('theme-select', selected: 'Hell')
       select('Dunkel', from: 'theme-select')
       expect(page).to have_no_css('body.theme-bright')
@@ -859,7 +859,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         JS
         load_presentation
         expect { page.evaluate_script('localStorage') }.to raise_error(Ferrum::JavaScriptError)
-        click_button('⚙️ Settings')
+        click_button('⚙️ Einstellungen')
         select('Hell', from: 'theme-select')
         expect(page).to have_css('body.theme-bright')
       end
@@ -876,7 +876,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page).not_to have_visible('#settings-modal')
       expect(page).to have_css('#open-settings[aria-haspopup="dialog"]')
 
-      click_button('⚙️ Settings')
+      click_button('⚙️ Einstellungen')
       expect(page).to have_visible('#settings-modal')
       expect(active_element_id).to eq('settings-title')
 
@@ -889,11 +889,11 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page.evaluate_script("Reveal.isOverview()")).to be false
       expect(active_element_id).to eq('open-settings')
 
-      click_button('⚙️ Settings')
+      click_button('⚙️ Einstellungen')
       click_button('Schliessen')
       expect(page).not_to have_visible('#settings-modal')
 
-      click_button('⚙️ Settings')
+      click_button('⚙️ Einstellungen')
       expect(page).to have_visible('#settings-modal')
       backdrop_click('settings-modal')
       expect(page).not_to have_visible('#settings-modal')
@@ -1090,7 +1090,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       page.driver.browser.page.command('Page.addScriptToEvaluateOnNewDocument',
                                        source: "Object.defineProperty(navigator, 'standalone', { value: true });")
       load_presentation
-      expect(page).to have_button('⚙️ Settings')
+      expect(page).to have_button('⚙️ Einstellungen')
       expect(page).to have_css('#fullscreen-toggle', visible: :hidden)
     end
   end
@@ -1105,12 +1105,12 @@ RSpec.describe 'index.html', :js, type: :feature do
       it 'the password makes this device host of a new session, kept in its storage across a reload, until 🏁' do
         open_live_scroll_dialog
         within('#multiplex-info-modal') do
-          expect(page).to have_css('#multiplex-info-status', text: 'Keine Session')
+          expect(page).to have_css('#multiplex-info-status', text: 'Keine Runde')
           expect(page).to have_css('#multiplex-info-join', text: 'Scanne den QR-Code eines Gastgebers')
           # A plain visitor has nothing to start, show or end
           expect(page).to have_no_button('🚀 Live-Scrollen starten', disabled: :all)
           expect(page).to have_no_button('🔗 QR-Code zeigen')
-          expect(page).to have_no_button('🏁 Session beenden')
+          expect(page).to have_no_button('🏁 Runde beenden')
           click_button('🔑 Als Gastgeber anmelden')
         end
         expect(page).to have_visible('#host-modal')
@@ -1167,7 +1167,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         within('#multiplex-info-modal') do
           expect(page).to have_button('🚀 Live-Scrollen starten', disabled: true) # the title slide is no song
           expect(page).to have_button('🔗 QR-Code zeigen')
-          expect(page).to have_button('🏁 Session beenden')
+          expect(page).to have_button('🏁 Runde beenden')
           expect(page).to have_no_css('#multiplex-info-join', visible: true)
           expect(page).to have_no_button('🔑 Als Gastgeber anmelden')
         end
@@ -1181,9 +1181,9 @@ RSpec.describe 'index.html', :js, type: :feature do
 
         # 🏁 leaves the session: the device forgets it, and with it what only a session offers
         open_live_scroll_dialog
-        within('#multiplex-info-modal') { click_button('🏁 Session beenden') }
-        expect(page).to have_css('#multiplex-toast.visible', text: 'Die Session ist beendet')
-        expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+        within('#multiplex-info-modal') { click_button('🏁 Runde beenden') }
+        expect(page).to have_css('#multiplex-toast.visible', text: 'Die Runde ist beendet')
+        expect(page).to have_css('#multiplex-status', text: 'Keine Runde')
         expect(session_secret).to be_nil
         open_live_scroll_dialog
         within('#multiplex-info-modal') { expect(page).to have_no_button('🔗 QR-Code zeigen') }
@@ -1391,7 +1391,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
           wait_for_js("Reveal.getIndices().h === 1") # sent to the table of contents
           expect(slide_indices).to eq([1, 0])
-          expect(page).to have_link('Table of contents') # free again: 📖 is back
+          expect(page).to have_link('Inhaltsverzeichnis') # free again: 📖 is back
           expect(page).to have_no_css('#multiplex-status-button.multiplex-driving')
           expect(page).to have_css('#multiplex-status', text: 'Du bist Gastgeber') # still, for the next song
         end
@@ -1399,7 +1399,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
           wait_for_js("Reveal.getIndices().h === 1") # every follower lands on the TOC too
           expect(slide_indices).to eq([1, 0])
-          expect(page).to have_link('Table of contents')
+          expect(page).to have_link('Inhaltsverzeichnis')
           expect(page).to have_no_css('#multiplex-status-button.multiplex-following')
           expect(page).to have_css('.reveal .controls') # the chevrons are back
           # free to browse again. press, not send_keys on body: that clicks the
@@ -1569,7 +1569,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           open_live_scroll_dialog
           within('#multiplex-info-modal') do
             expect(page).to have_no_button('🚀 Live-Scrollen beenden')
-            expect(page).to have_no_button('🏁 Session beenden')
+            expect(page).to have_no_button('🏁 Runde beenden')
             expect(page).to have_button('🔗 QR-Code zeigen') # still in the session
             expect(page).to have_button('🔑 Gastgeber übernehmen') # and may take it back
           end
@@ -1615,7 +1615,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
         using_session(:visitor) do
           load_presentation
-          expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+          expect(page).to have_css('#multiplex-status', text: 'Keine Runde')
         end
 
         using_session(:host_b) do
@@ -1640,15 +1640,15 @@ RSpec.describe 'index.html', :js, type: :feature do
           wait_for_js("Reveal.getIndices().h === 3")
           start_live(mode: :self)
           open_live_scroll_dialog
-          within('#multiplex-info-modal') { click_button('🏁 Session beenden') }
-          expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+          within('#multiplex-info-modal') { click_button('🏁 Runde beenden') }
+          expect(page).to have_css('#multiplex-status', text: 'Keine Runde')
         end
         # Ending a session mid-song frees its devices, takes them to the TOC
         # and out of the session: the address loses ?live=
         using_session(:client_a) do
-          expect(page).to have_css('#multiplex-toast.visible', text: 'Die Session ist beendet')
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Die Runde ist beendet')
           expect(page).to have_css('#multiplex-toast.visible', text: 'Du kannst jetzt wieder frei navigieren')
-          expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+          expect(page).to have_css('#multiplex-status', text: 'Keine Runde')
           expect(session_secret).to be_nil
           wait_for_js("Reveal.getIndices().h === 1")
           expect(slide_indices).to eq([1, 0])
@@ -1660,11 +1660,11 @@ RSpec.describe 'index.html', :js, type: :feature do
           # A guest may leave of its own accord, even mid-song: free where it stands
           open_live_scroll_dialog
           within('#multiplex-info-modal') do
-            expect(page).to have_no_button('🏁 Session beenden') # the host's
-            click_button('🚪 Session verlassen')
+            expect(page).to have_no_button('🏁 Runde beenden') # the host's
+            click_button('🚪 Runde verlassen')
           end
-          expect(page).to have_css('#multiplex-toast.visible', text: 'Du hast die Session verlassen')
-          expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Du hast die Runde verlassen')
+          expect(page).to have_css('#multiplex-status', text: 'Keine Runde')
           expect(session_secret).to be_nil
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
           press(:right)
@@ -1673,11 +1673,11 @@ RSpec.describe 'index.html', :js, type: :feature do
           # And stays out, across a reload too
           page.refresh
           wait_for_reveal
-          expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+          expect(page).to have_css('#multiplex-status', text: 'Keine Runde')
         end
         using_session(:host_b) do
           open_live_scroll_dialog
-          within('#multiplex-info-modal') { expect(page).to have_no_button('🚪 Session verlassen') } # the host ends it instead
+          within('#multiplex-info-modal') { expect(page).to have_no_button('🚪 Runde verlassen') } # the host ends it instead
         end
       end
 
@@ -1698,21 +1698,21 @@ RSpec.describe 'index.html', :js, type: :feature do
           # Logging in asks who is present, in the dialog that opens right away
           log_in_as_host(only: ['Daniel'])
           secret = session_secret
-          click_link 'Table of contents'
+          click_link 'Inhaltsverzeichnis'
           expect(page).to have_css('#TOC.present')
           wait_for_js("document.querySelectorAll('#TOC nav li:not(.toc-hidden)').length === 1")
           expect(toc_entries.call).to eq(['Imagine (John Lennon)'])
-          expect(page).to have_css(button, text: 'Songs von: Daniel')
+          expect(page).to have_css(button, text: 'Lieder von: Daniel')
         end
 
         using_session(:guest) do
           join_session(secret)
-          click_link 'Table of contents'
+          click_link 'Inhaltsverzeichnis'
           expect(page).to have_css('#TOC.present')
           # The host's choice arrives with its heartbeat, and is not the guest's to change
-          expect(page).to have_css(button, text: 'Songs von: Daniel')
+          expect(page).to have_css(button, text: 'Lieder von: Daniel')
           expect(toc_entries.call).to eq(['Imagine (John Lennon)'])
-          click_button('Songs von')
+          click_button('Lieder von')
           within('#gastgeber-modal') do
             expect(page).to have_css('#gastgeber-info', text: 'Der Gastgeber hat gewählt')
             expect(page).to have_checked_field('Daniel', disabled: true)
@@ -1726,22 +1726,22 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
 
         using_session(:presenter) do
-          click_button('Songs von')
+          click_button('Lieder von')
           within('#gastgeber-modal') do
             check 'Monika'
             click_button('OK')
           end
         end
         using_session(:guest) do
-          expect(page).to have_css(button, text: 'Songs von: Daniel, Monika')
+          expect(page).to have_css(button, text: 'Lieder von: Daniel, Monika')
           expect(toc_entries.call).to contain_exactly(
             'Across the universe (Beatles)', 'I Have a Dream (ABBA)', 'Imagine (John Lennon)'
           )
-          # Reset clears the guest's own filters, not whose songs the evening has
+          # „Zurücksetzen" clears the guest's own filters, not whose songs the evening has
           select 'Englisch', from: 'Sprache'
-          click_button 'Reset'
+          click_button 'Zurücksetzen'
           expect(page).to have_select('Sprache', selected: 'Alle')
-          expect(page).to have_css(button, text: 'Songs von: Daniel, Monika')
+          expect(page).to have_css(button, text: 'Lieder von: Daniel, Monika')
           expect(toc_entries.call.size).to eq(3)
         end
 
@@ -1753,10 +1753,10 @@ RSpec.describe 'index.html', :js, type: :feature do
         using_session(:presenter) do
           page.refresh
           wait_for_reveal
-          click_link 'Table of contents'
+          click_link 'Inhaltsverzeichnis'
           expect(page).to have_css('#TOC.present')
-          expect(page).to have_css(button, text: 'Songs von: Daniel, Monika')
-          click_button('Songs von')
+          expect(page).to have_css(button, text: 'Lieder von: Daniel, Monika')
+          click_button('Lieder von')
           within('#gastgeber-modal') do
             expect(page).to have_checked_field('Daniel')
             expect(page).to have_checked_field('Monika')
@@ -1766,14 +1766,14 @@ RSpec.describe 'index.html', :js, type: :feature do
           end
         end
         using_session(:guest) do
-          expect(page).to have_css(button, text: 'Songs von: Alle') # all of them: no filter, and Riptide, who has no Gastgeber, is back
+          expect(page).to have_css(button, text: 'Lieder von: Alle') # all of them: no filter, and Riptide, who has no Gastgeber, is back
           expect(toc_entries.call.size).to eq(5)
 
           # Out of the session, the checkboxes are a filter of the guest's own again, all checked
           open_live_scroll_dialog
-          within('#multiplex-info-modal') { click_button('🚪 Session verlassen') }
-          expect(page).to have_css(button, text: 'Songs von: Alle')
-          click_button('Songs von')
+          within('#multiplex-info-modal') { click_button('🚪 Runde verlassen') }
+          expect(page).to have_css(button, text: 'Lieder von: Alle')
+          click_button('Lieder von')
           within('#gastgeber-modal') do
             expect(page).to have_css('#gastgeber-info', text: 'Zeigt die Lieder der angehakten Gastgeber')
             expect(page).to have_checked_field('Josua')
@@ -1918,7 +1918,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page.evaluate_script('window._liveEnded')).to be >= 3
 
           open_live_scroll_dialog
-          within('#multiplex-info-modal') { click_button('🏁 Session beenden') }
+          within('#multiplex-info-modal') { click_button('🏁 Runde beenden') }
           wait_for_js("window._sessionEnded >= 3") # now, and again over the next second
           expect(page.evaluate_script('window._sessionEnded')).to be >= 3
         end
@@ -1959,7 +1959,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         find('#multiplex-status-button').click
         expect(page).to have_visible('#multiplex-info-modal')
         expect(active_element_id).to eq('multiplex-info-title')
-        expect(page).to have_css('#multiplex-info-status', text: 'Keine Session')
+        expect(page).to have_css('#multiplex-info-status', text: 'Keine Runde')
         within('#multiplex-info-modal') do # outside a session, only the way in
           expect(page).to have_button('🔑 Als Gastgeber anmelden')
           expect(page).to have_no_button('🔗 QR-Code zeigen')
@@ -2028,7 +2028,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         open_qr
         expect(page).to have_visible('#qr-modal')
         expect(active_element_id).to eq('qr-title')
-        expect(page).to have_css('#qr-title', text: 'Song Book öffnen')
+        expect(page).to have_css('#qr-title', text: 'Liederbuch öffnen')
         expect(page).to have_css('#qr-info', text: 'Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.')
         # Whoever scans it is in the session, and shows their own code right away
         expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"][alt$="?live=spec-qr&qr=1"]', visible: :all)
@@ -2104,7 +2104,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         # Reveal writes the address itself, at most once a second, and a write
         # it deferred carries the query string of the moment it was asked
         # for: had it ever seen ?live=, it could put it back a second after it
-        # was dropped — and after „Session verlassen", a reload joined again.
+        # was dropped — and after „Runde verlassen", a reload joined again.
         # So ?live= is gone before Reveal starts, and no write carries it.
         expect(page.evaluate_script("window._addresses.length")).to be > 0 # Reveal's own, at least
         expect(page.evaluate_script("window._addresses.filter(function(a) { return /[?&]live=/.test(a); })")).to eq([])
@@ -2125,7 +2125,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         within('#qr-modal') { click_button('Schliessen') }
         open_live_scroll_dialog
         within('#multiplex-info-modal') { click_button('🔗 QR-Code zeigen') }
-        expect(page).to have_css('#qr-title', text: 'Song Book öffnen')
+        expect(page).to have_css('#qr-title', text: 'Liederbuch öffnen')
         expect(page).to have_css('#qr-info', text: 'Scanne den Code')
         within('#qr-modal') { click_button('Schliessen') }
 
@@ -2144,7 +2144,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         age.call(13)
         page.refresh
         wait_for_reveal
-        expect(page).to have_css('#multiplex-status', text: 'Keine Session')
+        expect(page).to have_css('#multiplex-status', text: 'Keine Runde')
         expect(session_secret).to be_nil
       end
     end

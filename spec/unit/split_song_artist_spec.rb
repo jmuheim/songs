@@ -26,10 +26,10 @@ RSpec.describe 'split_song_artist' do
   end
 
   it 'leaves an h1 with no " - " untouched' do
-    html = '<section id="introduction" class="title-slide slide level1"><h1>Introduction</h1></section>'
+    html = '<section id="einleitung" class="title-slide slide level1"><h1>Einleitung</h1></section>'
     doc = parse(html)
-    expect(doc.at_css('section#introduction h1').text).to eq('Introduction')
-    expect(doc.at_css('section#introduction p.song-artist')).to be_nil
+    expect(doc.at_css('section#einleitung h1').text).to eq('Einleitung')
+    expect(doc.at_css('section#einleitung p.song-artist')).to be_nil
   end
 
   it 'does not mistake an unspaced hyphen inside the title for the artist separator' do
@@ -48,11 +48,11 @@ RSpec.describe 'split_song_artist' do
 
   it 'only touches section.level1, never the deck\'s own #title-slide' do
     html = <<~HTML
-      <section id="title-slide"><h1 class="title">Lieblings-Songs - the book</h1></section>
+      <section id="title-slide"><h1 class="title">Liedli - the book</h1></section>
       <section id="riptide" class="title-slide slide level1"><h1>Riptide - Vance Joy</h1></section>
     HTML
     doc = parse(html)
-    expect(doc.at_css('#title-slide h1').text).to eq('Lieblings-Songs - the book')
+    expect(doc.at_css('#title-slide h1').text).to eq('Liedli - the book')
     expect(doc.at_css('#title-slide p.song-artist')).to be_nil
     expect(doc.at_css('#riptide p.song-artist').text).to eq('Vance Joy')
   end

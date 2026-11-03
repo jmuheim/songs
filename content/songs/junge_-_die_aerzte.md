@@ -6,14 +6,14 @@
 - Genre: Rock
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=iK-1oGphELM)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/751634)
-- [Acoustic guitar interpretation](https://www.youtube.com/watch?v=YycHXyyI4fI)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/751634)
+- [Interpretation auf der Akustikgitarre](https://www.youtube.com/watch?v=YycHXyyI4fI)
 
 ## Intro
 
 [F] [G] [Am] [Am] _(x2)_
 
-## Verse 1
+## Strophe 1
 
 _(Picking)_
 
@@ -30,7 +30,7 @@ wenn Du ihn darum bittest
 
 [F] Junge... [G]
 
-## Chorus 1
+## Refrain 1
 
 _(Strumming)_
 
@@ -49,7 +49,7 @@ musst du die denn färb'n? [Am]
 Nie kommst du nach Hau[F]se
 wir wissen nicht mehr wei[Dm]ter
 
-## Verse 2
+## Strophe 2
 
 _(Picking)_
 
@@ -63,7 +63,7 @@ wäre das nichts für [Am] dich: eine eigene Praxis?
 
 [F] Junge... [G]
 
-## Chorus 2
+## Refrain 2
 
 _(Strumming)_
 
@@ -96,7 +96,7 @@ und du warst [C] so ein süsses [F] Kind
 und du warst [Dm] so ein süsses [Am] Kind
 du warst so [C] süss
 
-## Chorus
+## Refrain
 
 Und immer deine Freun[F]de
 ihr nehmt doch alle Dro[Dm]gen

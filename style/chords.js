@@ -1,6 +1,6 @@
 (function () {
   // Fallback fingerings (E A D G B e; x = muted, 0 = open) for chords that
-  // don't have an author-curated voicing in the song's own "Instructions" legend.
+  // don't have an author-curated voicing in the song's own "Spielhinweise" legend.
   var DEFAULT_CHORDS = {
     'A':      'x 0 2 2 2 0',
     'A7':     'x 0 2 0 2 0',
@@ -92,7 +92,7 @@
   };
 
   // Parses "ChordName |fret fret fret fret fret fret| optional hint" lines
-  // out of a song's own <pre><code> legend blocks (see e.g. "Instructions"
+  // out of a song's own <pre><code> legend blocks (see e.g. "Spielhinweise"
   // sections), so the tooltip reuses the exact voicing the author picked
   // for that song instead of a generic default.
   function parseSongChords(songSection) {
@@ -148,13 +148,13 @@
   }
 
   // The guitar block carries the chord name, so its own rows (including the
-  // "Guitar:" label) are indented by that name's width — the same pad the
+  // "Gitarre:" label) are indented by that name's width — the same pad the
   // chord row needs anyway to line its "Name |" up under the header's
   // opening pipe.
   function guitarBlock(chordName, tab) {
     var pad = spaces(chordName.length + 1);
     return [
-      pad + 'Guitar:',
+      pad + 'Gitarre:',
       pad + '|E A D G B e|',
       pad + '|-----------|',
       chordName + ' |' + tab + '|'
@@ -191,7 +191,7 @@
       } else {
         lines = guitarLines;
       }
-      // The note comes from a song's own Instructions legend (see
+      // The note comes from a song's own Spielhinweise legend (see
       // parseSongChords) and describes that guitar voicing specifically, so
       // it runs full-width below both columns rather than inside either.
       if (result.note) lines.push('', result.note);

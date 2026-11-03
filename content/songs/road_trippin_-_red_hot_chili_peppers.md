@@ -6,8 +6,8 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=11GYvfYjyV0)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/red-hot-chili-peppers/road-trippin-chords-1009501)
-- [Guitar tutorial](https://www.youtube.com/watch?v=NXLH5YT1ZLM)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/red-hot-chili-peppers/road-trippin-chords-1009501)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=NXLH5YT1ZLM)
 
 ## Intro
 
@@ -15,7 +15,7 @@ _(Instrumental)_
 
 [Em] [C] [B] _(x2)_
 
-## Verse 1
+## Strophe 1
 
 [Em] Road trippin with my two
 [C] favorite all[B]ies
@@ -37,7 +37,7 @@ let's go get [C] lost [B]
 [Em] Sparkles light with yellow [C] icing
 Just a [B] mirror for the sun [Em]
 
-##  Chorus
+## Refrain
 
 [C] Just a [B] mirror for the [Em] sun
 [C] Just a [B] mirror for the
@@ -46,7 +46,7 @@ Just a [B] mirror for the sun [Em]
 [Am] These smiling [G/B] eyes
 are just a [C] mirror for [D]
 
-## Verse 2
+## Strophe 2
 
 [Em] So much has come before
 those [C] battles lost and [B] won
@@ -58,7 +58,7 @@ And [C] let us check the surf [B]
 [Em] Staying high and dry's more [C] trouble
 than it's [B] worth in the sun [Em]
 
-##  Chorus
+## Refrain
 
 [C] Just a [B] mirror for the [Em] sun
 [C] Just a [B] mirror for the
@@ -67,7 +67,7 @@ than it's [B] worth in the sun [Em]
 [Am] These smiling [G/B] eyes
 are just a [C] mirror for [D]
 
-## Interlude
+## Zwischenspiel
 
 _(Instrumental)_
 
@@ -75,7 +75,7 @@ _(Instrumental)_
 
 [Bdim] _(x4)_
 
-## Verse 3
+## Strophe 3
 
 
 [Em] In Big Sur we take some
@@ -98,7 +98,7 @@ let's go get [C] lost [B]
 [Em] Sparkles light with yellow [C] icing
 Just a [B] mirror for the sun [Em]
 
-##  Chorus
+## Refrain
 
 [C] Just a [B] mirror for the [Em] sun
 [C] Just a [B] mirror for the

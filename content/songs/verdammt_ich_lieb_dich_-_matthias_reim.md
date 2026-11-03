@@ -6,10 +6,10 @@
 - Genre: Rock
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=x6q0ciiqyG0)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929)
-- [Guitar cover](https://www.youtube.com/watch?v=GIlCtOrisx0)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929)
+- [Gitarren-Cover](https://www.youtube.com/watch?v=GIlCtOrisx0)
 
-## Verse 1
+## Strophe 1
 
 Ich [Am] ziehe durch die Straßen bis nach Mitternacht
 hab das früher auch gern gemacht
@@ -31,7 +31,7 @@ Er [Am] fragt nur: [G] "Hast du'n [Am] Stich?"
 
 Und ich [F] denke schon wieder nur an [G] dich...
 
-## Chorus
+## Refrain
 
 _(x2: gently first time, then repeat intensively)_
 
@@ -45,7 +45,7 @@ Verdammt, ich [C] will dich,
 ich will dich [G] nicht,
 Ich [F] will dich nicht verli[Am]er'n!
 
-## Verse 2
+## Strophe 2
 
 So [Am] langsam fällt mir alles wieder ein:
 Ich wollt doch nur'n bisschen freier sein.
@@ -67,7 +67,7 @@ Doch [F] niemand, [G] niemand sagt: "Hör auf". [Am]
 
 Und ich [F] denke schon wieder nur an [G] dich...
 
-## Chorus
+## Refrain
 
 Verdammt, ich [C] lieb' dich,
 ich lieb' dich [G] nicht.

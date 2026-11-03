@@ -1,5 +1,5 @@
 <div id="top-left-controls" class="controls-group">
-  <a href="#/1" id="go-to-toc" class="ctrl"><span aria-hidden="true">📖</span> <span class="visually-hidden">Table of contents</span></a>
+  <a href="#/1" id="go-to-toc" class="ctrl"><span aria-hidden="true">📖</span> <span class="visually-hidden">Inhaltsverzeichnis</span></a>
 </div>
 <div id="top-right-controls" class="controls-group">
   <button id="fullscreen-toggle" class="ctrl" aria-pressed="false" hidden><span aria-hidden="true">↕️</span> <span class="visually-hidden">Vollbild</span></button>
@@ -9,7 +9,7 @@
   <button id="multiplex-status-button" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">📡</span> <span class="visually-hidden" id="multiplex-status" role="status">Kein Live-Scrollen aktiv</span></button>
 </div>
 <div id="bottom-right-controls" class="controls-group controls-bottom">
-  <button id="open-settings" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">⚙️</span> <span class="visually-hidden">Settings</span></button>
+  <button id="open-settings" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">⚙️</span> <span class="visually-hidden">Einstellungen</span></button>
 </div>
 <script>
   // Space on a focused button (or chord, see chords.js) presses it, and Reveal must not turn the page
@@ -343,8 +343,8 @@
       <p id="live-toggle-hint" hidden>Live-Scrollen lässt sich nur auf einem Lied starten.</p>
       <button id="show-qr" aria-haspopup="dialog" hidden><span aria-hidden="true">🔗</span> QR-Code zeigen</button>
       <button id="host-login" aria-haspopup="dialog"><span aria-hidden="true">🔑</span> <span id="host-login-label">Als Gastgeber anmelden</span></button>
-      <button id="session-leave" hidden><span aria-hidden="true">🚪</span> Session verlassen</button>
-      <button id="session-end" hidden><span aria-hidden="true">🏁</span> Session beenden</button>
+      <button id="session-leave" hidden><span aria-hidden="true">🚪</span> Runde verlassen</button>
+      <button id="session-end" hidden><span aria-hidden="true">🏁</span> Runde beenden</button>
       <button id="multiplex-info-close">Schliessen</button>
     </div>
   </div>
@@ -368,7 +368,7 @@
 <dialog id="qr-modal" class="overlay-modal" aria-labelledby="qr-title">
   <div class="modal-box modal-box-qr">
     <div class="qr-text">
-      <h2 id="qr-title" tabindex="-1" autofocus>Song Book öffnen</h2>
+      <h2 id="qr-title" tabindex="-1" autofocus>Liederbuch öffnen</h2>
       <p id="qr-info">Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.</p>
     </div>
     <div id="qr-canvas"></div>
@@ -587,7 +587,7 @@ window.addEventListener('load', function() {
   // The title slide carries no id of its own any more (see build_helpers.rb's
   // rename_title_slide_id) — it's matched by its class below instead; TOC and
   // the introduction are still plain id lookups.
-  var NON_SONG_SLIDES = { 'TOC': true, 'introduction': true };
+  var NON_SONG_SLIDES = { 'TOC': true, 'einleitung': true };
   // A horizontal slide with sub-slides is a stack <section> with no id of its
   // own — pandoc puts the slug on its first child. Title and TOC have no
   // sub-slides, so their id sits on the section itself.
@@ -830,7 +830,7 @@ window.addEventListener('load', function() {
     // (`fresh`): a latecomer that catches up on a heartbeat just follows.
     if (fresh && s.mode === 'self' && !amScroller() && announcedFor !== s.id) {
       announcedFor = s.id;
-      showToast(['Es geht gleich los!', 'Der nächste Song ist «' + s.songTitle + '».']);
+      showToast(['Es geht gleich los!', 'Das nächste Lied ist «' + s.songTitle + '».']);
     }
     persistSession();
     applyNavMode();
@@ -904,7 +904,7 @@ window.addEventListener('load', function() {
   // Only the session's current host ends it, not one that was taken over.
   function onEndMessage(data) {
     if (data.claim < heardClaim) return;
-    leaveSession(['Die Session ist beendet'], true);
+    leaveSession(['Die Runde ist beendet'], true);
   }
 
   // The scroller leads and snaps back if it ever leaves its song; a follower
@@ -927,7 +927,7 @@ window.addEventListener('load', function() {
   // ---- Status ----
   var statusIntervalHb = function() { return cfg.heartbeat || HEARTBEAT_MS; };
   function statusText() {
-    if (!secret) return 'Keine Session';
+    if (!secret) return 'Keine Runde';
     if (!socket.connected) return everConnected ? 'Keine Verbindung' : 'Verbinde …';
     if (live) {
       if (live.scrollerId === senderId) return isHost ? 'Du scrollst live' : 'Du scrollst für alle';
@@ -1163,11 +1163,11 @@ window.addEventListener('load', function() {
     send(end);
     setTimeout(function() { send(end); }, 400);
     setTimeout(function() { send(end); }, 1000);
-    leaveSession(['Die Session ist beendet'], true);
+    leaveSession(['Die Runde ist beendet'], true);
   }
 
-  // What the 📡 dialog offers depends on the role: 🚀 and „Session beenden"
-  // to the host, 🔗 to anyone in a session, „Session verlassen" to anyone in
+  // What the 📡 dialog offers depends on the role: 🚀 and „Runde beenden"
+  // to the host, 🔗 to anyone in a session, „Runde verlassen" to anyone in
   // it but the host, the login to anyone but the host.
   function updateControls() {
     var inSession = !!secret;
@@ -1234,7 +1234,7 @@ window.addEventListener('load', function() {
 
   sessionLeaveBtn.addEventListener('click', function() {
     multiplexModal.close();
-    leaveSession(['Du hast die Session verlassen'], false);
+    leaveSession(['Du hast die Runde verlassen'], false);
   });
 
   document.getElementById('scroll-self').addEventListener('click', function() { choiceModal.close(); startLive('self'); });

@@ -7,10 +7,10 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=wCQfkEkePx8)
-- [Source tab](https://tabs.ultimate-guitar.com/user/tab/view?h=_5ECoKMMKHZmcTbZHfp9P2JQ&tab_id=27297698)
-- [Guitar tutorial](https://www.youtube.com/watch?v=Yv-AsMzWaV0)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/user/tab/view?h=_5ECoKMMKHZmcTbZHfp9P2JQ&tab_id=27297698)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=Yv-AsMzWaV0)
 
-## Instructions
+## Spielhinweise
 
 ```
     |E A D G B e|
@@ -25,7 +25,7 @@ _(Barre chords)_
 [Dm] [Am] [Dm] [Am]
 [Gm] [Am] [Dm]
 
-## Verse 1
+## Strophe 1
 
 _(Barre chords)_
 
@@ -37,7 +37,7 @@ I'm [Gm] hanging around I'm [Am] waiting for you
 But [Gm] nothing ever happens [Am]
 and I won[Dm]der
 
-## Verse 2
+## Strophe 2
 
 _(Barre chords)_
 
@@ -49,7 +49,7 @@ I [Gm] feel so lonely I'm [Am] waiting for you
 But [Gm] nothing ever happens [Am]
 and I won[Dm]der
 
-## Chorus
+## Refrain
 
 _(Open chords)_
 
@@ -77,7 +77,7 @@ _(Barre chords)_
 [Gm] [Am] [Dm]
 Da da da...
 
-## Verse 3
+## Strophe 3
 
 _(Barre chords)_
 
@@ -97,7 +97,7 @@ _(Open chords)_
 [C7] Isolation - [F] I don't want to
 [A7] sit on a lemon tree
 
-## Verse 4
+## Strophe 4
 
 _(Barre chords)_
 
@@ -107,7 +107,7 @@ I'm [Dm] steppin' around in a [Am] desert of joy
 And [Gm] everything will happen
 [Am] and you'll won[Dm]der
 
-## Chorus
+## Refrain
 
 _(Open chords)_
 

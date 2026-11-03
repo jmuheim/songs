@@ -6,13 +6,13 @@
 - Genre: Pop
 - Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=LanCLS_hIo4)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-marley/three-little-birds-chords-166605)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/bob-marley/three-little-birds-chords-166605)
 
 ## Intro
 
 [A]
 
-## Chorus
+## Refrain
 
 Don't [A] worry, about a thing
 'Cause [D] every little thing, gonna be al[A]right
@@ -20,7 +20,7 @@ Don't [A] worry, about a thing
 Singin' don't [A] worry, about a thing
 'Cause [D] every little thing, gonna be al[A]right
 
-## Verse
+## Strophe
 
 Rise up this [A] mornin'
 Smile with the [E] rising sun

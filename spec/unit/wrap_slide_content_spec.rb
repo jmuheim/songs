@@ -52,13 +52,13 @@ RSpec.describe 'wrap_slide_content' do
   it 'handles nested sections (stack + level2)' do
     html = <<~HTML
       <section class="level1">
-        <section id="verse" class="slide level2">
-          <h2>Verse</h2>
+        <section id="strophe" class="slide level2">
+          <h2>Strophe</h2>
         </section>
       </section>
     HTML
     doc = parse(html)
     expect(doc.at_css('section.level1 .slide-content')).not_to be_nil
-    expect(doc.at_css('section#verse .slide-content h2').text).to eq('Verse')
+    expect(doc.at_css('section#strophe .slide-content h2').text).to eq('Strophe')
   end
 end

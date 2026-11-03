@@ -6,10 +6,10 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=P6zaCV4niKk)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/father-and-son-chords-84491)
-- [Guitar tutorial](https://www.youtube.com/watch?v=fP7VC-2J_Ok)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/cat-stevens/father-and-son-chords-84491)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=fP7VC-2J_Ok)
 
-## Instructions
+## Spielhinweise
 
 ```
      |E A D G B e|
@@ -30,7 +30,7 @@ E |3--3-3-3-3-------|
 
 _(Riff x4)_
 
-## Verse 1 - Father
+## Strophe 1 - Vater
 
 It's not [G] time to make a change [D/F#]
 just relax [C] and take it ea[Am7]sy
@@ -56,7 +56,7 @@ but your [Am] dreams [D] may [G] not
 
 _(Riff x2)_
 
-## Verse 2 - Son
+## Strophe 2 - Sohn
 
 How can I [G] try to explain? [Bm]
 'cause when I [C] do he turns a[Am7]way again
@@ -70,7 +70,7 @@ I [D] know I [C] have to [G] go
 
 _(Riff x2)_
 
-## Interlude
+## Zwischenspiel
 
 _(Instrumental)_
 
@@ -80,7 +80,7 @@ _(Instrumental)_
 [G] [Em] [D] [G]
 [D] [C] [G]
 
-## Verse 3 - Father
+## Strophe 3 - Vater
 
 It's not [G] time to make a change [D/F#]
 just ~~relax~~ **sit down** [C] and take it ~~easy~~ **slow[Am7]ly**
@@ -92,7 +92,7 @@ if you want [C], you can mar[Am7]ry
 Look at me [G], I am old [Em]
 but I'm [Am] happy [D]
 
-## Verse 4 - Son
+## Strophe 4 - Sohn
 
 All the times [G] that I've cried [Bm]
 keeping all [C] the things I knew [Am7] inside

@@ -10,7 +10,7 @@ module BuildHelpers
 
   FRONTMATTER = <<~MD
     ---
-    title:  Lieblings-Songs 🔥🎶🌛
+    title:  Liedli 🔥🎶🌛
     author: 😊 Josua & Monika ❤️
     lang:   de-CH
     ---
@@ -115,14 +115,18 @@ module BuildHelpers
     [title, sections]
   end
 
-  # Splices a song's `## Instructions` (alternate chord fingerings) into its
+  # The optional section of alternate chord fingerings, riffs and playing
+  # notes. Its heading is never shown: merge_about_section drops it.
+  NOTES_HEADING = 'Spielhinweise'
+
+  # Splices a song's `## Spielhinweise` (NOTES_HEADING) into its
   # ABOUT_HEADING section — which already carries the song's tags and resource
   # links as authored in the source file — so every song opens on one slide
   # instead of scattering the same information across two.
   def merge_about_section(content)
     title, sections = song_sections(content)
     about        = sections.find { |s| s[:name] == ABOUT_HEADING }
-    instructions = sections.find { |s| s[:name] == 'Instructions' }
+    instructions = sections.find { |s| s[:name] == NOTES_HEADING }
     return content unless about
 
     rest = sections - [about, instructions].compact
@@ -173,7 +177,7 @@ module BuildHelpers
   # once the source file uses that shape; split the artist out into its own
   # `<p class="song-artist">` right after the <h1> so CSS can size/colour it
   # apart from the title. A song with no " - " (an untitled-artist song, or
-  # "Introduction") is left as a bare <h1>. Must run before wrap_slide_content,
+  # the Einleitung) is left as a bare <h1>. Must run before wrap_slide_content,
   # so the new <p> still lands inside the same .slide-content div as the <h1>.
   def split_song_artist(html)
     doc = Nokogiri::HTML(html)
@@ -198,7 +202,7 @@ module BuildHelpers
   # a checkbox group for Gastgeber (any number of hosts can be checked at
   # once, OR'd together — a song usually has just one host, but showing songs
   # for *either* of two checked hosts is more useful than forcing one at a
-  # time), and a Reset button at the top of #TOC. The first <li> is the
+  # time), and a reset button („Zurücksetzen") at the top of #TOC. The first <li> is the
   # Introduction — it has no song behind it, so it is skipped. See
   # decisions/2026-10-05-gastgeber-filter-uses-checkboxes-not-a-select.md.
   def inject_toc_filter(html, tags:)
@@ -246,7 +250,7 @@ module BuildHelpers
     reset = Nokogiri::XML::Node.new('button', doc)
     reset['type'] = 'button'
     reset['id'] = 'toc-filter-reset'
-    reset.content = 'Reset'
+    reset.content = 'Zurücksetzen'
     fieldset.add_child(reset)
 
     toc.prepend_child(fieldset)
@@ -264,14 +268,14 @@ module BuildHelpers
     doc.to_html
   end
 
-  NEXT_LINE_LABEL     = 'Next:'
+  NEXT_LINE_LABEL     = 'Danach:'
   NEXT_LINE_SEPARATOR = ' - '
   NEXT_LINE_MORE      = '...'
   NEXT_LINE_END       = 'Ende des Lieds'
 
   # Whoever scrolls a song is often a beat late, so every sub-slide of a song
   # that is sung ends on a preview of what comes next: NEXT_LINE_LABEL, the
-  # next sub-slide's heading and its first line ("Next: Verse 1 - [D] Words
+  # next sub-slide's heading and its first line ("Danach: Strophe 1 - [D] Words
   # are flowing out [Bm]..."), or NEXT_LINE_END on the song's last one. A `<p class="next-line">` appended to each such `section.level2`,
   # so must run before wrap_slide_content — it then sits in .slide-content,
   # below the lyrics, and slide-zoom.js fits it together with them — and before
@@ -380,7 +384,7 @@ module BuildHelpers
     button['type'] = 'button'
     button['id'] = 'toc-filter-gastgeber-open'
     button['aria-haspopup'] = 'dialog'
-    button.add_child(Nokogiri::XML::Text.new('Songs von: ', doc))
+    button.add_child(Nokogiri::XML::Text.new('Lieder von: ', doc))
     selection = Nokogiri::XML::Node.new('span', doc)
     selection['class'] = 'toc-filter-selection'
     selection.content = 'Alle'
@@ -409,7 +413,7 @@ module BuildHelpers
     title['id'] = 'gastgeber-title'
     title['tabindex'] = '-1'
     title['autofocus'] = 'autofocus'
-    title.content = 'Songs von'
+    title.content = 'Lieder von'
     box.add_child(title)
     info = Nokogiri::XML::Node.new('p', doc)
     info['id'] = 'gastgeber-info'

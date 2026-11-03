@@ -34,10 +34,10 @@ namespace :golden do
       'toc.html'           => doc.at_css('section#TOC'),
       'host_modal.html'    => doc.at_css('dialog#host-modal'),
       'imagine_verse1.html' => imagine_title
-                                .xpath('following-sibling::section[.//h2[normalize-space()="Verse 1"]][1]')
+                                .xpath('following-sibling::section[.//h2[normalize-space()="Strophe 1"]][1]')
                                 .first,
       'imagine_verse1_print.html' => print_imagine_title
-                                .xpath('following-sibling::section[.//h2[normalize-space()="Verse 1"]][1]')
+                                .xpath('following-sibling::section[.//h2[normalize-space()="Strophe 1"]][1]')
                                 .first,
       'infos_ueber_das_lied.html' => across_title
                                 .xpath('following-sibling::section[.//h2[normalize-space()="Infos über das Lied"]][1]')

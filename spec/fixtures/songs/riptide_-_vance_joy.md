@@ -5,6 +5,6 @@
 - Sprache: Englisch
 - Genre: Mantra
 
-## Verse 1
+## Strophe 1
 
 [Am] Lady, running through my [G] veins

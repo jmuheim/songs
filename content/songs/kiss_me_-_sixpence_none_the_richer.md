@@ -7,9 +7,9 @@
 - Genre: Pop
 - Gastgeber: Daniel
 - [Lied auf YouTube](https://www.youtube.com/watch?v=8N-qO3sPMjc)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/sixpence-none-the-richer/kiss-me-chords-2707)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/sixpence-none-the-richer/kiss-me-chords-2707)
 
-## Instructions
+## Spielhinweise
 
 ```
       |E A D G B e|
@@ -26,14 +26,14 @@ Asus4 |x 0 0 2 3 0|
 
 [D] [Dmaj7] [D7] [Dmaj7] _(x2)_
 
-## Verse 1
+## Strophe 1
 
 [D] Kiss me [Dmaj7] out of the bearded barley
 [D7] Nightly, [Dmaj7] beside the green, green [D] grass
 Swing, swing, [Dmaj7] swing the spinning step
 [D7] You wear those shoes and I [G] will wear that dress
 
-## Chorus
+## Refrain
 
 Oh-oh, [Em] kiss [A] me [D] beneath the [Bm] milky twilight
 [Em] Lead [A] me ... [D] out on the [D7] moonlit [Em] floor
@@ -47,14 +47,14 @@ Lift your [A] open hand
 
 [D] me [Dmaj7] [D7] [Dmaj7]
 
-## Verse 2
+## Strophe 2
 
 [D] Kiss me [Dmaj7] down by the broken tree [D7] house
 Swing me [Dmaj7] upon its hanging [D] tire
 Bring, bring, [Dmaj7] bring your flowered hat
 [D7] We'll take the trail marked on your [G] father's map
 
-## Chorus
+## Refrain
 
 Oh-oh, [Em] kiss [A] me [D] beneath the [Bm] milky twilight
 [Em] Lead [A] me ... [D] out on the [D7] moonlit [Em] floor
@@ -64,14 +64,14 @@ Lift your [A] open hand
 [D/A] Silver moon's [Gmaj7] sparkling
 [Asus4] [A] So kiss
 
-## Interlude
+## Zwischenspiel
 
 [D] me [Dmaj7] [D7] [Dmaj7]
 [D] [Dmaj7] [D7] [Dmaj7]
 
 [Em] [A] [D] [Bm] [Em] [A] [D] [D7]
 
-## Chorus
+## Refrain
 
 [Em] Kiss [A] me [D] beneath the [Bm] milky twilight
 [Em] Lead [A] me ... [D] out on the [D7] moonlit [Em] floor

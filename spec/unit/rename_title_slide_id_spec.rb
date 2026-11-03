@@ -4,7 +4,7 @@ RSpec.describe 'rename_title_slide_id' do
   include BuildHelpers
 
   it 'swaps the id for a "deck-title-slide" class, dropping the id entirely' do
-    html = '<section id="title-slide"><div class="slide-content"><h1 class="title">Lieblings-Songs</h1></div></section>'
+    html = '<section id="title-slide"><div class="slide-content"><h1 class="title">Liedli</h1></div></section>'
     out = rename_title_slide_id(html)
     expect(out).to include('<section class="deck-title-slide">')
     expect(out).not_to include('id="title-slide"')
@@ -16,7 +16,7 @@ RSpec.describe 'rename_title_slide_id' do
   end
 
   it 'is idempotent — a second pass over already-renamed markup is a no-op' do
-    html = '<section id="title-slide"><h1 class="title">Lieblings-Songs</h1></section>'
+    html = '<section id="title-slide"><h1 class="title">Liedli</h1></section>'
     once = rename_title_slide_id(html)
     twice = rename_title_slide_id(once)
     expect(twice).to eq(once)

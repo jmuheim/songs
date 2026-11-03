@@ -6,14 +6,14 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=iy4mXZN1Zzk)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/feel-chords-133140)
-- [Guitar tutorial](https://www.youtube.com/watch?v=LVGNZyeff7)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/robbie-williams/feel-chords-133140)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=LVGNZyeff7)
 
 ## Intro
 
 [Dm] [Am] [Dm] [Am] _(2x)_
 
-## Verse 1
+## Strophe 1
 
 Come on and hold my [Dm] hand
 [Am] I wanna contact the living [A] [A7]
@@ -27,7 +27,7 @@ I sit and talk to [Dm] God
 My head speaks a [Gm] language
 [Dm] I don't understand [A] [A7]
 
-## Chorus 1
+## Refrain 1
 
 I just wanna [Bb] feel real lo[F]ve
 Fill the home that I li[C]ve in
@@ -35,7 +35,7 @@ Cause I got too much li[Bb]fe
 Running through my ve[F]igns
 Going to waste [C]
 
-## Verse 2
+## Strophe 2
 
 I dont wanna [Dm] die
 [Am] But I ain't keen on living ei[A]ther [A7]
@@ -49,7 +49,7 @@ I scare myself to de[Dm]ath
 Before I've ar[Gm]rived
 [Dm] I can see myself co[A]ming [A7]
 
-## Chorus 2
+## Refrain 2
 
 I just wanna [Bb] feel real lo[F]ve
 Fill the home that I li[C]ve in
@@ -67,7 +67,7 @@ I cannot get enough
 
 [Dm] [Am] _(Pause)_
 
-## Chorus 2
+## Refrain 2
 
 I just wanna [Bb] feel real lo[F]ve
 Fill the home that I li[C]ve in

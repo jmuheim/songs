@@ -6,9 +6,9 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=404oPn6tudE)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/568214)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/568214)
 
-## Verse 1
+## Strophe 1
 
 Hal[G]lo, mein Schatz, ich liebe Dich,
 Du [Em] bist die einzige für mich.
@@ -25,14 +25,14 @@ Weil [D] ich so verliebt in Dich bin.
 [C] Gleich wird es dunkel, [Bm] bald ist es Nacht,
 Da [C] ist ein Wort der Warnung angebracht! [D]
 
-## Chorus 1
+## Refrain 1
 
 Männer sind [G] Schweine!
 Traue ihnen [Em] nicht, mein Kind!
 Sie wollen [Am] alle das eine!
 Weil [C] Männer nun mal so [D] sind.
 
-## Verse 2
+## Strophe 2
 
 Ein [G] Mann fühlt sich erst dann als Mann,
 Wenn [Em] er es Dir besorgen kann.
@@ -49,7 +49,7 @@ Ge[D]fühle sind ihm völlig fremd.
 [C] Für ihn ist Liebe gleich [Bm] Samenverlust,
 [C] Mädchen, sei Dir dessen stets bewusst! [D]
 
-## Chorus 2
+## Refrain 2
 
 Männer sind [G] Schweine!
 Frage nicht nach [Em] Sonnenschein.
@@ -65,7 +65,7 @@ Sie schwör'n Dir [Am] ewige Treue
 Und dann am [C] nächsten Morgen
 sind sie fort. [D]
 
-## Verse 3
+## Strophe 3
 
 Und [G] falls Du doch den Fehler machst
 Und [Em] Dir 'nen Ehemann anlachst.
@@ -84,7 +84,7 @@ Und [D] rülpst und furzt im Ehebett.
 [C] Dann hast du King Kong [Bm] zum Ehemann!
 Drum [C] sag' ich Dir - denk bitte stets daran: [D]
 
-## Chorus 4
+## Refrain 4
 
 Männer sind [G] Schweine!
 Traue ihnen [Em] nicht, mein Kind!

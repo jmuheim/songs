@@ -16,13 +16,13 @@ RSpec.describe 'print.html', :js, type: :feature do
   it 'has its structure and content, leaves out the Infos sections, and uses the serif (light) theme' do
     load_presentation
     aggregate_failures do
-      expect(page.title).to eq('Lieblings-Songs 🔥🎶🌛')
+      expect(page.title).to eq('Liedli 🔥🎶🌛')
 
       within(find('section.deck-title-slide[data-background-image*="background.jpg"]', visible: :all)) do
-        expect(page).to have_css('h1', text: /Lieblings-Songs 🔥🎶🌛/)
+        expect(page).to have_css('h1', text: /Liedli 🔥🎶🌛/)
       end
 
-      expect(all('section.level1', visible: :all).size).to eq(song_count + 1) # +1 for Introduction
+      expect(all('section.level1', visible: :all).size).to eq(song_count + 1) # +1 for the Einleitung
 
       expect(page).to have_css('.slide-content', visible: :all)
 

@@ -6,13 +6,13 @@
 - Genre: Pop
 - Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=6NXnxTNIWkc)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/4-non-blondes/whats-up-chords-268676)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/4-non-blondes/whats-up-chords-268676)
 
 ## Intro
 
 [D] [Em] [G] [D] _(x2)_
 
-## Verse 1
+## Strophe 1
 
 [D] Twenty-five years and my life is still
 [Em] Trying to get up that great big hill
@@ -22,7 +22,7 @@ I [D] realized quickly when I knew I should
 That the world [Em] was made of this brotherhood
 Of man, [G] for whatever that means [D]
 
-## Pre-Chorus
+## Vor-Refrain
 
 And so I [D] cry sometimes when I'm lying in bed
 Just to [Em] get it all out, what's in my head
@@ -34,18 +34,18 @@ I [G] scream at the top of my lungs:
 
 "What's going [D] on?"
 
-## Chorus
+## Refrain
 
 And I said [D] "Heyeyeyeyey [Em] Heyeyey"
 I said "Hey, [G] what's going on?" [D]
 And I said [D] "Heyeyeyeyey [Em] Heyeyey"
 I said "Hey, [G] what's going on?" [D]
 
-## Interlude
+## Zwischenspiel
 
 [D] Ooh [Em] Ooh [G] Ooh [D] _(x2)_
 
-## Verse
+## Strophe
 
 And I try, [D] oh my Aod do I try [Em]
 I try all the time, [G] in this institu[D]tion
@@ -53,7 +53,7 @@ And I pray, [D] oh my god do I pray [Em]
 I pray every single day [G]
 For a revo[D]lution
 
-## Pre-Chorus
+## Vor-Refrain
 
 And so I [D] cry sometimes when I'm lying in bed
 Just to [Em] get it all out, what's in my head
@@ -65,7 +65,7 @@ I [G] scream at the top of my lungs:
 
 "What's going [D] on?"
 
-## Chorus
+## Refrain
 
 And I said [D] "Heyeyeyeyey [Em] Heyeyey"
 I said "Hey, [G] what's going on?" [D]
@@ -74,7 +74,7 @@ I said "Hey, [G] what's going on?" [D]
 
 _(Repeat)_
 
-## Interlude
+## Zwischenspiel
 
 [D] Ooh [Em] Ooh [G] Ooh [D]
 

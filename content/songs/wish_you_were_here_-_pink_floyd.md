@@ -6,8 +6,8 @@
 - Genre: Rock
 - Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=IXdNnw99-Ic)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/pink-floyd/wish-you-were-here-chords-1088963)
-- [Guitar tutorial](https://www.youtube.com/watch?v=N2dQRYyaglk)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/pink-floyd/wish-you-were-here-chords-1088963)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=N2dQRYyaglk)
 
 ## Intro
 
@@ -21,7 +21,7 @@ _(Instrumental)_
 
 _(Repeat with solo)_
 
-## Verse 1
+## Strophe 1
 
 [C] So, so you think you can [D] tell
 heaven from [Am] hell?
@@ -32,7 +32,7 @@ from a cold steel [C] rail?
 A smile from a [Am] veil?
 Do you think you can [G] tell?
 
-## Verse 2
+## Strophe 2
 
 Did they get you to [C] trade
 your heroes for [D] ghosts?
@@ -44,7 +44,7 @@ And did you ex[C]change
 a walk-on part in the [Am] war
 for a lead role in a [G] cage?
 
-## Interlude
+## Zwischenspiel
 
 [G] [Em]
 [G] [Em]
@@ -52,7 +52,7 @@ for a lead role in a [G] cage?
 [A] [Em]
 [A] [G]
 
-## Chorus
+## Refrain
 
 [C] How I wish
 how I wish you were [D] here

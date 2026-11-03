@@ -45,7 +45,7 @@ RSpec.describe 'HTML golden files' do
   end
 
   it 'drops the Introduction from the TOC entirely — it has no song/tags behind it' do
-    expect(doc.at_css('#TOC a[href="#/introduction"]')).to be_nil
+    expect(doc.at_css('#TOC a[href="#/einleitung"]')).to be_nil
   end
 
   it 'splits a song\'s "Title - Artist" H1 into the title and a p.song-artist line, on both index and print' do
@@ -57,7 +57,7 @@ RSpec.describe 'HTML golden files' do
   end
 
   it 'leaves a song with no artist in its H1 as a bare h1 (e.g. the Introduction)' do
-    expect(doc.at_css('section#introduction p.song-artist')).to be_nil
+    expect(doc.at_css('section#einleitung p.song-artist')).to be_nil
   end
 
   it 'renders the TOC entries as an <ol>, not a <ul>' do
@@ -65,7 +65,7 @@ RSpec.describe 'HTML golden files' do
     expect(doc.at_css('#TOC nav ul')).to be_nil
   end
 
-  it 'builds a Sprache and a Genre dropdown, each sorted with „Alle" first, plus a Reset button' do
+  it 'builds a Sprache and a Genre dropdown, each sorted with „Alle" first, plus a „Zurücksetzen" button' do
     sprache_options = doc.css('#toc-filter-sprache option').map { |o| o.text.strip }
     genre_options   = doc.css('#toc-filter-genre option').map { |o| o.text.strip }
     expect(sprache_options).to eq(['Alle', 'Deutsch', 'Englisch'])
@@ -73,18 +73,18 @@ RSpec.describe 'HTML golden files' do
     legend = doc.at_css('#toc-filter legend')
     expect(legend.text.strip).to eq('Filter')
     expect(legend['class']).to eq('visually-hidden')
-    expect(doc.at_css('#toc-filter-reset').text.strip).to eq('Reset')
+    expect(doc.at_css('#toc-filter-reset').text.strip).to eq('Zurücksetzen')
   end
 
-  it 'puts the Gastgeber in a dialog of their own, opened by a "Songs von" button in the bar' do
+  it 'puts the Gastgeber in a dialog of their own, opened by a "Lieder von" button in the bar' do
     button = doc.at_css('#toc-filter #toc-filter-gastgeber-open')
     expect(button['aria-haspopup']).to eq('dialog')
-    expect(button.text.strip).to eq('Songs von: Alle')
+    expect(button.text.strip).to eq('Lieder von: Alle')
     expect(doc.at_css('#toc-filter input[type="checkbox"]')).to be_nil # nothing in the bar to overflow it
 
     dialog = doc.at_css('body > dialog#gastgeber-modal') # outside the slides, which reveal.js makes inert
     expect(dialog['aria-labelledby']).to eq('gastgeber-title')
-    expect(dialog.at_css('#gastgeber-title').text.strip).to eq('Songs von')
+    expect(dialog.at_css('#gastgeber-title').text.strip).to eq('Lieder von')
     group = dialog.at_css('div.toc-filter-checkboxes')
     expect(group['role']).to eq('group')
     expect(group['aria-labelledby']).to eq('gastgeber-title')
@@ -105,7 +105,7 @@ RSpec.describe 'HTML golden files' do
     expect(print_doc.at_css('#toc-filter')).to be_nil
   end
 
-  it 'Infos über das Lied (merged with Instructions) HTML matches golden' do
+  it 'Infos über das Lied (merged with Spielhinweise) HTML matches golden' do
     across_title = doc.at_css('section#across-the-universe-beatles')
     section = across_title
                 .xpath('following-sibling::section[.//h2[normalize-space()="Infos über das Lied"]][1]')
@@ -118,18 +118,18 @@ RSpec.describe 'HTML golden files' do
     expect(dialog.to_html + "\n").to eq(golden('host_modal.html'))
   end
 
-  it 'Imagine Verse 1 HTML matches golden' do
+  it 'Imagine Strophe 1 HTML matches golden' do
     imagine_title = doc.at_css('section#imagine-john-lennon')
     section = imagine_title
-                .xpath('following-sibling::section[.//h2[normalize-space()="Verse 1"]][1]')
+                .xpath('following-sibling::section[.//h2[normalize-space()="Strophe 1"]][1]')
                 .first
     expect(section.to_html + "\n").to eq(golden('imagine_verse1.html'))
   end
 
-  it 'Imagine Verse 1 in print.html matches golden (verifies chord rendering survives print pipeline)' do
+  it 'Imagine Strophe 1 in print.html matches golden (verifies chord rendering survives print pipeline)' do
     imagine_title = print_doc.at_css('section#imagine-john-lennon')
     section = imagine_title
-                .xpath('following-sibling::section[.//h2[normalize-space()="Verse 1"]][1]')
+                .xpath('following-sibling::section[.//h2[normalize-space()="Strophe 1"]][1]')
                 .first
     expect(section.to_html + "\n").to eq(golden('imagine_verse1_print.html'))
   end

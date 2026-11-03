@@ -6,14 +6,14 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=C-u5WLJ9Yk4)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/britney-spears/baby-one-more-time-chords-1512732)
-- [Guitar tutorial](https://www.youtube.com/watch?v=jn4ydR1m96E)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/britney-spears/baby-one-more-time-chords-1512732)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=jn4ydR1m96E)
 
 ## Intro
 
 [Am] Oh baby, baby _(x2)_
 
-## Verse 1
+## Strophe 1
 
 [Am] Oh baby, baby
 How [E] was I supposed to know [C]
@@ -23,14 +23,14 @@ That [Dm] something wasn't [E] right here
 I [E] shouldn't have let you go [C]
 And [Dm] now you're out of [E] sight, yeah
 
-## Pre-Chorus
+## Vor-Refrain
 
 [Am] Show me, how you want it [E] to be
 Tell me [C] baby
 'Cause I need to [Dm] know now
 what we've got [E]
 
-## Chorus
+## Refrain
 
 [Am] My loneliness is [E] killing me
 [C] I must confess  I [Dm] still believe
@@ -40,7 +40,7 @@ what we've got [E]
 [G] Give me a sign [C]
 [Dm] Hit me baby [E] one more time
 
-## Verse 2
+## Strophe 2
 
 [Am] Oh baby, baby
 The [E] reason I breathe is you [C]
@@ -50,14 +50,14 @@ The [E] reason I breathe is you [C]
 There's [E] nothing that I woul[C]dn't do
 It's [Dm] not the way I [E] planned it
 
-## Pre-Chorus
+## Vor-Refrain
 
 [Am] Show me, how you want it [E] to be
 Tell me [C] baby
 'Cause I need to [Dm] know now
 what we've got [E]
 
-## Chorus
+## Refrain
 
 [Am] My loneliness is [E] killing me (and I)
 [C] I must confess  I [Dm] still believe
@@ -67,7 +67,7 @@ what we've got [E]
 [G] Give me a sign [C]
 [Dm] Hit me baby [E] one more time
 
-## Interlude
+## Zwischenspiel
 
 [Am] Oh baby, baby _(x2)_
 
@@ -89,7 +89,7 @@ Now give me a sign [F]
 [Dm] Hit me baby
 [G] one [G#m] more [Am] time _(use barre and move up)_
 
-## Chorus
+## Refrain
 
 [Am] My loneliness is [E] killing me (and I)
 [C] I must confess  I [Dm] still believe

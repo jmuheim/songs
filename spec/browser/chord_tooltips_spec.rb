@@ -2,11 +2,11 @@ require 'capybara/rspec'
 
 # Exercises style/chords.js: clicking an inline chord badge opens a tooltip
 # showing how to grip it, in the same "|E A D G B e|" tab notation used in the
-# songs' own Instructions legends, with a "|G C E A|" ukulele column from the
+# songs' own Spielhinweise legends, with a "|G C E A|" ukulele column from the
 # built-in UKULELE_CHORDS dictionary beside it (side by side, not stacked —
 # there's more horizontal than vertical room in a landscape slide).
 #
-# Fixture leverage: "Across the universe" ships an Instructions legend with
+# Fixture leverage: "Across the universe" ships a Spielhinweise legend with
 #   F#m    |2=4=4=2=2=2|   (barre notation, "=")
 #   (barré)|2 4 4 2 2 2|   (a "(…)" continuation line: names F#m(barré))
 # while the built-in fallback dictionary has plain "2 4 4 2 2 2" for F#m — so a
@@ -27,8 +27,8 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
     Capybara.app_host = FileServer.url
   end
 
-  # Across the universe → Verse 1 (has D, F#m; its stack also holds the legend)
-  VERSE_ID = 'verse-1-1'.freeze
+  # Across the universe → Strophe 1 (has D, F#m; its stack also holds the legend)
+  VERSE_ID = 'strophe-1-1'.freeze
 
   before do
     visit FixtureBuilder::URL_PATH
@@ -77,7 +77,7 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
     end
 
     it "shows the fingering tab and prefers the song's own legend voicing over the fallback dictionary" do
-      # Legend-documented chord: barre voicing straight from the Instructions block.
+      # Legend-documented chord: barre voicing straight from the Spielhinweise block.
       # Pinned in full, not just `include` — the point of this layout is that
       # the two columns line up, and a loose substring check can't catch a
       # misaligned pipe or a wrong gap between them.
@@ -106,7 +106,7 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
       # exists for ukulele, so it's always the dictionary's "2 1 2 0" — even
       # here, where the guitar tab beside it came from the legend.
       expect(tooltip_tab).to eq(
-        "    Guitar:        Ukulele:\n" \
+        "    Gitarre:       Ukulele:\n" \
         "    |E A D G B e|  |G C E A|\n" \
         "    |-----------|  |-------|\n" \
         "F#m |2=4=4=2=2=2|  |2 1 2 0|"
@@ -118,7 +118,7 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
       expect(page).to have_css('button.chord-active > code.d', text: 'D')
       expect(page).to have_no_css('button.chord-active > code.f')
       expect(tooltip_tab).to eq(
-        "  Guitar:        Ukulele:\n" \
+        "  Gitarre:       Ukulele:\n" \
         "  |E A D G B e|  |G C E A|\n" \
         "  |-----------|  |-------|\n" \
         "D |x x 0 2 3 2|  |2 2 2 0|"
@@ -148,7 +148,7 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
     end
 
     it "treats the chords in the slide's next-line preview like any other, with the fingering at the lyrics' size" do
-      # The slide ends on a preview of the Chorus' first line, its D included.
+      # The slide ends on a preview of the Refrain's first line, its D included.
       # The preview is set at 0.6em; its chord's fingering must not be. On a
       # desktop both fingerings are large enough to hit chords.js's cap (70% x
       # 45% of the screen) and would come out the same either way; on a
@@ -231,7 +231,7 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
       click_intro_chord('code.f', 'F#m(barré)')
       expect(page).to have_visible('#chord-tooltip')
       expect(tooltip_tab).to eq(
-        "           Guitar:\n" \
+        "           Gitarre:\n" \
         "           |E A D G B e|\n" \
         "           |-----------|\n" \
         "F#m(barré) |2 4 4 2 2 2|\n" \

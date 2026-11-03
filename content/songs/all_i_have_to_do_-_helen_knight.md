@@ -12,7 +12,7 @@
 
 [Em] [G] [D] [Am]
 
-## Verse
+## Strophe
 
 All I have to [Em] do is open [G] my heart
 [D] Wider than ever be[Am]fore _(2x)_

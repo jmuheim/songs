@@ -24,7 +24,7 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
   before do
     visit FixtureBuilder::URL_PATH
     wait_for_reveal
-    click_link 'Table of contents' # the 📖 control → #/1
+    click_link 'Inhaltsverzeichnis' # the 📖 control → #/1
     expect(page).to have_css('#TOC.present')
   end
 
@@ -45,23 +45,23 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
         expect(page).to have_select('Genre', options: ['Alle', 'Mantra', 'Pop', 'Rock'])
         expect(page).to have_select('Sprache', selected: 'Alle')
         expect(page).to have_select('Genre', selected: 'Alle')
-        expect(page).to have_button('Reset')
+        expect(page).to have_button('Zurücksetzen')
       end
       expect(visible_entries).to include('74-75 (The Connells)') # nothing hidden yet
       # The Introduction isn't a song and carries no tags — the build drops it
       # from the TOC entirely rather than just excluding it from the filter.
       within '#TOC nav' do
-        expect(page).to have_no_link('Introduction')
+        expect(page).to have_no_link('Einleitung')
       end
       expect(page).to have_css('#TOC nav ol') # an ordered list, not a <ul>
       expect(page).to have_no_css('#TOC nav ul')
     end
   end
 
-  # The Gastgeber are a „Songs von" button in the bar, whose dialog holds the
+  # The Gastgeber are a „Lieder von" button in the bar, whose dialog holds the
   # checkboxes; they filter at once, so the dialog can stay open or be closed
   def open_gastgeber
-    click_button 'Songs von'
+    click_button 'Lieder von'
     expect(page).to have_css('#gastgeber-modal[open]')
   end
 
@@ -71,12 +71,12 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
   end
 
   it 'offers the Gastgeber in a dialog of their own, all checked, with "Alle" on the button' do
-    expect(page).to have_css('#toc-filter #toc-filter-gastgeber-open', text: 'Songs von: Alle')
+    expect(page).to have_css('#toc-filter #toc-filter-gastgeber-open', text: 'Lieder von: Alle')
     expect(page).to have_no_css('#toc-filter input[type="checkbox"]') # nothing in the bar to overflow it
     expect(page).to have_no_css('#gastgeber-modal[open]')
     open_gastgeber
     within '#gastgeber-modal' do
-      expect(page).to have_css('h2', text: 'Songs von')
+      expect(page).to have_css('h2', text: 'Lieder von')
       expect(page).to have_checked_field('Daniel')
       expect(page).to have_checked_field('Josua')
       expect(page).to have_checked_field('Monika')
@@ -88,11 +88,11 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
     open_gastgeber
     uncheck 'Daniel'
     close_gastgeber
-    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Songs von: Josua, Monika')
+    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Lieder von: Josua, Monika')
     open_gastgeber
     check 'Daniel'
     close_gastgeber
-    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Songs von: Alle')
+    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Lieder von: Alle')
   end
 
   it 'filters to songs naming any checked Gastgeber (OR), ANDed with Sprache/Genre' do
@@ -123,16 +123,16 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
     expect(visible_entries).to include('74-75 (The Connells)') # filters cleared, back to everything
   end
 
-  it 'hides untagged entries while a Gastgeber is unchecked, and checks every Gastgeber again on Reset' do
+  it 'hides untagged entries while a Gastgeber is unchecked, and checks every Gastgeber again on „Zurücksetzen"' do
     open_gastgeber
     uncheck 'Josua'
     uncheck 'Monika'
     close_gastgeber
     expect(visible_entries).to eq(['Imagine (John Lennon)']) # Riptide has no Gastgeber at all
 
-    click_button 'Reset'
+    click_button 'Zurücksetzen'
     expect(visible_entries).to include('Riptide - Vance Joy')
-    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Songs von: Alle')
+    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Lieder von: Alle')
     open_gastgeber
     expect(page).to have_checked_field('Josua')
     expect(page).to have_checked_field('Monika')
@@ -144,7 +144,7 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
     close_gastgeber
     expect(page).to have_no_css(VISIBLE_ENTRY)
     expect(page).to have_css('#toc-filter-empty', text: 'Keine Ergebnisse')
-    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Songs von: Niemand')
+    expect(page).to have_css('#toc-filter-gastgeber-open', text: 'Lieder von: Niemand')
   end
 
   it 'filters to the selected Sprache, and restores everything on "Alle", without paging the deck' do
@@ -176,12 +176,12 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
     expect(page).to have_no_css('#toc-filter-empty', visible: :visible) # results again, message gone
   end
 
-  it 'hides untagged entries while filtering and restores them with Reset' do
+  it 'hides untagged entries while filtering and restores them with „Zurücksetzen"' do
     select 'Pop', from: 'Genre'
     expect(visible_entries).not_to include('74-75 (The Connells)')  # Rock only, no Pop
     expect(visible_entries.size).to eq(3)
 
-    click_button 'Reset'
+    click_button 'Zurücksetzen'
     expect(visible_entries).to include('74-75 (The Connells)')
     expect(page).to have_select('Sprache', selected: 'Alle')
     expect(page).to have_select('Genre', selected: 'Alle')

@@ -6,9 +6,9 @@
 - Genre: Traditionell
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=PkGatIgXERI)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/1197401)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/1197401)
 
-## Verse 1
+## Strophe 1
 
 I han es [C]Zündhölzli azündet
 Und das [G7] het e Flamme gäh
@@ -20,7 +20,7 @@ Und [C] uf e Teppich cho
 Und es [G7] hätt no fasch
 Es Loch i Teppich [C] gäh dervo
 
-## Verse 2
+## Strophe 2
 
 Ja me [C] weiss was cha passiere
 We me [G7] nid ufpasst mit Füür
@@ -32,7 +32,7 @@ Chönne ds [C] Füür i ds ganze Hus
 Und wär [G7] weiss, was da
 Nid alles no wär [C] worde drus
 
-## Verse 3
+## Strophe 3
 
 S'hätt e [C] Brand gäh im Quartier
 Und s'hätti d'[G7]Füürwehr müesse cho
@@ -44,7 +44,7 @@ Und das [C] hätt de glych nüt gnützt
 Und die [G7] ganzi Stadt hätt brönnt
 Es hätt se [C] nüt meh gschützt
 
-## Verse 4
+## Strophe 4
 
 Und d'Lüt [C] wären umegsprunge
 I dr [G7] Angscht um Hab und Guet
@@ -56,7 +56,7 @@ Ds ganze [C] Land i eim Tumult
 Dass me [G7] gschosse hätt
 Uf d'Bundesrät am [C] Rednerpult
 
-## Verse 5
+## Strophe 5
 
 D'UNO [C] hätt interveniert
 Und d'UNO-[G7]Gägner sofort o
@@ -68,7 +68,7 @@ Uf Eu[C]ropa, Afrika
 S'hätt e [G7] Wältchrieg gäh
 Und d'Mönschheit wär jitz [C] nümme da
 
-## Verse 6
+## Strophe 6
 
 I han es [C] Zündhölzli azündet
 Und das [G7] het e Flamme gäh

@@ -6,10 +6,10 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=yffOnXYgy3o)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/wild-world-chords-992169)
-- [Guitar tutorial](https://www.youtube.com/watch?v=SeDzGf7L3Fs)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/cat-stevens/wild-world-chords-992169)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=SeDzGf7L3Fs)
 
-## Instructions
+## Spielhinweise
 
 ```
      |E A D G B e|
@@ -32,7 +32,7 @@ E |------------3|3-3---------3-|
 [Am] [D/F#] [G] [C] [F] [Dm] [E] [Esus4] [E]
 La la la...
 
-## Verse 1
+## Strophe 1
 
 [Am] Now that I've [D/F#] lost everything to [G] you
 You say you [C] wanna start something [F] new
@@ -44,7 +44,7 @@ Hope you have a [C] lot of nice things to wear [F]
 But then a [Dm] lot of nice things turn
 [E] bad out[E7]there [G] [G7] [G6] [G5]
 
-## Chorus
+## Refrain
 
 [C] Oh [G] baby, baby
 it's a [F] wild world [C] _(Riff 1)_
@@ -56,7 +56,7 @@ it's a [F] wild world [C] _(Riff 1)_
 [G] I'll always remember you
 [F] like a [C] child girl [Dm] [E]
 
-## Verse 2
+## Strophe 2
 
 [Am] You know I've seen a [D/F#] lot of
 what the world can [G] do
@@ -69,7 +69,7 @@ Hope you make a [C] lot of nice friends out there [F]
 But just re[Dm]member there's a lot of bad
 [E] and be[E7]ware [G] [G7] [G6] [G5]
 
-## Chorus
+## Refrain
 
 [C] Oh [G] baby, baby
 it's a [F] wild world [C] _(Riff 1)_
@@ -81,7 +81,7 @@ it's a [F] wild world [C] _(Riff 1)_
 [G] I'll always remember you
 [F] like a [C] child girl [Dm] [E]
 
-## Verse 3
+## Strophe 3
 
 [Am] [D/F#] [G] [C] [F] [Dm] [E] [Esus4] [E]
 La la la... Baby I love you
@@ -91,7 +91,7 @@ Hope you make a [C] lot of nice friends out there [F]
 But just re[Dm]member there's a lot of bad
 [E] and be[E7]ware [G] [G7] [G6] [G5]
 
-## Chorus
+## Refrain
 
 [C] Oh [G] baby, baby
 it's a [F] wild world [C] _(Riff 1)_

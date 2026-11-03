@@ -6,13 +6,13 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=HMCQgWtST5c)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/further-on-up-the-road-chords-520573)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/johnny-cash/further-on-up-the-road-chords-520573)
 
 ## Intro
 
 [Am] [C] [Am] [E7] [Am]
 
-## Verse 1
+## Strophe 1
 
 Where the road is [Am] dark
 And the seed is [C] sowed
@@ -23,7 +23,7 @@ Where the miles are [Am] marked
 [G] In the blood and the [Am] gold
 [G] I'll [F] meet you further [G] on up the road [Am]
 
-## Verse 2
+## Strophe 2
 
 Got on my dead man [Am] suit
 And my smilin' skull [C] ring
@@ -35,7 +35,7 @@ I got a song to [Am] sing
 [G] And I'll [F] meet you
 further [G] on up the [Am] road
 
-## Chorus 1
+## Refrain 1
 
 Further on up the [C] road
 Further on up the [Am] road
@@ -51,7 +51,7 @@ further [G] on up the [Am] road
 
 [Am] [C] [Am] [E7] [Am]
 
-## Verse 3
+## Strophe 3
 
 Now I've been out in the [Am] desert
 Just don't my [C] time
@@ -63,7 +63,7 @@ Well, brother I don't [Am] know
 [G] But I've [F] got
 this fever [G] burnin' in my soul [Am]
 
-## Chours 2
+## Refrain 2
 
 Further on up the [C] road
 Further on up the [Am] road

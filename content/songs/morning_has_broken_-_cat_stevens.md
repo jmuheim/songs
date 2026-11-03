@@ -6,10 +6,10 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=uZAsfB1Np-8)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/cat-stevens/morning-has-broken-chords-84520)
-- [Guitar tutorial](https://www.youtube.com/watch?v=eyRVPNenXlg)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/cat-stevens/morning-has-broken-chords-84520)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=eyRVPNenXlg)
 
-## Instructions
+## Spielhinweise
 
 ```
        |E A D G B e|
@@ -26,7 +26,7 @@ G7sus4 |x x 0 0 1 1|
 [D] [G] [A] [F#] [Bm]
 [G7] [C] [F] [C]
 
-## Verse 1
+## Strophe 1
 
 Morning has [C]brok[Dm]en
 [G] like the first [F] morn[C]ing
@@ -43,7 +43,7 @@ Morning has [C]brok[Dm]en
 [F] [G] [E] [Am]
 [G7] [C] [G7sus4]
 
-## Verse 2
+## Strophe 2
 
 Sweet the rain's [C] new [Dm] fall
 [G] sunlit from [F] heav[C]en
@@ -61,7 +61,7 @@ Sweet the rain's [C] new [Dm] fall
 [F#] [Bm] [G] [D]
 [A7/D] [D]
 
-## Verse 3
+## Strophe 3
 
 Mine is the [D] sun[Em]light
 [A] mine is the [G] morn[D]ing
@@ -78,7 +78,7 @@ Born of the [F#m] one [Bm] light
 [G] [A] [F#] [Bm]
 [G7] [C] [F] [C]
 
-## Verse 1
+## Strophe 1
 
 Morning has [C]brok[Dm]en
 [G] like the first [F] morn[C]ing

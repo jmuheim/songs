@@ -8,7 +8,7 @@
 - Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=VVWu6Q0mrlo)
 
-## Verse 1
+## Strophe 1
 
 [Em] Walk quietly my love
 Let's [Am] kiss this earth we walk upon
@@ -18,14 +18,14 @@ With our [Em] steps
 [Am] In the silence of your mind
 [Em] Close your eyes
 
-## Chorus
+## Refrain
 
 [Dm] YaYa Ya Ya
 [Am] YaYa Ya Ya
 [Dm] YaYa Ya Ya
 La [C] lu[G]na _(2x)_
 
-## Verse 2
+## Strophe 2
 
 [Em] What is the sound
 Of the [Am] song in your heart
@@ -35,7 +35,7 @@ Listen [Em] close
 Let's [Am] throw our songs into the wind
 And let them [Em] echo echo
 
-## Chorus
+## Refrain
 
 [Dm] YaYa Ya Ya
 [Am] YaYa Ya Ya
@@ -45,7 +45,7 @@ La [C] lu[G]na _(2x)_
 _Repeat: women continue,
 men sing: "La luna illumina"_
 
-## Verse 3
+## Strophe 3
 
 _(Quieter)_
 
@@ -57,7 +57,7 @@ With our [Em] steps
 [Am] In the silence of your mind
 [Em] Close your eyes
 
-## Chorus
+## Refrain
 
 [Dm] YaYa Ya Ya
 [Am] YaYa Ya Ya

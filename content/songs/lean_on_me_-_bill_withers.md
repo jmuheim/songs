@@ -6,14 +6,14 @@
 - Genre: Pop
 - Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=fOZ-MySzAac)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/bill-withers/lean-on-me-chords-150987)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/bill-withers/lean-on-me-chords-150987)
 
 ## Intro
 
 [C] [F] [F] [C] [C] [Em] [Em] [G9]
 [C] [F] [F] [C] [C] [G7] [G7] [C]
 
-## Verse 1
+## Strophe 1
 
 [C] Sometimes in our [F] lives
 We all have [C] pain
@@ -21,7 +21,7 @@ We all have [Em] sor[G]row
 [C] But if we are [F] wise
 We know that [C] there's always [G7] tomor[C]row
 
-## Chorus
+## Refrain
 
 Lean on [C] me, when you're not [F] strong
 And I'll be your [C] friend
@@ -31,7 +31,7 @@ I'll help you [Em] carry [G] on
 'Til I'm gonna [C] need
 Somebody to [G7] lean [C] on
 
-## Verse 2
+## Strophe 2
 
 [C] Please swallow your [F] pride
 If I have [C] things
@@ -48,7 +48,7 @@ We all [C] need somebody to [G7] lean [C] on
 I just [C] might have a problem that you'd understand
 We all [C] need somebody to [G7] lean [C] on
 
-## Chorus
+## Refrain
 
 Lean on [C] me, when you're not [F] strong
 And I'll be your [C] friend
@@ -66,7 +66,7 @@ We all [C] need somebody to [G7] lean [C] on
 I just [C] might have a problem that you'd understand
 We all [C] need somebody to [G7] lean [C] on
 
-## Verse 3
+## Strophe 3
 
 [C] If there is a [F] load
 you have to [C] bear

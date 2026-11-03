@@ -7,9 +7,9 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=KohurXfPb7s)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/robbie-williams/the-road-to-mandalay-chords-303)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/robbie-williams/the-road-to-mandalay-chords-303)
 
-## Instructions
+## Spielhinweise
 
 ```
        |E A D G B e|
@@ -24,7 +24,7 @@ G7     |3 2 0 0 3 1|
 X Stop playing
 ```
 
-## Verse 1
+## Strophe 1
 
 [Dm] Save me from drowning in the sea [Dm6]
 [Am] Beat me up on the beach
@@ -46,7 +46,7 @@ On the road to Mandalay
 Has been rehashed and then re[Dm]played
 As I got lost along the way [G]
 
-## Chorus
+## Refrain
 
 [X] Bum bum bum [Dm] ba da dum bum bum [G]
 Bum bum bum [C] ba da dum bum bum [Am]
@@ -54,7 +54,7 @@ Bum bum bum [C] ba da dum bum bum [Am]
 Bum bum bum [F] ba da dum, bum bum [G]
 Bum ba dum [Am]
 
-## Verse 2
+## Strophe 2
 
 [Dm] There's nothing left for you to give [Dm6]
 [Am] The truth is all that you're left with
@@ -76,7 +76,7 @@ No more dragons left to slay
 Has been rehashed and then re[Dm]played
 As I got lost along the way [G]
 
-## Chorus
+## Refrain
 
 [X] Bum bum bum [Dm] ba da dum bum bum [G]
 Bum bum bum [C] ba da dum bum bum [Am]

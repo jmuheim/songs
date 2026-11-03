@@ -230,7 +230,7 @@ section.level1 h1 {
 }
 
 /* TOC tag filter (toc-filter.js): a <fieldset> sitting at the top of #TOC with
-   one <select> per category (Sprache, Genre), a „Songs von" button and a Reset button. Colours are
+   one <select> per category (Sprache, Genre), a „Lieder von" button and a „Zurücksetzen" button. Colours are
    theme-specific (night.css). Reset browser UA defaults for fieldset/legend
    first, then lay the fields and the button out in a row. */
 #toc-filter {
@@ -255,7 +255,7 @@ section.level1 h1 {
   font-size: 1.5rem;
 }
 
-/* „Songs von: …", the bar's one control for the Gastgeber (the checkboxes are
+/* „Lieder von: …", the bar's one control for the Gastgeber (the checkboxes are
    in a dialog of their own). The names it lists end in „…" rather than
    widening the bar. */
 .toc-filter-selection {

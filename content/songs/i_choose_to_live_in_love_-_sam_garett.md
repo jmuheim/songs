@@ -12,14 +12,14 @@
 
 [G] [D] [Em] [C]
 
-## Verse 1
+## Strophe 1
 
 I [G] sing like the [D] birds
 I [Em] grow like the trees
 I [C] choose to live in love
 I am [D] joy I am ease _(2x)_
 
-## Chorus
+## Refrain
 
 [G] Om Sri [D] Laxmi
 Maha[Em]devi Nama[C]ha _(2x)_
@@ -28,14 +28,14 @@ Maha[Em]devi Nama[C]ha _(2x)_
 Sri Laxmi Nama[G]ha
 Sri Laxmi Nama[D]ha _(2x)_
 
-## Verse 2
+## Strophe 2
 
 I [G] choose no more [D] fear
 I [Em] choose no more shame
 I [C] choose to live in love
 I am [D] light I am grace _(2x)_
 
-## Chorus
+## Refrain
 
 [G] Om Sri [D] Laxmi
 Maha[Em]devi Nama[C]ha _(2x)_

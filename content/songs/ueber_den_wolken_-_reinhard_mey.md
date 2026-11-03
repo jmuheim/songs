@@ -6,9 +6,9 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=zWwW-gqr2pA)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/946605)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/946605)
 
-## Verse 1
+## Strophe 1
 
 Wind Nord-Ost Startbahn [Am] null-drei,
 [D] bis hier hör' ich die [G] Motoren.
@@ -20,7 +20,7 @@ Und der nasse Asphalt [Am] bebt,
 bis sie abhebt und sie [Am] schwebt
 [D] der Sonne [G] entgegen.
 
-## Chorus
+## Refrain
 
 Über den [Am7] Wolken
 [D] muss die Freiheit wohl [G] grenzenlos sein.
@@ -30,7 +30,7 @@ bis sie abhebt und sie [Am] schwebt
 [C] würde, was uns gross und [G] wichtig erscheint,
 [D] plötzlich nichtig und [G] klein.
 
-## Verse 2
+## Strophe 2
 
 Ich seh' ihr noch lange [Am] nach,
 [D] seh' sie die Wolken [G] erklimmen.
@@ -42,7 +42,7 @@ Meine Augen haben [Am] schon
 nur von fern klingt [Am] monoton
 [D] das Summen der [G] Motoren.
 
-## Chorus
+## Refrain
 
 Über den [Am7] Wolken
 [D] muss die Freiheit wohl [G] grenzenlos sein.
@@ -52,7 +52,7 @@ nur von fern klingt [Am] monoton
 [C] würde, was uns gross und [G] wichtig erscheint,
 [D] plötzlich nichtig und [G] klein.
 
-## Verse 3
+## Strophe 3
 
 Dann ist alles still, ich [Am7] geh',
 [D] Regen durchdringt meine [G] Jacke.
@@ -64,7 +64,7 @@ In den Pfützen schwimmt [Am] Benzin,
 Wolken spiegeln sich [Am] darin.
 [D] Ich wär' gerne mit[G]geflogen.
 
-## Chorus
+## Refrain
 
 Über den [Am7] Wolken
 [D] muss die Freiheit wohl [G] grenzenlos sein.

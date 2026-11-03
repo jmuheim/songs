@@ -7,7 +7,7 @@
 - Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=aGL1_HDWevo)
 
-## Verse
+## Strophe
 
 He [Dm] yama yo wana hene yo
 He [A7] yama yo wana hene [Dm] yo _(2x)_

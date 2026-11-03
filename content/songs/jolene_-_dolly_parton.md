@@ -6,15 +6,15 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=Ixrje2rXLMA)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/dolly-parton/jolene-chords-183019)
-- [Guitar tutorial](https://www.youtube.com/watch?v=O2j6cZlT2LI)
-- [Interpretation by The Petersens](https://www.youtube.com/watch?v=viQx4KDivPY)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/dolly-parton/jolene-chords-183019)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=O2j6cZlT2LI)
+- [Interpretation von The Petersens](https://www.youtube.com/watch?v=viQx4KDivPY)
 
 ## Intro
 
 [Am] _(x4)_
 
-## Chorus
+## Refrain
 
 Jo[Am]lene, Jo[C]lene, Jo[G]lene, Jo[Am]lene
 I'm [G] begging of you
@@ -24,7 +24,7 @@ Jo[Am]lene, Jo[C]lene, Jo[G]lene, Jo[Am]lene
 [G] Please don't take him
 [Em] just because you [Am] can
 
-## Verse 1
+## Strophe 1
 
 Your [Am] beauty is be[C]yond compare
 With [G] flaming locks of [Am] auburn hair
@@ -36,7 +36,7 @@ Your [G] voice is soft like [Am] summer rain
 And [G] I cannot com[Em]pete with you
 [Am] Jolene
 
-## Verse 2
+## Strophe 2
 
 He [Am] talks about you [C] in his sleep
 There's [G] nothing I can [Am] do to keep
@@ -48,7 +48,7 @@ How [G] you could easily [Am] take my man
 But you [G] don't know what he [Em] means to me
 Jo[Am]lene
 
-## Chorus
+## Refrain
 
 Jo[Am]lene, Jo[C]lene, Jo[G]lene, Jo[Am]lene
 I'm [G] begging of you
@@ -58,7 +58,7 @@ Jo[Am]lene, Jo[C]lene, Jo[G]lene, Jo[Am]lene
 [G] Please don't take him
 [Em] just because you [Am] can
 
-## Verse 3
+## Strophe 3
 
 [Am] You could have your [C] choice of men
 But [G] I could never [Am] love again
@@ -70,7 +70,7 @@ My [G] happiness de[Am]pends on you
 What[G]ever you de[Em]cide to do
 Jo[Am]lene
 
-## Chorus
+## Refrain
 
 Jo[Am]lene, Jo[C]lene, Jo[G]lene, Jo[Am]lene
 I'm [G] begging of you

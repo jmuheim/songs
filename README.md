@@ -8,8 +8,8 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 
 - Swipe left/right to change songs, up/down to navigate song sections; on a computer, click the chevrons at the screen edges or use the arrow keys
 - Colour-coded chords (each root letter gets its own colour)
-- Each song slide ends on a small „Next: …" preview of the next slide's heading and first line (or „Ende des Lieds" on the last one), fading in a few seconds after the slide appears, so whoever scrolls can read ahead
-- Dark/bright theme and chord visibility, both in the ⚙️ Settings dialog
+- Each song slide ends on a small „Danach: …" preview of the next slide's heading and first line (or „Ende des Lieds" on the last one), fading in a few seconds after the slide appears, so whoever scrolls can read ahead
+- Dark/bright theme and chord visibility, both in the ⚙️ settings dialog („Einstellungen")
 - The four corner buttons (📖 ↕️ 📡 ⚙️) fade out a few seconds after the page opens, the first time with their labels. Tap anywhere, move the mouse or tab to one to bring them back; a swipe doesn't, nor does a tap on a chord. 📡 stays while its connection is down
 - Full screen with ↕️, top right, and back with another press. On an iPhone, where Safari has no full-screen mode for a web page, it asks for one swipe down instead: that makes Safari hide its bars, and they stay hidden while you page through the songs. Added to the home screen (Share › „Add to Home Screen"), the song book opens without any bars at all
 - Tag songs (language, genre, …) and filter the table of contents by tag
@@ -64,12 +64,12 @@ Every song needs an `## Infos über das Lied` section at the top with its Sprach
 - Genre: Mantra
 - [Lied auf YouTube](https://youtube.com/...)
 
-## Verse 1
+## Strophe 1
 
 ...
 ```
 
-The tags and links show on the song's „Infos über das Lied" slide (together with, if present, an Instructions section — see `CLAUDE.md`) and drive the Sprache/Genre filter dropdowns on the table of contents — pick a language and/or a genre to narrow the list (the two combine), „Reset" to clear both. At least one Sprache and one Genre tag are **required**: the build aborts on a song missing either. Tags are free text, so pick a vocabulary and keep it consistent (e.g. `Deutsch`, `Englisch`, `Mundart`, `Pop`, `Rock`, `Mantra`).
+The tags and links show on the song's „Infos über das Lied" slide (together with, if present, a Spielhinweise section — see `CLAUDE.md`) and drive the Sprache/Genre filter dropdowns on the table of contents — pick a language and/or a genre to narrow the list (the two combine), „Zurücksetzen" to clear both. At least one Sprache and one Genre tag are **required**: the build aborts on a song missing either. Tags are free text, so pick a vocabulary and keep it consistent (e.g. `Deutsch`, `Englisch`, `Mundart`, `Pop`, `Rock`, `Mantra`).
 
 Nothing but blank lines may sit between the H1 and the first H2 — a capo note or any other aside goes into the `## Infos über das Lied` list instead (e.g. `- Capo: 3. Bund`); the build aborts otherwise.
 
@@ -77,14 +77,14 @@ Nothing but blank lines may sit between the H1 and the first H2 — a capo note 
 
 The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multiplex/) so everyone in the room can follow along on their own device — song by song, led by the evening's host or by a volunteer.
 
-Each evening is a **session** of its own. Whoever leads it taps 📡 › 🔑 „Als Gastgeber anmelden" and enters the password: that opens a new session; once you have said whose songs the evening has, its QR code shows. The others join by scanning it (later on: 📡 › 🔗). Whoever has just scanned it sees their own copy of the code at once, with a hint to let further guests scan it — anyone in the session can show it, so a neighbour can let a latecomer in. Each device then keeps the session in its own storage — reloading, a new tab or the song book reopened from the home screen stay in it — until the host ends it (🏁), a guest leaves it (🚪), or nothing has been heard of it for 12 hours. A device that never scanned a code is in no session, and nobody's evening ever moves its screen; two evenings at the same time never touch each other.
+Each evening is a **session** („Runde" on screen) of its own. Whoever leads it taps 📡 › 🔑 „Als Gastgeber anmelden" and enters the password: that opens a new session; once you have said whose songs the evening has, its QR code shows. The others join by scanning it (later on: 📡 › 🔗). Whoever has just scanned it sees their own copy of the code at once, with a hint to let further guests scan it — anyone in the session can show it, so a neighbour can let a latecomer in. Each device then keeps the session in its own storage — reloading, a new tab or the song book reopened from the home screen stay in it — until the host ends it (🏁), a guest leaves it (🚪), or nothing has been heard of it for 12 hours. A device that never scanned a code is in no session, and nobody's evening ever moves its screen; two evenings at the same time never touch each other.
 
 | Button | Position | Function |
 |--------|----------|----------|
 | 📖 | Top left | Jump to the table of contents (hidden while a live-scroll session locks your navigation) |
 | ↕️ | Top right | Full screen, and back |
 | 📡 | Bottom left | Live scrolling: a badge shows your connection/role at a glance; tap for the details, the login, 🚀 and 🔗 |
-| ⚙️ | Bottom right | Settings — theme, chord visibility |
+| ⚙️ | Bottom right | Settings („Einstellungen") — theme, chord visibility |
 
 They fade out while they aren't needed: tap anywhere to bring them back.
 
@@ -95,18 +95,18 @@ In the 📡 dialog:
 | 🔑 | „Als Gastgeber anmelden" (asks for the password once per device), or, in a session, „Gastgeber übernehmen" |
 | 🚀 | Host only: start live scrolling on the current song (songs only), or end it |
 | 🔗 | In a session: show its QR code — scan to join |
-| 🚪 | Guests: „Session verlassen" — this device leaves the session |
-| 🏁 | Host only: „Session beenden" — everyone leaves the session |
+| 🚪 | Guests: „Runde verlassen" — this device leaves the session |
+| 🏁 | Host only: „Runde beenden" — everyone leaves the session |
 
 Navigate to a song, then tap 📡 › 🚀 and choose **„Ich selber möchte scrollen"** to scroll it yourself, or **„Ein Gast soll scrollen"** to let someone in the audience take over. In guest mode everyone in the session is asked whether they want to scroll; the first to accept leads, and the rest follow. Whoever scrolls can only move up and down within that song, and has no overview (Esc/O) meanwhile.
 
 While a song is live-scrolled, followers are held on the scroller's slide — their own navigation is off. The host and the scroller repeat themselves every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap 📡 › 🚀 „Live-Scrollen beenden" to end it: everyone lands on the table of contents, is told they can navigate freely again, and a guest who scrolled is thanked.
 
-As soon as you are logged in as host, a „Songs von" dialog asks whose songs the evening has: every Gastgeber is ticked at first; untick whoever is not here tonight and confirm with „OK", and the QR code follows. Every list in the session then shows only the songs that can be played. Guests find the choice behind the „Songs von" button in the table of contents (and can read it, not change it); Sprache and Genre stay theirs to filter. Outside a session, the same button is a plain filter of one's own.
+As soon as you are logged in as host, a „Lieder von" dialog asks whose songs the evening has: every Gastgeber is ticked at first; untick whoever is not here tonight and confirm with „OK", and the QR code follows. Every list in the session then shows only the songs that can be played. Guests find the choice behind the „Lieder von" button in the table of contents (and can read it, not change it); Sprache and Genre stay theirs to filter. Outside a session, the same button is a plain filter of one's own.
 
 There is one host at a time. Another device in the session can take the role over with 📡 › 🔑 „Gastgeber übernehmen" (and the password) — no need for the old host to hand anything on, which a phone with a flat battery couldn't. The old host stays in the session as a participant, and a song being live-scrolled carries on, its scroller included.
 
-The badge on 📡 shows at a glance who's driving — a filled dot for you, a ring while you follow someone else, amber while waiting for a guest, a strike through it if the connection drops — and a tap opens a dialog spelling it out in words: „Du scrollst live", „Warte auf Gast …", „Gast scrollt", „Du scrollst für alle", „Folgt", „Du bist Gastgeber", „Kein Live-Scrollen aktiv", „Keine Session" or „Keine Verbindung".
+The badge on 📡 shows at a glance who's driving — a filled dot for you, a ring while you follow someone else, amber while waiting for a guest, a strike through it if the connection drops — and a tap opens a dialog spelling it out in words: „Du scrollst live", „Warte auf Gast …", „Gast scrollt", „Du scrollst für alle", „Folgt", „Du bist Gastgeber", „Kein Live-Scrollen aktiv", „Keine Runde" or „Keine Verbindung".
 
 Every role survives a reload: the host stays host, and whoever scrolls or follows is back in place at once.
 

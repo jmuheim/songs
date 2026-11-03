@@ -6,13 +6,13 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=vGJTaP6anOU)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/elvis-presley/cant-help-falling-in-love-chords-1086983)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/elvis-presley/cant-help-falling-in-love-chords-1086983)
 
 ## Intro
 
 [C] [G] [C]
 
-## Verse 1
+## Strophe 1
 
 [C] Wise [Em] men [Am] say
 only [F] fools [C] rush [G] in
@@ -32,7 +32,7 @@ If [F] I [G] can't [Am] help
 [Em] Darling so it [B] goes
 [Em] Some things [A] are meant [Dm] to [G] be
 
-## Chorus
+## Refrain
 
 [C] Take [Em] my [Am] hand
 take my [F] whole [C] life [G] too
@@ -47,7 +47,7 @@ For [F] I [G] can't [Am] help
 [Em] Darling so it [B] goes
 [Em] Some things [A] are meant [Dm] to [G] be
 
-## Chorus
+## Refrain
 
 [C] Take [Em] my [Am] hand
 take my [F] whole [C] life [G] too

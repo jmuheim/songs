@@ -6,7 +6,7 @@
 - Genre: Pop
 - Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=Ib_eW9VSUwM)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/ville-valo/summer-wine-chords-590088)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/ville-valo/summer-wine-chords-590088)
 
 ## Intro _(Frauen)_
 
@@ -17,7 +17,7 @@
 
 [Am] (x4)
 
-## Verse 1 _(Männer)_
+## Strophe 1 _(Männer)_
 
 [Am] I walked in town on silver
 [G] spurs that jingled to
@@ -30,7 +30,7 @@
 
 [G]Ohhh[Em]oh summer wine [Am]
 
-## Chorus _(Frauen)_
+## Refrain _(Frauen)_
 
 [Am] Strawberries, cherries and an
 [G] angel's kiss in spring
@@ -43,7 +43,7 @@
 
 [G]Ohhh[Em]oh summer wine [Am]
 
-## Verse 2 _(Männer)_
+## Strophe 2 _(Männer)_
 
 [Am] My eyes grew heavy and my
 [G] lips they could not speak
@@ -57,7 +57,7 @@
 
 [G]Ohhh[Em]oh summer wine [Am]
 
-## Chorus _(Frauen)_
+## Refrain _(Frauen)_
 
 [Am] Strawberries, cherries and an
 [G] angel's kiss in spring
@@ -70,7 +70,7 @@
 
 [G]Ohhh[Em]oh summer wine [Am]
 
-## Verse 2 _(Männer)_
+## Strophe 2 _(Männer)_
 
 [Am] When I woke up the sun was
 [G] shining in my eyes
@@ -83,7 +83,7 @@ a [Am] dollar and a dime
 
 [G]Ohhh[Em]oh summer wine [Am]
 
-## Chorus _(Frauen)_
+## Refrain _(Frauen)_
 
 [Am] Strawberries, cherries and an
 [G] angel's kiss in spring

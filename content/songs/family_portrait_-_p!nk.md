@@ -6,13 +6,13 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=hSjIz8oQuko)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/pnk/family-portrait-chords-753196)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/pnk/family-portrait-chords-753196)
 
 ## Intro
 
 [Am] [Dm] [C] [B7] [E]
 
-## Verse 1
+## Strophe 1
 
 [Am] Mama please stop cryin'
 [Dm] I can't stand the sound
@@ -33,14 +33,14 @@
 [C] And this I come home to
 [B7] This is [E] my shelter
 
-## Pre-Chorus
+## Vor-Refrain
 
 [Am] It ain't easy, growin' up in world war 3
 [Dm] Never known what love could be, you'll see,
 [C] I don't want love to destroy me
 [B7] Like it has done my [E] family
 
-## Chorus
+## Refrain
 
 [Am] Can we work it out (Can we)
 [Dm] Can we be a family (Can we)
@@ -54,7 +54,7 @@
 [C] I promise I'll be better
 [B7] Daddy please don't [E] leave
 
-## Verse 2
+## Strophe 2
 
 [Am] Daddy please stop yelling (stop)
 [Dm] I can't stand the sound (can't stand the sound)
@@ -74,14 +74,14 @@
 [C] Don't wanna go back to that place
 [B7] But don't have no choice, [E] no way (no choice, no way)
 
-## Pre-Chorus
+## Vor-Refrain
 
 [Am] It ain't easy, growin' up in world war 3
 [Dm] Never knowin' what love could be
 But I've seen, [C] I don't want love to destroy me
 [B7] Like it did my [E] family
 
-## Chorus
+## Refrain
 
 [Am] Can we work it out (Can we work it out oh!)
 [Dm] Can we be a family

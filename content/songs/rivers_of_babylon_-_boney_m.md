@@ -6,8 +6,8 @@
 - Genre: Pop
 - Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=ta42xU2UXLA)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/boney-m-/rivers-of-babylon-chords-1458631)
-- [Guitar tutorial](https://www.youtube.com/watch?v=E9WcazK7eOI)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/boney-m-/rivers-of-babylon-chords-1458631)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=E9WcazK7eOI)
 
 ## Intro
 
@@ -16,7 +16,7 @@ _(Vocals only)_
 Mmmh [G] mmmh [G] mmmh [D7] mmmh [G]
 Uuuh [G] uuuh [G] uuuh [D7] uuuh [G]
 
-## Chorus
+## Refrain
 
 By the rivers of [G] Babylon
 there we sat down
@@ -25,7 +25,7 @@ when we remembered Zi[G]on
 
 _(x2)_
 
-## Verse 1
+## Strophe 1
 
 (When the wicked)
 [G] Carried us away in cap[G7]tivity
@@ -35,7 +35,7 @@ in a stra[D7]nge [G] land
 
 _(x2)_
 
-## Interlude
+## Zwischenspiel
 
 Mmmh [G] mmmh [G] mmmh [D7] mmmh [G]
 
@@ -47,7 +47,7 @@ Be acc[G]eptable in thy sight [D7]here to[G]night
 
 _(x2)_
 
-## Chorus
+## Refrain
 
 By the rivers of [G] Babylon
 there we sat down

@@ -6,13 +6,13 @@
 - Genre: Pop
 - Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=Mlt2xg_j5AY)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/wolfgang-petry/verlieben-verloren-vergessen-verzeihn-chords-1041842)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/wolfgang-petry/verlieben-verloren-vergessen-verzeihn-chords-1041842)
 
 ## Intro
 
 [G] [G] [G] [D] [Am] [C] [D] [G]
 
-## Verse 1
+## Strophe 1
 
 Du gingst von mir in einer Stunde, [D]
 Es [C] war die Stunde Null. [G]
@@ -24,7 +24,7 @@ Und [D] half mir, auch nicht Du.
 Jetzt [C] liebst Du halt 'nen anderen
 Und mein Herz [G] schaut traurig zu. [D]
 
-## Chorus
+## Refrain
 
 Verlieben, verlor'n, [G] vergessen, verzeih'n,
 Verdammt war ich glücklich,
@@ -33,7 +33,7 @@ Verdammt bin ich frei. [D]
 Ich hatte doch alles, [Am] alles was zählt, [C]
 Ohne Dich leben, [D] jetzt ist es zu spät. [G]
 
-## Verse 2
+## Strophe 2
 
 Jetzt sitz' ich auf meinem Bett 'rum, [D]
 Hab' die Kneipe [C] hinter mir. [G]
@@ -45,7 +45,7 @@ Und [D] half mir, auch nicht Du.
 Jetzt [C] liebst Du halt 'nen anderen
 Und mein Herz [G] schaut traurig zu. [D]
 
-## Chorus
+## Refrain
 
 Verlieben, verlor'n, [G] vergessen, verzeih'n,
 Verdammt war ich glücklich,

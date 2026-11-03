@@ -6,9 +6,9 @@
 - Genre: Traditionell
 - Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=sB2AaVVjF-0)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/indian-summer/the-river-is-flowing-chords-1159196)
 
-## Verse 1
+## Strophe 1
 
 _(Chords sequence remains the same)_
 
@@ -22,7 +22,7 @@ her child I will always be
 Mother Earth is caring me
 back to the sea
 
-## Verse 2
+## Strophe 2
 
 The [Am] Moon she [C] is waiting
 [G] waxing and [Am] waning
@@ -34,7 +34,7 @@ a child I will always be
 Sister Moon watch over me
 until we are free
 
-## Verse 3
+## Strophe 3
 
 The [Am] Sun he [C] is shining
 [G] brightly he's [Am] shining
@@ -46,7 +46,7 @@ your child I will always be
 father Sun shine over me
 until we can see
 
-## Verse 4
+## Strophe 4
 
 The [Am] Fire [C] is burning
 [G] destroying and [Am] healing

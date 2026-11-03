@@ -7,7 +7,7 @@
 - Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=3o1xu9MQcTA)
 
-## Chorus
+## Refrain
 
 [Am] Evening rise, [Dm] spirit come,
 [C] sun goes [Em] down when the [Am] day is done,

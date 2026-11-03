@@ -6,8 +6,8 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=aEtfgfv5iN4)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/bob-marley/no-woman-no-cry-chords-45479)
-- [Guitar tutorial](https://www.youtube.com/watch?v=7lasK3XSICc)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/bob-marley/no-woman-no-cry-chords-45479)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=7lasK3XSICc)
 
 ## Intro
 
@@ -16,14 +16,14 @@ _(Instrumental)_
 [C] [G/B] [Am] [F]
 [C] [F] [C] [G]
 
-## Chorus
+## Refrain
 
 [C] No [G/B] woman no cry [Am] [F]
 [C] No [F] woman no cry [C] [G]
 
 _(Repeat)_
 
-## Verse 1
+## Strophe 1
 
 Said said
 [C] said I re[G/B]member
@@ -45,7 +45,7 @@ with the good [G/B] people we meet [Am] [F]
 you [Am] cant forget your past [F]
 [C] So dry your tears [G/B] I say [Am] [F]
 
-## Chorus
+## Refrain
 
 [C] No [G/B] woman no cry [Am] [F]
 [C] No [F] woman no cry [C] [G]
@@ -55,7 +55,7 @@ you [Am] cant forget your past [F]
 **[Am] don't shed no [F] tears**
 [C] No [F] woman no cry [C] [G]
 
-## Verse 1
+## Strophe 1
 
 Said said
 [C] said I re[G/B]member
@@ -87,7 +87,7 @@ But while I'm [F] gone
 
 _(x4)_
 
-## Chorus
+## Refrain
 
 [C] No [G/B] woman no cry [Am] [F]
 [C] No [F] woman no cry [C] [G]

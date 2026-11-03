@@ -6,14 +6,14 @@
 - Genre: Pop
 - Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=ftjEcrrf7r0)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/u2/one-chords-87432)
-- [Guitar tutorial](https://www.youtube.com/watch?v=wQZaTaexcbk)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/u2/one-chords-87432)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=wQZaTaexcbk)
 
 ## Intro
 
 [Am] [Dsus2] [FM7] [G] _(x4)_
 
-## Verse 1
+## Strophe 1
 
 [Am] Is it getting [Dsus2] better?
 [FM7] Or do you feel the [G] same?
@@ -22,7 +22,7 @@ Now [FM7] you got someone to [G] blame
 
 You say
 
-## Chorus 1
+## Refrain 1
 
 [C] One love [Am] One life
 [FM7] When it's one need [C] in the night
@@ -32,7 +32,7 @@ if you [C] don't care for it
 
 [Am] [Dsus2] [FM7] [G]
 
-## Verse 2
+## Strophe 2
 
 [Am] Did I disap[Dsus2]point you?
 [FM7] Or leave a bad taste in your [G] mouth?
@@ -51,7 +51,7 @@ We got to [FM7] carry each other
 
 [Am] [Dsus2] [FM7] [G]
 
-## Verse 3
+## Strophe 3
 
 [Am] Have you come here for for[Dsus2]giveness?
 [FM7] Have you come to raise [G] the dead?
@@ -68,7 +68,7 @@ then we [C] do it again
 
 You say
 
-## Interlude
+## Zwischenspiel
 
 [C] Love is a temple [Am] Love's a higher law
 [C] Love is a temple [Am] Love's the higher law
@@ -79,7 +79,7 @@ And [G] I can't be holding on [FM7]
 To what you got [FM7]
 When all you got is hurt
 
-## Chorus 3
+## Refrain 3
 
 [C] One love [Am] One ~~life~~ **blood**
 ~~When it's one need in the night~~

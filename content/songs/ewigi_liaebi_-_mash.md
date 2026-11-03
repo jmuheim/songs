@@ -6,9 +6,9 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=8ax3HmHUK3I)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/1829530)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/1829530)
 
-## Verse 1
+## Strophe 1
 
 Nimm mich i [D] arm und drück mich fescht a dich
 und [G] la mi nummä los
@@ -24,7 +24,7 @@ ewigi [A] liäbi [G] - das wünsch ich [D] miär
 ewigi [Bm] liäbi - numä für üs [Em] zwei
 ewigi [A] liäbi [G] - fühl mich bi [D] dier dehäi
 
-## Verse 2
+## Strophe 2
 
 säg nid für [D] immer und säg nid niä, ich gibä [G] alles für dich uf
 di blick [A] hed igschlagä i mis härz,

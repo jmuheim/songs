@@ -6,13 +6,13 @@
 - Genre: Pop
 - Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=iOs9Osz3UFQ)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/john-lennon/imagine-chords-9306)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/john-lennon/imagine-chords-9306)
 
 ## Intro
 
 [C] [F] _(x2)_
 
-## Verse 1
+## Strophe 1
 
 [C] Imagine there's no [F] heaven
 [C] It's easy if you [F] try
@@ -24,7 +24,7 @@
 [F] Imagine [Am] all the [Dm] peo[F]ple
 [G] Living for [G7] today
 
-## Verse 2
+## Strophe 2
 
 [C] Imagine there's no [F] countries
 [C] It isn't hard to [F] do
@@ -36,7 +36,7 @@
 [F] Imagine [Am] all the [Dm] peo[F]ple
 [G] Living life in [G7] peace
 
-## Chorus
+## Refrain
 
 [F] You may [G] say I'm a [C] dreamer [E]
 [F] But I'm [G] not the only [C] one [E]
@@ -44,7 +44,7 @@
 [F] I hope some [G] day you'll [C] join us [E]
 [F] And the [G] world will be as [C] one
 
-## Verse 3
+## Strophe 3
 
 [C] Imagine no posses[F]sions
 [C] I wonder if you [F] can
@@ -56,7 +56,7 @@
 [F] Imagine [Am] all the [Dm] peo[F]ple
 [G] Living life in [G7] peace
 
-## Chorus
+## Refrain
 
 [F] You may [G] say I'm a [C] dreamer [E]
 [F] But I'm [G] not the only [C] one [E]

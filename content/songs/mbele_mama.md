@@ -7,7 +7,7 @@
 - Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=WrUUVf9kMHs&pp=ygUJYmVsZSBtYW1h)
 
-## Chorus
+## Refrain
 
 [C] Mbele Mama, [G] Mbele Mama, [C] yee
 [C] Mbele Mama, [G] Mbele Mama, [C] yee

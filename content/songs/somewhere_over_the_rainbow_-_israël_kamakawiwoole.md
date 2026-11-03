@@ -6,7 +6,7 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=Z26BvHOD_sg)
-- [Source tab](https://ukutabs.com/i/israel-kamakawiwoole/somewhere-over-the-rainbow-what-a-wonderful-world/)
+- [Tab-Quelle](https://ukutabs.com/i/israel-kamakawiwoole/somewhere-over-the-rainbow-what-a-wonderful-world/)
 
 ## Intro
 
@@ -19,7 +19,7 @@ _(Instrumental)_
 [F] Ooo-ooo [E7] ooo-ooo
 [Am] ooo-ooo [F] ooo-ooo
 
-## Verse 1
+## Strophe 1
 
 [C] Somewhere [Em] over the rainbow
 [F] way up [C] high
@@ -31,7 +31,7 @@ Oh [C] somewhere [Em] over the rainbow
 [F] And the [C] dreams that you dream of
 [G] dreams really do come [Am] true [F]
 
-## Verse 2
+## Strophe 2
 
 Some[C]day i'll wish upon a star
 [G] To wake up where the clouds are far
@@ -42,14 +42,14 @@ Where [C] trouble melts like lemon drops
 that's [Am] where
 you'll [F] find me
 
-## Interlude 1
+## Zwischenspiel 1
 
 Oh [C] somewhere [Em] over the rainbow
 [F] blue birds [C] fly
 [F] And the [C] dreams that you dare to oh
 [G] why oh why can't [Am] I? [F]
 
-## Verse 3
+## Strophe 3
 
 Well I see [C] trees of [Em] green and
 [F] Red roses [C] too
@@ -81,7 +81,7 @@ saying [F] how do you [C] do?
 [F] They're really [C] saying
 [Dm7] I - I love [D] you
 
-## Interlude 2
+## Zwischenspiel 2
 
 I hear [C] babies [Em] cry and I
 [F] watch them [C] grow
@@ -91,7 +91,7 @@ I hear [C] babies [Em] cry and I
 And I [F] think to myself
 [G] what a wonderful [Am] world [F] world
 
-## Verse 2
+## Strophe 2
 
 Some[C]day i'll wish upon a star
 [G] To wake up where the clouds are far
@@ -102,7 +102,7 @@ Where [C] trouble melts like lemon drops
 that's [Am] where
 you'll [F] find me
 
-## Interlude 1
+## Zwischenspiel 1
 
 [C] Oh somewhere [Em] over the rainbow
 ~~blue birds fly~~

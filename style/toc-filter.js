@@ -1,6 +1,6 @@
 // Filters the table of contents by tag. The build (inject_toc_filter in
 // lib/build_helpers.rb) renders the <fieldset id="toc-filter"> (one <select>
-// each for Sprache/Genre, a „Songs von" button for Gastgeber, plus a Reset
+// each for Sprache/Genre, a „Lieder von" button for Gastgeber, plus a „Zurücksetzen"
 // button), the <dialog id="gastgeber-modal"> that button opens, with the
 // Gastgeber as checkboxes, a data-sprache / data-genre / data-gastgeber
 // attribute on each song's <li>, and a hidden <p id="toc-filter-empty"> for
@@ -11,7 +11,7 @@
 // and with all checked there is no filter, so a song without a Gastgeber
 // stays), then AND into the rest — see
 // decisions/2026-10-05-gastgeber-filter-uses-checkboxes-not-a-select.md. An
-// untagged entry hides while any filter is active. Reset clears every
+// untagged entry hides while any filter is active. „Zurücksetzen" clears every
 // control. The selects, checkboxes and the button are real form controls, so
 // the keyboardCondition in body-controls.html already keeps their keys from
 // reaching Reveal. The selection is local to this client and not synced over
@@ -88,12 +88,12 @@
       });
     }
 
-    // The dialog behind the „Songs von" button. Like the others in
+    // The dialog behind the „Lieder von" button. Like the others in
     // body-controls.html it keeps its keys from Reveal, which listens on the
     // document, and closes on a click on its backdrop.
     var INFO = {
       own: 'Zeigt die Lieder der angehakten Gastgeber. Wer abgehakt ist, fehlt in der Liste.',
-      host: 'Wer ist heute Abend dabei? Alle in der Session sehen nur die Lieder der angehakten Gastgeber.',
+      host: 'Wer ist heute Abend dabei? Alle in der Runde sehen nur die Lieder der angehakten Gastgeber.',
       guest: 'Der Gastgeber hat gewählt, wessen Lieder heute Abend gespielt werden können.'
     };
     if (dialog) {

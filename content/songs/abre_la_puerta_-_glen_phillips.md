@@ -8,7 +8,7 @@
 - Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=TVfpenKPVSc)
 
-## Chorus
+## Refrain
 
 Abre la [Am] puerta, abre la puerta [C]
 Abre la [G] puerta, abre la puerta [Am] _(2x)_

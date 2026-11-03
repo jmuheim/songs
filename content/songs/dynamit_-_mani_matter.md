@@ -6,9 +6,9 @@
 - Genre: Traditionell
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=qaeVSV0fRDo)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/mani-matter/dynamit-chords-2553321)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/mani-matter/dynamit-chords-2553321)
 
-## Verse 1
+## Strophe 1
 
 [Am] Einisch ir Nacht won i spät no bi [E7] gloffe
 [Am] D'Bundesterrasse z'düruf gäge [G] hei
@@ -17,7 +17,7 @@
 [C] Dass dä sech dert zu nachtschlafener [E] Zyt
 [Am] Am Bundeshus z'schaffe macht [E7] mit Dyna[Am]mit
 
-## Verse 2
+## Strophe 2
 
 [Am] I bi erchlüpft und ha zuen ihm gseit: [E7] Säget
 [Am] Exgüse, aber es gseht fasch so [G] us
@@ -26,7 +26,7 @@
 [C] Ja, seit dä Ma mir mit Füür, es mues [E] sy
 [Am] Furt mit däm Ghütt, i bi [E7] für d'Anar[Am]chie
 
-## Verse 3
+## Strophe 3
 
 [Am] Was isch als Bürger mir da übrig[E7]blybe
 [Am] Als ihm's probiere uszrede, i [G] ha
@@ -35,7 +35,7 @@
 [C] Ds Rütli und d'Freiheit und d'Demokra[E]tie
 [Am] Han i beschworen, är [E7] sölls doch la [Am] sy
 
-## Verse 4
+## Strophe 4
 
 [Am] D'Angscht het mys Rednertalänt la ent[E7]falte
 [Am] Chüel het dr Wind um üs gwäit i dr [G] Nacht
@@ -44,7 +44,7 @@
 [C] Z'letscht hei dä Ma mini Wort so be[E]rückt
 [Am] Dass är e Träne im [E7] Oug het ver[Am]drückt
 
-## Verse 5
+## Strophe 5
 
 [Am] So han i schliesslech dr Staat chönne [E7] rette
 [Am] Är isch mit sym Dynamit wieder [G] hei
@@ -56,7 +56,7 @@
 _^*^ Zmonderischt: Ein Tag, welcher nach einem schon
 vergangenen Tag gekommen ist. ([Quelle](https://www.msn.com/de-ch/nachrichten/other/der-morndrig-tag-macht-hinecht-zu-n%C3%A4chti/ar-BBYnNVi))_
 
-## Verse 6
+## Strophe 6
 
 [Am] Han ig ihm d'Schwyz o mit Rächt eso [E7] prise?
 [Am] Fragen i mi no bis hüt hinde[G]dry

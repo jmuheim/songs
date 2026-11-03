@@ -6,10 +6,10 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=8AHCfZTRGiI)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/johnny-cash/hurt-chords-89849)
-- [Guitar tutorial](https://www.youtube.com/watch?v=hEKexrWq5RU)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/johnny-cash/hurt-chords-89849)
+- [Gitarren-Tutorial](https://www.youtube.com/watch?v=hEKexrWq5RU)
 
-## Instructions
+## Spielhinweise
 
 ```
 Chorus chord variations:
@@ -29,7 +29,7 @@ Just keep pinky on 3rd fret of e string
 [C] [D] [Am]
 [C] [D] [Am]
 
-## Verse 1
+## Strophe 1
 
 I [C] hurt myself [D] today [Am]
 to see [C] if I [D] still feel [Am]
@@ -43,7 +43,7 @@ the [C] old fa[D]miliar sting [Am]
 Try to [C] kill it [D] all away [Am]
 but I re[C]member [D] everything [G]
 
-## Chorus 1
+## Refrain 1
 
 [Am7] What have I become? [Fadd9]
 [C/E] My sweetest friend [G]
@@ -57,12 +57,12 @@ And [Am7] you could have it all [Fadd9]
 [Am7] I will let you down [Fadd9]
 [G] I will make you hurt [Am]
 
-## Transition
+## Überleitung
 
 [C] [D] [Am]
 [C] [D] [Am]
 
-## Verse 2
+## Strophe 2
 
 I [C] wear this crown [D] of thorns [Am]
 u[C]pon my li[D]ar's chair [Am]
@@ -78,7 +78,7 @@ the [C] feelings [D] disappear [Am]
 
 _(x2)_
 
-## Chorus 2
+## Refrain 2
 
 [Am7] What have I become? [Fadd9]
 [C/E] My sweetest friend [G]

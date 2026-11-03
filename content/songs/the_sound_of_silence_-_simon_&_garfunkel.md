@@ -6,9 +6,9 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=6ukmjBSQY-c)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/simon-garfunkel/the-sound-of-silence-chords-159157)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/simon-garfunkel/the-sound-of-silence-chords-159157)
 
-## Verse 1
+## Strophe 1
 
 [Am] Hello darkness, my old [G] friend,
 I've come to talk with you a[Am]gain,
@@ -19,7 +19,7 @@ And the [F] vision that was planted in my [C] brain
 Still remains [Am] [C]
 Within the [G] sound of [Am] silence.
 
-## Verse 2
+## Strophe 2
 
 In restless dreams I walked [G] alone
 Narrow streets of cobble[Am]stone,
@@ -30,7 +30,7 @@ When my [F] eyes were stabbed by the flash of a neon [C] light
 That split the night [Am] [C]
 And touched the [G] sound of [Am] silence.
 
-## Verse 3
+## Strophe 3
 
 And in the naked light I [G] saw
 Ten thousand people, maybe [Am] more.
@@ -41,7 +41,7 @@ People writing [F] songs that voices never [C] share
 And no one dare [Am] [C]
 Disturb the [G] sound of [Am] silence.
 
-## Verse 4
+## Strophe 4
 
 Fools said I, you do not [G] know
 Silence like a cancer [Am] grows.
@@ -51,7 +51,7 @@ Take my arms that I [F] might reach [C] you.
 But my [F] words like silent raindrops [C] fell, [Am]
 [C] And echoed in the [G] wells of [Am] silence
 
-## Verse 5
+## Strophe 5
 
 And the people bowed and [G] prayed
 To the neon god they [Am] made.

@@ -4,16 +4,16 @@ RSpec.describe '#merge_about_section' do
   include BuildHelpers
 
   it 'passes content through unchanged when there is no "Infos über das Lied" section' do
-    content = "# S (X)\n\n## Chorus\n\nLa [C] la\n"
+    content = "# S (X)\n\n## Refrain\n\nLa [C] la\n"
     expect(merge_about_section(content)).to eq(content)
   end
 
-  it 'leaves a song with no Instructions section untouched aside from the section split' do
-    content = "# S (X)\n\n## Infos über das Lied\n\n- Sprache: Englisch\n- Genre: Pop\n- [Lied auf YouTube](http://example.com)\n\n## Chorus\n\nLa [C] la\n"
+  it 'leaves a song with no Spielhinweise section untouched aside from the section split' do
+    content = "# S (X)\n\n## Infos über das Lied\n\n- Sprache: Englisch\n- Genre: Pop\n- [Lied auf YouTube](http://example.com)\n\n## Refrain\n\nLa [C] la\n"
     expect(merge_about_section(content)).to eq(content)
   end
 
-  it 'splices Instructions (alternate chord fingerings) into the Infos-über-das-Lied section' do
+  it 'splices Spielhinweise (alternate chord fingerings) into the Infos-über-das-Lied section' do
     content = <<~MD
       # S (X)
 
@@ -22,14 +22,14 @@ RSpec.describe '#merge_about_section' do
       - Sprache: Englisch
       - Genre: Pop
 
-      ## Instructions
+      ## Spielhinweise
 
       ```
       |E A D G B e|
       A7sus4 |x 0 2 0 3 0|
       ```
 
-      ## Chorus
+      ## Refrain
 
       La [C] la
     MD
@@ -47,7 +47,7 @@ RSpec.describe '#merge_about_section' do
       A7sus4 |x 0 2 0 3 0|
       ```
 
-      ## Chorus
+      ## Refrain
 
       La [C] la
     MD

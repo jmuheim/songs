@@ -6,9 +6,9 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=kinhpcXbTqA)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/polo-hofer/alperose-ukulele-4330988)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/polo-hofer/alperose-ukulele-4330988)
 
-## Verse 1
+## Strophe 1
 
 [C] Blüemlisalp irä [G] Summer[Am]nacht
 [C] Nachdem i ha ä [G] Bärgtour gmacht,
@@ -22,14 +22,14 @@
 [C] I gloube mir sei nume [G] einisch [Am] hie
 [C] Als wärs ä Film ver[G]gissenis nie
 
-## Chorus
+## Refrain
 
 [F] Alperose, chöme mir i [C] Sinn
 [F] Alperose, si das gsi [C] denn
 [F] Alperose, müesse das gsi [Am] si,
 wo [F] nebed üs im Heu gläge [G] si
 
-## Verse 2
+## Strophe 2
 
 [C] Si zäme zoge an [G] gliche [Am] Ort
 [C] Wo der Herbscht isch cho da isch sie [G] wider furt
@@ -43,7 +43,7 @@ wo [F] nebed üs im Heu gläge [G] si
 [C] Und immer wenn i die [G] Bärge [Am] gseh
 [C] Isch es wieder [G] um mi [C] gscheh
 
-## Chorus
+## Refrain
 
 [F] Alperose, chöme mir i [C] Sinn
 [F] Alperose, si das gsi [C] denn
@@ -54,7 +54,7 @@ wo [F] nebed üs im Heu gläge [G] si
 
 [C] [G] [Am] [F] [G] _(2x)_
 
-## Chorus
+## Refrain
 
 [F] Alperose, chöme mir i [C] Sinn
 [F] Alperose, si das gsi [C] denn

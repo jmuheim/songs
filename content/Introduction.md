@@ -1,19 +1,20 @@
-# Introduction
+# Einleitung
 
-## Welcome
+## Willkommen
 
-This is a collection of my favourite guitar songs.
-🎤😍🎸🔥 Find it on [songs.josh.ch](https://songs.josh.ch).
+Das ist eine Sammlung meiner liebsten Gitarrenlieder.
+🎤😍🎸🔥 Du findest sie auf [songs.josh.ch](https://songs.josh.ch).
 
-- Use arrow keys or swipe gestures to navigate
-- To toggle chords display, click 🎹
-- For fullscreen on mobile, click "Share" and "Add to home screen", then open from there
+- Wische nach links/rechts zum nächsten Lied, nach oben/unten durchs Lied
+- Am Computer: Pfeiltasten oder die Pfeile am Bildschirmrand
+- Tippe auf einen Akkord, um seinen Griff zu sehen
+- ⚙️ blendet die Akkorde aus, ↕️ schaltet auf Vollbild
 
-Let's sing together and have some fun! 💫
+Lasst uns zusammen singen und Spass haben! 💫
 
-🙏 Cheers, Josua + Monika 🌛
+🙏 Liebe Grüsse, Josua + Monika 🌛
 
-## Basic chords
+## Grundakkorde
 
 ```
 x Not played / muted

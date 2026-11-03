@@ -6,13 +6,13 @@
 - Genre: Rock
 - Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=6Ejga4kJUts)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/the-cranberries/zombie-chords-844902)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/the-cranberries/zombie-chords-844902)
 
 ## Intro
 
 [Em] [C] [G] [D] _(x2)_
 
-## Verse 1
+## Strophe 1
 
 [Em] Another [C] head hangs lowly,
 [G] child is slowly [D] taken
@@ -28,7 +28,7 @@ and their [C] bombs and their guns
 
 in your [G] head, in your head, they are [D] crying
 
-## Chorus
+## Refrain
 
 In your [Em] head, in your [C] head
 zombie, [G] zombie, zombie [D] _(2x)_
@@ -37,7 +37,7 @@ zombie, [G] zombie, zombie [D] _(2x)_
 
 [Em] [C] [G] [D] _(x2)_
 
-## Verse 2
+## Strophe 2
 
 [Em] Another [C] mother's breaking
 [G] heart is taking [D] over
@@ -53,7 +53,7 @@ and their [C] bombs and their guns
 
 In your [G] head, in your head, they are [D] dying
 
-## Chorus
+## Refrain
 
 In your [Em] head, in your [C] head
 zombie, [G] zombie, zombie [D] _(2x)_
@@ -63,7 +63,7 @@ zombie, [G] zombie, zombie [D] _(2x)_
 [Em] [C] [G] [D] _(x2)_
 [Em] [C] [Em] [C] _(x2)_
 
-## Chorus
+## Refrain
 
 In your [Em] head, in your [C] head
 zombie, [G] zombie, zombie [D] _(2x)_

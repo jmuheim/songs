@@ -6,13 +6,13 @@
 - Genre: Pop
 - Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=ER_3h03omdE)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/abba/i-have-a-dream-chords-897049)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/abba/i-have-a-dream-chords-897049)
 
 ## Intro
 
 [A] [E] [A]
 
-## Verse 1
+## Strophe 1
 
 [A] I have a [E] dream, a song to [A] sing
 To help me [E] cope, with any[A]thing
@@ -22,7 +22,7 @@ of a fairy [A] tale
 You can take the [E] future
 even if you [A] fail
 
-## Chorus
+## Refrain
 
 I believe in [E] angels
 Something good in, [D] everything I [A] see
@@ -32,7 +32,7 @@ When I know the [D] time, is right for [A] me
 I'll cross the [E] stream
 I have a [A] dream
 
-## Verse 2
+## Strophe 2
 
 I have a [E] dream, a fanta[A]sy
 To help me [E] through, reali[A]ty
@@ -42,7 +42,7 @@ makes it worth the [A] while
 Pushing through the [E] darkness
 still another [A] mile
 
-## Chorus 2
+## Refrain 2
 
 I believe _(Pause)_ in [E] angels
 Something good in [D] everything I [A] see
@@ -52,11 +52,11 @@ When I know the [D] time, is right for [A] me
 I'll cross the [E] stream
 I have a [A] dream _(2x)_
 
-## Interlude
+## Zwischenspiel
 
 [A] [E] _(2x)_
 
-## Verse 3
+## Strophe 3
 
 I have a [E] dream, a song to [A] sing
 To help me [E] cope, with any[A]thing
@@ -66,7 +66,7 @@ of a fairy [A] tale
 You can take the [E] future
 even if you [A] fail
 
-## Chorus 3
+## Refrain 3
 
 I believe _(Long pause)_ in [E] angels
 Something good in [D] everything I [A] see

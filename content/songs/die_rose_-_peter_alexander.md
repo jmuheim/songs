@@ -6,9 +6,9 @@
 - Genre: Pop
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=tTJ990zzDFI)
-- [Source tab](https://tabs.ultimate-guitar.com/tab/peter-alexander/die-rose-chords-2328527)
+- [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/peter-alexander/die-rose-chords-2328527)
 
-## Verse 1
+## Strophe 1
 
 Liebe [C] ist, wie wildes [G] Wasser,
 das [F] sich [G] durch Felsen [C] zwängt.
@@ -19,7 +19,7 @@ ein [F] Sturmwind und ein [G] Hauch.
 Für mich [C] ist sie eine [G] Rose,
 für [F] dich [G] ein Dornen[C]strauch.
 
-## Verse 2
+## Strophe 2
 
 Wer nie [C] weint und niemals [G] trauert,
 der [F] weiss [G] auch nichts vom [C] Glück.
@@ -30,7 +30,7 @@ und [F] wer sein Leben [G] lang
 immer [C] Angst hat vor dem [G] Sterben –
 fängt [F] nie [G] zu leben [C] an.
 
-## Verse 3
+## Strophe 3
 
 Wenn du [C] denkst du bist ver[G]lassen
 und kein [F] Weg [G] führt aus der [C] Nacht.
