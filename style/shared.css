@@ -303,9 +303,14 @@ section.level1 h1 {
    the slide instead, and cut any title wider than that rather than letting
    it wrap or push the box wider. It fades out at the row's end rather than
    ending in "…" (night.css), and the <li> places that fade, and in a
-   session its ❤️. */
+   session its ❤️. No numbers: the titles say enough, and the number column
+   took room from them. Without it, nothing is left for the theme's margin
+   and the list's padding to hold, and the box is centred as it is. */
 #TOC ol {
   width: 90%;
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 #TOC ol li {

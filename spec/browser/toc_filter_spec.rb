@@ -218,6 +218,17 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
     JS
     expect(ol_width.to_f / nav_width).to be_within(0.01).of(0.9)
 
+    # No numbers, and no room left for them: the list is centred
+    marker, left_gap, right_gap = page.evaluate_script(<<~JS)
+      (function() {
+        var ol = document.querySelector('#TOC nav ol').getBoundingClientRect();
+        var nav = document.querySelector('#TOC nav').getBoundingClientRect();
+        return [getComputedStyle(document.querySelector('#TOC nav ol')).listStyleType, ol.left - nav.left, nav.right - ol.right];
+      })()
+    JS
+    expect(marker).to eq('none')
+    expect(left_gap).to be_within(1).of(right_gap)
+
     # A title wider than its row is cut, not wrapped, and fades out under an
     # overlay at the row's end in the list's own background instead of ending
     # in "…"
