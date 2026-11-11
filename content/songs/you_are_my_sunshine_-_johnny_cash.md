@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Englisch
-- Genre: Pop
+- Genre: Country
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=cGa3zFRqDn4)
 - [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/johnny-cash/you-are-my-sunshine-chords-834069)

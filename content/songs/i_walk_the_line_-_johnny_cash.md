@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Englisch
-- Genre: Pop
+- Genre: Country
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=st22r2pDCKA)
 - [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/johnny-cash/i-walk-the-line-chords-15835)

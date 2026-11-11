@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Andere
-- Genre: Traditionell
+- Genre: Traditionell, Kids
 - Gastgeber: Josua, Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=WrUUVf9kMHs&pp=ygUJYmVsZSBtYW1h)
 

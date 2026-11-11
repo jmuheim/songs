@@ -4,7 +4,7 @@
 
 - Capo: 4. Bund
 - Sprache: Englisch
-- Genre: Pop
+- Genre: Mantra
 - Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=pOL66P0FdPQ)
 

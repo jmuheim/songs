@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Mundart
-- Genre: Traditionell
+- Genre: Traditionell, Kids
 - Gastgeber: Josua
 - [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/mani-matter/dr-eskimo-chords-2146513)
 

@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Englisch
-- Genre: Traditionell
+- Genre: Traditionell, Country
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=ZbmQQ4RfzVE)
 - [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/the-carter-family/keep-on-the-sunny-side-chords-1431252)

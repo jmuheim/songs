@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Englisch
-- Genre: Pop
+- Genre: Country
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=8AHCfZTRGiI)
 - [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/johnny-cash/hurt-chords-89849)

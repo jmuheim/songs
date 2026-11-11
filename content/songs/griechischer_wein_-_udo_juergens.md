@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Deutsch
-- Genre: Pop
+- Genre: Schlager
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=6Ucp1IxujUg)
 - [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/1018193)

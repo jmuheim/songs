@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Englisch
-- Genre: Pop
+- Genre: Country
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=Ixrje2rXLMA)
 - [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/dolly-parton/jolene-chords-183019)

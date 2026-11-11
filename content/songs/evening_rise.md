@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Englisch
-- Genre: Traditionell
+- Genre: Traditionell, Mantra
 - Gastgeber: Monika
 - [Lied auf YouTube](https://www.youtube.com/watch?v=3o1xu9MQcTA)
 

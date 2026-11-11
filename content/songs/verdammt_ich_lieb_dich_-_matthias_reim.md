@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Deutsch
-- Genre: Rock
+- Genre: Schlager
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=x6q0ciiqyG0)
 - [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/matthias-reim/verdammt-ich-lieb-dich-chords-1680929)

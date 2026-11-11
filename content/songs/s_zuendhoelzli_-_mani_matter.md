@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Mundart
-- Genre: Traditionell
+- Genre: Traditionell, Kids
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=PkGatIgXERI)
 - [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/1197401)

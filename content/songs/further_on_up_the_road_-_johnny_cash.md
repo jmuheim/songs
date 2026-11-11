@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Englisch
-- Genre: Pop
+- Genre: Country
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=HMCQgWtST5c)
 - [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/johnny-cash/further-on-up-the-road-chords-520573)

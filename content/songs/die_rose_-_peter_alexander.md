@@ -3,7 +3,7 @@
 ## Infos über das Lied
 
 - Sprache: Deutsch
-- Genre: Pop
+- Genre: Schlager
 - Gastgeber: Josua
 - [Lied auf YouTube](https://www.youtube.com/watch?v=tTJ990zzDFI)
 - [Tab-Quelle](https://tabs.ultimate-guitar.com/tab/peter-alexander/die-rose-chords-2328527)
