@@ -40,6 +40,34 @@ RSpec.describe 'mobile layout', :js, type: :feature do
     end
   end
 
+  # --- @media (width < 500px), (height < 500px) { .modal-box { font-size: 1.35rem } } ---
+
+  describe 'dialogs on a phone held sideways' do
+    it 'fit every dialog on the screen, the settings with their fonts included, and on a laptop as well' do
+      # An iPhone 13 held sideways, Safari's bars shown; a laptop's browser
+      # window, its own bars taken off
+      [[844, 390], [1280, 680]].each do |width, height|
+        page.driver.browser.resize(width: width, height: height)
+        load_presentation
+        # Each dialog opened straight from script: through its own button,
+        # half of them need a session, a host and a song first. All that
+        # matters here is their size once open
+        overflowing = page.evaluate_script(<<~JS)
+          Array.prototype.filter.call(document.querySelectorAll('dialog.overlay-modal'), function (dialog) {
+            dialog.showModal();
+            var tooTall = dialog.scrollHeight > dialog.clientHeight;
+            dialog.close();
+            return tooTall;
+          }).map(function (dialog) { return dialog.id; })
+        JS
+        expect(page.evaluate_script("document.querySelectorAll('dialog.overlay-modal').length")).to be >= 7 # else this proves little
+        expect(overflowing).to eq([]), "at #{width}×#{height}: #{overflowing.join(', ')}"
+      end
+    ensure
+      page.driver.browser.resize(width: 1280, height: 800)
+    end
+  end
+
   # --- @media (pointer: coarse) { .reveal .controls { display: none } } ---
 
   describe 'navigation chevrons' do

@@ -66,6 +66,20 @@
     var bright = stored === 'bright';
     applyTheme(bright); // applied right away, so there's no flash of the wrong theme
 
+    // The fonts of the titles and of the text (night.css), applied right away
+    // too: the slides are fitted in them from the start. The theme's own,
+    // Montserrat and Open Sans, are '' and set no attribute.
+    var FONTS = { 'title-font': 'titleFont', 'text-font': 'textFont' };
+    function applyFont(key, font) {
+      if (font) document.body.dataset[FONTS[key]] = font;
+      else delete document.body.dataset[FONTS[key]];
+    }
+    var fonts = {};
+    Object.keys(FONTS).forEach(function(key) {
+      try { fonts[key] = localStorage.getItem(key) || ''; } catch (e) { fonts[key] = ''; }
+      applyFont(key, fonts[key]);
+    });
+
     // The rest waits for 'load': the settings dialog markup sits further down
     // the document, after this script tag, so it isn't parsed yet at this point.
     window.addEventListener('load', function() {
@@ -77,6 +91,23 @@
         try { localStorage.setItem('theme', nowBright ? 'bright' : 'dark'); } catch (e) {}
       });
 
+      // One radio button per font, named after the key it is stored under
+      Object.keys(FONTS).forEach(function(key) {
+        var radios = Array.prototype.slice.call(document.querySelectorAll('input[name="' + key + '"]'));
+        var chosen = radios.filter(function(radio) { return radio.value === fonts[key]; })[0];
+        if (!chosen) { // a font no longer offered: the theme's again
+          chosen = radios.filter(function(radio) { return radio.value === ''; })[0];
+          applyFont(key, '');
+        }
+        chosen.checked = true;
+        radios.forEach(function(radio) {
+          radio.addEventListener('change', function() {
+            applyFont(key, radio.value);
+            try { localStorage.setItem(key, radio.value); } catch (e) {}
+          });
+        });
+      });
+
       var chordsCheckbox = document.getElementById('show-chords-checkbox');
       chordsCheckbox.checked = !document.body.classList.contains('chords-hidden');
       chordsCheckbox.addEventListener('change', function() {
@@ -84,7 +115,14 @@
       });
 
       var settingsModal = document.getElementById('settings-modal');
-      document.getElementById('open-settings').addEventListener('click', function() { settingsModal.showModal(); });
+      document.getElementById('open-settings').addEventListener('click', function() {
+        settingsModal.showModal();
+        // Each font list scrolled to its checked font, in the middle where it can
+        Array.prototype.forEach.call(settingsModal.querySelectorAll('.settings-font-list'), function(list) {
+          var row = list.querySelector('input:checked').parentNode;
+          list.scrollTop = row.offsetTop - (list.clientHeight - row.offsetHeight) / 2;
+        });
+      });
       document.getElementById('settings-close').addEventListener('click', function() { settingsModal.close(); });
       settingsModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
       settingsModal.addEventListener('keypress', function(e) { e.stopPropagation(); });
@@ -139,13 +177,16 @@
       // scrolls it up, and Safari brings its bars back. .reveal's touch-action
       // doesn't reach a code block (overflow: auto, a scroll container of its
       // own), nor the corner buttons beside the deck. Only the table of
-      // contents, a dialog and the 🎉 still scroll, when they hold more than
-      // fits (night.css keeps them from passing a swipe on to the page). Two
-      // fingers are a pinch-zoom, which stays.
+      // contents, a dialog, the settings' font lists and the 🎉 still scroll,
+      // when they hold more than fits (night.css keeps them from passing a
+      // swipe on to the page); a font list that doesn't leaves the swipe to
+      // its dialog. Two fingers are a pinch-zoom, which stays.
+      var SCROLLERS = '#TOC, dialog, .settings-font-list, .runway-success';
       function holdPage(e) {
         if (e.touches.length > 1) return;
-        var own = e.target.closest && e.target.closest('#TOC, dialog, .runway-success');
-        if (own && own.scrollHeight > own.clientHeight) return;
+        for (var own = e.target.closest && e.target.closest(SCROLLERS); own; own = own.parentElement && own.parentElement.closest(SCROLLERS)) {
+          if (own.scrollHeight > own.clientHeight) return;
+        }
         e.preventDefault();
       }
 
@@ -297,8 +338,37 @@
         <option value="bright">Hell</option>
       </select>
     </div>
-    <label class="settings-checkbox"><input type="checkbox" id="show-chords-checkbox"> Akkorde anzeigen</label>
-    <button id="settings-close">Schliessen</button>
+    <div class="settings-font-groups">
+      <fieldset class="settings-fonts">
+        <legend>Titelschrift</legend>
+        <div class="settings-font-list">
+          <label><input type="radio" name="title-font" value=""><img src="{{assets}}fonts/samples/title-standard.png" alt="Montserrat" loading="lazy"></label>
+          <label><input type="radio" name="title-font" value="playfair"><img src="{{assets}}fonts/samples/title-playfair.png" alt="Playfair Display" loading="lazy"></label>
+          <label><input type="radio" name="title-font" value="oswald"><img src="{{assets}}fonts/samples/title-oswald.png" alt="Oswald" loading="lazy"></label>
+          <label><input type="radio" name="title-font" value="pacifico"><img src="{{assets}}fonts/samples/title-pacifico.png" alt="Pacifico" loading="lazy"></label>
+          <label><input type="radio" name="title-font" value="marker"><img src="{{assets}}fonts/samples/title-marker.png" alt="Permanent Marker" loading="lazy"></label>
+          <label><input type="radio" name="title-font" value="dancing"><img src="{{assets}}fonts/samples/title-dancing.png" alt="Dancing Script" loading="lazy"></label>
+          <label><input type="radio" name="title-font" value="antic"><img src="{{assets}}fonts/samples/title-antic.png" alt="Antic Slab" loading="lazy"></label>
+          <label><input type="radio" name="title-font" value="comic"><img src="{{assets}}fonts/samples/title-comic.png" alt="Comic Relief" loading="lazy"></label>
+        </div>
+      </fieldset>
+      <fieldset class="settings-fonts">
+        <legend>Textschrift</legend>
+        <div class="settings-font-list">
+          <label><input type="radio" name="text-font" value=""><img src="{{assets}}fonts/samples/text-standard.png" alt="Open Sans" loading="lazy"></label>
+          <label><input type="radio" name="text-font" value="atkinson"><img src="{{assets}}fonts/samples/text-atkinson.png" alt="Atkinson Hyperlegible" loading="lazy"></label>
+          <label><input type="radio" name="text-font" value="lora"><img src="{{assets}}fonts/samples/text-lora.png" alt="Lora" loading="lazy"></label>
+          <label><input type="radio" name="text-font" value="nunito"><img src="{{assets}}fonts/samples/text-nunito.png" alt="Nunito" loading="lazy"></label>
+          <label><input type="radio" name="text-font" value="caveat"><img src="{{assets}}fonts/samples/text-caveat.png" alt="Caveat" loading="lazy"></label>
+          <label><input type="radio" name="text-font" value="antic"><img src="{{assets}}fonts/samples/text-antic.png" alt="Antic Slab" loading="lazy"></label>
+          <label><input type="radio" name="text-font" value="comic"><img src="{{assets}}fonts/samples/text-comic.png" alt="Comic Relief" loading="lazy"></label>
+        </div>
+      </fieldset>
+    </div>
+    <div class="settings-footer">
+      <label class="settings-checkbox"><input type="checkbox" id="show-chords-checkbox"> Akkorde anzeigen</label>
+      <button id="settings-close">Schliessen</button>
+    </div>
   </div>
 </dialog>
 

@@ -819,17 +819,27 @@ RSpec.describe 'index.html', :js, type: :feature do
   end
 
   # -----------------------------------------------------------------------
-  # Theme toggle
+  # Theme and fonts
   # -----------------------------------------------------------------------
-  describe 'theme toggle' do
+  describe 'theme and fonts' do
     def body_background_color
       page.evaluate_script("getComputedStyle(document.body).getPropertyValue('--r-background-color').trim()")
     end
 
-    before { load_presentation }
-    after { page.evaluate_script("localStorage.removeItem('theme')") }
+    def font_of(selector)
+      page.evaluate_script("getComputedStyle(document.querySelector(#{selector.to_json})).fontFamily")
+    end
 
-    it 'switches theme from the settings dialog, persists preference, and restores on reload' do
+    # A family only loads once a rendered text uses it; a missing file ends
+    # in 'error', a rule that never applies in 'unloaded'
+    def font_loaded(family)
+      "Array.from(document.fonts).some(function (f) { return f.family.replace(/\"/g, '') === #{family.to_json} && f.status === 'loaded'; })"
+    end
+
+    before { load_presentation }
+    after { page.evaluate_script("['theme', 'title-font', 'text-font'].forEach(function (k) { localStorage.removeItem(k); })") }
+
+    it 'switches theme and fonts from the settings dialog, persists them, and restores them on reload' do
       expect(page).to have_no_css('body.theme-bright')
       expect(body_background_color).to eq('#111')
 
@@ -841,14 +851,80 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(body_background_color).to eq('#fffad5')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('bright')
 
+      # A font each for the titles and the text, the theme's Montserrat and
+      # Open Sans until then. Each radio button shows its font as a picture,
+      # so opening the dialog downloads the pictures but no font
+      expect(page).to have_checked_field('title-font', with: '')
+      expect(page).to have_checked_field('text-font', with: '')
+      expect(font_of('section.deck-title-slide h1')).to start_with('Montserrat')
+      wait_for_js("Array.prototype.every.call(document.querySelectorAll('.settings-fonts img'), function (img) { return img.complete && img.naturalWidth > 0; })")
+      expect(page.evaluate_script(<<~JS)).to eq([15, 15])
+        (function () {
+          var imgs = document.querySelectorAll('.settings-fonts img');
+          return [imgs.length, Array.prototype.filter.call(imgs, function (img) { return img.complete && img.naturalWidth > 0; }).length];
+        })()
+      JS
+      expect(page.evaluate_script("performance.getEntriesByType('resource').some(function (e) { return /playfair-display|lora-/.test(e.name); })")).to be false
+
+      # Every font on offer is there to be had: its rule names a family
+      # fonts.css has, and that family's files are in style/fonts/
+      expect(page).to have_css('section.deck-title-slide > .slide-content[data-fitted]', visible: :all)
+      title_scale = page.evaluate_script("document.querySelector('section.deck-title-slide > .slide-content').style.transform")
+      { 'title-font' => 'section.deck-title-slide h1', 'text-font' => 'section.deck-title-slide p.author' }.each do |name, selector|
+        all("input[name='#{name}']", visible: :all).map(&:value).each do |value|
+          choose(name, option: value)
+          family = font_of(selector)[/\A"?([^",]+)/, 1]
+          wait_for_js(font_loaded(family))
+          expect(page.evaluate_script(font_loaded(family))).to be(true), "#{name} #{value.inspect}: #{family} did not load"
+        end
+      end
+
+      # Picked: the slide is fitted anew; the code blocks and the chords stay monospace
+      choose('title-font', option: 'playfair')
+      choose('text-font', option: 'lora')
+      expect(page).to have_css('body[data-title-font="playfair"][data-text-font="lora"]')
+      expect(font_of('section.deck-title-slide h1')).to start_with('"Playfair Display"')
+      expect(font_of('section.deck-title-slide p.author')).to start_with('Lora')
+      expect(font_of('#grundakkorde pre code')).to eq('monospace')
+      expect(font_of('.reveal .slides button.chord code')).to eq('monospace')
+      expect(page).to have_no_css("section.deck-title-slide > .slide-content[style=#{title_scale.to_json}]", visible: :all)
+      expect(page.evaluate_script("localStorage.getItem('title-font')")).to eq('playfair')
+
       load_presentation
       expect(page).to have_css('body.theme-bright')
+      expect(page).to have_css('body[data-title-font="playfair"][data-text-font="lora"]')
 
       click_button('⚙️ Einstellungen')
       expect(page).to have_select('theme-select', selected: 'Hell')
+      expect(page).to have_checked_field('title-font', with: 'playfair')
+      expect(page).to have_checked_field('text-font', with: 'lora')
+      # The white pictures, darkened for the bright dialog
+      expect(page.evaluate_script("getComputedStyle(document.querySelector('.settings-fonts img')).filter")).to eq('invert(0.8)')
       select('Dunkel', from: 'theme-select')
       expect(page).to have_no_css('body.theme-bright')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('dark')
+      choose('title-font', option: '')
+      expect(page).to have_no_css('body[data-title-font]')
+      expect(font_of('section.deck-title-slide h1')).to start_with('Montserrat')
+
+      # A font the book no longer offers falls back to the theme's, and its
+      # radio button is the one checked, not none
+      page.execute_script("localStorage.setItem('text-font', 'gone'); localStorage.setItem('title-font', 'comic')")
+      load_presentation
+      expect(page).to have_no_css('body[data-text-font]')
+      click_button('⚙️ Einstellungen')
+      expect(page).to have_checked_field('text-font', with: '')
+      # The fonts are a list that scrolls, each large enough to read, and it
+      # opens scrolled to the one checked, here the last
+      shown, scrolled = page.evaluate_script(<<~JS)
+        (function () {
+          var list = document.querySelector('.settings-font-list');
+          var box = list.getBoundingClientRect(), row = list.querySelector('input:checked').parentNode.getBoundingClientRect();
+          return [row.top >= box.top && row.bottom <= box.bottom, list.scrollHeight > list.clientHeight && list.scrollTop > 0];
+        })()
+      JS
+      expect(shown).to be true
+      expect(scrolled).to be true
 
       # With site data blocked, touching storage throws: the theme switches all the same
       using_session(:no_storage) do
@@ -862,6 +938,8 @@ RSpec.describe 'index.html', :js, type: :feature do
         click_button('⚙️ Einstellungen')
         select('Hell', from: 'theme-select')
         expect(page).to have_css('body.theme-bright')
+        choose('title-font', option: 'oswald')
+        expect(page).to have_css('body[data-title-font="oswald"]')
       end
     end
   end
@@ -1027,6 +1105,16 @@ RSpec.describe 'index.html', :js, type: :feature do
       wait_for_js("document.getElementById('TOC').scrollTop > 0")
       expect(page.evaluate_script("document.getElementById('TOC').scrollTop")).to be > 0
       expect(page.evaluate_script('scrollY')).to eq(300)
+
+      # So do the settings' font lists, though their dialog has room to spare
+      click_button('⚙️ Einstellungen')
+      expect(page.evaluate_script("document.querySelector('.settings-font-list').scrollTop")).to eq(0)
+      finger_swipe('.settings-font-list', -150)
+      wait_for_js("document.querySelector('.settings-font-list').scrollTop > 0")
+      expect(page.evaluate_script("document.querySelector('.settings-font-list').scrollTop")).to be > 0
+      expect(page.evaluate_script('scrollY')).to eq(300)
+      press(:escape)
+      expect(page).not_to have_visible('#settings-modal')
 
       # A second press gives the room back
       click_button('↕️ Vollbild')

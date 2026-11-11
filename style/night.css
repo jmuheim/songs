@@ -668,8 +668,9 @@ dialog.overlay-modal::backdrop {
 }
 
 /* On a phone, 2rem and its 2em sides left a button a third of the width,
-   and the live-scroll dialog ran off the bottom */
-@media (width < 500px) {
+   and the live-scroll dialog ran off the bottom. Held sideways, a phone is
+   wide enough but as low: the settings dialog was twice its height */
+@media (width < 500px), (height < 500px) {
   .modal-box {
     font-size: 1.35rem;
     padding: 1.2em 1em;
@@ -744,6 +745,137 @@ dialog.overlay-modal::backdrop {
 
 .settings-checkbox input {
   margin-right: 0.5em;
+}
+
+/* The fonts, one radio button each, labelled with a picture of the font's
+   name set in it (style/fonts/samples/, `rake fonts:samples`): pictures, so
+   opening the dialog downloads no font. White on transparent, darkened for
+   the bright theme below. A font to a row, large enough to read, in a list
+   that scrolls: shrunk to fit the dialog all at once, they were too small to
+   tell apart. The two lists side by side where they both fit. The dialog is
+   wider for them, and on a large screen set smaller than the others: in
+   their 2rem, it ran past the bottom of a laptop's. */
+#settings-modal .modal-box {
+  width: min(48rem, 94vw);
+}
+
+@media (width >= 500px) and (height >= 500px) {
+  #settings-modal .modal-box {
+    font-size: 1.5rem;
+  }
+}
+
+.settings-font-groups {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 0.8em;
+}
+
+/* The chords' checkbox and the close button share a row: one less */
+.settings-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+.settings-footer .settings-checkbox {
+  margin: 0;
+}
+
+.settings-fonts {
+  min-width: 0;
+  margin: 0 0 0.8em;
+  padding: 0;
+  border: none;
+  text-align: left;
+}
+
+.settings-fonts legend {
+  margin-bottom: 0.3em;
+  padding: 0;
+  font-size: 0.8em;
+}
+
+/* Positioned, so a row's offsetTop is its place in the list (the dialog
+   scrolls the checked one into view as it opens). As tall as the screen
+   leaves room for beside the rest of the dialog, and no taller than five
+   rows: svh, the height with a phone's browser bars shown. */
+.settings-font-list {
+  position: relative;
+  max-height: max(3.5em, min(10.5em, 100svh - 14em));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.15em;
+  border: 1px solid #555;
+  border-radius: 0.3em;
+}
+
+.modal-box .settings-fonts label {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0;
+  padding: 0.25em 0.5em;
+  font-size: 1em;
+  border-radius: 0.25em;
+  cursor: pointer;
+}
+
+.settings-fonts label:has(:checked) {
+  background: rgba(231, 173, 82, 0.2);
+}
+
+.settings-fonts label:has(:focus-visible) {
+  outline: 2px solid #e7ad52;
+  outline-offset: -2px;
+}
+
+.settings-fonts input {
+  flex: none;
+  margin: 0;
+}
+
+/* A long name is shrunk to fit its row, never cut off */
+.settings-fonts img {
+  min-width: 0;
+  max-width: 100%;
+  height: 1.5em;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* On a phone held upright, one list above the other, each half the room */
+@media (width < 500px) {
+  .settings-font-groups {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-font-list {
+    max-height: max(3.5em, min(10.5em, (100svh - 17em) / 2));
+  }
+}
+
+/* On a phone held sideways, three selects with their labels above them made
+   the settings dialog run off the bottom: there, each label goes beside its
+   select */
+@media (height < 500px) {
+  .settings-field {
+    display: grid;
+    grid-template-columns: 5em 1fr; /* one column for every label, so the selects line up */
+    align-items: center;
+    column-gap: 0.6em;
+    margin-bottom: 0.6em;
+  }
+
+  .settings-field label,
+  .settings-field select {
+    margin: 0;
+  }
+
+  .settings-font-list {
+    max-height: max(3.5em, 100svh - 13.3em);
+  }
 }
 
 .modal-box input.shake {
@@ -826,6 +958,27 @@ dialog.overlay-modal::backdrop {
   }
 }
 
+/* The fonts ⚙️ offers (body-controls.html sets the attributes), in place of
+   the theme's Montserrat for the titles and Open Sans for the text. Code
+   blocks and the chords keep --r-code-font. The theme's tight letter spacing
+   is Montserrat's: the others are set as designed. The theme asks for its
+   headings at weight normal and gets Montserrat's 700, the only one there
+   is; Comic Relief has a 400, so its headings ask for the 700. */
+body[data-title-font] { --r-heading-letter-spacing: normal; }
+body[data-title-font="playfair"] { --r-heading-font: 'Playfair Display', Georgia, serif; }
+body[data-title-font="oswald"]   { --r-heading-font: 'Oswald', 'Arial Narrow', sans-serif; }
+body[data-title-font="pacifico"] { --r-heading-font: 'Pacifico', cursive; }
+body[data-title-font="marker"]   { --r-heading-font: 'Permanent Marker', cursive; }
+body[data-title-font="comic"]    { --r-heading-font: 'Comic Relief', cursive; --r-heading-font-weight: 700; }
+body[data-title-font="dancing"]  { --r-heading-font: 'Dancing Script', cursive; }
+body[data-title-font="antic"]    { --r-heading-font: 'Antic Slab', serif; }
+body[data-text-font="atkinson"]  { --r-main-font: 'Atkinson Hyperlegible', sans-serif; }
+body[data-text-font="lora"]      { --r-main-font: 'Lora', Georgia, serif; }
+body[data-text-font="nunito"]    { --r-main-font: 'Nunito', sans-serif; }
+body[data-text-font="caveat"]    { --r-main-font: 'Caveat', cursive; }
+body[data-text-font="comic"]     { --r-main-font: 'Comic Relief', cursive; }
+body[data-text-font="antic"]     { --r-main-font: 'Antic Slab', serif; }
+
 /* Bright theme overrides */
 
 body.theme-bright .reveal section h1,
@@ -887,6 +1040,15 @@ body.theme-bright .modal-box button {
 
 body.theme-bright .modal-box button:hover {
   background: #ccc;
+}
+
+body.theme-bright .settings-font-list {
+  border-color: #bbb;
+}
+
+/* The samples are white: darkened to the dialog's #333 */
+body.theme-bright .settings-fonts img {
+  filter: invert(0.8);
 }
 
 body.theme-bright #fullscreen-runway {

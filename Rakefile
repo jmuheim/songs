@@ -51,3 +51,60 @@ namespace :golden do
     end
   end
 end
+
+namespace :fonts do
+  # The settings dialog shows each font it offers as a picture of its name set
+  # in it, so opening the dialog downloads a dozen small pictures instead of a
+  # dozen fonts. This renders those pictures from the radio buttons in
+  # body-controls.html (the img's src and alt) with the same @font-face rules
+  # and night.css variables the song book uses: white on transparent, which
+  # night.css darkens for the bright theme.
+  desc 'Render the font samples of the settings dialog (style/fonts/samples/)'
+  task :samples do
+    require 'ferrum'
+    require 'fileutils'
+    require 'nokogiri'
+    require_relative 'spec/support/file_server'
+
+    FileServer.start
+    browser = Ferrum::Browser.new(headless: true, browser_options: { 'no-sandbox': nil })
+    # Fonts load only from the page's own origin, not from a file:// page
+    browser.go_to(FileServer.url('/'))
+    controls = Nokogiri::HTML.fragment(File.read(File.join(__dir__, 'style', 'body-controls.html'), encoding: 'UTF-8'))
+    begin
+      controls.css('.settings-fonts input[type="radio"]').each do |radio|
+        img = radio.next_element
+        title = radio['name'] == 'title-font'
+        attribute = radio['value'].empty? ? '' : %( data-#{radio['name']}="#{radio['value']}")
+        tag = title ? 'h1' : 'p'
+        browser.content = <<~HTML
+          <!doctype html>
+          <html><head>
+            <link rel="stylesheet" href="/style/fonts/fonts.css">
+            <link rel="stylesheet" href="/style/revealjs/dist/theme/night.css">
+            <link rel="stylesheet" href="/style/night.css">
+            <style>
+              html, body { margin: 0; background: transparent !important; }
+              #sample { display: inline-block; margin: 0; padding: 0.1em 0.2em; font-size: 64px; line-height: 1.3; white-space: nowrap; color: #fff; text-shadow: none; }
+            </style>
+          </head><body#{attribute}><div class="reveal"><#{tag} id="sample">#{img['alt']}</#{tag}></div></body></html>
+        HTML
+        family = browser.evaluate("getComputedStyle(document.getElementById('sample')).fontFamily")[/\A"?([^",]+)/, 1]
+        loaded = browser.evaluate_async(<<~JS, 10)
+          var done = arguments[0];
+          document.fonts.ready.then(function () {
+            done(Array.from(document.fonts).some(function (f) { return f.family.replace(/"/g, '') === #{family.to_json} && f.status === 'loaded'; }));
+          });
+        JS
+        raise "#{img['alt']}: #{family} did not load" unless loaded
+
+        path = File.join(__dir__, img['src'].sub('{{assets}}', 'style/'))
+        FileUtils.mkdir_p(File.dirname(path))
+        browser.screenshot(path: path, selector: '#sample', background_color: Ferrum::RGBA.new(0, 0, 0, 0.0))
+        puts "  rendered #{path.delete_prefix("#{__dir__}/")} (#{family})"
+      end
+    ensure
+      browser.quit
+    end
+  end
+end
