@@ -70,7 +70,7 @@ Every song needs an `## Infos über das Lied` section at the top with its Sprach
 ...
 ```
 
-The tags and links show on the song's „Infos über das Lied" slide (together with, if present, a Spielhinweise section — see `CLAUDE.md`) and drive the Sprache/Genre filter dropdowns on the table of contents — pick a language and/or a genre to narrow the list (the two combine), „Zurücksetzen" to clear both. At least one Sprache and one Genre tag are **required**: the build aborts on a song missing either. Tags are free text, so pick a vocabulary and keep it consistent (e.g. `Deutsch`, `Englisch`, `Mundart`, `Pop`, `Rock`, `Mantra`).
+The tags and links show on the song's „Infos über das Lied" slide (together with, if present, a Spielhinweise section — see `CLAUDE.md`) and drive the Sprache/Genre filter dropdowns on the table of contents — pick a language and/or a genre to narrow the list (the two combine), „Zurücksetzen" to clear both. At least one Sprache and one Genre tag are **required**: the build aborts on a song missing either. Tags are free text, so pick a vocabulary and keep it consistent (e.g. `Deutsch`, `Englisch`, `Mundart` for the Sprache; `Pop`, `Rock`, `Schlager`, `Country`, `Traditionell`, `Mantra`, `Kids` for the Genre). A song in more than one genre names them on its one Genre line, comma-separated: `- Genre: Traditionell, Kids`.
 
 Nothing but blank lines may sit between the H1 and the first H2 — a capo note or any other aside goes into the `## Infos über das Lied` list instead (e.g. `- Capo: 3. Bund`); the build aborts otherwise.
 

@@ -60,4 +60,9 @@ RSpec.describe '#song_tags' do
     content = "# S\n\n## Infos über das Lied\n\n- Gastgeber: Josua,  Monika ,Daniel\n\n## Strophe 1\n"
     expect(song_tags(content)).to eq([%w[Gastgeber Josua], %w[Gastgeber Monika], %w[Gastgeber Daniel]])
   end
+
+  it 'splits a comma-separated Genre line into one pair per genre, trimming whitespace' do
+    content = "# S\n\n## Infos über das Lied\n\n- Sprache: Mundart\n- Genre: Traditionell,  Kids\n\n## Strophe 1\n"
+    expect(song_tags(content)).to eq([%w[Sprache Mundart], %w[Genre Traditionell], %w[Genre Kids]])
+  end
 end

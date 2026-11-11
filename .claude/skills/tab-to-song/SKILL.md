@@ -26,7 +26,7 @@ The filename is derived from that H1, not chosen independently: lowercase it, dr
 Put an `## Infos über das Lied` section **first** (before the song's own sections), holding the song's tags and its resource links together, one per list item — see `CLAUDE.md` for the full format. `validate_song!` **requires** at least one Sprache and one Genre tag; the build aborts without them, so this section isn't optional.
 
 - **Sprache** from the lyrics: `Deutsch`, `Englisch`, `Mundart` (Swiss German), …
-- **Genre** from the artist/style: `Pop`, `Rock`, `Mantra`, …
+- **Genre** from the artist/style, in the book's vocabulary: `Pop`, `Rock`, `Schlager` (German-language Schlager), `Country`, `Traditionell` (a folk song with nobody specific to credit), `Mantra` (chants and circle songs, in any language), `Kids` (children's songs). A song in more than one genre names them on its one Genre line, comma-separated: `- Genre: Traditionell, Kids`.
 - Resource links, same as always — only ever link a URL you actually found (on the tab page, via a real web search you ran, or one the user gave you), never a fabricated-looking one:
   - `[Lied auf YouTube](<official or lyric video>)` — if you can't confidently find one, omit this line rather than guess
   - `[Tab-Quelle](<the URL you were given>)` — required, that's the URL you were given

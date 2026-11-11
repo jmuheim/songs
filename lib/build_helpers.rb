@@ -59,13 +59,13 @@ module BuildHelpers
   # in CLAUDE.md) rather than assembled from separate sections at build time.
   ABOUT_HEADING = 'Infos über das Lied'
 
-  # A song's tags live as "- Sprache: X" / "- Genre: Y" / "- Gastgeber: X, Y"
-  # list items in its ABOUT_HEADING section (one tag per list item; everything
+  # A song's tags live as "- Sprache: X" / "- Genre: Y, Z" / "- Gastgeber: X, Y"
+  # list items in its ABOUT_HEADING section (one category per list item; everything
   # else there — a Capo note, resource links — is not a tag and is skipped).
   # Returns [category, value] pairs in order, [] when there is no such
-  # section. Sprache/Genre carry one value per list item; Gastgeber may name
-  # several hosts on one line, comma-separated, and is split here into one
-  # pair per name so every downstream consumer (grouping by category, the TOC
+  # section. Sprache carries one value per list item; Genre and Gastgeber may
+  # name several on one line, comma-separated, and are split here into one
+  # pair per value so every downstream consumer (grouping by category, the TOC
   # filter) sees the same flat shape regardless of category. The category is
   # exactly what was written, not inferred from a fixed vocabulary — so a
   # language, genre or host value this book hasn't seen before is still
@@ -82,8 +82,8 @@ module BuildHelpers
       next unless m
 
       category = m[1].downcase == 'sprache' ? 'Sprache' : (m[1].downcase == 'genre' ? 'Genre' : 'Gastgeber')
-      if category == 'Gastgeber'
-        m[2].split(',').each { |name| tags << [category, name.strip] }
+      if category == 'Genre' || category == 'Gastgeber'
+        m[2].split(',').each { |value| tags << [category, value.strip] }
       else
         tags << [category, m[2]]
       end

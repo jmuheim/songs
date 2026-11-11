@@ -1,0 +1,7 @@
+## 2026-11-11 — A song's genres share one comma-separated line
+
+**Context:** The book's genres were nearly all `Pop`, `Rock` or `Traditionell`, so the Genre filter in the table of contents could hardly narrow anything: Udo Jürgens and Johnny Cash were both „Pop", Ajeet's chants too, and no song was tagged `Mantra` although the docs named it as an example. Adding three songs (Pippi Langstrumpf, the knallrote Gummiboot, „Es wott es Fraueli z'Märit gah") brought in `Kids` and `Schlager`, then `Country`, and some songs belong to two genres at once: a Swiss folk song that is also a children's song, a traditional chant.
+
+**Decision:** A song names all its genres on its one `- Genre:` line, comma-separated (`- Genre: Traditionell, Kids`), the way `- Gastgeber:` already names several hosts; `song_tags` splits it into one pair per genre. The vocabulary is `Pop`, `Rock`, `Schlager`, `Country`, `Traditionell`, `Mantra` (chants and circle songs, in any language) and `Kids`. Where a new genre corrects a catch-all `Pop`/`Rock` (Johnny Cash's songs → `Country`, Ajeet → `Mantra`), it replaces it; where it adds to `Traditionell`, it joins it, so the song is found under both.
+
+**Reasoning:** One `- Genre:` line per genre also worked, but the user asked for commas instead: one line per category keeps the „Infos über das Lied" list short, and Genre and Gastgeber now read the same way. The table of contents' filter needed no change: it already split `data-genre` on commas. Sprache stays one value per line; no song has needed two.
