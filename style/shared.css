@@ -292,6 +292,12 @@ section.level1 h1 {
   background: transparent;
 }
 
+/* A guest's, in a session: the host filters for everyone (toc-filter.js) */
+#toc-filter select:disabled,
+#toc-filter button:disabled {
+  cursor: default;
+}
+
 #TOC li.toc-hidden,
 #toc-filter-empty.toc-hidden {
   display: none;

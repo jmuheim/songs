@@ -109,6 +109,14 @@ RSpec.describe 'index.html', :js, type: :feature do
     page.evaluate_script("[Reveal.getIndices().h, Reveal.getIndices().v]")
   end
 
+  # The titles in the table of contents that its filter leaves standing
+  def toc_entries
+    page.evaluate_script(<<~'JS')
+      Array.prototype.map.call(document.querySelectorAll('#TOC nav li:not(.toc-hidden) a'),
+        function(a) { return a.textContent.replace(/\s+/g, ' ').trim(); })
+    JS
+  end
+
   # Simulate a touch swipe by (dx, dy) px across the current slide. Below
   # Capybara on purpose: a swipe has no Capybara action, and Cuprite's mouse
   # emits pointerType 'mouse', which both Reveal and the song-book's swipe guard
@@ -1722,12 +1730,6 @@ RSpec.describe 'index.html', :js, type: :feature do
       # The fixture's Gastgeber: Josua = {74-75, Across}, Monika = {Across,
       # I Have a Dream}, Daniel = {Imagine}; Riptide names none.
       it 'the host picks whose songs the evening has, at login, and every list in the session shows only those' do
-        toc_entries = lambda do
-          page.evaluate_script(<<~'JS')
-            Array.prototype.map.call(document.querySelectorAll('#TOC nav li:not(.toc-hidden) a'),
-              function(a) { return a.textContent.replace(/\s+/g, ' ').trim(); })
-          JS
-        end
         button = '#toc-filter-gastgeber-open'
 
         secret = nil
@@ -1739,7 +1741,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           click_link 'Inhaltsverzeichnis'
           expect(page).to have_css('#TOC.present')
           wait_for_js("document.querySelectorAll('#TOC nav li:not(.toc-hidden)').length === 1")
-          expect(toc_entries.call).to eq(['Imagine (John Lennon)'])
+          expect(toc_entries).to eq(['Imagine (John Lennon)'])
           expect(page).to have_css(button, text: 'Lieder von: Daniel')
         end
 
@@ -1749,18 +1751,14 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).to have_css('#TOC.present')
           # The host's choice arrives with its heartbeat, and is not the guest's to change
           expect(page).to have_css(button, text: 'Lieder von: Daniel')
-          expect(toc_entries.call).to eq(['Imagine (John Lennon)'])
+          expect(toc_entries).to eq(['Imagine (John Lennon)'])
           click_button('Lieder von')
           within('#gastgeber-modal') do
-            expect(page).to have_css('#gastgeber-info', text: 'Der Gastgeber hat gewählt')
+            expect(page).to have_css('#gastgeber-info', text: 'Der Gastgeber wählt für alle')
             expect(page).to have_checked_field('Daniel', disabled: true)
             expect(page).to have_unchecked_field('Monika', disabled: true)
             click_button('OK')
           end
-          # Sprache and Genre stay the guest's own, on top of it
-          select 'Deutsch', from: 'Sprache'
-          expect(page).to have_css('#toc-filter-empty', text: 'Keine Ergebnisse')
-          select 'Alle', from: 'Sprache'
         end
 
         using_session(:presenter) do
@@ -1772,15 +1770,9 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
         using_session(:guest) do
           expect(page).to have_css(button, text: 'Lieder von: Daniel, Monika')
-          expect(toc_entries.call).to contain_exactly(
+          expect(toc_entries).to contain_exactly(
             'Across the universe (Beatles)', 'I Have a Dream (ABBA)', 'Imagine (John Lennon)'
           )
-          # „Zurücksetzen" clears the guest's own filters, not whose songs the evening has
-          select 'Englisch', from: 'Sprache'
-          click_button 'Zurücksetzen'
-          expect(page).to have_select('Sprache', selected: 'Alle')
-          expect(page).to have_css(button, text: 'Lieder von: Daniel, Monika')
-          expect(toc_entries.call.size).to eq(3)
         end
 
         # The host keeps it across a reload: it never hears its own heartbeat,
@@ -1805,7 +1797,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
         using_session(:guest) do
           expect(page).to have_css(button, text: 'Lieder von: Alle') # all of them: no filter, and Riptide, who has no Gastgeber, is back
-          expect(toc_entries.call.size).to eq(5)
+          expect(toc_entries.size).to eq(5)
 
           # Out of the session, the checkboxes are a filter of the guest's own again, all checked
           open_live_scroll_dialog
@@ -1818,7 +1810,90 @@ RSpec.describe 'index.html', :js, type: :feature do
             expect(page).to have_no_css('input[disabled]')
             click_button('OK')
           end
-          expect(toc_entries.call.size).to eq(5)
+          expect(toc_entries.size).to eq(5)
+        end
+      end
+
+      # The fixture's tags: 74-75 is Deutsch/Rock (Josua's), Across the
+      # universe and I Have a Dream Englisch/Pop (Josua's and Monika's),
+      # Imagine Englisch/Pop (Daniel's), Riptide Englisch/Mantra (nobody's).
+      it 'the host filters Sprache and Genre for the whole session too, and the guests cannot filter on their own' do
+        button = '#toc-filter-gastgeber-open'
+
+        secret = nil
+        using_session(:presenter) do
+          load_presentation
+          log_in_as_host(only: ['Josua', 'Monika'])
+          secret = session_secret
+          click_link 'Inhaltsverzeichnis'
+          expect(page).to have_css('#TOC.present')
+          select 'Englisch', from: 'Sprache'
+          expect(toc_entries).to eq(['Across the universe (Beatles)', 'I Have a Dream (ABBA)'])
+        end
+
+        using_session(:guest) do
+          join_session(secret)
+          click_link 'Inhaltsverzeichnis'
+          expect(page).to have_css('#TOC.present')
+          # The host's filter arrives with its heartbeat, and is not the guest's to change
+          expect(page).to have_select('Sprache', selected: 'Englisch', disabled: true)
+          expect(page).to have_select('Genre', selected: 'Alle', disabled: true)
+          expect(page).to have_button('Zurücksetzen', disabled: true)
+          expect(toc_entries).to eq(['Across the universe (Beatles)', 'I Have a Dream (ABBA)'])
+        end
+
+        # The host's changes reach every list; a reload keeps them, from the
+        # host's storage alone (it never hears its own heartbeat)
+        using_session(:presenter) do
+          select 'Deutsch', from: 'Sprache'
+          select 'Rock', from: 'Genre'
+          page.refresh
+          wait_for_reveal
+          click_link 'Inhaltsverzeichnis'
+          expect(page).to have_css('#TOC.present')
+          expect(page).to have_select('Sprache', selected: 'Deutsch', disabled: false)
+          expect(page).to have_select('Genre', selected: 'Rock', disabled: false)
+        end
+        using_session(:guest) do
+          expect(page).to have_select('Sprache', selected: 'Deutsch', disabled: true)
+          expect(page).to have_select('Genre', selected: 'Rock', disabled: true)
+          expect(toc_entries).to eq(['74-75 (The Connells)'])
+        end
+
+        # The host's „Zurücksetzen" clears Sprache and Genre for everyone, not whose songs the evening has
+        using_session(:presenter) do
+          click_button 'Zurücksetzen'
+          expect(page).to have_css(button, text: 'Lieder von: Josua, Monika')
+        end
+        using_session(:guest) do
+          expect(page).to have_select('Sprache', selected: 'Alle', disabled: true)
+          expect(page).to have_select('Genre', selected: 'Alle', disabled: true)
+          expect(page).to have_css(button, text: 'Lieder von: Josua, Monika')
+          expect(toc_entries.size).to eq(3)
+        end
+
+        # Taken over, the filter goes along with the role
+        using_session(:presenter) { select 'Pop', from: 'Genre' }
+        using_session(:guest) do
+          expect(page).to have_select('Genre', selected: 'Pop', disabled: true)
+          log_in_as_host(label: 'Gastgeber übernehmen')
+          expect(page).to have_select('Genre', selected: 'Pop', disabled: false)
+          expect(page).to have_button('Zurücksetzen', disabled: false)
+          select 'Rock', from: 'Genre'
+          expect(toc_entries).to eq(['74-75 (The Connells)'])
+        end
+        using_session(:presenter) do
+          expect(page).to have_css('#multiplex-toast.visible', text: 'Jemand anderes ist jetzt Gastgeber')
+          expect(page).to have_select('Genre', selected: 'Rock', disabled: true)
+          expect(page).to have_button('Zurücksetzen', disabled: true)
+
+          # Out of the session, the filter is one's own again, and nothing is filtered
+          open_live_scroll_dialog
+          within('#multiplex-info-modal') { click_button('🚪 Runde verlassen') }
+          expect(page).to have_select('Sprache', selected: 'Alle', disabled: false)
+          expect(page).to have_select('Genre', selected: 'Alle', disabled: false)
+          expect(page).to have_button('Zurücksetzen', disabled: false)
+          expect(toc_entries.size).to eq(5)
         end
       end
 

@@ -14,9 +14,8 @@
 // untagged entry hides while any filter is active. „Zurücksetzen" clears every
 // control. The selects, checkboxes and the button are real form controls, so
 // the keyboardCondition in body-controls.html already keeps their keys from
-// reaching Reveal. The selection is local to this client and not synced over
-// multiplex — except, in a session, the Gastgeber checkboxes (setPresent
-// below), which are the host's to set for everyone.
+// reaching Reveal. Outside a session the selection is this client's own; in
+// one it is the host's, for everyone (setSession below).
 (function () {
   function init() {
     var bar = document.getElementById('toc-filter');
@@ -33,7 +32,7 @@
     var dialog    = document.getElementById('gastgeber-modal');
     var info      = document.getElementById('gastgeber-info');
     var inSession = false;
-    var onPresentChange = null;
+    var onSessionChange = null;
 
     function matches(li, select, attr) {
       if (!select || !select.value) return true; // that category has no filter active
@@ -66,25 +65,29 @@
       if (empty) empty.classList.toggle('toc-hidden', anyVisible);
     }
 
+    // A change of one's own; in a session only the host can make one, and
+    // every list in the session follows it
+    function changed() {
+      render();
+      if (inSession && onSessionChange) {
+        onSessionChange({ present: checkedHosts(), sprache: sprache ? sprache.value : '', genre: genre ? genre.value : '' });
+      }
+    }
+
     [sprache, genre].forEach(function (select) {
-      if (select) select.addEventListener('change', render);
+      if (select) select.addEventListener('change', changed);
     });
     gastgeber.forEach(function (checkbox) {
-      checkbox.addEventListener('change', function () {
-        render();
-        if (inSession && onPresentChange) {
-          onPresentChange(checkedHosts());
-        }
-      });
+      checkbox.addEventListener('change', changed);
     });
 
     if (reset) {
       reset.addEventListener('click', function () {
         if (sprache) sprache.value = '';
         if (genre) genre.value = '';
-        // In a session they are whose songs the evening has, not this client's filter
+        // In a session the Gastgeber are whose songs the evening has, not a filter
         if (!inSession) gastgeber.forEach(function (checkbox) { checkbox.checked = true; });
-        render();
+        changed();
       });
     }
 
@@ -93,8 +96,8 @@
     // document, and closes on a click on its backdrop.
     var INFO = {
       own: 'Zeigt die Lieder der angehakten Gastgeber. Wer abgehakt ist, fehlt in der Liste.',
-      host: 'Wer ist heute Abend dabei? Alle in der Runde sehen nur die Lieder der angehakten Gastgeber.',
-      guest: 'Der Gastgeber hat gewählt, wessen Lieder heute Abend gespielt werden können.'
+      host: 'Wer ist heute Abend dabei? Alle in der Runde sehen nur die Lieder der angehakten Gastgeber. Auch Sprache und Genre wählst du für alle.',
+      guest: 'Der Gastgeber wählt für alle in der Runde, wessen Lieder heute Abend gespielt werden können, und auch Sprache und Genre.'
     };
     if (dialog) {
       if (openBtn) openBtn.addEventListener('click', function () { dialog.showModal(); });
@@ -104,19 +107,23 @@
       dialog.addEventListener('click', function (e) { if (e.target === dialog) dialog.close(); });
     }
 
-    // In a session the Gastgeber checkboxes stop being a filter of one's own:
-    // they say whose songs this evening has, so that every list in the
-    // session shows only the songs that can be played. The host sets them for
-    // everyone — body-controls.html carries them in its heartbeat — and only
-    // the host can change them (`editable`); the guests see them ticked, but
-    // disabled. `present` null: no session, and the checkboxes are one's own
-    // again, all checked.
+    // In a session the filter stops being one's own: the Gastgeber checkboxes
+    // say whose songs this evening has (`present`), Sprache and Genre which of
+    // them the list shows, and every list in the session shows the same. The
+    // host sets them for everyone — body-controls.html carries them in its
+    // heartbeat — and only the host can change them (`editable`); the guests
+    // see them as set, but disabled, „Zurücksetzen" too. `session` null: no
+    // session, and the controls are one's own again, nothing filtered.
     window.tocFilter = {
-      setPresent: function (present, editable) {
-        inSession = !!present;
+      setSession: function (session, editable) {
+        inSession = !!session;
+        var locked = inSession && !editable;
+        if (sprache) { sprache.value = inSession ? session.sprache : ''; sprache.disabled = locked; }
+        if (genre) { genre.value = inSession ? session.genre : ''; genre.disabled = locked; }
+        if (reset) reset.disabled = locked;
         gastgeber.forEach(function (checkbox) {
-          checkbox.checked = !inSession || present.indexOf(checkbox.value) !== -1;
-          checkbox.disabled = inSession && !editable;
+          checkbox.checked = !inSession || session.present.indexOf(checkbox.value) !== -1;
+          checkbox.disabled = locked;
         });
         if (info) info.textContent = !inSession ? INFO.own : editable ? INFO.host : INFO.guest;
         render();
@@ -131,8 +138,8 @@
         dialog.showModal();
         return true;
       },
-      // The host's own changes, to pass on to the session
-      onPresentChange: function (fn) { onPresentChange = fn; }
+      // The host's own changes, { present, sprache, genre }, to pass on to the session
+      onSessionChange: function (fn) { onSessionChange = fn; }
     };
 
     render();

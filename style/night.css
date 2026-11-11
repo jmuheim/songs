@@ -229,6 +229,11 @@ section#TOC::-webkit-scrollbar-thumb {
   opacity: 1;
 }
 
+#toc-filter select:disabled,
+#toc-filter button:disabled {
+  opacity: 0.5;
+}
+
 #toc-filter select:focus-visible,
 #toc-filter button:focus-visible {
   outline: 3px solid var(--r-main-color);
