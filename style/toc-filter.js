@@ -15,7 +15,8 @@
 // control. The selects, checkboxes and the button are real form controls, so
 // the keyboardCondition in body-controls.html already keeps their keys from
 // reaching Reveal. Outside a session the selection is this client's own; in
-// one it is the host's, for everyone (setSession below).
+// one it is the host's, for everyone, but for a Sprache or Genre the host
+// left at „Alle" (setSession below).
 (function () {
   function init() {
     var bar = document.getElementById('toc-filter');
@@ -32,6 +33,7 @@
     var dialog    = document.getElementById('gastgeber-modal');
     var info      = document.getElementById('gastgeber-info');
     var inSession = false;
+    var hosting = false; // in a session, as its host
     var onSessionChange = null;
 
     function matches(li, select, attr) {
@@ -65,11 +67,10 @@
       if (empty) empty.classList.toggle('toc-hidden', anyVisible);
     }
 
-    // A change of one's own; in a session only the host can make one, and
-    // every list in the session follows it
+    // A change of one's own. In a session, the host's is every list's
     function changed() {
       render();
-      if (inSession && onSessionChange) {
+      if (hosting && onSessionChange) {
         onSessionChange({ present: checkedHosts(), sprache: sprache ? sprache.value : '', genre: genre ? genre.value : '' });
       }
     }
@@ -83,8 +84,9 @@
 
     if (reset) {
       reset.addEventListener('click', function () {
-        if (sprache) sprache.value = '';
-        if (genre) genre.value = '';
+        // A disabled select is the host's, not this guest's to clear
+        if (sprache && !sprache.disabled) sprache.value = '';
+        if (genre && !genre.disabled) genre.value = '';
         // In a session the Gastgeber are whose songs the evening has, not a filter
         if (!inSession) gastgeber.forEach(function (checkbox) { checkbox.checked = true; });
         changed();
@@ -96,8 +98,8 @@
     // document, and closes on a click on its backdrop.
     var INFO = {
       own: 'Zeigt die Lieder der angehakten Gastgeber. Wer abgehakt ist, fehlt in der Liste.',
-      host: 'Wer ist heute Abend dabei? Alle in der Runde sehen nur die Lieder der angehakten Gastgeber. Auch Sprache und Genre wählst du für alle.',
-      guest: 'Der Gastgeber wählt für alle in der Runde, wessen Lieder heute Abend gespielt werden können, und auch Sprache und Genre.'
+      host: 'Wer ist heute Abend dabei? Alle in der Runde sehen nur die Lieder der angehakten Gastgeber. Wählst du eine Sprache oder ein Genre, gilt das auch für alle; bei „Alle" filtern die Gäste selbst.',
+      guest: 'Der Gastgeber wählt für alle in der Runde, wessen Lieder heute Abend gespielt werden können. Wählt der Gastgeber eine Sprache oder ein Genre, gilt das auch für alle.'
     };
     if (dialog) {
       if (openBtn) openBtn.addEventListener('click', function () { dialog.showModal(); });
@@ -108,19 +110,29 @@
     }
 
     // In a session the filter stops being one's own: the Gastgeber checkboxes
-    // say whose songs this evening has (`present`), Sprache and Genre which of
-    // them the list shows, and every list in the session shows the same. The
-    // host sets them for everyone — body-controls.html carries them in its
-    // heartbeat — and only the host can change them (`editable`); the guests
-    // see them as set, but disabled, „Zurücksetzen" too. `session` null: no
+    // say whose songs this evening has (`present`), and a Sprache or Genre the
+    // host picks holds for every list in the session too. The host sets them
+    // for everyone — body-controls.html carries them in its heartbeat — and
+    // only the host can change them (`editable`); the guests see them as set,
+    // but disabled. A Sprache or Genre the host leaves at „Alle" is each
+    // guest's own: kept as the guest set it, from „Alle" again once the host
+    // lets go of one, and „Zurücksetzen" clears it. `session` null: no
     // session, and the controls are one's own again, nothing filtered.
     window.tocFilter = {
       setSession: function (session, editable) {
         inSession = !!session;
+        hosting = inSession && editable;
         var locked = inSession && !editable;
-        if (sprache) { sprache.value = inSession ? session.sprache : ''; sprache.disabled = locked; }
-        if (genre) { genre.value = inSession ? session.genre : ''; genre.disabled = locked; }
-        if (reset) reset.disabled = locked;
+        [[sprache, 'sprache'], [genre, 'genre']].forEach(function (pair) {
+          var select = pair[0];
+          var value = inSession ? session[pair[1]] : '';
+          if (!select) return;
+          if (!locked || value) select.value = value;
+          else if (select.disabled) select.value = ''; // the host let go of it
+          select.disabled = locked && !!value;
+        });
+        var own = [sprache, genre].some(function (select) { return select && !select.disabled; });
+        if (reset) reset.disabled = locked && !own;
         gastgeber.forEach(function (checkbox) {
           checkbox.checked = !inSession || session.present.indexOf(checkbox.value) !== -1;
           checkbox.disabled = locked;
