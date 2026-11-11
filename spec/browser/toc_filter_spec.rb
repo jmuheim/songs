@@ -209,7 +209,7 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
     end
   end
 
-  it 'keeps the TOC at a constant ~90% width and truncates an overflowing title with an ellipsis' do
+  it 'keeps the TOC at a constant ~90% width and fades out an overflowing title at the end of its row' do
     ol_width, nav_width = page.evaluate_script(<<~JS)
       [
         document.querySelector('#TOC nav ol').getBoundingClientRect().width,
@@ -218,13 +218,21 @@ RSpec.describe 'TOC tag filter', :js, type: :feature do
     JS
     expect(ol_width.to_f / nav_width).to be_within(0.01).of(0.9)
 
-    link_style = page.evaluate_script(<<~JS)
+    # A title wider than its row is cut, not wrapped, and fades out under an
+    # overlay at the row's end in the list's own background instead of ending
+    # in "…"
+    link_style, fade, list_background = page.evaluate_script(<<~JS)
       (function() {
-        var a = document.querySelector('#TOC nav ol li a');
-        var cs = getComputedStyle(a);
-        return [cs.whiteSpace, cs.overflow, cs.textOverflow];
+        var li = document.querySelector('#TOC nav ol li');
+        var cs = getComputedStyle(li.querySelector('a'));
+        var after = getComputedStyle(li, '::after');
+        return [[cs.whiteSpace, cs.overflow, cs.textOverflow],
+                [after.display, after.position, after.right, after.backgroundImage],
+                getComputedStyle(document.body).backgroundColor];
       })()
     JS
-    expect(link_style).to eq(%w[nowrap hidden ellipsis])
+    expect(link_style).to eq(%w[nowrap hidden clip])
+    expect(fade[0..2]).to eq(%w[block absolute 0px])
+    expect(fade[3]).to start_with('linear-gradient').and include(list_background)
   end
 end

@@ -584,6 +584,11 @@ window.addEventListener('load', function() {
   var everConnected = false;
   var connectionLostShown = false; // a "Verbindung verloren" toast is owed a "Wieder verbunden" once it reconnects
   var scrollerSilent = false;      // host only: the device it handed the song to has gone quiet
+  // The ❤️ on each song (style/wishes.js): which songs this device wishes in
+  // this session, and every device's wishes as last heard, from → { wishes, at }
+  var WISH_SYNC_MS = 8000;
+  var myWishes = [];
+  var wishSets = {};
 
   function amScroller() { return !!live && live.scrollerId === senderId; }
 
@@ -613,6 +618,7 @@ window.addEventListener('load', function() {
     }
     everConnected = socket.connected;
     socket.on(socketId, onMessage);
+    scheduleWishRound();
   }
 
   function sameState(a, b) {
@@ -782,8 +788,9 @@ window.addEventListener('load', function() {
   });
 
   // ---- Broadcasting (everything rides on the one relayed event) ----
-  // Four types: `host` (the host's heartbeat), `state` (the scroller's
-  // position), `volunteer` (a guest's „Ja") and `end` (the session is over).
+  // Five types: `host` (the host's heartbeat), `state` (the scroller's
+  // position), `volunteer` (a guest's „Ja"), `wish` (a device's wishes, see
+  // below) and `end` (the session is over).
   function message(payload) {
     payload.secret = secret;
     payload.socketId = socketId;
@@ -835,6 +842,7 @@ window.addEventListener('load', function() {
     if (data.type === 'host') onHostMessage(data);
     else if (data.type === 'state') onStateMessage(data);
     else if (data.type === 'volunteer') onVolunteerMessage(data);
+    else if (data.type === 'wish') onWishMessage(data);
     else if (data.type === 'end') onEndMessage(data);
   }
 
@@ -1083,7 +1091,8 @@ window.addEventListener('load', function() {
       if (secret) {
         localStorage.setItem('multiplex-session', JSON.stringify({
           secret: secret, seenAt: seenAt, heardClaim: heardClaim,
-          hostClaim: isHost ? hostClaim : 0, present: present, live: live, scrolling: amScroller()
+          hostClaim: isHost ? hostClaim : 0, present: present, live: live, scrolling: amScroller(),
+          wishes: myWishes
         }));
       } else {
         localStorage.removeItem('multiplex-session');
@@ -1104,6 +1113,73 @@ window.addEventListener('load', function() {
       persistSession();
       broadcastHost();
     });
+  }
+
+  // ---- Wishes (the ❤️ on each song, style/wishes.js) ----
+  // A session's guests say which songs they would like to sing, and everyone
+  // sees how many devices wish each one. Each device sends its whole set of
+  // wishes — never a +1, which a lost packet would falsify — on every change,
+  // on connect, and again every round (WISH_SYNC_MS; cfg.wishSync lets the
+  // specs shorten it) while it has any. Every device tallies the sets it
+  // hears, its own included: no host is asked, so a takeover or a host's
+  // reload loses nothing, and a latecomer is counted, and counts everyone,
+  // within one round. A device unheard for three rounds has left, and its
+  // wishes with it. Only a session has a room to count: the hearts show in
+  // one, and the wishes go with the session when it is left (leaveSession)
+  // — the next evening starts from none. See
+  // decisions/2026-11-11-guests-wish-for-songs-with-a-heart-counted-per-session.md.
+  function wishSyncMs() { return cfg.wishSync || WISH_SYNC_MS; }
+
+  function broadcastWishes() {
+    emit({ type: 'wish', wishes: myWishes });
+  }
+
+  function onWishMessage(data) {
+    wishSets[data.from] = { wishes: Array.isArray(data.wishes) ? data.wishes : [], at: Date.now() };
+    renderWishes();
+  }
+
+  function renderWishes() {
+    if (!window.songWishes) return;
+    var counts = {}, now = Date.now();
+    function count(slug) { counts[slug] = (counts[slug] || 0) + 1; }
+    Object.keys(wishSets).forEach(function(from) {
+      if (now - wishSets[from].at > 3 * wishSyncMs()) { delete wishSets[from]; return; }
+      wishSets[from].wishes.forEach(count);
+    });
+    myWishes.forEach(count);
+    songWishes.setMine(myWishes);
+    songWishes.setCounts(counts);
+    songWishes.setActive(!!secret);
+  }
+
+  if (window.songWishes) {
+    songWishes.onToggle(function(slug) {
+      if (!secret) return;
+      var i = myWishes.indexOf(slug);
+      if (i === -1) myWishes.push(slug); else myWishes.splice(i, 1);
+      persistSession();
+      broadcastWishes();
+      renderWishes();
+    });
+  }
+
+  // The round, for as long as this device is in a session (join starts it,
+  // leaveSession ends it): say one's own wishes again, and let lapsed ones go
+  var wishRound = null;
+  function scheduleWishRound() {
+    clearTimeout(wishRound);
+    wishRound = setTimeout(function() {
+      if (myWishes.length) broadcastWishes();
+      renderWishes();
+      scheduleWishRound();
+    }, wishSyncMs());
+  }
+
+  function forgetWishes() {
+    clearTimeout(wishRound);
+    myWishes = [];
+    wishSets = {};
   }
 
   // Anything heard from the session, or said in it, keeps it from expiring
@@ -1131,6 +1207,7 @@ window.addEventListener('load', function() {
     touch();
     broadcastHost();
     applyPresent(); // who is present: the host's to set now (taken over: as it was)
+    renderWishes(); // a new session: the hearts show from now on
     updateControls();
     updateStatus();
     restartHeartbeat();
@@ -1207,8 +1284,10 @@ window.addEventListener('load', function() {
     heardClaim = 0;
     seenAt = 0;
     present = allHosts();
+    forgetWishes(); // they were this evening's
     persistSession();
     applyPresent();
+    renderWishes();
     // Not right away: the host's last words are still being repeated.
     clearTimeout(pendingDisconnect);
     pendingDisconnect = setTimeout(function() { if (!secret) socket.disconnect(); }, 1200);
@@ -1325,6 +1404,7 @@ window.addEventListener('load', function() {
     everConnected = true;
     broadcastHost();  // no-op unless host
     broadcastState(); // no-op unless scroller
+    if (myWishes.length) broadcastWishes(); // back from a dead spot: the room may have let them lapse
     if (connectionLostShown) {
       connectionLostShown = false;
       if (live) showToast(['Wieder verbunden']);
@@ -1361,6 +1441,7 @@ window.addEventListener('load', function() {
     heardClaim = stored.heardClaim || 0;
     present = stored.present || allHosts();
     live = stored.live || null;
+    myWishes = stored.wishes || [];
     if (stored.hostClaim) {
       isHost = true;
       hostClaim = stored.hostClaim;
@@ -1380,6 +1461,7 @@ window.addEventListener('load', function() {
   restartHeartbeat();
   updateControls();
   updateStatus();
+  renderWishes(); // the hearts, if this device is back in a session
 
   // 🚀 is only live on a song: re-check whenever the slide moves.
   Reveal.on('slidechanged', updateControls);

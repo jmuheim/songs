@@ -226,6 +226,10 @@ module BuildHelpers
       li['data-sprache']   = by_category['Sprache'].map   { |(_, v)| v }.join(',') if by_category['Sprache']
       li['data-genre']     = by_category['Genre'].map     { |(_, v)| v }.join(',') if by_category['Genre']
       li['data-gastgeber'] = by_category['Gastgeber'].map { |(_, v)| v }.join(',') if by_category['Gastgeber']
+      # The song's slug, from the entry's own link (Pandoc's "#/<slug>"): the
+      # same id its title slide carries, so the two wish buttons share it.
+      link = li.at_css('a[href^="#/"]')
+      li.add_child(wish_button(doc, song: link['href'].delete_prefix('#/'))) if link
     end
 
     all_pairs = tags.flat_map { |song| Array(song) }.map { |(cat, val)| [cat, val.to_s.strip] }.reject { |(_, val)| val.empty? }
@@ -446,6 +450,55 @@ module BuildHelpers
     dialog
   end
 
+  # A song's ❤️: in a session, a guest's wish to sing it (style/wishes.js
+  # toggles it, body-controls.html carries it to the room), with the count of
+  # devices in the session that wish it. The slug (`data-song`) is what the
+  # room agrees on, and the same button stands in the table of contents and
+  # on the song's title slide (inject_song_wishes). The count is for the eye;
+  # the hidden label is what a screen reader hears, kept current by wishes.js.
+  # Only a session has a room to count: outside one the buttons are hidden
+  # (shared.css), so the markup is always there. See
+  # decisions/2026-11-11-guests-wish-for-songs-with-a-heart-counted-per-session.md.
+  WISH_LABEL = 'Lied wünschen'
+
+  def wish_button(doc, song:)
+    button = Nokogiri::XML::Node.new('button', doc)
+    button['type'] = 'button'
+    button['class'] = 'song-wish'
+    button['data-song'] = song
+    button['aria-pressed'] = 'false'
+    heart = Nokogiri::XML::Node.new('span', doc)
+    heart['class'] = 'song-wish-heart'
+    heart['aria-hidden'] = 'true'
+    heart.content = '❤️'
+    button.add_child(heart)
+    count = Nokogiri::XML::Node.new('span', doc)
+    count['class'] = 'song-wish-count'
+    count['aria-hidden'] = 'true'
+    button.add_child(count)
+    label = Nokogiri::XML::Node.new('span', doc)
+    label['class'] = 'visually-hidden'
+    label.content = WISH_LABEL
+    button.add_child(label)
+    button
+  end
+
+  # The same ❤️ as in the table of contents, on each song's own title slide
+  # (`section.level1`, whose id is the slug), so a wish can be made from the
+  # song itself. The first stack is the Introduction, no song (skipped by
+  # order like in inject_toc_filter). Before wrap_slide_content, so the button
+  # lands in .slide-content with the title — hidden, it has no client rects
+  # and leaves slide-zoom.js's widest-line measure alone.
+  def inject_song_wishes(html)
+    doc = Nokogiri::HTML(html)
+    stacks = doc.css('.slides > section').select { |s| s.at_css('> section.level1') }
+    stacks.drop(1).each do |stack|
+      title = stack.at_css('> section.level1')
+      title.add_child(wish_button(doc, song: title['id'])) if title['id']
+    end
+    doc.to_html
+  end
+
   # Everything below is shared by `build` and spec/support/fixture_builder.rb,
   # so the specs exercise the pipeline that builds the song book, not a copy.
   # `assets` is how the pages reach style/: "style/" beside index.html,
@@ -484,9 +537,9 @@ module BuildHelpers
     # slide-zoom.js first: the slides are already on screen once Reveal has
     # initialised, and no script that waits on the network (socket.io comes
     # from the relay's host) may hold up their first fit.
-    scripts = ["#{assets}slide-zoom.js", "#{multiplex[:url]}/socket.io/socket.io.js", "#{assets}sha256.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}chords.js", "#{assets}toc-filter.js"]
+    scripts = ["#{assets}slide-zoom.js", "#{multiplex[:url]}/socket.io/socket.io.js", "#{assets}sha256.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}chords.js", "#{assets}toc-filter.js", "#{assets}wishes.js"]
     html = html.sub('</body>', scripts.map { |src| %(  <script src="#{src}"></script>\n) }.join + '</body>')
-    wrap_slide_content(chord_buttons(inject_next_line_previews(inject_toc_filter(split_song_artist(html), tags: tags))))
+    wrap_slide_content(chord_buttons(inject_next_line_previews(inject_song_wishes(inject_toc_filter(split_song_artist(html), tags: tags)))))
   end
 
   def post_process_print(html, assets:)

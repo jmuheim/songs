@@ -300,21 +300,101 @@ section.level1 h1 {
 /* The reveal theme makes #TOC's <ol> an inline-block shrink-to-fit box
    (centred by the <nav>'s own text-align), so its width used to change with
    whatever the filter currently left standing. Pin it to a constant share of
-   the slide instead, and truncate any title wider than that with "…" rather
-   than letting it wrap or push the box wider. */
+   the slide instead, and cut any title wider than that rather than letting
+   it wrap or push the box wider. It fades out at the row's end rather than
+   ending in "…" (night.css), and the <li> places that fade, and in a
+   session its ❤️. */
 #TOC ol {
   width: 90%;
+}
+
+#TOC ol li {
+  position: relative;
 }
 
 #TOC ol li a {
   display: block;
   overflow: hidden;
   white-space: nowrap;
-  text-overflow: ellipsis;
+  text-overflow: clip;
 }
 
 #toc-filter-empty {
   text-align: center;
   font-family: sans-serif;
   font-size: 1.5rem;
+}
+
+/* The ❤️ on each song (wishes.js): in the song's TOC row and on its title
+   slide. Hidden until a session has a room to count (body.wishes-active,
+   set by body-controls.html). The heart is grey until this device wishes
+   the song (aria-pressed), and the count beside it shows from 1 on. Colours
+   are theme-specific (night.css). */
+button.song-wish {
+  display: none;
+  align-items: center;
+  gap: .25em;
+  font: inherit;
+  font-family: sans-serif;
+  line-height: 1;
+  padding: .15em .5em;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+body.wishes-active button.song-wish {
+  display: inline-flex;
+}
+
+button.song-wish[aria-pressed="false"] .song-wish-heart {
+  filter: grayscale(1);
+  opacity: .45;
+}
+
+button.song-wish[aria-pressed="false"]:hover .song-wish-heart {
+  opacity: .8;
+}
+
+.song-wish-count {
+  font-size: .8em;
+  font-weight: bold;
+}
+
+.song-wish-count:empty {
+  display: none;
+}
+
+/* In the TOC the heart sits at the row's right edge and its count to its
+   left, so the hearts stand in one column with or without a count. The
+   button covers the row's height, and a long title runs on underneath it:
+   the button wears the list's own background, its left edge transparent
+   (night.css), so the title fades out just before the count. Nothing to its
+   right: the heart ends at the list's edge, as the titles start at it. */
+#TOC ol li button.song-wish {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  flex-direction: row-reverse;
+  padding-left: 2em;
+  padding-right: 0;
+  border-right-width: 0;
+  border-radius: 0;
+}
+
+/* On the title slide, under the title (and the artist), a little smaller */
+section.level1 button.song-wish {
+  font-size: .8em;
+  margin-top: .4em;
+}
+
+/* With the heart behind it, a title without an artist is no longer the
+   slide's last child, and reveal.css's `h1:last-child { margin-bottom: 0 }`
+   stops applying — even while the heart is display: none. Without this, every
+   such title slide was 20px taller and fitted that much smaller. */
+.reveal section.level1 h1:has(+ button.song-wish:last-child) {
+  margin-bottom: 0;
 }

@@ -3,6 +3,7 @@ require 'capybara/cuprite'
 require_relative 'support/file_server'
 require_relative 'support/multiplex_server'
 require_relative 'support/fixture_builder'
+require_relative 'support/session_helpers'
 
 PROJECT_ROOT = File.expand_path('..', __dir__)
 
@@ -127,4 +128,5 @@ end
 
 RSpec.configure do |config|
   config.include BrowserHelpers, type: :feature
+  config.include SessionHelpers, type: :feature
 end

@@ -33,6 +33,7 @@ namespace :golden do
       'title_slide.html'   => doc.at_css('section.deck-title-slide'),
       'toc.html'           => doc.at_css('section#TOC'),
       'host_modal.html'    => doc.at_css('dialog#host-modal'),
+      'imagine_title.html' => imagine_title,
       'imagine_verse1.html' => imagine_title
                                 .xpath('following-sibling::section[.//h2[normalize-space()="Strophe 1"]][1]')
                                 .first,

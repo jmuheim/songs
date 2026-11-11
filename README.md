@@ -14,6 +14,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - Full screen with ↕️, top right, and back with another press. On an iPhone, where Safari has no full-screen mode for a web page, it asks for one swipe down instead: that makes Safari hide its bars, and they stay hidden while you page through the songs. Added to the home screen (Share › „Add to Home Screen"), the song book opens without any bars at all
 - Tag songs (language, genre, …) and filter the table of contents by tag
 - **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)
+- **Song wishes** — in a session, tap the ❤️ on a song (in the table of contents or on its title slide) to wish for it; everyone sees how many want each song, and the wishes are gone with the evening
 - Print-friendly version: open `print.html?print-pdf` in Chrome and print
 
 ## Installation
@@ -103,6 +104,8 @@ Navigate to a song, then tap 📡 › 🚀 and choose **„Ich selber möchte sc
 While a song is live-scrolled, followers are held on the scroller's slide — their own navigation is off. The host and the scroller repeat themselves every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap 📡 › 🚀 „Live-Scrollen beenden" to end it: everyone lands on the table of contents, is told they can navigate freely again, and a guest who scrolled is thanked.
 
 As soon as you are logged in as host, a „Lieder von" dialog asks whose songs the evening has: every Gastgeber is ticked at first; untick whoever is not here tonight and confirm with „OK", and the QR code follows. Every list in the session then shows only the songs that can be played. Guests find the choice behind the „Lieder von" button in the table of contents (and can read it, not change it); Sprache and Genre stay theirs to filter. Outside a session, the same button is a plain filter of one's own.
+
+In a session, every song carries a ❤️ — at the right end of its row in the table of contents and under its title on the song's own slide. Tap it to wish for the song, tap again to take the wish back; the number beside it is how many devices in the session wish for it right now, so the host can see what the room is in the mood for. Each device keeps its own wishes across a reload; they are counted only within this session and forgotten when it ends or you leave it — next evening starts from none. Outside a session the hearts are not shown: there is nobody to count.
 
 There is one host at a time. Another device in the session can take the role over with 📡 › 🔑 „Gastgeber übernehmen" (and the password) — no need for the old host to hand anything on, which a phone with a flat battery couldn't. The old host stays in the session as a participant, and a song being live-scrolled carries on, its scroller included.
 

@@ -118,6 +118,20 @@ RSpec.describe 'HTML golden files' do
     expect(dialog.to_html + "\n").to eq(golden('host_modal.html'))
   end
 
+  it 'Imagine title slide HTML matches golden (title, artist and the ❤️)' do
+    expect(doc.at_css('section#imagine-john-lennon').to_html + "\n").to eq(golden('imagine_title.html'))
+  end
+
+  it 'gives each song a ❤️ in its TOC row and on its title slide, under the same slug — not the Introduction, nor print.html' do
+    toc = doc.css('#TOC ol li button.song-wish').map { |b| b['data-song'] }
+    titles = doc.css('section.level1 button.song-wish').map { |b| b['data-song'] }
+    expect(toc).to eq(%w[the-connells across-the-universe-beatles i-have-a-dream-abba imagine-john-lennon riptide---vance-joy])
+    expect(titles).to eq(toc)
+    expect(doc.at_css('section#einleitung button.song-wish')).to be_nil
+    expect(doc.css('#TOC ol li button.song-wish').map { |b| b.parent.at_css('a')['href'] }).to eq(toc.map { |slug| "#/#{slug}" })
+    expect(print_doc.css('button.song-wish')).to be_empty
+  end
+
   it 'Imagine Strophe 1 HTML matches golden' do
     imagine_title = doc.at_css('section#imagine-john-lennon')
     section = imagine_title

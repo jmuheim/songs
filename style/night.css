@@ -243,6 +243,45 @@ body.theme-bright #toc-filter {
   border-bottom-color: #d8caa0;
 }
 
+/* The ❤️ on each song (wishes.js) — colours; layout is in shared.css */
+.song-wish-count {
+  color: var(--r-main-color);
+}
+
+button.song-wish:focus-visible {
+  outline: 3px solid var(--r-main-color);
+  outline-offset: 2px;
+}
+
+/* A title too long for its row of the TOC fades out at the row's end rather
+   than ending in "…": an overlay in the list's own background
+   (--r-background-color, which the bright theme sets too), transparent at
+   its left edge. An overlay rather than a mask on the link, which would cut
+   off the link's focus ring. In a session the row's ❤️ is that overlay, and
+   this one, after the button, would cover it. */
+#TOC ol li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1.6em;
+  background: linear-gradient(to right, transparent, var(--r-background-color));
+  pointer-events: none;
+}
+
+body.wishes-active #TOC ol li::after {
+  display: none;
+}
+
+/* The heart's button, likewise. border-box: an image starts inside the
+   border and repeats under it, so the button's 2px transparent border
+   showed the gradient's transparent start at its right edge, and a long
+   title peeked out beside the heart. */
+#TOC ol li button.song-wish {
+  background: linear-gradient(to right, transparent, var(--r-background-color) 1.6em) border-box;
+}
+
 #top-left-controls {
   top: 1em;
   left: 1em;
