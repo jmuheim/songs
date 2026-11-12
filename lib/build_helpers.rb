@@ -535,9 +535,11 @@ module BuildHelpers
     controls = style_file('body-controls.html').strip.gsub('{{assets}}', assets)
     html = html.sub('<body>', "<body><script>window.MULTIPLEX=#{multiplex.to_json};</script>" + controls)
     # slide-zoom.js first: the slides are already on screen once Reveal has
-    # initialised, and no script that waits on the network (socket.io comes
-    # from the relay's host) may hold up their first fit.
-    scripts = ["#{assets}slide-zoom.js", "#{multiplex[:url]}/socket.io/socket.io.js", "#{assets}sha256.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}chords.js", "#{assets}toc-filter.js", "#{assets}wishes.js"]
+    # initialised, and nothing may hold up their first fit. socket.io's client
+    # comes from style/ too, not from the relay's host: there, a slow relay
+    # held up every script after it (the chords, the TOC filter), and one out
+    # of reach left 📡 dead until a reload.
+    scripts = ["#{assets}slide-zoom.js", "#{assets}socketio/socket.io.js", "#{assets}sha256.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}chords.js", "#{assets}toc-filter.js", "#{assets}wishes.js"]
     html = html.sub('</body>', scripts.map { |src| %(  <script src="#{src}"></script>\n) }.join + '</body>')
     wrap_slide_content(chord_buttons(inject_next_line_previews(inject_song_wishes(inject_toc_filter(split_song_artist(html), tags: tags)))))
   end

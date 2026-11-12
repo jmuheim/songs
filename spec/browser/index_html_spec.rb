@@ -193,6 +193,14 @@ RSpec.describe 'index.html', :js, type: :feature do
       # In no session (nothing stored, no ?live= from a QR code): not even a socket is opened
       expect(page.evaluate_script("window.MULTIPLEX.socket === undefined")).to be true
 
+      # Every script comes from the song book itself, socket.io's client
+      # included (style/socketio/): one from the relay's host held up every
+      # script after it on a slow connection, and left 📡 dead without it.
+      here = URI(current_url)
+      scripts = all('script[src]', visible: :all).map { |script| URI.join(current_url, script[:src]) }
+      expect(scripts.map { |src| [src.host, src.port] }.uniq).to eq([[here.host, here.port]])
+      expect(page.evaluate_script("typeof io")).to eq('function')
+
       # Every device derives the relay channel from the session's secret, with
       # sha256.js. The relay only forwards when its own SHA-256 agrees, so it
       # must match Ruby's: across several blocks, and in UTF-8 too.
