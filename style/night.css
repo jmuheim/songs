@@ -154,7 +154,7 @@ body.controls-intro .controls-bottom .ctrl > .visually-hidden {
 /* A few seconds after they last showed, the buttons and the chevrons fade
    out (body-controls.html), slowly, and come back quickly. Faded, they let a
    tap through to the slide, which brings them back. One the mouse is on, or
-   the keyboard's focus, stays; so does 📡 while its connection is down, or
+   the keyboard's focus, stays; so does 🔥 while its connection is down, or
    nobody would notice. */
 .ctrl,
 .reveal .controls {
@@ -442,7 +442,7 @@ section.level2 > .slide-content {
   bottom: 0;
 }
 
-/* 📡 (bottom-left) opens the live-scroll dialog; a badge on its corner tells
+/* 🔥 (bottom-left) opens the live-scroll dialog; a badge on its corner tells
    the role at a glance. Shape says who's driving (a filled dot) versus just
    following (an open ring) — not colour alone (WCAG 1.4.1) — and a diagonal
    strike overlays either shape when the socket is disconnected. The dialog
@@ -456,7 +456,7 @@ section.level2 > .slide-content {
   width: 1.1em;
   height: 1.1em;
   border-radius: 50%;
-  border: 0.15em solid var(--r-background-color); /* a rim that sets it off the 📡 */
+  border: 0.15em solid var(--r-background-color); /* a rim that sets it off the 🔥 */
   background: #888; /* idle: no song being live-scrolled */
 }
 

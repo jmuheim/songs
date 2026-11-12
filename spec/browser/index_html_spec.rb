@@ -183,10 +183,10 @@ RSpec.describe 'index.html', :js, type: :feature do
       within('#top-left-controls') { expect(page).to have_link('📖 Inhaltsverzeichnis') }
       within('#top-right-controls') { expect(page).to have_button('↕️ Vollbild') }
       within('#bottom-left-controls') do
-        expect(page).to have_css('#multiplex-status-button[aria-haspopup="dialog"]', text: '📡')
+        expect(page).to have_css('#multiplex-status-button[aria-haspopup="dialog"]', text: '🔥')
       end
       within('#bottom-right-controls') { expect(page).to have_button('⚙️ Einstellungen') }
-      # 🚀 and 🔗 sit in the 📡 dialog, out of sight until it opens
+      # 🚀 and 🔗 sit in the 🔥 dialog, out of sight until it opens
       expect(page).to have_css('#multiplex-info-modal #live-toggle', visible: :hidden)
       expect(page).to have_css('#multiplex-info-modal #show-qr', visible: :hidden)
 
@@ -195,7 +195,7 @@ RSpec.describe 'index.html', :js, type: :feature do
 
       # Every script comes from the song book itself, socket.io's client
       # included (style/socketio/): one from the relay's host held up every
-      # script after it on a slow connection, and left 📡 dead without it.
+      # script after it on a slow connection, and left 🔥 dead without it.
       here = URI(current_url)
       scripts = all('script[src]', visible: :all).map { |script| URI.join(current_url, script[:src]) }
       expect(scripts.map { |src| [src.host, src.port] }.uniq).to eq([[here.host, here.port]])
@@ -406,7 +406,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page).to have_visible('#open-settings')
       expect(page).to have_visible('.reveal .controls')
 
-      # 📡 stays while its connection is down, or nobody would notice
+      # 🔥 stays while its connection is down, or nobody would notice
       wait_until_idle
       expect(page).to have_no_css('#multiplex-status-button')
       page.execute_script("document.getElementById('multiplex-status-button').classList.add('multiplex-disconnected')")
@@ -1368,7 +1368,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_visible('#qr-modal')
         expect(page).to have_css("#qr-canvas img[alt$='?live=#{secret}&qr=1']", visible: :all)
         expect(page).to have_css('#qr-info', text: 'Scanne den Code') # for those reading it off this screen
-        expect(page).to have_css('#qr-code-line', text: "Oder in 📡 den Code eingeben: #{secret[0, 4]}-#{secret[4, 4]}")
+        expect(page).to have_css('#qr-code-line', text: "Oder in 🔥 den Code eingeben: #{secret[0, 4]}-#{secret[4, 4]}")
         within('#qr-modal') { click_button('Schliessen') }
         open_live_scroll_dialog
         within('#multiplex-info-modal') do
@@ -1627,7 +1627,7 @@ RSpec.describe 'index.html', :js, type: :feature do
           wait_for_js("Reveal.getIndices().h === 5")
           # Free again, the overview is back. Left open as the live scroll
           # starts, it closes: switched off while open, Reveal couldn't close it.
-          # O, not Esc: the focus is back on 📡, where Esc hides its tooltip.
+          # O, not Esc: the focus is back on 🔥, where Esc hides its tooltip.
           press('o')
           expect(page).to have_css('.reveal.overview')
           start_live(mode: :self)
@@ -2379,7 +2379,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       end
       before { join_session('spec-qr') } # anyone in a session may show its code, not only the host
 
-      # 🔗 sits in the 📡 dialog, which closes as the QR opens
+      # 🔗 sits in the 🔥 dialog, which closes as the QR opens
       def open_qr
         open_live_scroll_dialog
         within('#multiplex-info-modal') { click_button('🔗 QR-Code zeigen') }

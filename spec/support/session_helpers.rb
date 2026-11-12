@@ -3,11 +3,11 @@
 # for live scrolling, song_wishes_spec.rb for the ❤️), so there is one way to
 # log in as host and one to join. Included for type: :feature in spec_helper.rb.
 module SessionHelpers
-  # 🚀, 🔗 and the host login sit in the live-scroll dialog behind 📡 (bottom left)
+  # 🚀, 🔗 and the host login sit in the live-scroll dialog behind 🔥 (bottom left)
   def open_live_scroll_dialog
     # A toast that just appeared lifts the bottom corners clear of it over
     # 0.3s (night.css), and a click computed at the start of that slide lands
-    # where 📡 used to be
+    # where 🔥 used to be
     wait_for_js("document.getElementById('bottom-left-controls').getAnimations().length === 0")
     find('#multiplex-status-button').click
     expect(page).to have_visible('#multiplex-info-modal')
@@ -24,7 +24,7 @@ module SessionHelpers
     wait_for_reveal
   end
 
-  # Logs in as host from the 📡 dialog: opens a session, or takes over the one
+  # Logs in as host from the 🔥 dialog: opens a session, or takes over the one
   # this tab is in. `label` is what the login button reads. The heartbeat is
   # shortened first, so whoever joins late and the end of a live scroll
   # arrive quickly, and so is the wishes' round (`wish_sync`), so a wish said

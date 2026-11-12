@@ -576,7 +576,7 @@ module BuildHelpers
     # initialised, and nothing may hold up their first fit. socket.io's client
     # comes from style/ too, not from the relay's host: there, a slow relay
     # held up every script after it (the chords, the TOC filter), and one out
-    # of reach left 📡 dead until a reload.
+    # of reach left 🔥 dead until a reload.
     scripts = ["#{assets}slide-zoom.js", "#{assets}socketio/socket.io.js", "#{assets}sha256.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}chords.js", "#{assets}toc-filter.js", "#{assets}wishes.js"]
     html = html.sub('</body>', scripts.map { |src| %(  <script src="#{src}"></script>\n) }.join + '</body>')
     wrap_slide_content(chord_buttons(inject_next_line_previews(inject_song_wishes(inject_toc_filter(external_links(split_song_artist(html)), tags: tags)))))

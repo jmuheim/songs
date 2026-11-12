@@ -6,7 +6,7 @@
 </div>
 <div id="multiplex-toast" role="status" aria-live="polite"></div>
 <div id="bottom-left-controls" class="controls-group controls-bottom">
-  <button id="multiplex-status-button" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">📡</span> <span class="visually-hidden" id="multiplex-status" role="status">Kein Live-Scrollen aktiv</span></button>
+  <button id="multiplex-status-button" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">🔥</span> <span class="visually-hidden" id="multiplex-status" role="status">Kein Live-Scrollen aktiv</span></button>
 </div>
 <div id="bottom-right-controls" class="controls-group controls-bottom">
   <button id="open-settings" class="ctrl" aria-haspopup="dialog"><span aria-hidden="true">⚙️</span> <span class="visually-hidden">Einstellungen</span></button>
@@ -567,7 +567,7 @@
     <div class="qr-text">
       <h2 id="qr-title" tabindex="-1" autofocus>Liederbuch öffnen</h2>
       <p id="qr-info">Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.</p>
-      <p id="qr-code-line">Oder in 📡 den Code eingeben: <strong id="qr-code"></strong></p>
+      <p id="qr-code-line">Oder in 🔥 den Code eingeben: <strong id="qr-code"></strong></p>
     </div>
     <div id="qr-canvas"></div>
     <button id="qr-close">Schliessen</button>
@@ -1472,7 +1472,7 @@ window.addEventListener('load', function() {
     leaveSession(['Die Runde ist beendet'], true);
   }
 
-  // What the 📡 dialog offers depends on the role: 🚀 and „Runde beenden"
+  // What the 🔥 dialog offers depends on the role: 🚀 and „Runde beenden"
   // to the host, 🔗 to anyone in a session, „Runde verlassen" to anyone in
   // it but the host, the login to anyone but the host.
   function updateControls() {
@@ -1498,8 +1498,8 @@ window.addEventListener('load', function() {
   }
 
   // ---- Buttons and dialogs ----
-  // Everything here sits in the 📡 dialog: it closes first, so the next one
-  // returns the focus to 📡 when it closes in turn.
+  // Everything here sits in the 🔥 dialog: it closes first, so the next one
+  // returns the focus to 🔥 when it closes in turn.
   hostLoginBtn.addEventListener('click', function() {
     multiplexModal.close();
     if (authed) { becomeHost(); return; }
