@@ -743,7 +743,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
 
     it 'toggles chord visibility from the settings dialog, and fits the slide again' do
-      fitted = 'section.slide.present > .slide-content[style="transform: scale(1.65786);"]'
+      fitted = 'section.slide.present > .slide-content[style="transform: scale(1.6648);"]'
       expect(page).to have_css(fitted, visible: :all)
       expect(page).to have_no_css('body.chords-hidden')
       within 'section.slide.present' do
@@ -840,14 +840,17 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(body_background_color).to eq('#fffad5')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('bright')
 
-      # A font each for the titles and the text, the theme's Montserrat and
-      # Open Sans until then. Each radio button shows its font as a picture,
-      # so opening the dialog downloads the pictures but no font
+      # A font each for the titles and the text, every one for either, the
+      # scheme's until then: Hell's Montserrat and Open Sans. Each row shows
+      # its font as a picture, so opening the dialog downloads the pictures
+      # but no font
       expect(page).to have_checked_field('title-font', with: '')
       expect(page).to have_checked_field('text-font', with: '')
+      expect(page).to have_css('body[data-title-font="montserrat"][data-text-font="opensans"]')
       expect(font_of('section.deck-title-slide h1')).to start_with('Montserrat')
+      expect(all("input[name='title-font']").map(&:value)).to eq(all("input[name='text-font']").map(&:value))
       wait_for_js("Array.prototype.every.call(document.querySelectorAll('.settings-fonts img'), function (img) { return img.complete && img.naturalWidth > 0; })")
-      expect(page.evaluate_script(<<~JS)).to eq([15, 15])
+      expect(page.evaluate_script(<<~JS)).to eq([20, 20])
         (function () {
           var imgs = document.querySelectorAll('.settings-fonts img');
           return [imgs.length, Array.prototype.filter.call(imgs, function (img) { return img.complete && img.naturalWidth > 0; }).length];
@@ -868,14 +871,21 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
       end
 
-      # Picked: the slide is fitted anew; the code blocks and the chords stay monospace
+      # Picked: the slide is fitted anew; the chords in the lyrics wear the
+      # text's font, the code blocks' fingerings stay monospace, or their
+      # columns wouldn't line up
       choose('title-font', option: 'playfair')
       choose('text-font', option: 'lora')
       expect(page).to have_css('body[data-title-font="playfair"][data-text-font="lora"]')
       expect(font_of('section.deck-title-slide h1')).to start_with('"Playfair Display"')
       expect(font_of('section.deck-title-slide p.author')).to start_with('Lora')
       expect(font_of('#grundakkorde pre code')).to eq('monospace')
-      expect(font_of('.reveal .slides button.chord code')).to eq('monospace')
+      expect(font_of('.reveal .slides button.chord code')).to start_with('Lora')
+      # whichever it is, pictures too
+      choose('text-font', option: 'symbole')
+      expect(font_of('.reveal .slides button.chord code')).to start_with('"Liedli Symbole"')
+      expect(font_of('#grundakkorde pre code')).to eq('monospace')
+      choose('text-font', option: 'lora')
       expect(page).to have_no_css("section.deck-title-slide > .slide-content[style=#{title_scale.to_json}]", visible: :all)
       expect(page.evaluate_script("localStorage.getItem('title-font')")).to eq('playfair')
 
@@ -894,24 +904,25 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page).to have_no_css('body[data-theme]')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('dark')
       choose('title-font', option: '')
-      expect(page).to have_no_css('body[data-title-font]')
+      expect(page).to have_css('body[data-title-font="montserrat"]')
       expect(font_of('section.deck-title-slide h1')).to start_with('Montserrat')
 
       # A font or a scheme the book no longer offers falls back to the
-      # theme's, and its radio button or option is the one checked, not none
+      # scheme's or Dunkel, and its radio button or option is the one
+      # checked, not none
       page.execute_script("localStorage.setItem('text-font', 'gone'); localStorage.setItem('title-font', 'comic'); localStorage.setItem('theme', 'gone')")
       load_presentation
-      expect(page).to have_no_css('body[data-text-font]')
+      expect(page).to have_css('body[data-text-font="opensans"]')
       expect(page).to have_no_css('body[data-theme]')
       click_button('⚙️ Einstellungen')
       expect(page).to have_checked_field('text-font', with: '')
       expect(page).to have_select('theme-select', selected: 'Dunkel')
       # The fonts are a list that scrolls, each large enough to read, and it
-      # opens scrolled to the one checked, here the last
+      # opens scrolled to the one picked, here halfway down
       shown, scrolled = page.evaluate_script(<<~JS)
         (function () {
           var list = document.querySelector('.settings-font-list');
-          var box = list.getBoundingClientRect(), row = list.querySelector('input:checked').parentNode.getBoundingClientRect();
+          var box = list.getBoundingClientRect(), row = list.querySelector('input[name="title-font"]:checked').parentNode.getBoundingClientRect();
           return [row.top >= box.top && row.bottom <= box.bottom, list.scrollHeight > list.clientHeight && list.scrollTop > 0];
         })()
       JS
@@ -919,7 +930,13 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(scrolled).to be true
 
       # Every scheme sets five colours of its own, as its pickers show them,
-      # and the page wears them; only Hell's background counts as light
+      # and the page wears them; whether they count as light follows the
+      # background. And a font for the text, which holds while the reader's
+      # is the scheme's (here), but not for the titles, where the reader
+      # picked one (Comic Relief). Graustufen greys out the whole page
+      light = %w[bright paper pink rainbow]
+      text_fonts = { 'dark' => 'opensans', 'paper' => 'lora', 'terminal' => 'vt323', 'rainbow' => 'comic' }
+      offered = all("input[name='text-font']").map(&:value) - ['']
       surface = computed('.modal-box', 'backgroundColor')
       schemes = all('#theme-select option').map { |option| [option.text, option.value] } - [%w[Eigene custom]]
       seen = schemes.map do |label, value|
@@ -930,26 +947,34 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(computed('body', 'backgroundColor')).to eq(rgb(colors['background']))
         expect(computed('.reveal', 'color')).to eq(rgb(colors['text']))
         expect(computed('section.deck-title-slide h1', 'color')).to eq(rgb(colors['title']))
-        expect(page).to(value == 'bright' ? have_css('body.theme-light') : have_no_css('body.theme-light'))
+        expect(page).to(light.include?(value) ? have_css('body.theme-light') : have_no_css('body.theme-light'))
+        expect(page).to have_css('body[data-title-font="comic"]')
+        expect(offered).to include(find('body')['data-text-font']), "#{label}: #{find('body')['data-text-font']}"
+        expect(page).to have_css(%(body[data-text-font="#{text_fonts[value]}"])) if text_fonts[value]
+        expect(computed('html', 'filter')).to eq(value == 'grayscale' ? 'grayscale(1)' : 'none')
         colors
       end
       expect(seen.uniq.size).to eq(schemes.size)
+      expect(font_of('section.deck-title-slide p.author')).to start_with('"Comic Relief"') # Kunterbunt's, the last
 
       # A colour picked makes them the reader's own, the other four the
-      # scheme's they were picked from. The dialog's own colours are mixed
-      # from them, and whether they are light follows the background
-      select('Hell', from: 'theme-select')
-      hell = picker_colors
+      # scheme's they were picked from, and its fonts. The dialog's own
+      # colours are mixed from them, and whether they are light follows the
+      # background
+      choose('title-font', option: '')
+      select('Kunterbunt', from: 'theme-select')
+      expect(page).to have_css('body.theme-light[data-title-font="nabla"][data-text-font="comic"]')
+      rainbow = picker_colors
       pick_color('background', '#203040')
       expect(page).to have_select('theme-select', selected: 'Eigene')
-      expect(page).to have_css('body[data-theme="custom"]')
+      expect(page).to have_css('body[data-theme="custom"][data-title-font="nabla"][data-text-font="comic"]')
       expect(page).to have_no_css('body.theme-light')
       expect(computed('body', 'backgroundColor')).to eq('rgb(32, 48, 64)')
-      expect(computed('section.deck-title-slide h1', 'color')).to eq(rgb(hell['title']))
+      expect(computed('section.deck-title-slide h1', 'color')).to eq(rgb(rainbow['title']))
       expect(computed('.modal-box', 'backgroundColor')).not_to eq(surface)
-      own = hell.merge('background' => '#203040')
+      own = rainbow.merge('background' => '#203040')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('custom')
-      expect(JSON.parse(page.evaluate_script("localStorage.getItem('theme-colors')"))).to eq(own)
+      expect(JSON.parse(page.evaluate_script("localStorage.getItem('theme-colors')"))).to eq(own.merge('title-font' => 'nabla', 'text-font' => 'comic'))
 
       # A scheme picked again leaves them be: „Eigene" brings them back
       select('Dunkel', from: 'theme-select')
@@ -961,7 +986,7 @@ RSpec.describe 'index.html', :js, type: :feature do
 
       # and so does a reload, before the dialog is ever opened
       load_presentation
-      expect(page).to have_css('body[data-theme="custom"]')
+      expect(page).to have_css('body[data-theme="custom"][data-title-font="nabla"]')
       expect(computed('body', 'backgroundColor')).to eq('rgb(32, 48, 64)')
       click_button('⚙️ Einstellungen')
       expect(page).to have_select('theme-select', selected: 'Eigene')
@@ -991,7 +1016,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         select('Dunkel', from: 'theme-select')
         select('Eigene', from: 'theme-select')
         expect(computed('section.deck-title-slide h1', 'color')).to eq('rgb(255, 0, 0)')
-        expect(computed('body', 'backgroundColor')).to eq(rgb(hell['background']))
+        expect(computed('body', 'backgroundColor')).to eq('rgb(255, 250, 213)') # Hell's
         choose('title-font', option: 'oswald')
         expect(page).to have_css('body[data-title-font="oswald"]')
       end

@@ -55,14 +55,20 @@
   // multiplex gate below: both must keep working even if socket.io fails to
   // load, same as they did as standalone corner buttons before.
   (function() {
-    // The colours: one of night.css's schemes (data-theme on <body>; Dunkel,
-    // the default, sets none), or the reader's own five, set on <body>
-    // itself (data-theme="custom"). Kept as 'theme' and 'theme-colors'.
+    // A scheme: five colours (--color-*) and a font for the titles and one for
+    // the text (--theme-*-font, by their ids), one of night.css's (data-theme
+    // on <body>; Dunkel, the default, sets none), or the reader's own, set on
+    // <body> itself (data-theme="custom"). Kept as 'theme' and 'theme-colors'.
     var COLORS = ['background', 'text', 'title', 'link', 'bold'];
-    function currentColors() {
-      var style = getComputedStyle(document.body), colors = {};
-      COLORS.forEach(function(name) { colors[name] = style.getPropertyValue('--color-' + name).trim(); });
-      return colors;
+    var FONTS = { 'title-font': 'titleFont', 'text-font': 'textFont' };
+    var PARTS = COLORS.concat(Object.keys(FONTS));
+    function property(part) {
+      return (COLORS.indexOf(part) < 0 ? '--theme-' : '--color-') + part;
+    }
+    function currentScheme() {
+      var style = getComputedStyle(document.body), scheme = {};
+      PARTS.forEach(function(part) { scheme[part] = style.getPropertyValue(property(part)).trim(); });
+      return scheme;
     }
     // Light, by WCAG's measure: black stands out more on it than white
     function isLight(hex) {
@@ -72,42 +78,39 @@
       });
       return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2] > 0.179;
     }
+    // The reader's fonts, '' for the scheme's: either way an id on <body>
+    // (night.css)
+    var fonts = { 'title-font': '', 'text-font': '' };
+    function applyFonts() {
+      var scheme = currentScheme();
+      Object.keys(FONTS).forEach(function(key) { document.body.dataset[FONTS[key]] = fonts[key] || scheme[key]; });
+    }
     // theme-light, for what can't be mixed from the five (night.css)
-    function applyTheme(theme, colors) {
+    function applyTheme(theme, scheme) {
       if (theme === 'dark') delete document.body.dataset.theme;
       else document.body.dataset.theme = theme;
-      COLORS.forEach(function(name) {
-        if (colors) document.body.style.setProperty('--color-' + name, colors[name]);
-        else document.body.style.removeProperty('--color-' + name);
+      PARTS.forEach(function(part) {
+        if (scheme && scheme[part]) document.body.style.setProperty(property(part), scheme[part]);
+        else document.body.style.removeProperty(property(part));
       });
-      document.body.classList.toggle('theme-light', isLight(currentColors().background));
+      document.body.classList.toggle('theme-light', isLight(currentScheme().background));
+      applyFonts();
     }
 
-    // With site data blocked, merely touching localStorage throws: the colours
-    // then change without being remembered.
+    // With site data blocked, merely touching localStorage throws: colours and
+    // fonts then change without being remembered.
     var theme = null, custom = null;
     try {
       theme = localStorage.getItem('theme');
       custom = JSON.parse(localStorage.getItem('theme-colors'));
+      Object.keys(FONTS).forEach(function(key) { fonts[key] = localStorage.getItem(key) || ''; });
     } catch (e) {}
     if (!custom || !COLORS.every(function(name) { return /^#[0-9a-f]{6}$/i.test(custom[name]); })) custom = null;
+    else Object.keys(FONTS).forEach(function(key) { if (!/^[a-z0-9]+$/.test(custom[key])) delete custom[key]; });
     if (!theme || (theme === 'custom' && !custom)) theme = 'dark';
-    // applied right away, so there's no flash of the wrong colours
+    // Applied right away, so there's no flash of the wrong colours, and the
+    // slides are fitted in their fonts from the start
     applyTheme(theme, theme === 'custom' ? custom : null);
-
-    // The fonts of the titles and of the text (night.css), applied right away
-    // too: the slides are fitted in them from the start. The theme's own,
-    // Montserrat and Open Sans, are '' and set no attribute.
-    var FONTS = { 'title-font': 'titleFont', 'text-font': 'textFont' };
-    function applyFont(key, font) {
-      if (font) document.body.dataset[FONTS[key]] = font;
-      else delete document.body.dataset[FONTS[key]];
-    }
-    var fonts = {};
-    Object.keys(FONTS).forEach(function(key) {
-      try { fonts[key] = localStorage.getItem(key) || ''; } catch (e) { fonts[key] = ''; }
-      applyFont(key, fonts[key]);
-    });
 
     // The rest waits for 'load': the settings dialog markup sits further down
     // the document, after this script tag, so it isn't parsed yet at this point.
@@ -115,8 +118,8 @@
       var themeSelect = document.getElementById('theme-select');
       var pickers = Array.prototype.slice.call(document.querySelectorAll('.settings-colors input'));
       function showColors() {
-        var colors = currentColors();
-        pickers.forEach(function(picker) { picker.value = colors[picker.name]; });
+        var scheme = currentScheme();
+        pickers.forEach(function(picker) { picker.value = scheme[picker.name]; });
       }
       if (!themeSelect.querySelector('option[value="' + theme + '"]')) { // a scheme no longer offered: Dunkel again
         theme = 'dark';
@@ -128,7 +131,7 @@
         theme = themeSelect.value;
         // Eigene: the reader's own as they were left, or to start from, the
         // scheme shown until now
-        if (theme === 'custom' && !custom) custom = currentColors();
+        if (theme === 'custom' && !custom) custom = currentScheme();
         applyTheme(theme, theme === 'custom' ? custom : null);
         showColors();
         try {
@@ -136,11 +139,12 @@
           if (theme === 'custom') localStorage.setItem('theme-colors', JSON.stringify(custom));
         } catch (e) {}
       });
-      // A colour changed makes them the reader's own, as it is picked (input,
-      // not change, which waits for the picker to close)
+      // A colour changed makes the scheme the reader's own, the scheme's
+      // fonts with it, as it is picked (input, not change, which waits for
+      // the picker to close)
       pickers.forEach(function(picker) {
         picker.addEventListener('input', function() {
-          custom = currentColors();
+          custom = currentScheme();
           custom[picker.name] = picker.value;
           theme = themeSelect.value = 'custom';
           applyTheme(theme, custom);
@@ -151,18 +155,20 @@
         });
       });
 
-      // One radio button per font, named after the key it is stored under
+      // A radio button per font and use, named after the key it is stored under
       Object.keys(FONTS).forEach(function(key) {
         var radios = Array.prototype.slice.call(document.querySelectorAll('input[name="' + key + '"]'));
         var chosen = radios.filter(function(radio) { return radio.value === fonts[key]; })[0];
-        if (!chosen) { // a font no longer offered: the theme's again
+        if (!chosen) { // a font no longer offered: the scheme's again
           chosen = radios.filter(function(radio) { return radio.value === ''; })[0];
-          applyFont(key, '');
+          fonts[key] = '';
+          applyFonts();
         }
         chosen.checked = true;
         radios.forEach(function(radio) {
           radio.addEventListener('change', function() {
-            applyFont(key, radio.value);
+            fonts[key] = radio.value;
+            applyFonts();
             try { localStorage.setItem(key, radio.value); } catch (e) {}
           });
         });
@@ -177,11 +183,13 @@
       var settingsModal = document.getElementById('settings-modal');
       document.getElementById('open-settings').addEventListener('click', function() {
         settingsModal.showModal();
-        // Each font list scrolled to its checked font, in the middle where it can
-        Array.prototype.forEach.call(settingsModal.querySelectorAll('.settings-font-list'), function(list) {
-          var row = list.querySelector('input:checked').parentNode;
-          list.scrollTop = row.offsetTop - (list.clientHeight - row.offsetHeight) / 2;
-        });
+        // The font list scrolled to the first font picked down the list, the
+        // titles' or the text's, in the middle where it can; to its top while
+        // both are the scheme's
+        var list = settingsModal.querySelector('.settings-font-list');
+        var picked = Array.prototype.filter.call(list.querySelectorAll('input:checked'), function(radio) { return radio.value; })[0];
+        var row = picked && picked.closest('.settings-font-row');
+        list.scrollTop = row ? row.offsetTop - (list.clientHeight - row.offsetHeight) / 2 : 0;
       });
       document.getElementById('settings-close').addEventListener('click', function() { settingsModal.close(); });
       settingsModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
@@ -424,15 +432,23 @@
   <div class="modal-box">
     <h2 id="settings-title" tabindex="-1" autofocus>Einstellungen</h2>
     <!-- A scheme each (night.css), and the reader's own: a picker changed
-         makes it „Eigene" -->
+         makes it „Eigene". Light and dark ones, the playful ones last. -->
     <div class="settings-field">
       <label for="theme-select">Farben</label>
       <select id="theme-select">
         <option value="dark">Dunkel</option>
         <option value="bright">Hell</option>
         <option value="contrast">Kontrast</option>
+        <option value="grayscale">Graustufen</option>
+        <option value="paper">Papier</option>
         <option value="navy">Nachtblau</option>
+        <option value="ocean">Ozean</option>
         <option value="campfire">Lagerfeuer</option>
+        <option value="sunset">Sonnenuntergang</option>
+        <option value="military">Militär</option>
+        <option value="terminal">Terminal</option>
+        <option value="pink">Rosa</option>
+        <option value="rainbow">Kunterbunt</option>
         <option value="custom">Eigene</option>
       </select>
       <div class="settings-colors" role="group" aria-label="Eigene Farben">
@@ -443,33 +459,123 @@
         <label><input type="color" name="bold"> Fett</label>
       </div>
     </div>
-    <div class="settings-font-groups">
-      <fieldset class="settings-fonts">
-        <legend>Titelschrift</legend>
-        <div class="settings-font-list">
-          <label><input type="radio" name="title-font" value=""><img src="{{assets}}fonts/samples/title-standard.png" alt="Montserrat" loading="lazy"></label>
-          <label><input type="radio" name="title-font" value="playfair"><img src="{{assets}}fonts/samples/title-playfair.png" alt="Playfair Display" loading="lazy"></label>
-          <label><input type="radio" name="title-font" value="oswald"><img src="{{assets}}fonts/samples/title-oswald.png" alt="Oswald" loading="lazy"></label>
-          <label><input type="radio" name="title-font" value="pacifico"><img src="{{assets}}fonts/samples/title-pacifico.png" alt="Pacifico" loading="lazy"></label>
-          <label><input type="radio" name="title-font" value="marker"><img src="{{assets}}fonts/samples/title-marker.png" alt="Permanent Marker" loading="lazy"></label>
-          <label><input type="radio" name="title-font" value="dancing"><img src="{{assets}}fonts/samples/title-dancing.png" alt="Dancing Script" loading="lazy"></label>
-          <label><input type="radio" name="title-font" value="antic"><img src="{{assets}}fonts/samples/title-antic.png" alt="Antic Slab" loading="lazy"></label>
-          <label><input type="radio" name="title-font" value="comic"><img src="{{assets}}fonts/samples/title-comic.png" alt="Comic Relief" loading="lazy"></label>
+    <!-- One list, a font to a row, its name a picture set in it; a radio
+         button for the titles and one for the text in each. „Passend zum
+         Thema" ('') is the scheme's own (night.css). -->
+    <fieldset class="settings-fonts">
+      <legend>Schriften</legend>
+      <div class="settings-font-list">
+        <div class="settings-font-head" aria-hidden="true">
+          <span id="font-column-title">Titel</span>
+          <span id="font-column-text">Text</span>
         </div>
-      </fieldset>
-      <fieldset class="settings-fonts">
-        <legend>Textschrift</legend>
-        <div class="settings-font-list">
-          <label><input type="radio" name="text-font" value=""><img src="{{assets}}fonts/samples/text-standard.png" alt="Open Sans" loading="lazy"></label>
-          <label><input type="radio" name="text-font" value="atkinson"><img src="{{assets}}fonts/samples/text-atkinson.png" alt="Atkinson Hyperlegible" loading="lazy"></label>
-          <label><input type="radio" name="text-font" value="lora"><img src="{{assets}}fonts/samples/text-lora.png" alt="Lora" loading="lazy"></label>
-          <label><input type="radio" name="text-font" value="nunito"><img src="{{assets}}fonts/samples/text-nunito.png" alt="Nunito" loading="lazy"></label>
-          <label><input type="radio" name="text-font" value="caveat"><img src="{{assets}}fonts/samples/text-caveat.png" alt="Caveat" loading="lazy"></label>
-          <label><input type="radio" name="text-font" value="antic"><img src="{{assets}}fonts/samples/text-antic.png" alt="Antic Slab" loading="lazy"></label>
-          <label><input type="radio" name="text-font" value="comic"><img src="{{assets}}fonts/samples/text-comic.png" alt="Comic Relief" loading="lazy"></label>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="" aria-labelledby="font-column-title font-theme"></label>
+          <label><input type="radio" name="text-font" value="" aria-labelledby="font-column-text font-theme"></label>
+          <span id="font-theme" class="settings-font-theme">Passend zum Thema</span>
         </div>
-      </fieldset>
-    </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="montserrat" aria-labelledby="font-column-title font-montserrat"></label>
+          <label><input type="radio" name="text-font" value="montserrat" aria-labelledby="font-column-text font-montserrat"></label>
+          <img id="font-montserrat" src="{{assets}}fonts/samples/montserrat.png" alt="Montserrat" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="opensans" aria-labelledby="font-column-title font-opensans"></label>
+          <label><input type="radio" name="text-font" value="opensans" aria-labelledby="font-column-text font-opensans"></label>
+          <img id="font-opensans" src="{{assets}}fonts/samples/opensans.png" alt="Open Sans" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="atkinson" aria-labelledby="font-column-title font-atkinson"></label>
+          <label><input type="radio" name="text-font" value="atkinson" aria-labelledby="font-column-text font-atkinson"></label>
+          <img id="font-atkinson" src="{{assets}}fonts/samples/atkinson.png" alt="Atkinson Hyperlegible" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="lexend" aria-labelledby="font-column-title font-lexend"></label>
+          <label><input type="radio" name="text-font" value="lexend" aria-labelledby="font-column-text font-lexend"></label>
+          <img id="font-lexend" src="{{assets}}fonts/samples/lexend.png" alt="Lexend" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="dyslexic" aria-labelledby="font-column-title font-dyslexic"></label>
+          <label><input type="radio" name="text-font" value="dyslexic" aria-labelledby="font-column-text font-dyslexic"></label>
+          <img id="font-dyslexic" src="{{assets}}fonts/samples/dyslexic.png" alt="OpenDyslexic" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="nunito" aria-labelledby="font-column-title font-nunito"></label>
+          <label><input type="radio" name="text-font" value="nunito" aria-labelledby="font-column-text font-nunito"></label>
+          <img id="font-nunito" src="{{assets}}fonts/samples/nunito.png" alt="Nunito" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="lora" aria-labelledby="font-column-title font-lora"></label>
+          <label><input type="radio" name="text-font" value="lora" aria-labelledby="font-column-text font-lora"></label>
+          <img id="font-lora" src="{{assets}}fonts/samples/lora.png" alt="Lora" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="playfair" aria-labelledby="font-column-title font-playfair"></label>
+          <label><input type="radio" name="text-font" value="playfair" aria-labelledby="font-column-text font-playfair"></label>
+          <img id="font-playfair" src="{{assets}}fonts/samples/playfair.png" alt="Playfair Display" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="oswald" aria-labelledby="font-column-title font-oswald"></label>
+          <label><input type="radio" name="text-font" value="oswald" aria-labelledby="font-column-text font-oswald"></label>
+          <img id="font-oswald" src="{{assets}}fonts/samples/oswald.png" alt="Oswald" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="antic" aria-labelledby="font-column-title font-antic"></label>
+          <label><input type="radio" name="text-font" value="antic" aria-labelledby="font-column-text font-antic"></label>
+          <img id="font-antic" src="{{assets}}fonts/samples/antic.png" alt="Antic Slab" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="comic" aria-labelledby="font-column-title font-comic"></label>
+          <label><input type="radio" name="text-font" value="comic" aria-labelledby="font-column-text font-comic"></label>
+          <img id="font-comic" src="{{assets}}fonts/samples/comic.png" alt="Comic Relief" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="caveat" aria-labelledby="font-column-title font-caveat"></label>
+          <label><input type="radio" name="text-font" value="caveat" aria-labelledby="font-column-text font-caveat"></label>
+          <img id="font-caveat" src="{{assets}}fonts/samples/caveat.png" alt="Caveat" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="dancing" aria-labelledby="font-column-title font-dancing"></label>
+          <label><input type="radio" name="text-font" value="dancing" aria-labelledby="font-column-text font-dancing"></label>
+          <img id="font-dancing" src="{{assets}}fonts/samples/dancing.png" alt="Dancing Script" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="pacifico" aria-labelledby="font-column-title font-pacifico"></label>
+          <label><input type="radio" name="text-font" value="pacifico" aria-labelledby="font-column-text font-pacifico"></label>
+          <img id="font-pacifico" src="{{assets}}fonts/samples/pacifico.png" alt="Pacifico" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="marker" aria-labelledby="font-column-title font-marker"></label>
+          <label><input type="radio" name="text-font" value="marker" aria-labelledby="font-column-text font-marker"></label>
+          <img id="font-marker" src="{{assets}}fonts/samples/marker.png" alt="Permanent Marker" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="vt323" aria-labelledby="font-column-title font-vt323"></label>
+          <label><input type="radio" name="text-font" value="vt323" aria-labelledby="font-column-text font-vt323"></label>
+          <img id="font-vt323" src="{{assets}}fonts/samples/vt323.png" alt="VT323" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="outline" aria-labelledby="font-column-title font-outline"></label>
+          <label><input type="radio" name="text-font" value="outline" aria-labelledby="font-column-text font-outline"></label>
+          <img id="font-outline" src="{{assets}}fonts/samples/outline.png" alt="Londrina Outline" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="nabla" aria-labelledby="font-column-title font-nabla"></label>
+          <label><input type="radio" name="text-font" value="nabla" aria-labelledby="font-column-text font-nabla"></label>
+          <img id="font-nabla" src="{{assets}}fonts/samples/nabla.png" alt="Nabla" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="symbole" aria-labelledby="font-column-title font-symbole"></label>
+          <label><input type="radio" name="text-font" value="symbole" aria-labelledby="font-column-text font-symbole"></label>
+          <img id="font-symbole" src="{{assets}}fonts/samples/symbole.png" alt="Liedli Symbole" loading="lazy">
+        </div>
+        <div class="settings-font-row">
+          <label><input type="radio" name="title-font" value="hieroglyphen" aria-labelledby="font-column-title font-hieroglyphen"></label>
+          <label><input type="radio" name="text-font" value="hieroglyphen" aria-labelledby="font-column-text font-hieroglyphen"></label>
+          <img id="font-hieroglyphen" src="{{assets}}fonts/samples/hieroglyphen.png" alt="Liedli Hieroglyphen" loading="lazy">
+        </div>
+      </div>
+    </fieldset>
     <div class="settings-footer">
       <label class="settings-checkbox"><input type="checkbox" id="show-chords-checkbox"> Akkorde anzeigen</label>
       <button id="settings-close">Schliessen</button>

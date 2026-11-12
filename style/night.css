@@ -1,5 +1,7 @@
-/* The colours (⚙️ › Farben, body-controls.html): five a scheme sets, and
-   the reader can change each of them. Dunkel, the night theme's own, is the
+/* The schemes (⚙️ › Farben, body-controls.html): five colours each, which
+   the reader can change, and a font for the titles and one for the text,
+   which hold while the reader's own font is „Passend zum Thema" (the ids of
+   the fonts at the end of this file). Dunkel, the night theme's own, is the
    default; another scheme sets data-theme on the body, and the reader's own
    colours (data-theme="custom") are set on the body itself. Every other colour
    on the page is mixed from these five. #rrggbb, the only form a colour
@@ -10,6 +12,8 @@ body {
   --color-title: #e7ad52;
   --color-link: #e7ad52;
   --color-bold: #5ad066;
+  --theme-title-font: montserrat;
+  --theme-text-font: opensans;
 }
 
 body[data-theme="bright"] {
@@ -26,6 +30,33 @@ body[data-theme="contrast"] {
   --color-title: #ffff00;
   --color-link: #00ffff;
   --color-bold: #00ff00;
+  --theme-title-font: atkinson;
+  --theme-text-font: atkinson;
+}
+
+/* The whole page in greys, the chords and the emoji too: on the root,
+   which, unlike any other element, a filter doesn't make the containing
+   block of what is fixed */
+body[data-theme="grayscale"] {
+  --color-background: #2b2b2b;
+  --color-text: #e6e6e6;
+  --color-title: #ffffff;
+  --color-link: #bdbdbd;
+  --color-bold: #a6a6a6;
+}
+
+html:has(body[data-theme="grayscale"]) {
+  filter: grayscale(1);
+}
+
+body[data-theme="paper"] {
+  --color-background: #f3e9d2;
+  --color-text: #3b2a1a;
+  --color-title: #7a3e10;
+  --color-link: #8b4513;
+  --color-bold: #5a6b1f;
+  --theme-title-font: playfair;
+  --theme-text-font: lora;
 }
 
 body[data-theme="navy"] {
@@ -36,12 +67,73 @@ body[data-theme="navy"] {
   --color-bold: #9be564;
 }
 
+body[data-theme="ocean"] {
+  --color-background: #0b2e3a;
+  --color-text: #e0f7f5;
+  --color-title: #3fe0d0;
+  --color-link: #ff7f6b;
+  --color-bold: #ffd166;
+  --theme-title-font: lexend;
+  --theme-text-font: lexend;
+}
+
 body[data-theme="campfire"] {
   --color-background: #1a0d06;
   --color-text: #ffe0c2;
   --color-title: #ff8a3d;
   --color-link: #ffb070;
   --color-bold: #ffd23f;
+  --theme-title-font: marker;
+}
+
+body[data-theme="sunset"] {
+  --color-background: #2a1036;
+  --color-text: #ffe3d1;
+  --color-title: #ffa552;
+  --color-link: #ff6fb5;
+  --color-bold: #ffd23f;
+  --theme-title-font: pacifico;
+  --theme-text-font: nunito;
+}
+
+body[data-theme="military"] {
+  --color-background: #2d321f;
+  --color-text: #e3dcc0;
+  --color-title: #c8b273;
+  --color-link: #a3b16d;
+  --color-bold: #d4a73a;
+  --theme-title-font: oswald;
+}
+
+body[data-theme="terminal"] {
+  --color-background: #050c05;
+  --color-text: #3cff6e;
+  --color-title: #b4ffc8;
+  --color-link: #ffb000;
+  --color-bold: #ffd75e;
+  --theme-title-font: vt323;
+  --theme-text-font: vt323;
+}
+
+body[data-theme="pink"] {
+  --color-background: #ffe0ef;
+  --color-text: #5a1040;
+  --color-title: #e0218a;
+  --color-link: #b0127a;
+  --color-bold: #8e24aa;
+  --theme-title-font: dancing;
+  --theme-text-font: nunito;
+}
+
+/* Nabla's letters bring colours of their own */
+body[data-theme="rainbow"] {
+  --color-background: #fff8c4;
+  --color-text: #2b1a7a;
+  --color-title: #ff1f8e;
+  --color-link: #0077ff;
+  --color-bold: #00a63e;
+  --theme-title-font: nabla;
+  --theme-text-font: comic;
 }
 
 /* The theme's variables, and the dialogs', the toast's and the tooltips':
@@ -906,14 +998,14 @@ dialog.overlay-modal::backdrop {
   margin-right: 0.5em;
 }
 
-/* The fonts, one radio button each, labelled with a picture of the font's
-   name set in it (style/fonts/samples/, `rake fonts:samples`): pictures, so
-   opening the dialog downloads no font. White on transparent, darkened for
-   the bright theme below. A font to a row, large enough to read, in a list
-   that scrolls: shrunk to fit the dialog all at once, they were too small to
-   tell apart. The two lists side by side where they both fit. The dialog is
-   wider for them, and on a large screen set smaller than the others: in
-   their 2rem, it ran past the bottom of a laptop's. */
+/* The fonts, a row each, its name a picture set in it (style/fonts/samples/,
+   `rake fonts:samples`): pictures, so opening the dialog downloads no font.
+   White on transparent, darkened on a light background below. A radio
+   button in the row for the titles and one for the text. Large enough to
+   read, in a list that scrolls: shrunk to fit the dialog all at once, they
+   were too small to tell apart. The dialog is wider for the colours' row,
+   and on a large screen set smaller than the others: in their 2rem, it ran
+   past the bottom of a laptop's. */
 #settings-modal .modal-box {
   width: min(48rem, 94vw);
 }
@@ -922,12 +1014,6 @@ dialog.overlay-modal::backdrop {
   #settings-modal .modal-box {
     font-size: 1.5rem;
   }
-}
-
-.settings-font-groups {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 0.8em;
 }
 
 /* The chords' checkbox and the close button share a row: one less */
@@ -957,46 +1043,69 @@ dialog.overlay-modal::backdrop {
 }
 
 /* Positioned, so a row's offsetTop is its place in the list (the dialog
-   scrolls the checked one into view as it opens). As tall as the screen
-   leaves room for beside the rest of the dialog, and no taller than five
-   rows: svh, the height with a phone's browser bars shown. */
+   scrolls a picked one into view as it opens). As tall as the screen leaves
+   room for beside the rest of the dialog, and no taller than seven rows:
+   svh, the height with a phone's browser bars shown. */
 .settings-font-list {
   position: relative;
-  max-height: max(3.5em, min(10.5em, 100svh - 15.3em));
+  max-height: max(3.5em, min(14em, 100svh - 16.3em));
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 0.15em;
+  padding: 0 0.15em 0.15em;
   border: 1px solid var(--color-border);
   border-radius: 0.3em;
 }
 
-.modal-box .settings-fonts label {
-  display: flex;
+/* The radio buttons in two columns under their heading, which stays on top
+   as the list scrolls */
+.settings-font-head,
+.settings-font-row {
+  display: grid;
+  grid-template-columns: 2.4em 2.4em minmax(0, 1fr);
   align-items: center;
-  gap: 0.5em;
+  column-gap: 0.2em;
+}
+
+.settings-font-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0.2em 0;
+  background: var(--color-surface);
+  line-height: 1;
+  text-align: center;
+}
+
+.settings-font-head span {
+  font-size: 0.6em;
+}
+
+.modal-box .settings-font-row label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0;
-  padding: 0.25em 0.5em;
+  padding: 0.25em 0;
   font-size: 1em;
   border-radius: 0.25em;
   cursor: pointer;
 }
 
-.settings-fonts label:has(:checked) {
+.settings-font-row label:has(:checked) {
   background: color-mix(in srgb, var(--color-link) 20%, transparent);
 }
 
-.settings-fonts label:has(:focus-visible) {
+.settings-font-row label:has(:focus-visible) {
   outline: 2px solid var(--color-link);
   outline-offset: -2px;
 }
 
-.settings-fonts input {
-  flex: none;
+.settings-font-row input {
   margin: 0;
 }
 
 /* A long name is shrunk to fit its row, never cut off */
-.settings-fonts img {
+.settings-font-row img {
   min-width: 0;
   max-width: 100%;
   height: 1.5em;
@@ -1004,14 +1113,14 @@ dialog.overlay-modal::backdrop {
   object-position: left center;
 }
 
-/* On a phone held upright, one list above the other, each half the room */
-@media (width < 500px) {
-  .settings-font-groups {
-    grid-template-columns: 1fr;
-  }
+.settings-font-theme {
+  font-size: 0.8em;
+}
 
+/* On a phone held upright, the colours take two rows */
+@media (width < 500px) {
   .settings-font-list {
-    max-height: max(3.5em, min(10.5em, (100svh - 20em) / 2));
+    max-height: max(3.5em, min(14em, 100svh - 20em));
   }
 }
 
@@ -1164,31 +1273,96 @@ dialog.overlay-modal::backdrop {
   border: 0;
 }
 
-/* The fonts ⚙️ offers (body-controls.html sets the attributes), in place of
-   the theme's Montserrat for the titles and Open Sans for the text. Code
-   blocks and the chords keep --r-code-font. The theme's tight letter spacing
-   is Montserrat's: the others are set as designed. The theme asks for its
-   headings at weight normal and gets Montserrat's 700, the only one there
-   is; Comic Relief has a 400, so its headings ask for the 700. */
-body[data-title-font] { --r-heading-letter-spacing: normal; }
-body[data-title-font="playfair"] { --r-heading-font: 'Playfair Display', Georgia, serif; }
-body[data-title-font="oswald"]   { --r-heading-font: 'Oswald', 'Arial Narrow', sans-serif; }
-body[data-title-font="pacifico"] { --r-heading-font: 'Pacifico', cursive; }
-body[data-title-font="marker"]   { --r-heading-font: 'Permanent Marker', cursive; }
-body[data-title-font="comic"]    { --r-heading-font: 'Comic Relief', cursive; --r-heading-font-weight: 700; }
-body[data-title-font="dancing"]  { --r-heading-font: 'Dancing Script', cursive; }
-body[data-title-font="antic"]    { --r-heading-font: 'Antic Slab', serif; }
-body[data-text-font="atkinson"]  { --r-main-font: 'Atkinson Hyperlegible', sans-serif; }
-body[data-text-font="lora"]      { --r-main-font: 'Lora', Georgia, serif; }
-body[data-text-font="nunito"]    { --r-main-font: 'Nunito', sans-serif; }
-body[data-text-font="caveat"]    { --r-main-font: 'Caveat', cursive; }
-body[data-text-font="comic"]     { --r-main-font: 'Comic Relief', cursive; }
-body[data-text-font="antic"]     { --r-main-font: 'Antic Slab', serif; }
+/* The fonts ⚙️ offers, each for the titles and for the text alike, by the
+   id body-controls.html sets as data-title-font and data-text-font: the
+   reader's pick, or the scheme's. Code blocks keep --r-code-font, the
+   chords don't (below). The theme's tight letter spacing is
+   Montserrat's: the others are set as designed. Headings ask for a font's
+   700 where it has one; one that has only a 400 is set in it as it is, not
+   thickened by the browser. */
+body {
+  --font-montserrat: 'Montserrat', Impact, sans-serif;
+  --font-opensans: 'Open Sans', sans-serif;
+  --font-atkinson: 'Atkinson Hyperlegible', sans-serif;
+  --font-lexend: 'Lexend', sans-serif;
+  --font-dyslexic: 'OpenDyslexic', sans-serif;
+  --font-nunito: 'Nunito', sans-serif;
+  --font-lora: 'Lora', Georgia, serif;
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-oswald: 'Oswald', 'Arial Narrow', sans-serif;
+  --font-antic: 'Antic Slab', serif;
+  --font-comic: 'Comic Relief', cursive;
+  --font-caveat: 'Caveat', cursive;
+  --font-dancing: 'Dancing Script', cursive;
+  --font-pacifico: 'Pacifico', cursive;
+  --font-marker: 'Permanent Marker', cursive;
+  --font-vt323: 'VT323', monospace;
+  --font-outline: 'Londrina Outline', cursive;
+  --font-nabla: 'Nabla', cursive;
+  --font-symbole: 'Liedli Symbole', sans-serif;
+  --font-hieroglyphen: 'Liedli Hieroglyphen', sans-serif;
+  --r-heading-font-weight: 700;
+  --r-heading-letter-spacing: normal;
+}
+
+.reveal :is(h1, h2, h3, h4, h5, h6) {
+  font-synthesis: style;
+}
+
+body[data-title-font="montserrat"]   { --r-heading-font: var(--font-montserrat); --r-heading-letter-spacing: -.03em; }
+body[data-title-font="opensans"]     { --r-heading-font: var(--font-opensans); }
+body[data-title-font="atkinson"]     { --r-heading-font: var(--font-atkinson); }
+body[data-title-font="lexend"]       { --r-heading-font: var(--font-lexend); }
+body[data-title-font="dyslexic"]     { --r-heading-font: var(--font-dyslexic); }
+body[data-title-font="nunito"]       { --r-heading-font: var(--font-nunito); }
+body[data-title-font="lora"]         { --r-heading-font: var(--font-lora); }
+body[data-title-font="playfair"]     { --r-heading-font: var(--font-playfair); }
+body[data-title-font="oswald"]       { --r-heading-font: var(--font-oswald); }
+body[data-title-font="antic"]        { --r-heading-font: var(--font-antic); }
+body[data-title-font="comic"]        { --r-heading-font: var(--font-comic); }
+body[data-title-font="caveat"]       { --r-heading-font: var(--font-caveat); }
+body[data-title-font="dancing"]      { --r-heading-font: var(--font-dancing); }
+body[data-title-font="pacifico"]     { --r-heading-font: var(--font-pacifico); }
+body[data-title-font="marker"]       { --r-heading-font: var(--font-marker); }
+body[data-title-font="vt323"]        { --r-heading-font: var(--font-vt323); }
+body[data-title-font="outline"]      { --r-heading-font: var(--font-outline); }
+body[data-title-font="nabla"]        { --r-heading-font: var(--font-nabla); }
+body[data-title-font="symbole"]      { --r-heading-font: var(--font-symbole); }
+body[data-title-font="hieroglyphen"] { --r-heading-font: var(--font-hieroglyphen); }
+body[data-text-font="montserrat"]    { --r-main-font: var(--font-montserrat); }
+body[data-text-font="opensans"]      { --r-main-font: var(--font-opensans); }
+body[data-text-font="atkinson"]      { --r-main-font: var(--font-atkinson); }
+body[data-text-font="lexend"]        { --r-main-font: var(--font-lexend); }
+body[data-text-font="dyslexic"]      { --r-main-font: var(--font-dyslexic); }
+body[data-text-font="nunito"]        { --r-main-font: var(--font-nunito); }
+body[data-text-font="lora"]          { --r-main-font: var(--font-lora); }
+body[data-text-font="playfair"]      { --r-main-font: var(--font-playfair); }
+body[data-text-font="oswald"]        { --r-main-font: var(--font-oswald); }
+body[data-text-font="antic"]         { --r-main-font: var(--font-antic); }
+body[data-text-font="comic"]         { --r-main-font: var(--font-comic); }
+body[data-text-font="caveat"]        { --r-main-font: var(--font-caveat); }
+body[data-text-font="dancing"]       { --r-main-font: var(--font-dancing); }
+body[data-text-font="pacifico"]      { --r-main-font: var(--font-pacifico); }
+body[data-text-font="marker"]        { --r-main-font: var(--font-marker); }
+body[data-text-font="vt323"]         { --r-main-font: var(--font-vt323); }
+body[data-text-font="outline"]       { --r-main-font: var(--font-outline); }
+body[data-text-font="nabla"]         { --r-main-font: var(--font-nabla); }
+body[data-text-font="symbole"]       { --r-main-font: var(--font-symbole); }
+body[data-text-font="hieroglyphen"]  { --r-main-font: var(--font-hieroglyphen); }
+
+/* The chords in the lyrics are text too, and wear its font, whichever it
+   is: the picture fonts' too, for whoever picks them. A code block's
+   fingerings, like the chord tooltip's, keep --r-code-font, whose letters
+   are all as wide, or their columns would no longer line up. */
+.reveal section button.chord code {
+  font-family: var(--r-main-font);
+}
 
 /* On a light background (body-controls.html says which is) */
 
-/* The samples are white: darkened to a dark text */
-body.theme-light .settings-fonts img {
+/* The samples are white: darkened to a dark text. Nabla's has colours of
+   its own. */
+body.theme-light .settings-font-row img:not(#font-nabla) {
   filter: invert(0.8);
 }
 

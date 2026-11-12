@@ -55,10 +55,11 @@ end
 
 namespace :fonts do
   # The settings dialog shows each font it offers as a picture of its name set
-  # in it, so opening the dialog downloads a dozen small pictures instead of a
-  # dozen fonts. This renders those pictures from the radio buttons in
-  # body-controls.html (the img's src and alt) with the same @font-face rules
-  # and night.css variables the song book uses: white on transparent, which
+  # in it, so opening the dialog downloads a score of small pictures instead of
+  # a score of fonts. This renders those pictures from the font list in
+  # body-controls.html (each row's img, its src and alt, and its radio
+  # buttons' value, the font's id) with the same @font-face rules and night.css
+  # variables the song book uses, as text: white on transparent, which
   # night.css darkens on a light background.
   desc 'Render the font samples of the settings dialog (style/fonts/samples/)'
   task :samples do
@@ -73,11 +74,8 @@ namespace :fonts do
     browser.go_to(FileServer.url('/'))
     controls = Nokogiri::HTML.fragment(File.read(File.join(__dir__, 'style', 'body-controls.html'), encoding: 'UTF-8'))
     begin
-      controls.css('.settings-fonts input[type="radio"]').each do |radio|
-        img = radio.next_element
-        title = radio['name'] == 'title-font'
-        attribute = radio['value'].empty? ? '' : %( data-#{radio['name']}="#{radio['value']}")
-        tag = title ? 'h1' : 'p'
+      controls.css('.settings-font-row img').each do |img|
+        font = img.parent.at_css('input[name="text-font"]')['value']
         browser.content = <<~HTML
           <!doctype html>
           <html><head>
@@ -88,7 +86,7 @@ namespace :fonts do
               html, body { margin: 0; background: transparent !important; }
               #sample { display: inline-block; margin: 0; padding: 0.1em 0.2em; font-size: 64px; line-height: 1.3; white-space: nowrap; color: #fff; text-shadow: none; }
             </style>
-          </head><body#{attribute}><div class="reveal"><#{tag} id="sample">#{img['alt']}</#{tag}></div></body></html>
+          </head><body data-text-font="#{font}"><div class="reveal"><p id="sample">#{img['alt']}</p></div></body></html>
         HTML
         family = browser.evaluate("getComputedStyle(document.getElementById('sample')).fontFamily")[/\A"?([^",]+)/, 1]
         loaded = browser.evaluate_async(<<~JS, 10)
