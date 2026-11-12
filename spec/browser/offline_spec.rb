@@ -119,6 +119,11 @@ RSpec.describe 'offline (service worker)', :js, type: :feature do
       # Reveal listens on the document: nothing pressed inside the dialog reaches it
       press(:right)
       expect(page.evaluate_script('Reveal.getIndices().h')).to eq(2)
+      # „Neu laden" is all it offers, and a tap beside it (the click lands on
+      # the <dialog> itself) leaves it standing
+      within('#update-modal') { expect(page).to have_css('button', count: 1, text: 'Neu laden') }
+      page.execute_script("document.getElementById('update-modal').click()")
+      expect(page).to have_visible('#update-modal')
       within('#update-modal') { click_button('Neu laden') }
       expect(page).to have_css('#next-build', visible: :all)
       wait_for_reveal

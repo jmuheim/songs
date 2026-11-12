@@ -370,21 +370,20 @@
   //
   // A new build shows from the load after the one that finds it. Should the
   // new worker take over while this page is open (a page it was already
-  // controlling: not the very first worker), a dialog (#update-modal) offers
-  // that load now, on the slide the reader is on; „Später" leaves it to the
-  // next visit.
+  // controlling: not the very first worker), a dialog (#update-modal) asks
+  // for that load now, on the slide the reader is on. „Neu laden" is all it
+  // offers, and a tap beside it doesn't close it, or a stray one on a phone
+  // would. Esc still does: a modal dialog's Esc is the browser's own.
   window.addEventListener('load', function() {
     if (!navigator.serviceWorker) return;
     if (window.SERVICE_WORKER && !window.SERVICE_WORKER_OFF) {
       var updateModal = document.getElementById('update-modal');
-      document.getElementById('update-later').addEventListener('click', function() { updateModal.close(); });
       document.getElementById('update-reload').addEventListener('click', function() {
         writeSlideToUrl();
         location.reload();
       });
       updateModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
       updateModal.addEventListener('keypress', function(e) { e.stopPropagation(); });
-      updateModal.addEventListener('click', function(e) { if (e.target === updateModal) updateModal.close(); });
       var controlled = !!navigator.serviceWorker.controller;
       navigator.serviceWorker.addEventListener('controllerchange', function() {
         if (controlled && !updateModal.open) updateModal.showModal();
@@ -809,9 +808,8 @@
 <dialog id="update-modal" class="overlay-modal" aria-labelledby="update-title">
   <div class="modal-box">
     <h2 id="update-title" tabindex="-1" autofocus>Neue Version</h2>
-    <p>Eine neue Version des Liederbuchs ist da. Jetzt neu laden? Du bleibst auf dieser Folie.</p>
+    <p>Eine neue Version des Liederbuchs ist da.</p>
     <div class="modal-buttons">
-      <button type="button" id="update-later">Später</button>
       <button type="button" id="update-reload">Neu laden</button>
     </div>
   </div>
