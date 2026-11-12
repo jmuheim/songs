@@ -1309,7 +1309,8 @@ RSpec.describe 'index.html', :js, type: :feature do
         open_live_scroll_dialog
         within('#multiplex-info-modal') do
           expect(page).to have_css('#multiplex-info-status', text: 'Keine Runde')
-          expect(page).to have_css('#multiplex-info-join', text: 'Scanne den QR-Code eines Gastgebers')
+          expect(page).to have_css('#multiplex-info-join', text: 'Scanne den QR-Code eines Gastgebers oder gib den Code der Runde ein')
+          expect(page).to have_button('🎟️ Mit Code beitreten')
           # A plain visitor has nothing to start, show or end
           expect(page).to have_no_button('🚀 Live-Scrollen starten', disabled: :all)
           expect(page).to have_no_button('🔗 QR-Code zeigen')
@@ -1350,9 +1351,11 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_css('#multiplex-toast.visible', text: 'Du bist jetzt Gastgeber')
         expect(page).to have_css('#multiplex-status', text: 'Du bist Gastgeber')
         # A fresh secret, generated here, is the session — kept on the device,
-        # not in the address, and hashed into the relay channel
+        # not in the address, and hashed into the relay channel. It is the
+        # session's code too, short enough to type: 8 characters of Crockford's
+        # base32, which leaves out I, L, O and U
         secret = session_secret
-        expect(secret).to match(/\A\h{32}\z/)
+        expect(secret).to match(/\A[0-9A-HJKMNP-TV-Z]{8}\z/)
         expect(page.evaluate_script("window.MULTIPLEX.socketId")).to eq(Digest::SHA256.hexdigest(secret))
         expect(page.evaluate_script("location.search")).to eq('')
         # First, whose songs the evening has (the fixture names Gastgeber), and
@@ -1365,9 +1368,11 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_visible('#qr-modal')
         expect(page).to have_css("#qr-canvas img[alt$='?live=#{secret}&qr=1']", visible: :all)
         expect(page).to have_css('#qr-info', text: 'Scanne den Code') # for those reading it off this screen
+        expect(page).to have_css('#qr-code-line', text: "Oder in 📡 den Code eingeben: #{secret[0, 4]}-#{secret[4, 4]}")
         within('#qr-modal') { click_button('Schliessen') }
         open_live_scroll_dialog
         within('#multiplex-info-modal') do
+          expect(page).to have_no_button('🎟️ Mit Code beitreten') # in a session already
           expect(page).to have_button('🚀 Live-Scrollen starten', disabled: true) # the title slide is no song
           expect(page).to have_button('🔗 QR-Code zeigen')
           expect(page).to have_button('🏁 Runde beenden')
@@ -1400,7 +1405,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_visible('#gastgeber-modal') # again first,
         within('#gastgeber-modal') { click_button('OK') }
         expect(page).to have_visible('#qr-modal') # and then its QR code
-        expect(session_secret).to match(/\A\h{32}\z/)
+        expect(session_secret).to match(/\A[0-9A-HJKMNP-TV-Z]{8}\z/)
         expect(session_secret).not_to eq(secret)
       end
     end
@@ -1792,6 +1797,81 @@ RSpec.describe 'index.html', :js, type: :feature do
           wait_for_js("Reveal.getIndices().h === 1")
           expect(slide_indices).to eq([1, 0])
           expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv')
+        end
+      end
+
+      it 'a guest joins by the code under the QR code, typed in any case and spacing; one that finds no session is let go again' do
+        secret = code = nil
+        using_session(:presenter) do
+          load_presentation
+          log_in_as_host
+          secret = session_secret
+          open_live_scroll_dialog
+          within('#multiplex-info-modal') { click_button('🔗 QR-Code zeigen') }
+          code = find('#qr-code').text
+          expect(code).to eq("#{secret[0, 4]}-#{secret[4, 4]}") # read out in two halves
+          within('#qr-modal') { click_button('Schliessen') }
+        end
+
+        using_session(:guest) do
+          load_presentation
+          page.execute_script("window.MULTIPLEX.heartbeat = 200") # a code nobody answers is let go after three of them
+          open_live_scroll_dialog
+          within('#multiplex-info-modal') { click_button('🎟️ Mit Code beitreten') }
+          expect(page).to have_visible('#join-modal')
+          expect(active_element_id).to eq('join-code')
+          # Reveal listens on the document: Esc closes the dialog and opens no overview
+          press(:escape)
+          expect(page).not_to have_visible('#join-modal')
+          expect(page.evaluate_script("Reveal.isOverview()")).to be false
+
+          open_live_scroll_dialog
+          within('#multiplex-info-modal') { click_button('🎟️ Mit Code beitreten') }
+          within('#join-modal') do
+            # Not a code at all: said at once, and nothing tried
+            find('#join-code').set('ABC')
+            click_button('Beitreten')
+            expect(page).to have_css('#join-code.shake')
+            expect(page).to have_css('#join-info', text: 'Ein Code hat 8 Zeichen, Ziffern und Buchstaben.')
+
+            # Lower case, a space and an O for a 0 make a code all the same (or
+            # this would be the message above), but no session has this one:
+            # the device is let go again once it has heard nothing
+            find('#join-code').set('zzzz zzzo')
+            click_button('Beitreten')
+            expect(page).to have_css('#join-code[readonly]')
+            expect(page).to have_css('#join-info', text: 'Keine Runde mit diesem Code gefunden. Stimmt er?')
+            expect(page).to have_no_css('#join-code[readonly]')
+          end
+          expect(page).to have_visible('#join-modal') # for another try
+          expect(page).to have_css('#multiplex-status', text: 'Keine Runde', visible: :all)
+          expect(session_secret).to be_nil
+
+          # The host's code, typed as it may come: in, once the host is heard
+          within('#join-modal') do
+            find('#join-code').set(code.downcase.tr('-', ' '))
+            click_button('Beitreten')
+          end
+          expect(page).to have_visible('#qr-modal')
+          expect(page).not_to have_visible('#join-modal')
+          expect(page).to have_css('#qr-title', text: 'Du bist dabei!')
+          expect(page).to have_css('#qr-code', text: code) # for the next guests
+          expect(session_secret).to eq(secret)
+          expect(page).to have_css('#multiplex-status', text: 'Kein Live-Scrollen aktiv', visible: :all)
+        end
+
+        # Without a connection to the relay, a code can't be checked: it is let go too
+        using_session(:offline) do
+          load_presentation
+          page.execute_script("window.MULTIPLEX.heartbeat = 200; window.MULTIPLEX.url = 'http://127.0.0.1:9'") # nothing listens there
+          open_live_scroll_dialog
+          within('#multiplex-info-modal') { click_button('🎟️ Mit Code beitreten') }
+          within('#join-modal') do
+            find('#join-code').set(code)
+            click_button('Beitreten')
+            expect(page).to have_css('#join-info', text: 'Keine Verbindung. Versuch es nochmals, sobald du Netz hast.')
+          end
+          expect(session_secret).to be_nil
         end
       end
 
@@ -2321,6 +2401,8 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect(page).to have_css('#qr-info', text: 'Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.')
         # Whoever scans it is in the session, and shows their own code right away
         expect(page).to have_css('#qr-canvas img[alt^="QR-Code für http"][alt$="?live=spec-qr&qr=1"]', visible: :all)
+        # A secret from before the codes (this one isn't one either) has no code to type
+        expect(page).to have_css('#qr-code-line', visible: :hidden)
 
         # Wide viewports (this spec's default window is 1280x800, past the
         # 769px breakpoint night.css switches on): the QR sits beside the text

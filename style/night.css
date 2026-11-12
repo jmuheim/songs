@@ -808,6 +808,7 @@ dialog.overlay-modal::backdrop {
 }
 
 #host-info,
+#join-info,
 #gastgeber-info,
 #qr-info,
 #live-toggle-hint,
@@ -819,6 +820,7 @@ dialog.overlay-modal::backdrop {
 }
 
 .modal-box input[type="password"],
+.modal-box input[type="text"],
 .settings-field select {
   display: block;
   width: 100%;
@@ -834,6 +836,7 @@ dialog.overlay-modal::backdrop {
 }
 
 .modal-box input[type="password"]:focus,
+.modal-box input[type="text"]:focus,
 .settings-field select:focus {
   border-color: var(--color-link);
 }
@@ -1080,6 +1083,28 @@ dialog.overlay-modal::backdrop {
 .modal-box button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* A session's code (body-controls.html), typed and shown: in a monospace
+   face, where 0 and O, 1 and I don't look alike to begin with */
+#join-code,
+#qr-code {
+  font-family: monospace;
+  letter-spacing: 0.1em;
+}
+
+#join-code {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#qr-code-line {
+  font-size: 0.8em;
+}
+
+#qr-code {
+  font-size: 1.25em;
+  white-space: nowrap;
 }
 
 #qr-canvas {

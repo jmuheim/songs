@@ -94,9 +94,10 @@ In the 📡 dialog:
 
 | Button | Function |
 |--------|----------|
+| 🎟️ | Outside a session: „Mit Code beitreten" — type the code shown under the session's QR code (case and dashes don't matter) |
 | 🔑 | „Als Gastgeber anmelden" (asks for the password once per device), or, in a session, „Gastgeber übernehmen" |
 | 🚀 | Host only: start live scrolling on the current song (songs only), or end it |
-| 🔗 | In a session: show its QR code — scan to join |
+| 🔗 | In a session: show its QR code — scan to join — and below it the session's code, to type in instead |
 | 🚪 | Guests: „Runde verlassen" — this device leaves the session |
 | 🏁 | Host only: „Runde beenden" — everyone leaves the session |
 

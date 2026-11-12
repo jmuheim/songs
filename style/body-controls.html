@@ -519,12 +519,13 @@
   <div class="modal-box">
     <h2 id="multiplex-info-title" tabindex="-1" autofocus>Live-Scrollen</h2>
     <p id="multiplex-info-status"></p>
-    <p id="multiplex-info-join">Scanne den QR-Code eines Gastgebers, um mitzulesen.</p>
+    <p id="multiplex-info-join">Scanne den QR-Code eines Gastgebers oder gib den Code der Runde ein, um mitzulesen.</p>
     <p id="multiplex-info-legend">●&nbsp;Du scrollst &nbsp;○&nbsp;Du folgst &nbsp;●&nbsp;Warte auf Gast &nbsp;⦸&nbsp;Keine Verbindung</p>
     <div class="modal-buttons modal-buttons-stacked">
       <button id="live-toggle" aria-haspopup="dialog" aria-pressed="false" aria-describedby="live-toggle-hint" hidden><span aria-hidden="true">🚀</span> <span id="live-toggle-label">Live-Scrollen starten</span></button>
       <p id="live-toggle-hint" hidden>Live-Scrollen lässt sich nur auf einem Lied starten.</p>
       <button id="show-qr" aria-haspopup="dialog" hidden><span aria-hidden="true">🔗</span> QR-Code zeigen</button>
+      <button id="session-join" aria-haspopup="dialog"><span aria-hidden="true">🎟️</span> Mit Code beitreten</button>
       <button id="host-login" aria-haspopup="dialog"><span aria-hidden="true">🔑</span> <span id="host-login-label">Als Gastgeber anmelden</span></button>
       <button id="session-leave" hidden><span aria-hidden="true">🚪</span> Runde verlassen</button>
       <button id="session-end" hidden><span aria-hidden="true">🏁</span> Runde beenden</button>
@@ -548,11 +549,25 @@
   </form>
 </dialog>
 
+<dialog id="join-modal" class="overlay-modal" aria-labelledby="join-title">
+  <form class="modal-box" method="dialog">
+    <h2 id="join-title">Runde beitreten</h2>
+    <p id="join-info" role="status">Der Code steht unter dem QR-Code der Runde.</p>
+    <label for="join-code">Code</label>
+    <input type="text" id="join-code" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" autofocus>
+    <div class="modal-buttons">
+      <button type="button" id="join-cancel">Abbrechen</button>
+      <button id="join-confirm">Beitreten</button>
+    </div>
+  </form>
+</dialog>
+
 <dialog id="qr-modal" class="overlay-modal" aria-labelledby="qr-title">
   <div class="modal-box modal-box-qr">
     <div class="qr-text">
       <h2 id="qr-title" tabindex="-1" autofocus>Liederbuch öffnen</h2>
       <p id="qr-info">Scanne den Code, um die Liedtexte auf deinem Gerät mitzuverfolgen.</p>
+      <p id="qr-code-line">Oder in 📡 den Code eingeben: <strong id="qr-code"></strong></p>
     </div>
     <div id="qr-canvas"></div>
     <button id="qr-close">Schliessen</button>
@@ -656,6 +671,10 @@ window.addEventListener('load', function() {
   var multiplexModal = document.getElementById('multiplex-info-modal');
   var multiplexInfoStatus = document.getElementById('multiplex-info-status');
   var multiplexInfoJoin   = document.getElementById('multiplex-info-join');
+  var sessionJoinBtn = document.getElementById('session-join');
+  var joinModal   = document.getElementById('join-modal');
+  var joinCode    = document.getElementById('join-code');
+  var joinInfo    = document.getElementById('join-info');
 
   // ---- Session, host and live scrolling ----
   // A session is one evening. Whoever has its secret is in it, on the relay
@@ -709,11 +728,24 @@ window.addEventListener('load', function() {
 
   function amScroller() { return !!live && live.scrollerId === senderId; }
 
+  // A session's secret is its code: 8 characters of Crockford's base32 (the
+  // digits, and the letters but I, L, O and U, which pass for 1, 1, 0 and V),
+  // 40 random bits, short enough to read out and type (see joining by code).
+  // The relay only checks sha256(secret) == socketId, whatever its length.
+  var CODE_ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
   function newSecret() {
-    var bytes = new Uint8Array(16);
+    var bytes = new Uint8Array(8);
     crypto.getRandomValues(bytes);
-    return Array.prototype.map.call(bytes, function(b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+    return Array.prototype.map.call(bytes, function(b) { return CODE_ALPHABET[b & 31]; }).join('');
   }
+  // What was typed, as a code, or null: case, spaces and dashes don't count,
+  // and O, I and L are read as the 0 and 1 they look like
+  function readCode(text) {
+    var code = String(text).toUpperCase().replace(/[\s-]/g, '').replace(/O/g, '0').replace(/[IL]/g, '1');
+    return /^[0-9A-HJKMNP-TV-Z]{8}$/.test(code) ? code : null;
+  }
+  // K7QM2XRA as K7QM-2XRA, easier to read out
+  function formatCode(code) { return code.slice(0, 4) + '-' + code.slice(4); }
 
   // cfg.socket, cfg.secret and cfg.socketId are seams for the specs: they
   // simulate a real drop/reconnect on the socket and feed it from sockets of
@@ -961,6 +993,7 @@ window.addEventListener('load', function() {
     else if (data.type === 'volunteer') onVolunteerMessage(data);
     else if (data.type === 'wish') onWishMessage(data);
     else if (data.type === 'end') onEndMessage(data);
+    trialHeard(); // a typed code: the session is there
   }
 
   function onHostMessage(data) {
@@ -1424,7 +1457,7 @@ window.addEventListener('load', function() {
       lines = lines.concat(['Du kannst jetzt wieder frei navigieren']);
       if (wasScroller) lines.push('Vielen Dank fürs Scrollen!');
     }
-    showToast(lines);
+    if (lines.length) showToast(lines); // none: a typed code that found no session
   }
 
   // There is no heartbeat left to carry this one, so it is repeated twice
@@ -1461,6 +1494,7 @@ window.addEventListener('load', function() {
     sessionLeaveBtn.hidden = !inSession || isHost;
     sessionEndBtn.hidden = !isHost;
     multiplexInfoJoin.hidden = inSession;
+    sessionJoinBtn.hidden = inSession;
   }
 
   // ---- Buttons and dialogs ----
@@ -1474,6 +1508,80 @@ window.addEventListener('load', function() {
   });
 
   document.getElementById('host-cancel').addEventListener('click', function() { hostModal.close(); });
+
+  // ---- Joining by code ----
+  // Without a camera, or in the song book added to the home screen (whose
+  // storage a scanned QR code, opening in Safari, never reaches): the code
+  // under the session's QR code, typed in. A code can be mistyped, or be last
+  // week's, and a session that doesn't exist looks just like a quiet one. So
+  // the device joins on trial, and stays once it hears the session (its host
+  // repeats itself on every heartbeat). Connected and unheard for three
+  // heartbeats, it leaves again and says so; unconnected for eight, it gives
+  // up rather than keep the reader waiting. Not touched meanwhile, so a
+  // reload during the trial doesn't keep the session either (seenAt 0 is long
+  // past the TTL).
+  var JOIN_INFO = joinInfo.textContent;
+  var trial = null; // { since, connectedAt, timer } while a typed code is tried
+  function endTrial() {
+    clearInterval(trial.timer);
+    trial = null;
+    joinCode.readOnly = false;
+  }
+  function failTrial(text) {
+    endTrial();
+    leaveSession([], false);
+    joinInfo.textContent = text;
+    joinCode.focus();
+  }
+  function trialHeard() {
+    if (!trial) return;
+    endTrial();
+    joinModal.close();
+    showQrModal(true); // in, like a scanned code: and here is the code for the next guests
+  }
+
+  sessionJoinBtn.addEventListener('click', function() {
+    multiplexModal.close();
+    joinInfo.textContent = JOIN_INFO;
+    joinModal.showModal();
+  });
+  document.getElementById('join-cancel').addEventListener('click', function() { joinModal.close(); });
+  joinModal.addEventListener('close', function() {
+    if (trial) { endTrial(); leaveSession([], false); }
+    joinCode.value = '';
+  });
+
+  joinModal.querySelector('form').addEventListener('submit', function(e) {
+    e.preventDefault(); // stays open until the session is heard
+    if (trial) return;
+    var code = readCode(joinCode.value);
+    if (!code) {
+      joinInfo.textContent = 'Ein Code hat 8 Zeichen, Ziffern und Buchstaben.';
+      joinCode.classList.add('shake');
+      setTimeout(function() { joinCode.classList.remove('shake'); }, 500);
+      joinCode.focus();
+      return;
+    }
+    joinCode.value = formatCode(code);
+    joinCode.readOnly = true;
+    joinInfo.textContent = 'Suche die Runde …';
+    join(code);
+    applyTocFilter();
+    restartHeartbeat();
+    updateControls();
+    updateStatus();
+    renderWishes();
+    var beat = cfg.heartbeat || HEARTBEAT_MS;
+    trial = { since: Date.now(), connectedAt: 0, timer: setInterval(function() {
+      var now = Date.now();
+      if (socket.connected) {
+        trial.connectedAt = trial.connectedAt || now;
+        if (now - trial.connectedAt > 3 * beat) failTrial('Keine Runde mit diesem Code gefunden. Stimmt er?');
+      } else if (now - trial.since > 8 * beat) {
+        failTrial('Keine Verbindung. Versuch es nochmals, sobald du Netz hast.');
+      }
+    }, 250) };
+  });
 
   // Weiter and Enter submit; method="dialog" closes the dialog unless we stop it
   hostModal.querySelector('form').addEventListener('submit', function(e) {
@@ -1599,11 +1707,16 @@ window.addEventListener('load', function() {
   // off this screen.
   var qrTitle = document.getElementById('qr-title');
   var qrInfo  = document.getElementById('qr-info');
+  var qrCodeLine = document.getElementById('qr-code-line');
   var QR_TEXT = { title: qrTitle.textContent, info: qrInfo.textContent };
   function showQrModal(joined) {
     if (!window.QRCode || !secret) return;
     qrTitle.textContent = joined ? 'Du bist dabei!' : QR_TEXT.title;
     qrInfo.textContent = joined ? 'Lass weitere Gäste diesen QR-Code scannen, damit auch sie mitlesen können.' : QR_TEXT.info;
+    // A session opened before the codes (a 32-digit secret) has none to type
+    var code = readCode(secret);
+    qrCodeLine.hidden = !code;
+    if (code) document.getElementById('qr-code').textContent = formatCode(code);
     var url = location.origin + location.pathname + '?' + LIVE_PARAM + '=' + secret + '&' + QR_JOIN_PARAM + '=1';
     var container = document.getElementById('qr-canvas');
     container.innerHTML = '';
@@ -1644,7 +1757,7 @@ window.addEventListener('load', function() {
   // showModal() makes the page behind inert and Esc closes natively. What is
   // left: Reveal listens for keys on the document, where they still arrive from
   // inside the dialog, and a click on the backdrop lands on the dialog itself.
-  [hostModal, qrModal, choiceModal, inviteModal, multiplexModal].forEach(function(dialog) {
+  [hostModal, joinModal, qrModal, choiceModal, inviteModal, multiplexModal].forEach(function(dialog) {
     dialog.addEventListener('keydown', function(e) { e.stopPropagation(); });
     dialog.addEventListener('keypress', function(e) { e.stopPropagation(); });
     dialog.addEventListener('click', function(e) { if (e.target === dialog) dialog.close(); });

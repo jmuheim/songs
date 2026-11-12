@@ -1,0 +1,13 @@
+## 2026-11-12 — A session's secret is an 8-character code to type
+
+**Context:** The only way into a session was its QR code. That leaves out a guest without a working camera, and on an iPhone the song book added to the home screen: a scanned code always opens in Safari, whose storage the home-screen app doesn't share, so a guest there could never follow in the app. And on a slow connection, scanning means loading the page again. The secret was 16 random bytes as hex, 32 characters, too long to type.
+
+**Decision:** The secret is now the session's code: 8 characters of Crockford's base32 (no I, L, O, U), 40 random bits. The QR dialog shows it as `K7QM-2XRA`, and 📡 › 🎟️ „Mit Code beitreten" takes it in any case and spacing, reading O, I and L as 0 and 1. A typed code is tried before it is kept: the device joins and stays only once it hears the session. Connected and unheard for three heartbeats, it leaves again and says no session has this code. Unconnected for eight, it says there is no connection.
+
+**Reasoning:**
+- **Why 8 characters:** the user's choice. Short enough to read out across a room and type on a phone, and 32⁸ ≈ 10¹² makes two evenings' codes colliding, or guessing a live one by trying, out of the question.
+- **What it costs:** the relay sends every message to every connected socket, under the session's `socketId`, which is `sha256(code)`. So whoever connects to it sees the hashes, and could search the 40 bits for a match offline, in minutes on a GPU, and then send into that session. With 128 bits that was impossible.
+- **Why that is acceptable:** they would gain nothing beyond what the host password in the page source already gives anyone in a session. Nor could they read more than they already can: everything is forwarded to everyone either way. It keeps out the audience's accidents, not an attacker, as the password does.
+- **Rejected, a slow hash:** a slow key derivation (PBKDF2) between code and secret would have made that search impractical, but at the price of a second of hashing on a phone, and a plain-JS implementation (no `crypto.subtle` outside a secure context), for a threat the password already concedes.
+- **Rejected, a check character:** a check digit would have caught typos at once, but cost 5 of the 40 bits or a ninth character. Trying the code catches typos too, and also a valid code from a past evening, which no check digit could.
+- **Why join on trial:** a session that doesn't exist looks just like a quiet one, and the relay keeps no list to ask. The host's heartbeat is the proof. Without the trial, a mistyped code would leave the guest waiting in an empty session, with nothing to tell them why.
