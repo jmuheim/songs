@@ -442,6 +442,37 @@ body.wishes-active #TOC ol li::after {
   background: linear-gradient(to right, transparent, var(--r-background-color) 1.6em) border-box;
 }
 
+/* Over a picture of one's own, the list's background colour would show: the
+   filter bar as a band, the fades as a column at the rows' ends. The bar is
+   frosted glass instead, and a long title fades out by its own letters, its
+   colour a gradient they cut out (background-clip: text; the focus ring is
+   no background, and stays). In a session, they fade out before the ❤️ and
+   its count, a few digits wide, rather than under them. */
+body.custom-background #toc-filter {
+  background: var(--background-veil);
+  -webkit-backdrop-filter: blur(0.3em);
+  backdrop-filter: blur(0.3em);
+}
+
+body.custom-background #TOC ol li::after {
+  display: none;
+}
+
+body.custom-background #TOC ol li a {
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(to right, currentColor calc(100% - 1.6em), transparent) content-box no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+body.custom-background.wishes-active #TOC ol li a {
+  padding-right: 2.8em;
+}
+
+body.custom-background #TOC ol li button.song-wish {
+  background: none;
+}
+
 #top-left-controls {
   top: 1em;
   left: 1em;
@@ -900,6 +931,7 @@ dialog.overlay-modal::backdrop {
 }
 
 #host-info,
+#background-info,
 #join-info,
 #gastgeber-info,
 #qr-info,
@@ -1019,9 +1051,24 @@ dialog.overlay-modal::backdrop {
 /* The chords' checkbox and the close button share a row: one less */
 .settings-footer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1em;
+  gap: 0.5em 1em;
+}
+
+/* „Hintergrund" beside „Schliessen", both on the right; on a phone held
+   upright, in a row of their own under the chords' checkbox, narrower so
+   that they fit it side by side */
+#open-background {
+  margin-left: auto;
+}
+
+@media (width < 500px) {
+  .modal-box .settings-footer button {
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+  }
 }
 
 .settings-footer .settings-checkbox {
@@ -1120,7 +1167,7 @@ dialog.overlay-modal::backdrop {
 /* On a phone held upright, the colours take two rows */
 @media (width < 500px) {
   .settings-font-list {
-    max-height: max(3.5em, min(14em, 100svh - 20em));
+    max-height: max(3.5em, min(14em, 100svh - 22.4em));
   }
 }
 
@@ -1137,6 +1184,7 @@ dialog.overlay-modal::backdrop {
   }
 
   .settings-field label,
+  .settings-field .settings-label,
   .settings-field select {
     margin: 0;
   }
@@ -1148,6 +1196,10 @@ dialog.overlay-modal::backdrop {
 
   .settings-font-list {
     max-height: max(3.5em, 100svh - 14.7em);
+  }
+
+  body.custom-background .settings-font-list {
+    max-height: max(3.5em, 100svh - 14.4em);
   }
 }
 
@@ -1368,4 +1420,136 @@ body.theme-light .settings-font-row img:not(#font-nabla) {
 
 body.theme-light .chord-tooltip-inner {
   background-color: #ffe29a;
+}
+
+/* A picture of one's own behind the slides (⚙️ › Hintergrund,
+   body-controls.html), under a veil of the colours' background that keeps
+   the lyrics readable on it, as strong as the reader sets it (--veil, 70%
+   unless set). Declared on the body, where the colours are. A layer fixed
+   to the screen rather than the page's own background: on an iPhone in
+   Vollbild the page is many screens tall (the runway), and
+   background-attachment: fixed does nothing there. */
+body {
+  --background-veil: color-mix(in srgb, var(--color-background) calc(var(--veil, 0.7) * 100%), transparent);
+}
+
+#background-image {
+  display: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
+  container-type: size; /* the screen's height, for the parallax below */
+}
+
+body.custom-background #background-image {
+  display: block;
+}
+
+/* The veil, over both copies of the picture */
+#background-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--background-veil);
+}
+
+/* Two copies of the picture: one shown, the other to fade in over it where
+   the picture would move too far to glide, to another song's top
+   (body-controls.html). Each covers the screen. */
+.background-picture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  visibility: hidden;
+}
+
+.background-picture.current,
+.background-picture.arriving {
+  visibility: visible;
+}
+
+.background-picture.arriving {
+  z-index: 1;
+  animation: background-arrive 1.2s ease;
+}
+
+@keyframes background-arrive {
+  from { opacity: 0; }
+}
+
+/* „Hintergrund-Bewegung (Parallax)": the picture, as wide as the screen and
+   as tall as its own proportions make it, glides up as one goes down a song,
+   all the way from its top edge at the screen's top to its bottom edge at the
+   screen's bottom (body-controls.html says how far, from 0 to 1): a picture
+   in portrait a long way, past several screens' height. At least three tenths
+   taller than the screen, so that a landscape one moves too; its sides are
+   cut off for that. With reveal.js's own timing, as the slide moves. A
+   transform, so the compositor moves it, without repainting a screenful of
+   picture every frame. Not for a reader who asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  body.background-parallax .background-picture {
+    height: auto;
+    min-height: 130%;
+    transform: translateY(calc(var(--parallax-y, 0) * (100cqh - 100%)));
+  }
+
+  body.background-parallax .background-picture.placed {
+    transition: transform 0.8s cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  }
+}
+
+/* „Hintergrund …" (⚙️) opens it: its buttons, and once there is a picture,
+   the veil's slider and the parallax's checkbox. No backdrop: the slides
+   around the dialog show what the veil does as the slider moves. */
+#background-modal::backdrop {
+  background: transparent;
+}
+
+.background-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+body:not(.custom-background) .background-picture-only {
+  display: none;
+}
+
+.background-veil {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-bottom: 0.8em;
+}
+
+.modal-box .background-veil label {
+  margin: 0;
+}
+
+#background-veil {
+  flex: 1;
+  min-width: 4em;
+  margin: 0;
+  accent-color: var(--color-link);
+}
+
+/* Only with a picture to remove; the focus moves on as it goes */
+body:not(.custom-background) #background-remove {
+  display: none;
+}
+
+#background-message {
+  margin: -0.4em 0 1em;
+  font-size: 0.8em;
+  color: #e5484d;
+}
+
+#background-message:empty {
+  display: none;
 }

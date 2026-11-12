@@ -1024,6 +1024,339 @@ RSpec.describe 'index.html', :js, type: :feature do
   end
 
   # -----------------------------------------------------------------------
+  # Background image
+  # -----------------------------------------------------------------------
+  describe 'background image' do
+    # print.html's title picture, 1920×1080: small enough to be kept as it is
+    def picture_path
+      File.expand_path('../../style/background.jpg', __dir__)
+    end
+
+    # Handed to the file input as if picked there: blob is a JS expression
+    def pick(blob, name)
+      page.execute_script(<<~JS)
+        Promise.resolve(#{blob}).then(function (blob) {
+          var files = new DataTransfer();
+          files.items.add(new File([blob], #{name.to_json}, { type: blob.type }));
+          var input = document.getElementById('background-input');
+          input.files = files.files;
+          input.dispatchEvent(new Event('change'));
+        });
+      JS
+    end
+
+    def drawn_picture(width, height)
+      <<~JS
+        new Promise(function (resolve) {
+          var canvas = document.createElement('canvas');
+          canvas.width = #{width};
+          canvas.height = #{height};
+          var g = canvas.getContext('2d');
+          g.fillStyle = '#4a90d9';
+          g.fillRect(0, 0, canvas.width, canvas.height);
+          canvas.toBlob(resolve, 'image/png');
+        })
+      JS
+    end
+
+    def stored
+      page.evaluate_script("localStorage.getItem('background-image')")
+    end
+
+    def stored_size
+      page.evaluate_async_script(<<~JS)
+        var done = arguments[0], img = new Image();
+        img.onload = function () { done([img.naturalWidth, img.naturalHeight]); };
+        img.src = localStorage.getItem('background-image');
+      JS
+    end
+
+    # A colour as [r, g, b, alpha]: one mixed from the scheme's colours comes
+    # back from getComputedStyle in a form of its own, so it is read off a
+    # pixel painted in it
+    def rgba(colour_js)
+      page.evaluate_script(<<~JS)
+        (function () {
+          var g = document.createElement('canvas').getContext('2d');
+          g.fillStyle = #{colour_js};
+          g.fillRect(0, 0, 1, 1);
+          var p = g.getImageData(0, 0, 1, 1).data;
+          return [p[0], p[1], p[2], Math.round(p[3] / 255 * 100) / 100];
+        })()
+      JS
+    end
+
+    # Within one step a channel: a see-through pixel's channels are rounded
+    def expect_colour(actual, expected)
+      actual.zip(expected).each_with_index { |(a, e), i| expect(a).to be_within(i < 3 ? 1 : 0.01).of(e) }
+    end
+
+    # The veil over the picture
+    def veil_color
+      rgba("getComputedStyle(document.getElementById('background-image'), '::after').backgroundColor")
+    end
+
+    # Its own dialog, opened from the settings, which close first
+    def open_background
+      click_button('⚙️ Einstellungen')
+      click_button('Hintergrund')
+      expect(page).to have_visible('#background-modal')
+    end
+
+    def pick_scheme(label)
+      click_button('⚙️ Einstellungen')
+      select(label, from: 'theme-select')
+      click_button('Schliessen')
+    end
+
+    # Of the copy of the picture shown
+    def layer_style(property)
+      page.evaluate_script("getComputedStyle(document.querySelector('#background-image .current')).#{property}")
+    end
+
+    def style_of(selector, property, pseudo = nil)
+      page.evaluate_script("getComputedStyle(document.querySelector(#{selector.to_json}), #{pseudo.to_json}).#{property}")
+    end
+
+    # The picture's offset once it has glided or faded there
+    def picture_offset
+      wait_for_js("!document.querySelector('#background-image .arriving') && document.querySelector('#background-image .current').getAnimations().length === 0", timeout: 5)
+      page.evaluate_script(<<~JS)
+        (function () {
+          var m = new DOMMatrix(getComputedStyle(document.querySelector('#background-image .current')).transform);
+          return [m.e + 0, m.f + 0]; // + 0: CDP hands back -0 as nothing
+        })()
+      JS
+    end
+
+    # Where it should be: y from 0, its top edge at the screen's top, to 1,
+    # its bottom edge at the screen's bottom; never sideways
+    def expect_offset(y)
+      x, actual = picture_offset
+      expect(x).to eq(0)
+      room = page.evaluate_script("document.querySelector('#background-image .current').offsetHeight - innerHeight")
+      expect(room).to be > 0
+      expect(actual).to be_within(0.5).of(-room * y)
+    end
+
+    def picture_edges
+      picture_offset # once it has come to rest
+      page.evaluate_script("(function () { var r = document.querySelector('#background-image .current').getBoundingClientRect(); return [r.top + 0, r.bottom, innerHeight]; })()")
+    end
+
+    # Pages there and says whether the picture's other copy fades in
+    def go(h, v)
+      page.evaluate_script("(Reveal.slide(#{h}, #{v}), !!document.querySelector('#background-image .arriving'))")
+    end
+
+    before { load_presentation }
+    after do
+      page.execute_script("['background-image', 'background-veil', 'background-parallax', 'theme'].forEach(function (k) { localStorage.removeItem(k); })")
+      page.driver.browser.page.command('Emulation.setEmulatedMedia', features: [])
+    end
+
+    it 'shows a picture picked in its dialog behind the slides, kept in this browser only, and removes it again' do
+      expect(page).to have_no_css('body.custom-background')
+      expect(page).not_to have_visible('#background-image')
+      # A dialog of its own, from the settings' „Hintergrund"; the settings
+      # close first, so the focus returns to ⚙️ afterwards. It keeps its keys
+      # from Reveal, closes on Esc, OK and outside, and leaves the slides
+      # around it in view: no backdrop
+      open_background
+      expect(page).not_to have_visible('#settings-modal')
+      expect(active_element_id).to eq('background-title')
+      expect(rgba("getComputedStyle(document.getElementById('background-modal'), '::backdrop').backgroundColor")).to eq([0, 0, 0, 0])
+      indices = slide_indices
+      press(:right)
+      expect(slide_indices).to eq(indices)
+      press(:escape)
+      expect(page).not_to have_visible('#background-modal')
+      expect(page.evaluate_script('Reveal.isOverview()')).to be false
+      expect(active_element_id).to eq('open-settings')
+      open_background
+      backdrop_click('background-modal')
+      expect(page).not_to have_visible('#background-modal')
+      open_background
+      expect(page).to have_button('Bild wählen …')
+      expect(page).to have_no_button('Entfernen')
+
+      attach_file('background-input', picture_path, make_visible: true)
+      expect(page).to have_css('body.custom-background')
+      expect(page).to have_visible('#background-image')
+      # Under a veil of the colours' background, from the browser's own
+      # storage: a data URL, nothing that was sent anywhere
+      expect_colour(veil_color, [17, 17, 17, 0.7])
+      expect(page.evaluate_script("Array.prototype.map.call(document.querySelectorAll('#background-image img'), function (img) { return img.getAttribute('src').slice(0, 23); })")).to eq(['data:image/jpeg;base64,'] * 2)
+      expect(stored).to start_with('data:image/jpeg;base64,')
+      expect(stored_size).to eq([1920, 1080])
+      expect(page).to have_button('Entfernen')
+      expect(page).not_to have_visible('#background-message')
+
+      # A phone's photo is shrunk to 2048 pixels on its longer side
+      before = stored.length
+      pick(drawn_picture(3000, 4000), 'foto.png')
+      wait_for_js("localStorage.getItem('background-image').length !== #{before}")
+      expect(stored).to start_with('data:image/jpeg;base64,')
+      expect(stored_size).to eq([1536, 2048])
+
+      # A file the browser can't read changes nothing, and says so
+      before = stored
+      pick("new Blob(['kein Bild'], { type: 'image/jpeg' })", 'kaputt.jpg')
+      expect(page).to have_css('#background-message', text: 'Dieses Bild kann der Browser nicht öffnen.')
+      expect(page).to have_css('body.custom-background')
+      expect(stored).to eq(before)
+      click_button('OK')
+
+      # Another scheme veils it in its own background
+      pick_scheme('Hell')
+      expect_colour(veil_color, [255, 250, 213, 0.7])
+      pick_scheme('Nachtblau')
+      expect_colour(veil_color, [13, 27, 42, 0.7])
+      pick_scheme('Dunkel')
+
+      # The table of contents' own background would show over the picture as
+      # a band and a column: the filter bar wears the veil, the rows' fading
+      # overlay is off, and a long title fades out by its own letters
+      load_presentation
+      expect(page).to have_css('body.custom-background')
+      page.evaluate_script('Reveal.slide(1)')
+      expect_colour(rgba("getComputedStyle(document.getElementById('toc-filter')).backgroundColor"), [17, 17, 17, 0.7])
+      expect(style_of('#toc-filter', 'backdropFilter')).to start_with('blur(')
+      expect(style_of('#TOC ol li', 'display', '::after')).to eq('none')
+      expect(style_of('#TOC ol li a', 'backgroundClip')).to eq('text')
+      expect(style_of('#TOC ol li a', 'webkitTextFillColor')).to eq('rgba(0, 0, 0, 0)')
+      expect(style_of('#TOC ol li a', 'backgroundImage')).to start_with('linear-gradient(to right, ')
+      expect(style_of('#TOC ol li button.song-wish', 'backgroundImage')).to eq('none')
+
+      open_background
+      click_button('Entfernen')
+      expect(page).to have_no_css('body.custom-background')
+      expect(page).not_to have_visible('#background-image')
+      expect(stored).to be_nil
+      expect(page).to have_no_button('Entfernen')
+      expect(active_element_id).to eq('background-choose') # not lost with the button pressed
+      click_button('OK')
+      # The table of contents as it was
+      expect(style_of('#TOC ol li', 'display', '::after')).to eq('block')
+      expect(style_of('#TOC ol li a', 'backgroundClip')).to eq('border-box')
+
+      load_presentation
+      expect(page).to have_no_css('body.custom-background')
+
+      # With site data blocked, the picture shows all the same, until a reload
+      using_session(:no_storage_background) do
+        page.driver.browser.page.command('Page.addScriptToEvaluateOnNewDocument', source: <<~JS)
+          ['localStorage', 'sessionStorage'].forEach(function (name) {
+            Object.defineProperty(window, name, { get: function () { throw new DOMException('blocked', 'SecurityError'); } });
+          });
+        JS
+        load_presentation
+        open_background
+        attach_file('background-input', picture_path, make_visible: true)
+        expect(page).to have_css('body.custom-background')
+        expect(page).to have_css('#background-message', text: 'Das Bild konnte nicht gespeichert werden und gilt nur bis zum Neuladen.')
+      end
+    end
+
+    it 'lets the reader set the veil over the picture, and move the picture along with the slides' do
+      open_background
+      # Neither without a picture to veil or move
+      expect(page).to have_no_field('Schleier')
+      expect(page).to have_no_field('Hintergrund-Bewegung (Parallax) aktivieren')
+      attach_file('background-input', picture_path, make_visible: true)
+      expect(page).to have_field('Schleier', with: '70')
+      expect(page).to have_unchecked_field('Hintergrund-Bewegung (Parallax) aktivieren')
+
+      # The arrow keys move the slider, not the deck; the dialog stays, the
+      # slides around it show the veil
+      indices = slide_indices
+      page.execute_script("document.getElementById('background-veil').focus()") # a click would move it
+      press(:left, :left)
+      expect(page).to have_field('Schleier', with: '60')
+      expect_colour(veil_color, [17, 17, 17, 0.6])
+      expect(slide_indices).to eq(indices)
+      expect(page).to have_visible('#background-modal')
+      click_button('OK')
+      # Another scheme's veil follows it
+      pick_scheme('Hell')
+      expect_colour(veil_color, [255, 250, 213, 0.6])
+      pick_scheme('Dunkel')
+
+      # Up as one goes down a song's slides. The fixture's song at h = 3 has
+      # 12 sub-slides
+      open_background
+      check('Hintergrund-Bewegung (Parallax) aktivieren')
+      expect(page).to have_css('body.background-parallax')
+      expect(page.evaluate_script("localStorage.getItem('background-parallax')")).to eq('on')
+      click_button('OK')
+      # This picture in landscape: as wide as the screen, three tenths taller
+      # than it, and cut off at the sides for that
+      expect(layer_style('width')).to eq("#{page.evaluate_script('innerWidth')}px")
+      expect(layer_style('height')).to eq("#{(page.evaluate_script('innerHeight') * 1.3).round}px")
+      # With reveal.js's own timing, as the slide moves
+      expect(layer_style('transitionDuration')).to eq('0.8s')
+      # The table of contents and a song's title slide both start at the top,
+      # so a jump between them moves nothing; back up a song it glides, but
+      # to another song's top, or the table of contents, it fades
+      expect(go(1, 0)).to be false
+      expect_offset(0)
+      expect(go(3, 0)).to be false
+      expect_offset(0)
+      expect(go(3, 4)).to be false
+      expect_offset(4 / 11.0)
+      expect(go(3, 0)).to be false
+      expect_offset(0)
+      expect(go(3, 4)).to be false
+      expect(go(5, 0)).to be true
+      expect_offset(0)
+      expect(go(3, 4)).to be true
+      expect_offset(4 / 11.0)
+      expect(go(1, 0)).to be true
+      expect_offset(0)
+      expect(go(3, 4)).to be true
+
+      # A reload finds it in place, not on its way there; the veil and the
+      # movement kept, like the picture
+      visit 'about:blank' # else only the hash changes, and the deck pages there
+      visit "#{FixtureBuilder::URL_PATH}#/3/4"
+      wait_for_reveal
+      wait_for_js("document.querySelector('#background-image .current').classList.contains('placed')")
+      expect(page.evaluate_script("document.querySelector('#background-image .current').getAnimations().length")).to eq(0)
+      expect_offset(4 / 11.0)
+      expect_colour(veil_color, [17, 17, 17, 0.6])
+      open_background
+      expect(page).to have_field('Schleier', with: '60')
+      expect(page).to have_checked_field('Hintergrund-Bewegung (Parallax) aktivieren')
+
+      # A picture in portrait goes a long way: as wide as the screen, as tall as
+      # that makes it, from its top edge at the screen's top on the song's
+      # title to its bottom edge at the screen's bottom on its last slide
+      pick(drawn_picture(1000, 2000), 'hochformat.png')
+      wait_for_js("document.querySelector('#background-image .current').naturalHeight === 2000")
+      click_button('OK')
+      expect(layer_style('height')).to eq("#{page.evaluate_script('innerWidth') * 2}px")
+      go(3, 0)
+      top, _bottom, _height = picture_edges
+      expect(top).to be_within(0.5).of(0)
+      go(3, 11)
+      _top, bottom, height = picture_edges
+      expect(bottom).to be_within(0.5).of(height)
+
+      # Not for a reader who asked for less motion: neither glide nor fade
+      page.driver.browser.page.command('Emulation.setEmulatedMedia', features: [{ name: 'prefers-reduced-motion', value: 'reduce' }])
+      expect(layer_style('transform')).to eq('none')
+      expect(layer_style('height')).to eq("#{page.evaluate_script('innerHeight')}px")
+      expect(go(1, 0)).to be false
+
+      # Without a picture, nothing to veil or move
+      open_background
+      click_button('Entfernen')
+      expect(page).to have_no_field('Schleier')
+      expect(page).to have_no_field('Hintergrund-Bewegung (Parallax) aktivieren')
+    end
+  end
+
+  # -----------------------------------------------------------------------
   # Settings dialog
   # -----------------------------------------------------------------------
   describe 'settings dialog' do

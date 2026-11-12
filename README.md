@@ -9,7 +9,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - Swipe left/right to change songs, up/down to navigate song sections; on a computer, click the chevrons at the screen edges or use the arrow keys
 - Colour-coded chords (each root letter gets its own colour)
 - Each song slide ends on a small „Danach: …" preview of the next slide's heading and first line (or „Ende des Lieds" on the last one), fading in a few seconds after the slide appears, so whoever scrolls can read ahead
-- A colour scheme (Dunkel, Hell, Kontrast, Graustufen, Papier, Nachtblau, Ozean, Lagerfeuer, Sonnenuntergang, Militär, Terminal, Rosa, Kunterbunt) or colours of your own for the background, text, titles, links and bold, with a colour picker each; a font for the titles and one for the text, each from the same 20 (among them Atkinson Hyperlegible, Lexend and OpenDyslexic for easier reading, and a few just for fun), or the pair the scheme brings (the chords follow the text; the fingerings in code blocks stay monospace); and chord visibility, all in the ⚙️ settings dialog („Einstellungen"), remembered per device
+- A colour scheme (Dunkel, Hell, Kontrast, Graustufen, Papier, Nachtblau, Ozean, Lagerfeuer, Sonnenuntergang, Militär, Terminal, Rosa, Kunterbunt) or colours of your own for the background, text, titles, links and bold, with a colour picker each; a background picture of your own (it stays in your browser, nothing is uploaded) with a veil as strong as you like, which can glide as you go down a song (parallax); a font for the titles and one for the text, each from the same 20 (among them Atkinson Hyperlegible, Lexend and OpenDyslexic for easier reading, and a few just for fun), or the pair the scheme brings (the chords follow the text; the fingerings in code blocks stay monospace); and chord visibility, all in the ⚙️ settings dialog („Einstellungen"), remembered per device
 - The four corner buttons (📖 ↕️ 🔥 ⚙️) fade out a few seconds after the page opens, the first time with their labels. Tap anywhere, move the mouse or tab to one to bring them back; a swipe doesn't, nor does a tap on a chord. 🔥 stays while its connection is down
 - Full screen with ↕️, top right, and back with another press. On an iPhone, where Safari has no full-screen mode for a web page, it asks for one swipe down instead: that makes Safari hide its bars, and they stay hidden while you page through the songs. Added to the home screen (Share › „Add to Home Screen"), the song book opens without any bars at all
 - Tag songs (language, genre, …) and filter the table of contents by tag
@@ -88,7 +88,7 @@ Each evening is a **session** („Runde" on screen) of its own. Whoever leads it
 | 📖 | Top left | Jump to the table of contents (hidden while a live-scroll session locks your navigation) |
 | ↕️ | Top right | Full screen, and back |
 | 🔥 | Bottom left | Live scrolling: a badge shows your connection/role at a glance; tap for the details, the login, 🚀 and 🔗 |
-| ⚙️ | Bottom right | Settings („Einstellungen") — colours, fonts, chord visibility |
+| ⚙️ | Bottom right | Settings („Einstellungen") — colours, background picture, fonts, chord visibility |
 
 They fade out while they aren't needed: tap anywhere to bring them back.
 

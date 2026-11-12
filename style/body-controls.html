@@ -1,3 +1,4 @@
+<div id="background-image"><img class="background-picture current" alt=""><img class="background-picture" alt=""></div>
 <div id="top-left-controls" class="controls-group">
   <a href="#/1" id="go-to-toc" class="ctrl"><span aria-hidden="true">📖</span> <span class="visually-hidden">Inhaltsverzeichnis</span></a>
 </div>
@@ -51,9 +52,9 @@
     });
   });
 
-  // Theme and chord visibility live behind ⚙️ Settings, independent of the
-  // multiplex gate below: both must keep working even if socket.io fails to
-  // load, same as they did as standalone corner buttons before.
+  // Theme, fonts, background and chord visibility live behind ⚙️ Settings,
+  // independent of the multiplex gate below: they must keep working even if
+  // socket.io fails to load, same as they did as standalone corner buttons before.
   (function() {
     // A scheme: five colours (--color-*) and a font for the titles and one for
     // the text (--theme-*-font, by their ids), one of night.css's (data-theme
@@ -111,6 +112,38 @@
     // Applied right away, so there's no flash of the wrong colours, and the
     // slides are fitted in their fonts from the start
     applyTheme(theme, theme === 'custom' ? custom : null);
+
+    // A picture of one's own behind the slides (night.css), kept in this
+    // browser's storage and nowhere else: there is no server to send it to.
+    // Applied right away too, so the slides never show without it first.
+    // Two copies of it, <img>s rather than a background, so that the
+    // picture's own proportions set its height (night.css).
+    var backgroundLayer = document.getElementById('background-image');
+    function applyBackground(picture) {
+      Array.prototype.forEach.call(backgroundLayer.children, function(img) {
+        if (picture) img.src = picture;
+        else img.removeAttribute('src');
+      });
+      document.body.classList.toggle('custom-background', !!picture);
+    }
+    var picture = null;
+    try { picture = localStorage.getItem('background-image'); } catch (e) {}
+    applyBackground(picture);
+
+    // The veil over it (night.css) is the reader's to set, in percent, and
+    // so is whether the picture moves along as one pages (placePicture below)
+    var VEIL = 70;
+    function applyVeil(percent) {
+      document.body.style.setProperty('--veil', percent / 100);
+    }
+    var veil = VEIL, parallax = false;
+    try {
+      var storedVeil = parseInt(localStorage.getItem('background-veil'), 10);
+      if (storedVeil >= 0 && storedVeil <= 90) veil = storedVeil;
+      parallax = localStorage.getItem('background-parallax') === 'on';
+    } catch (e) {}
+    applyVeil(veil);
+    document.body.classList.toggle('background-parallax', parallax);
 
     // The rest waits for 'load': the settings dialog markup sits further down
     // the document, after this script tag, so it isn't parsed yet at this point.
@@ -174,6 +207,117 @@
         });
       });
 
+      // Shrunk to BACKGROUND_SIZE on its longer side and stored as a JPEG:
+      // a phone's photo is several times that, too large for localStorage, and
+      // under the veil nobody sees the difference.
+      var BACKGROUND_SIZE = 2048;
+      var backgroundInput = document.getElementById('background-input');
+      var backgroundChoose = document.getElementById('background-choose');
+      var backgroundMessage = document.getElementById('background-message');
+      function shrink(img) {
+        var scale = Math.min(1, BACKGROUND_SIZE / Math.max(img.naturalWidth, img.naturalHeight));
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.naturalWidth * scale);
+        canvas.height = Math.round(img.naturalHeight * scale);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        return canvas.toDataURL('image/jpeg', 0.8);
+      }
+      backgroundChoose.addEventListener('click', function() { backgroundInput.click(); });
+      backgroundInput.addEventListener('change', function() {
+        var file = backgroundInput.files[0];
+        backgroundInput.value = ''; // so the same file picked again is a change too
+        if (!file) return;
+        var url = URL.createObjectURL(file);
+        var img = new Image();
+        img.onload = function() {
+          URL.revokeObjectURL(url);
+          var shrunk = shrink(img);
+          var stored = false;
+          try {
+            localStorage.removeItem('background-image'); // the old one's room first
+            localStorage.setItem('background-image', shrunk);
+            stored = true;
+          } catch (e) {} // blocked, or full: shown all the same, until a reload
+          applyBackground(shrunk);
+          backgroundMessage.textContent = stored ? '' : 'Das Bild konnte nicht gespeichert werden und gilt nur bis zum Neuladen.';
+        };
+        img.onerror = function() {
+          URL.revokeObjectURL(url);
+          backgroundMessage.textContent = 'Dieses Bild kann der Browser nicht öffnen.';
+        };
+        img.src = url;
+      });
+      document.getElementById('background-remove').addEventListener('click', function() {
+        applyBackground(null);
+        try { localStorage.removeItem('background-image'); } catch (e) {}
+        backgroundMessage.textContent = '';
+        backgroundChoose.focus(); // the button pressed is gone (night.css)
+      });
+
+      // As it moves: its dialog leaves the slides around it in view (night.css)
+      var veilInput = document.getElementById('background-veil');
+      veilInput.value = veil;
+      veilInput.addEventListener('input', function() {
+        applyVeil(veilInput.value);
+        try { localStorage.setItem('background-veil', veilInput.value); } catch (e) {}
+      });
+
+      // „Hintergrund-Bewegung": the picture glides up as one goes down a song's
+      // slides (night.css moves it by --parallax-y, from its top edge at the
+      // screen's top on the song's title to its bottom edge at the screen's
+      // bottom on its last slide), as reveal.js's parallax background does.
+      // Another song, or the table of contents, starts at the top again:
+      // rather than sweep back up in one go, the picture's other copy, already
+      // there, fades in over it. Kept up to date whether it moves or not, so
+      // switching it on finds it in place. reveal.js's own parallax background
+      // counts the vertical slides of every song together, and would have
+      // moved this book's by a pixel a slide.
+      var pictures = backgroundLayer.children, current = pictures[0], arriving = null, song = null, lastY = null;
+      // A fade cut short by the next slide ends at once
+      function settle() {
+        if (!arriving) return;
+        current.classList.remove('current');
+        arriving.classList.remove('arriving');
+        arriving.classList.add('current');
+        current = arriving;
+        arriving = null;
+      }
+      backgroundLayer.addEventListener('animationend', settle);
+      backgroundLayer.addEventListener('animationcancel', settle);
+      function placePicture() {
+        settle();
+        var at = Reveal.getIndices(), slides = Reveal.getHorizontalSlides()[at.h];
+        var down = slides ? slides.querySelectorAll(':scope > section').length : 0;
+        var y = down > 1 ? (at.v || 0) / (down - 1) : 0;
+        var fade = parallax && song !== null && at.h !== song && y !== lastY &&
+          document.body.classList.contains('custom-background') && matchMedia('(prefers-reduced-motion: no-preference)').matches;
+        song = at.h;
+        lastY = y;
+        if (!fade) return current.style.setProperty('--parallax-y', y);
+        arriving = current === pictures[0] ? pictures[1] : pictures[0];
+        arriving.classList.remove('placed');
+        arriving.style.setProperty('--parallax-y', y);
+        getComputedStyle(arriving).transform;
+        arriving.classList.add('placed', 'arriving');
+      }
+      Reveal.on('slidechanged', placePicture);
+      // In place before it may glide: a reload shows it there, not on its way
+      function startPlacing() {
+        placePicture();
+        getComputedStyle(current).transform;
+        current.classList.add('placed');
+      }
+      if (Reveal.isReady()) startPlacing();
+      else Reveal.on('ready', startPlacing);
+
+      var parallaxCheckbox = document.getElementById('background-parallax');
+      parallaxCheckbox.checked = parallax;
+      parallaxCheckbox.addEventListener('change', function() {
+        parallax = parallaxCheckbox.checked;
+        document.body.classList.toggle('background-parallax', parallax);
+        try { localStorage.setItem('background-parallax', parallax ? 'on' : 'off'); } catch (e) {}
+      });
+
       var chordsCheckbox = document.getElementById('show-chords-checkbox');
       chordsCheckbox.checked = !document.body.classList.contains('chords-hidden');
       chordsCheckbox.addEventListener('change', function() {
@@ -195,6 +339,19 @@
       settingsModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
       settingsModal.addEventListener('keypress', function(e) { e.stopPropagation(); });
       settingsModal.addEventListener('click', function(e) { if (e.target === settingsModal) settingsModal.close(); });
+
+      // The background has a dialog of its own (its button „Hintergrund"): in
+      // the settings it didn't fit a phone held sideways. The settings close first, so the focus returns
+      // to ⚙️ afterwards, as the 📡 dialog's buttons do.
+      var backgroundModal = document.getElementById('background-modal');
+      document.getElementById('open-background').addEventListener('click', function() {
+        settingsModal.close();
+        backgroundModal.showModal();
+      });
+      document.getElementById('background-close').addEventListener('click', function() { backgroundModal.close(); });
+      backgroundModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
+      backgroundModal.addEventListener('keypress', function(e) { e.stopPropagation(); });
+      backgroundModal.addEventListener('click', function(e) { if (e.target === backgroundModal) backgroundModal.close(); });
     });
   })();
 
@@ -596,8 +753,31 @@
     </fieldset>
     <div class="settings-footer">
       <label class="settings-checkbox"><input type="checkbox" id="show-chords-checkbox"> Akkorde anzeigen</label>
+      <button type="button" id="open-background" aria-haspopup="dialog">Hintergrund</button>
       <button id="settings-close">Schliessen</button>
     </div>
+  </div>
+</dialog>
+
+<!-- A picture of one's own behind the slides, kept in this browser only; its
+     veil and its movement once there is one. No backdrop: the slides around
+     the dialog show what the veil does. -->
+<dialog id="background-modal" class="overlay-modal" aria-labelledby="background-title">
+  <div class="modal-box">
+    <h2 id="background-title" tabindex="-1" autofocus>Hintergrund</h2>
+    <p id="background-info">Ein Bild von deinem Gerät, hinter den Folien. Es bleibt in diesem Browser.</p>
+    <div class="background-buttons">
+      <button type="button" id="background-choose">Bild wählen …</button>
+      <button type="button" id="background-remove">Entfernen</button>
+    </div>
+    <input type="file" id="background-input" accept="image/*" hidden>
+    <p id="background-message" role="status"></p>
+    <div class="background-picture-only background-veil">
+      <label for="background-veil">Schleier</label>
+      <input type="range" id="background-veil" min="0" max="90" step="5">
+    </div>
+    <label class="settings-checkbox background-picture-only"><input type="checkbox" id="background-parallax"> Hintergrund-Bewegung (Parallax) aktivieren</label>
+    <button id="background-close">OK</button>
   </div>
 </dialog>
 
