@@ -55,16 +55,45 @@
   // multiplex gate below: both must keep working even if socket.io fails to
   // load, same as they did as standalone corner buttons before.
   (function() {
-    function applyTheme(bright) {
-      document.body.classList.toggle('theme-bright', bright);
+    // The colours: one of night.css's schemes (data-theme on <body>; Dunkel,
+    // the default, sets none), or the reader's own five, set on <body>
+    // itself (data-theme="custom"). Kept as 'theme' and 'theme-colors'.
+    var COLORS = ['background', 'text', 'title', 'link', 'bold'];
+    function currentColors() {
+      var style = getComputedStyle(document.body), colors = {};
+      COLORS.forEach(function(name) { colors[name] = style.getPropertyValue('--color-' + name).trim(); });
+      return colors;
+    }
+    // Light, by WCAG's measure: black stands out more on it than white
+    function isLight(hex) {
+      var rgb = [1, 3, 5].map(function(i) {
+        var c = parseInt(hex.substr(i, 2), 16) / 255;
+        return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2] > 0.179;
+    }
+    // theme-light, for what can't be mixed from the five (night.css)
+    function applyTheme(theme, colors) {
+      if (theme === 'dark') delete document.body.dataset.theme;
+      else document.body.dataset.theme = theme;
+      COLORS.forEach(function(name) {
+        if (colors) document.body.style.setProperty('--color-' + name, colors[name]);
+        else document.body.style.removeProperty('--color-' + name);
+      });
+      document.body.classList.toggle('theme-light', isLight(currentColors().background));
     }
 
-    // With site data blocked, merely touching localStorage throws: the theme
-    // then switches without being remembered.
-    var stored = null;
-    try { stored = localStorage.getItem('theme'); } catch (e) {}
-    var bright = stored === 'bright';
-    applyTheme(bright); // applied right away, so there's no flash of the wrong theme
+    // With site data blocked, merely touching localStorage throws: the colours
+    // then change without being remembered.
+    var theme = null, custom = null;
+    try {
+      theme = localStorage.getItem('theme');
+      custom = JSON.parse(localStorage.getItem('theme-colors'));
+    } catch (e) {}
+    if (!custom || !COLORS.every(function(name) { return /^#[0-9a-f]{6}$/i.test(custom[name]); })) custom = null;
+    if (!theme || (theme === 'custom' && !custom)) theme = 'dark';
+    // applied right away, so there's no flash of the wrong colours
+    applyTheme(theme, theme === 'custom' ? custom : null);
 
     // The fonts of the titles and of the text (night.css), applied right away
     // too: the slides are fitted in them from the start. The theme's own,
@@ -84,11 +113,42 @@
     // the document, after this script tag, so it isn't parsed yet at this point.
     window.addEventListener('load', function() {
       var themeSelect = document.getElementById('theme-select');
-      themeSelect.value = bright ? 'bright' : 'dark';
+      var pickers = Array.prototype.slice.call(document.querySelectorAll('.settings-colors input'));
+      function showColors() {
+        var colors = currentColors();
+        pickers.forEach(function(picker) { picker.value = colors[picker.name]; });
+      }
+      if (!themeSelect.querySelector('option[value="' + theme + '"]')) { // a scheme no longer offered: Dunkel again
+        theme = 'dark';
+        applyTheme(theme, null);
+      }
+      themeSelect.value = theme;
+      showColors();
       themeSelect.addEventListener('change', function() {
-        var nowBright = themeSelect.value === 'bright';
-        applyTheme(nowBright);
-        try { localStorage.setItem('theme', nowBright ? 'bright' : 'dark'); } catch (e) {}
+        theme = themeSelect.value;
+        // Eigene: the reader's own as they were left, or to start from, the
+        // scheme shown until now
+        if (theme === 'custom' && !custom) custom = currentColors();
+        applyTheme(theme, theme === 'custom' ? custom : null);
+        showColors();
+        try {
+          localStorage.setItem('theme', theme);
+          if (theme === 'custom') localStorage.setItem('theme-colors', JSON.stringify(custom));
+        } catch (e) {}
+      });
+      // A colour changed makes them the reader's own, as it is picked (input,
+      // not change, which waits for the picker to close)
+      pickers.forEach(function(picker) {
+        picker.addEventListener('input', function() {
+          custom = currentColors();
+          custom[picker.name] = picker.value;
+          theme = themeSelect.value = 'custom';
+          applyTheme(theme, custom);
+          try {
+            localStorage.setItem('theme', theme);
+            localStorage.setItem('theme-colors', JSON.stringify(custom));
+          } catch (e) {}
+        });
       });
 
       // One radio button per font, named after the key it is stored under
@@ -331,12 +391,25 @@
 <dialog id="settings-modal" class="overlay-modal" aria-labelledby="settings-title">
   <div class="modal-box">
     <h2 id="settings-title" tabindex="-1" autofocus>Einstellungen</h2>
+    <!-- A scheme each (night.css), and the reader's own: a picker changed
+         makes it „Eigene" -->
     <div class="settings-field">
-      <label for="theme-select">Thema</label>
+      <label for="theme-select">Farben</label>
       <select id="theme-select">
         <option value="dark">Dunkel</option>
         <option value="bright">Hell</option>
+        <option value="contrast">Kontrast</option>
+        <option value="navy">Nachtblau</option>
+        <option value="campfire">Lagerfeuer</option>
+        <option value="custom">Eigene</option>
       </select>
+      <div class="settings-colors" role="group" aria-label="Eigene Farben">
+        <label><input type="color" name="background"> Hintergrund</label>
+        <label><input type="color" name="text"> Text</label>
+        <label><input type="color" name="title"> Titel</label>
+        <label><input type="color" name="link"> Links</label>
+        <label><input type="color" name="bold"> Fett</label>
+      </div>
     </div>
     <div class="settings-font-groups">
       <fieldset class="settings-fonts">

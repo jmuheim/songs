@@ -1,3 +1,70 @@
+/* The colours (⚙️ › Farben, body-controls.html): five a scheme sets, and
+   the reader can change each of them. Dunkel, the night theme's own, is the
+   default; another scheme sets data-theme on the body, and the reader's own
+   colours (data-theme="custom") are set on the body itself. Every other colour
+   on the page is mixed from these five. #rrggbb, the only form a colour
+   picker takes. */
+body {
+  --color-background: #111111;
+  --color-text: #ffffff;
+  --color-title: #e7ad52;
+  --color-link: #e7ad52;
+  --color-bold: #5ad066;
+}
+
+body[data-theme="bright"] {
+  --color-background: #fffad5;
+  --color-text: #222222;
+  --color-title: #222222;
+  --color-link: #9a6f00;
+  --color-bold: #38920b;
+}
+
+body[data-theme="contrast"] {
+  --color-background: #000000;
+  --color-text: #ffffff;
+  --color-title: #ffff00;
+  --color-link: #00ffff;
+  --color-bold: #00ff00;
+}
+
+body[data-theme="navy"] {
+  --color-background: #0d1b2a;
+  --color-text: #e0e8f0;
+  --color-title: #7cc4ff;
+  --color-link: #7cc4ff;
+  --color-bold: #9be564;
+}
+
+body[data-theme="campfire"] {
+  --color-background: #1a0d06;
+  --color-text: #ffe0c2;
+  --color-title: #ff8a3d;
+  --color-link: #ffb070;
+  --color-bold: #ffd23f;
+}
+
+/* The theme's variables, and the dialogs', the toast's and the tooltips':
+   a shade of the text over the background. Declared on the body, where the
+   five are, so they are mixed from the reader's own. */
+body {
+  --r-background-color: var(--color-background);
+  --r-background: var(--color-background);
+  --r-main-color: var(--color-text);
+  --r-heading-color: var(--color-title);
+  --r-link-color: var(--color-link);
+  --r-link-color-hover: color-mix(in srgb, var(--color-link) 70%, var(--color-text));
+  --r-selection-background-color: var(--color-link);
+  --r-selection-color: var(--color-background);
+  --thumbBG: var(--color-link);
+  --color-surface: color-mix(in srgb, var(--color-text) 6%, var(--color-background));
+  --color-field: color-mix(in srgb, var(--color-text) 15%, var(--color-background));
+  --color-control: color-mix(in srgb, var(--color-text) 25%, var(--color-background));
+  --color-control-hover: color-mix(in srgb, var(--color-text) 33%, var(--color-background));
+  --color-control-border: color-mix(in srgb, var(--color-text) 50%, var(--color-background));
+  --color-border: color-mix(in srgb, var(--color-text) 35%, var(--color-background));
+}
+
 /* The group lets a tap through, only its buttons take one: faded out, they
    don't either (controls-idle, below). */
 .controls-group {
@@ -54,8 +121,8 @@ body.controls-intro .ctrl > .visually-hidden {
   z-index: 101;
   padding: 0.25em 0.6em;
   border-top: 0.4rem solid transparent;
-  background: #222 padding-box;
-  color: #fff;
+  background: var(--color-surface) padding-box;
+  color: var(--color-text);
   border-radius: 0.3em;
   font-family: sans-serif;
   font-size: 1rem;
@@ -82,11 +149,6 @@ body.controls-intro .controls-bottom .ctrl > .visually-hidden {
   bottom: 100%;
   border-top: none;
   border-bottom: 0.4rem solid transparent;
-}
-
-body.theme-bright .ctrl > .visually-hidden {
-  background-color: #f4f4f4;
-  color: #333;
 }
 
 /* A few seconds after they last showed, the buttons and the chevrons fade
@@ -118,35 +180,40 @@ body.chords-hidden .reveal button.chord {
 }
 
 .reveal section code.x {
-  border: 1px solid #eee;
-  color: #eee;
+  border: 1px solid color-mix(in srgb, var(--color-text) 90%, var(--color-background));
+  color: color-mix(in srgb, var(--color-text) 90%, var(--color-background));
 }
 
 .reveal section h1,
 .reveal section h2,
 .reveal section em,
 .reveal section .next-line-section {
-  color: #e7ad52 !important;
+  color: var(--color-title) !important;
 }
 
 /* The next-line preview keeps the lyrics' own colours, its heading the slide
    titles' (above); it is dimmed by its opacity alone (shared.css). Only its
-   separating rule is grey. */
+   separating rule is a shade of its own. */
 .reveal section .next-line {
-  border-top-color: #999;
+  border-top-color: color-mix(in srgb, var(--color-text) 55%, var(--color-background));
 }
 
+/* A shade toward the background from the title it stands under */
 .reveal section p.song-artist {
-  color: #b88a42;
+  color: color-mix(in srgb, var(--color-title) 78%, var(--color-background));
 }
 
+/* Paper, whatever the background, a little deeper on a light one */
 .reveal section pre code {
   background-color: #ffe4ba;
 }
 
+body.theme-light .reveal section pre code {
+  background-color: #ffe29a;
+}
+
 html {
   --scrollbarBG: transparent;
-  --thumbBG: #be7e1b;
 }
 
 section#TOC {
@@ -201,7 +268,7 @@ section#TOC::-webkit-scrollbar-thumb {
   top: 0;
   z-index: 1;
   background: var(--r-background-color);
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 20%, var(--color-background));
 }
 
 .toc-filter-field label {
@@ -244,10 +311,6 @@ section#TOC::-webkit-scrollbar-thumb {
   color: initial; /* <option> ignores the select's own color in some browsers */
 }
 
-body.theme-bright #toc-filter {
-  border-bottom-color: #d8caa0;
-}
-
 /* The ❤️ on each song (wishes.js) — colours; layout is in shared.css */
 .song-wish-count {
   color: var(--r-main-color);
@@ -260,7 +323,7 @@ button.song-wish:focus-visible {
 
 /* A title too long for its row of the TOC fades out at the row's end rather
    than ending in "…": an overlay in the list's own background
-   (--r-background-color, which the bright theme sets too), transparent at
+   (--r-background-color, whatever the colours), transparent at
    its left edge. An overlay rather than a mask on the link, which would cut
    off the link's focus ring. In a session the row's ❤️ is that overlay, and
    this one, after the button, would cover it. */
@@ -363,7 +426,7 @@ section.level2 > .slide-content {
 
 
 .reveal section strong {
-  color: #5ad066;
+  color: var(--color-bold);
 }
 
 .reveal section del {
@@ -422,12 +485,13 @@ section.level2 > .slide-content {
   transform: rotate(-45deg);
 }
 
-/* Idle only: the state colours above would lose to this selector's weight */
-body.theme-bright #multiplex-status-button:not(.multiplex-driving):not(.multiplex-following):not(.multiplex-waiting)::before {
+/* On a light background (body-controls.html says which is). Idle only: the
+   state colours above would lose to this selector's weight */
+body.theme-light #multiplex-status-button:not(.multiplex-driving):not(.multiplex-following):not(.multiplex-waiting)::before {
   background: #999;
 }
 
-body.theme-bright #multiplex-status-button.multiplex-following::before {
+body.theme-light #multiplex-status-button.multiplex-following::before {
   border-color: #1565c0;
 }
 
@@ -442,9 +506,9 @@ body.theme-bright #multiplex-status-button.multiplex-following::before {
   margin: 0;
   width: 100%;
   padding: 0.6em 0.9em;
-  background: #1c1c1c;
+  background: var(--color-surface);
   border: none;
-  border-top: 1px solid #888;
+  border-top: 1px solid var(--color-border);
   color: var(--r-main-color);
   font-family: sans-serif;
   font-size: 1rem;
@@ -495,8 +559,8 @@ html.fullscreen-runway dialog {
   position: relative;
   z-index: 200;
   padding: 0 1.5rem 1000vh;
-  background: rgba(17, 17, 17, 0.96);
-  color: #fff;
+  background: color-mix(in srgb, var(--color-background) 96%, transparent);
+  color: var(--color-text);
   font-family: sans-serif;
   font-size: 1.4rem;
   line-height: 1.4;
@@ -530,7 +594,7 @@ html.fullscreen-runway dialog {
   height: 4.5rem;
   margin: 0 -1.5rem;
   padding: 0 4rem;
-  background: #111;
+  background: var(--color-background);
 }
 
 /* The first screen, less the header's 4.5rem, is read with Safari's bars
@@ -570,9 +634,9 @@ html.fullscreen-runway dialog {
   padding: 0.4em 1.2em;
   font-size: 1em;
   border-radius: 0.3em;
-  border: 1px solid #888;
-  background: #444;
-  color: #fff;
+  border: 1px solid var(--color-control-border);
+  background: var(--color-control);
+  color: var(--color-text);
   cursor: pointer;
 }
 
@@ -699,12 +763,12 @@ dialog.overlay-modal::backdrop {
 }
 
 .modal-box {
-  background: #1c1c1c;
-  border: 1px solid #555;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 0.5em;
   padding: 1.5em 2em;
   text-align: center;
-  color: #fff;
+  color: var(--color-text);
   font-family: sans-serif;
   font-size: 2rem;
   width: min(36rem, 90vw);
@@ -761,22 +825,70 @@ dialog.overlay-modal::backdrop {
   padding: 0.4em 0.6em;
   margin-bottom: 1em;
   font-size: 1em;
-  background: #333;
-  border: 1px solid #666;
+  background: var(--color-field);
+  border: 1px solid var(--color-border);
   border-radius: 0.3em;
-  color: #fff;
+  color: var(--color-text);
   box-sizing: border-box;
   outline: none;
 }
 
 .modal-box input[type="password"]:focus,
 .settings-field select:focus {
-  border-color: #e7ad52;
+  border-color: var(--color-link);
 }
 
 .settings-field {
   margin-bottom: 1em;
   text-align: left;
+}
+
+/* The five colours under the schemes' select, a picker each with its name
+   beside it, in a row that wraps where it must */
+.settings-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em 1em;
+  margin-top: -0.4em;
+}
+
+.modal-box .settings-colors label {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+  margin: 0;
+  cursor: pointer;
+}
+
+.settings-colors input {
+  flex: none;
+  width: 1.6em;
+  height: 1.6em;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 0.3em;
+  background: none;
+  cursor: pointer;
+}
+
+.settings-colors input::-webkit-color-swatch-wrapper {
+  padding: 0.15em;
+}
+
+.settings-colors input::-webkit-color-swatch {
+  border: none;
+  border-radius: 0.15em;
+}
+
+.settings-colors input::-moz-color-swatch {
+  border: none;
+  border-radius: 0.15em;
+}
+
+.settings-colors input:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
 }
 
 .settings-checkbox {
@@ -847,11 +959,11 @@ dialog.overlay-modal::backdrop {
    rows: svh, the height with a phone's browser bars shown. */
 .settings-font-list {
   position: relative;
-  max-height: max(3.5em, min(10.5em, 100svh - 14em));
+  max-height: max(3.5em, min(10.5em, 100svh - 15.3em));
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 0.15em;
-  border: 1px solid #555;
+  border: 1px solid var(--color-border);
   border-radius: 0.3em;
 }
 
@@ -867,11 +979,11 @@ dialog.overlay-modal::backdrop {
 }
 
 .settings-fonts label:has(:checked) {
-  background: rgba(231, 173, 82, 0.2);
+  background: color-mix(in srgb, var(--color-link) 20%, transparent);
 }
 
 .settings-fonts label:has(:focus-visible) {
-  outline: 2px solid #e7ad52;
+  outline: 2px solid var(--color-link);
   outline-offset: -2px;
 }
 
@@ -896,7 +1008,7 @@ dialog.overlay-modal::backdrop {
   }
 
   .settings-font-list {
-    max-height: max(3.5em, min(10.5em, (100svh - 17em) / 2));
+    max-height: max(3.5em, min(10.5em, (100svh - 20em) / 2));
   }
 }
 
@@ -917,8 +1029,13 @@ dialog.overlay-modal::backdrop {
     margin: 0;
   }
 
+  .settings-colors {
+    grid-column: 2;
+    margin-top: 0.4em;
+  }
+
   .settings-font-list {
-    max-height: max(3.5em, 100svh - 13.3em);
+    max-height: max(3.5em, 100svh - 14.7em);
   }
 }
 
@@ -950,14 +1067,14 @@ dialog.overlay-modal::backdrop {
   padding: 0.4em 1.2em;
   font-size: 1em;
   border-radius: 0.3em;
-  border: 1px solid #888;
-  background: #444;
-  color: #fff;
+  border: 1px solid var(--color-control-border);
+  background: var(--color-control);
+  color: var(--color-text);
   cursor: pointer;
 }
 
 .modal-box button:hover {
-  background: #555;
+  background: var(--color-control-hover);
 }
 
 .modal-box button:disabled {
@@ -1023,98 +1140,13 @@ body[data-text-font="caveat"]    { --r-main-font: 'Caveat', cursive; }
 body[data-text-font="comic"]     { --r-main-font: 'Comic Relief', cursive; }
 body[data-text-font="antic"]     { --r-main-font: 'Antic Slab', serif; }
 
-/* Bright theme overrides */
+/* On a light background (body-controls.html says which is) */
 
-body.theme-bright .reveal section h1,
-body.theme-bright .reveal section h2,
-body.theme-bright .reveal section em,
-body.theme-bright .reveal section .next-line-section {
-  color: unset !important;
-}
-
-body.theme-bright .reveal section .next-line {
-  border-top-color: #666;
-}
-
-body.theme-bright .reveal section p.song-artist {
-  color: #1a1a1a;
-}
-
-body.theme-bright .reveal section code.x {
-  border: 1px solid #999;
-  color: #777;
-}
-
-body.theme-bright .reveal section pre code {
-  background-color: #ffe29a;
-}
-
-body.theme-bright {
-  --thumbBG: #8b6914;
-  --r-background-color: #fffad5;
-  --r-background: #fffad5;
-  --r-main-color: #222;
-  --r-heading-color: #333;
-  --r-link-color: #9a6f00;
-  --r-link-color-hover: #7a5500;
-}
-
-body.theme-bright .reveal section strong {
-  color: #38920b;
-}
-
-body.theme-bright .modal-box {
-  background: #f4f4f4;
-  border-color: #ccc;
-  color: #333;
-}
-
-body.theme-bright .modal-box input[type="password"],
-body.theme-bright .settings-field select {
-  background: #fff;
-  border-color: #bbb;
-  color: #333;
-}
-
-body.theme-bright .modal-box button {
-  background: #ddd;
-  border-color: #bbb;
-  color: #333;
-}
-
-body.theme-bright .modal-box button:hover {
-  background: #ccc;
-}
-
-body.theme-bright .settings-font-list {
-  border-color: #bbb;
-}
-
-/* The samples are white: darkened to the dialog's #333 */
-body.theme-bright .settings-fonts img {
+/* The samples are white: darkened to a dark text */
+body.theme-light .settings-fonts img {
   filter: invert(0.8);
 }
 
-body.theme-bright #fullscreen-runway {
-  background: rgba(255, 250, 213, 0.97);
-  color: #333;
-}
-
-body.theme-bright .runway-header {
-  background: #fffad5;
-}
-
-body.theme-bright #fullscreen-runway button {
-  background: #ddd;
-  border-color: #bbb;
-  color: #333;
-}
-
-body.theme-bright .chord-tooltip-inner {
+body.theme-light .chord-tooltip-inner {
   background-color: #ffe29a;
-}
-
-body.theme-bright #multiplex-toast {
-  background: #f4f4f4;
-  border-color: #ccc;
 }

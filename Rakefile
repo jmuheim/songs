@@ -59,7 +59,7 @@ namespace :fonts do
   # dozen fonts. This renders those pictures from the radio buttons in
   # body-controls.html (the img's src and alt) with the same @font-face rules
   # and night.css variables the song book uses: white on transparent, which
-  # night.css darkens for the bright theme.
+  # night.css darkens on a light background.
   desc 'Render the font samples of the settings dialog (style/fonts/samples/)'
   task :samples do
     require 'ferrum'

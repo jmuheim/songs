@@ -788,6 +788,29 @@ RSpec.describe 'index.html', :js, type: :feature do
       page.evaluate_script("getComputedStyle(document.querySelector(#{selector.to_json})).fontFamily")
     end
 
+    def computed(selector, property)
+      page.evaluate_script("getComputedStyle(document.querySelector(#{selector.to_json})).#{property}")
+    end
+
+    def rgb(hex)
+      "rgb(#{hex.scan(/\h\h/).map(&:hex).join(', ')})"
+    end
+
+    # The five pickers, by name, as they show
+    def picker_colors
+      all('.settings-colors input').to_h { |picker| [picker['name'], picker.value] }
+    end
+
+    # The picker opens the browser's own dialog, which Capybara can't reach:
+    # its value set and `input` fired, as the picker does while it is dragged
+    def pick_color(name, hex)
+      page.execute_script(<<~JS)
+        var picker = document.querySelector('.settings-colors input[name=#{name.to_json}]');
+        picker.value = #{hex.to_json};
+        picker.dispatchEvent(new Event('input', { bubbles: true }));
+      JS
+    end
+
     # A family only loads once a rendered text uses it; a missing file ends
     # in 'error', a rule that never applies in 'unloaded'
     def font_loaded(family)
@@ -795,17 +818,17 @@ RSpec.describe 'index.html', :js, type: :feature do
     end
 
     before { load_presentation }
-    after { page.evaluate_script("['theme', 'title-font', 'text-font'].forEach(function (k) { localStorage.removeItem(k); })") }
+    after { page.evaluate_script("['theme', 'theme-colors', 'title-font', 'text-font'].forEach(function (k) { localStorage.removeItem(k); })") }
 
-    it 'switches theme and fonts from the settings dialog, persists them, and restores them on reload' do
-      expect(page).to have_no_css('body.theme-bright')
-      expect(body_background_color).to eq('#111')
+    it 'switches colours and fonts from the settings dialog, persists them, and restores them on reload' do
+      expect(page).to have_no_css('body.theme-light')
+      expect(body_background_color).to eq('#111111')
 
       click_button('⚙️ Einstellungen')
       expect(page).to have_select('theme-select', selected: 'Dunkel')
 
       select('Hell', from: 'theme-select')
-      expect(page).to have_css('body.theme-bright')
+      expect(page).to have_css('body.theme-light[data-theme="bright"]')
       expect(body_background_color).to eq('#fffad5')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('bright')
 
@@ -849,29 +872,32 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page.evaluate_script("localStorage.getItem('title-font')")).to eq('playfair')
 
       load_presentation
-      expect(page).to have_css('body.theme-bright')
+      expect(page).to have_css('body.theme-light[data-theme="bright"]')
       expect(page).to have_css('body[data-title-font="playfair"][data-text-font="lora"]')
 
       click_button('⚙️ Einstellungen')
       expect(page).to have_select('theme-select', selected: 'Hell')
       expect(page).to have_checked_field('title-font', with: 'playfair')
       expect(page).to have_checked_field('text-font', with: 'lora')
-      # The white pictures, darkened for the bright dialog
+      # The white pictures, darkened for the light dialog
       expect(page.evaluate_script("getComputedStyle(document.querySelector('.settings-fonts img')).filter")).to eq('invert(0.8)')
       select('Dunkel', from: 'theme-select')
-      expect(page).to have_no_css('body.theme-bright')
+      expect(page).to have_no_css('body.theme-light')
+      expect(page).to have_no_css('body[data-theme]')
       expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('dark')
       choose('title-font', option: '')
       expect(page).to have_no_css('body[data-title-font]')
       expect(font_of('section.deck-title-slide h1')).to start_with('Montserrat')
 
-      # A font the book no longer offers falls back to the theme's, and its
-      # radio button is the one checked, not none
-      page.execute_script("localStorage.setItem('text-font', 'gone'); localStorage.setItem('title-font', 'comic')")
+      # A font or a scheme the book no longer offers falls back to the
+      # theme's, and its radio button or option is the one checked, not none
+      page.execute_script("localStorage.setItem('text-font', 'gone'); localStorage.setItem('title-font', 'comic'); localStorage.setItem('theme', 'gone')")
       load_presentation
       expect(page).to have_no_css('body[data-text-font]')
+      expect(page).to have_no_css('body[data-theme]')
       click_button('⚙️ Einstellungen')
       expect(page).to have_checked_field('text-font', with: '')
+      expect(page).to have_select('theme-select', selected: 'Dunkel')
       # The fonts are a list that scrolls, each large enough to read, and it
       # opens scrolled to the one checked, here the last
       shown, scrolled = page.evaluate_script(<<~JS)
@@ -884,7 +910,62 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(shown).to be true
       expect(scrolled).to be true
 
-      # With site data blocked, touching storage throws: the theme switches all the same
+      # Every scheme sets five colours of its own, as its pickers show them,
+      # and the page wears them; only Hell's background counts as light
+      surface = computed('.modal-box', 'backgroundColor')
+      schemes = all('#theme-select option').map { |option| [option.text, option.value] } - [%w[Eigene custom]]
+      seen = schemes.map do |label, value|
+        select(label, from: 'theme-select')
+        colors = picker_colors
+        expect(colors.keys).to eq(%w[background text title link bold])
+        expect(colors.values).to all(match(/\A#\h{6}\z/)), "#{label}: #{colors}"
+        expect(computed('body', 'backgroundColor')).to eq(rgb(colors['background']))
+        expect(computed('.reveal', 'color')).to eq(rgb(colors['text']))
+        expect(computed('section.deck-title-slide h1', 'color')).to eq(rgb(colors['title']))
+        expect(page).to(value == 'bright' ? have_css('body.theme-light') : have_no_css('body.theme-light'))
+        colors
+      end
+      expect(seen.uniq.size).to eq(schemes.size)
+
+      # A colour picked makes them the reader's own, the other four the
+      # scheme's they were picked from. The dialog's own colours are mixed
+      # from them, and whether they are light follows the background
+      select('Hell', from: 'theme-select')
+      hell = picker_colors
+      pick_color('background', '#203040')
+      expect(page).to have_select('theme-select', selected: 'Eigene')
+      expect(page).to have_css('body[data-theme="custom"]')
+      expect(page).to have_no_css('body.theme-light')
+      expect(computed('body', 'backgroundColor')).to eq('rgb(32, 48, 64)')
+      expect(computed('section.deck-title-slide h1', 'color')).to eq(rgb(hell['title']))
+      expect(computed('.modal-box', 'backgroundColor')).not_to eq(surface)
+      own = hell.merge('background' => '#203040')
+      expect(page.evaluate_script("localStorage.getItem('theme')")).to eq('custom')
+      expect(JSON.parse(page.evaluate_script("localStorage.getItem('theme-colors')"))).to eq(own)
+
+      # A scheme picked again leaves them be: „Eigene" brings them back
+      select('Dunkel', from: 'theme-select')
+      expect(page).to have_no_css('body[data-theme]')
+      expect(picker_colors['background']).to eq('#111111')
+      select('Eigene', from: 'theme-select')
+      expect(picker_colors).to eq(own)
+      expect(computed('body', 'backgroundColor')).to eq('rgb(32, 48, 64)')
+
+      # and so does a reload, before the dialog is ever opened
+      load_presentation
+      expect(page).to have_css('body[data-theme="custom"]')
+      expect(computed('body', 'backgroundColor')).to eq('rgb(32, 48, 64)')
+      click_button('⚙️ Einstellungen')
+      expect(page).to have_select('theme-select', selected: 'Eigene')
+      expect(picker_colors).to eq(own)
+
+      # Stored colours that aren't five of them as #rrggbb are none: Dunkel
+      page.execute_script("localStorage.setItem('theme-colors', JSON.stringify({ background: 'red' }))")
+      load_presentation
+      expect(page).to have_no_css('body[data-theme]')
+      expect(computed('body', 'backgroundColor')).to eq('rgb(17, 17, 17)')
+
+      # With site data blocked, touching storage throws: the colours switch all the same
       using_session(:no_storage) do
         page.driver.browser.page.command('Page.addScriptToEvaluateOnNewDocument', source: <<~JS)
           ['localStorage', 'sessionStorage'].forEach(function (name) {
@@ -895,7 +976,14 @@ RSpec.describe 'index.html', :js, type: :feature do
         expect { page.evaluate_script('localStorage') }.to raise_error(Ferrum::JavaScriptError)
         click_button('⚙️ Einstellungen')
         select('Hell', from: 'theme-select')
-        expect(page).to have_css('body.theme-bright')
+        expect(page).to have_css('body.theme-light')
+        # The reader's own colours outlast another scheme tried, if not a reload
+        pick_color('title', '#ff0000')
+        expect(computed('section.deck-title-slide h1', 'color')).to eq('rgb(255, 0, 0)')
+        select('Dunkel', from: 'theme-select')
+        select('Eigene', from: 'theme-select')
+        expect(computed('section.deck-title-slide h1', 'color')).to eq('rgb(255, 0, 0)')
+        expect(computed('body', 'backgroundColor')).to eq(rgb(hell['background']))
         choose('title-font', option: 'oswald')
         expect(page).to have_css('body[data-title-font="oswald"]')
       end
