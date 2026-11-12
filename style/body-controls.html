@@ -22,17 +22,22 @@
     unseenFocus = e.target.matches(':focus-visible') ? null : e.target;
   });
 
+  // The current slide into the URL, now: Reveal writes it at most once a
+  // second, and a reload or a discarded tab would come back a slide early
+  function writeSlideToUrl() {
+    var path = Reveal.getSlidePath();
+    try {
+      history.replaceState(null, '', path === '/' ? location.pathname + location.search : '#' + path);
+    } catch (e) {} // Safari's replaceState limit: Reveal's own write remains
+  }
+
   window.addEventListener('load', function() {
-    // Reveal writes the slide into the URL at most once a second, and iOS
-    // stops that timer when the page goes to the background: a phone switched
-    // to another app right after a slide change, and discarded there, reloaded
-    // a slide early. So the URL is written the moment the page is hidden.
+    // iOS stops Reveal's timer when the page goes to the background: a phone
+    // switched to another app right after a slide change, and discarded
+    // there, reloaded a slide early. So the URL is written the moment the
+    // page is hidden.
     document.addEventListener('visibilitychange', function() {
-      if (document.visibilityState !== 'hidden') return;
-      var path = Reveal.getSlidePath();
-      try {
-        history.replaceState(null, '', path === '/' ? location.pathname + location.search : '#' + path);
-      } catch (e) {} // Safari's replaceState limit: Reveal's own write remains
+      if (document.visibilityState === 'hidden') writeSlideToUrl();
     });
 
     Reveal.configure({
@@ -362,9 +367,29 @@
   // what it keeps), any left from before is unregistered. The specs keep it
   // off (SERVICE_WORKER_OFF), but for the one about it. Only in a secure
   // context: not on a phone reaching ./dev by IP address.
+  //
+  // A new build shows from the load after the one that finds it. Should the
+  // new worker take over while this page is open (a page it was already
+  // controlling: not the very first worker), a dialog (#update-modal) offers
+  // that load now, on the slide the reader is on; „Später" leaves it to the
+  // next visit.
   window.addEventListener('load', function() {
     if (!navigator.serviceWorker) return;
     if (window.SERVICE_WORKER && !window.SERVICE_WORKER_OFF) {
+      var updateModal = document.getElementById('update-modal');
+      document.getElementById('update-later').addEventListener('click', function() { updateModal.close(); });
+      document.getElementById('update-reload').addEventListener('click', function() {
+        writeSlideToUrl();
+        location.reload();
+      });
+      updateModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
+      updateModal.addEventListener('keypress', function(e) { e.stopPropagation(); });
+      updateModal.addEventListener('click', function(e) { if (e.target === updateModal) updateModal.close(); });
+      var controlled = !!navigator.serviceWorker.controller;
+      navigator.serviceWorker.addEventListener('controllerchange', function() {
+        if (controlled && !updateModal.open) updateModal.showModal();
+        controlled = true;
+      });
       navigator.serviceWorker.register(window.SERVICE_WORKER).catch(function() {});
     } else {
       navigator.serviceWorker.getRegistrations().then(function(registrations) {
@@ -778,6 +803,17 @@
     </div>
     <label class="settings-checkbox background-picture-only"><input type="checkbox" id="background-parallax"> Hintergrund-Bewegung (Parallax) aktivieren</label>
     <button id="background-close">OK</button>
+  </div>
+</dialog>
+
+<dialog id="update-modal" class="overlay-modal" aria-labelledby="update-title">
+  <div class="modal-box">
+    <h2 id="update-title" tabindex="-1" autofocus>Neue Version</h2>
+    <p>Eine neue Version des Liederbuchs ist da. Jetzt neu laden? Du bleibst auf dieser Folie.</p>
+    <div class="modal-buttons">
+      <button type="button" id="update-later">Später</button>
+      <button type="button" id="update-reload">Neu laden</button>
+    </div>
   </div>
 </dialog>
 

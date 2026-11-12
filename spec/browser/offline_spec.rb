@@ -29,9 +29,17 @@ RSpec.describe 'offline (service worker)', :js, type: :feature do
     end
   end
 
+  # controllerChanged: a worker took the page over. Listened for from the
+  # start, so it is heard before the page's own listener (body-controls.html,
+  # on load) has acted on the same event
   before do
     resume_service_workers
-    page.driver.browser.page.command('Page.addScriptToEvaluateOnNewDocument', source: 'window.SERVICE_WORKER_OFF = false;')
+    page.driver.browser.page.command('Page.addScriptToEvaluateOnNewDocument', source: <<~JS)
+      window.SERVICE_WORKER_OFF = false;
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.addEventListener('controllerchange', function() { window.controllerChanged = true; });
+      }
+    JS
   end
 
   # Nothing of it is left for the examples that follow
@@ -52,7 +60,7 @@ RSpec.describe 'offline (service worker)', :js, type: :feature do
   def visit_controlled
     visit FixtureBuilder::URL_PATH
     wait_for_reveal
-    wait_for_js('!!navigator.serviceWorker.controller', timeout: 10)
+    wait_for_js('window.controllerChanged === true', timeout: 10)
     expect(page.evaluate_script('!!navigator.serviceWorker.controller')).to be true
   end
 
@@ -63,6 +71,9 @@ RSpec.describe 'offline (service worker)', :js, type: :feature do
 
   it 'opens, reloads and takes a QR code from its cache, with the server gone' do
     visit_controlled
+    # The very first worker takes over the page it was registered from: that
+    # is no new build, and nothing is offered
+    expect(page).to have_no_css('#update-modal[open]', visible: :all)
     FileServer.stop
 
     page.refresh
@@ -79,7 +90,7 @@ RSpec.describe 'offline (service worker)', :js, type: :feature do
     expect(session_secret).to eq('spec-offline')
   end
 
-  it 'shows a new build from the load after the one that finds it, and keeps nothing of the old' do
+  it 'shows a new build from the load after the one that finds it, offered at once in a dialog, and keeps nothing of the old' do
     visit_controlled
     expect(cache_names.size).to eq(1)
 
@@ -99,10 +110,19 @@ RSpec.describe 'offline (service worker)', :js, type: :feature do
       sleep 0.1 until cache_names == ['songs-next'] || Time.now > deadline
       expect(cache_names).to eq(['songs-next'])
 
-      # The next is the new build
-      page.refresh
-      wait_for_reveal
+      # The new build has taken over the page on screen: a dialog offers it
+      # now, and „Neu laden" is the next load, the new build, on the same slide
+      page.evaluate_script("Reveal.slide(2, 0)")
+      expect(page).to have_visible('#update-modal')
+      expect(page).to have_css('#update-title', text: 'Neue Version')
+      expect(active_element_id).to eq('update-title')
+      # Reveal listens on the document: nothing pressed inside the dialog reaches it
+      press(:right)
+      expect(page.evaluate_script('Reveal.getIndices().h')).to eq(2)
+      within('#update-modal') { click_button('Neu laden') }
       expect(page).to have_css('#next-build', visible: :all)
+      wait_for_reveal
+      expect(page.evaluate_script('Reveal.getIndices().h')).to eq(2)
     ensure
       File.write(FixtureBuilder::OUTPUT, old_page, encoding: 'UTF-8')
       File.write(FixtureBuilder::SERVICE_WORKER, old_worker, encoding: 'UTF-8')

@@ -16,7 +16,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - A song's YouTube video plays right in the song book, in a dialog of its own; its other links (tab sources, …) open in a new tab, so the song book stays open and never has to load again
 - **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)
 - **Song wishes** — in a session, tap the ❤️ on a song (in the table of contents or on its title slide) to wish for it; everyone sees how many want each song, and the wishes are gone with the evening
-- **Offline** — once a device has opened the song book, it opens again without the network, and at once on a slow one: a service worker keeps it. A new version shows from the second visit after it went live
+- **Offline** — once a device has opened the song book, it opens again without the network, and at once on a slow one: a service worker keeps it. A new version shows from the second visit after it went live, or at once: as soon as the device has fetched it, a dialog offers „Neu laden"
 - Print-friendly version: open `print.html?print-pdf` in Chrome and print
 
 ## Installation
