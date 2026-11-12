@@ -2,6 +2,7 @@ require 'nokogiri'
 require 'json'
 require 'open3'
 require 'uri'
+require 'digest'
 
 module BuildHelpers
   module_function
@@ -537,6 +538,26 @@ module BuildHelpers
     nil
   end
 
+  # sw.js, the service worker (lib/service-worker.js), for the finished
+  # index.html: it keeps the page and every script and stylesheet it loads
+  # from its own site (read off the page itself, so the list never falls
+  # behind it). VERSION is a hash of them all, so a build that changes any of
+  # them changes sw.js, which is how the browser learns of it. `root` is
+  # where style/ is: the build's paths (`style/…`, `./style/…`) and the
+  # fixtures' (`/style/…`) both start from there.
+  def service_worker(index_html, root:)
+    files = Nokogiri::HTML(index_html, nil, 'UTF-8').css('script[src], link[rel="stylesheet"][href]')
+                .map { |el| el['src'] || el['href'] }
+                .reject { |url| url.match?(%r{\A(?:[a-z]+:)?//}i) }
+                .uniq
+    version = Digest::SHA256.new
+    version << index_html
+    files.each { |url| version << File.binread(File.join(root, url.sub(%r{\A\.?/}, ''))) }
+    File.read(File.expand_path('service-worker.js', __dir__), encoding: 'UTF-8')
+        .sub('{{version}}', version.hexdigest[0, 16])
+        .sub('{{files}}', JSON.generate(files))
+  end
+
   # Everything below is shared by `build` and spec/support/fixture_builder.rb,
   # so the specs exercise the pipeline that builds the song book, not a copy.
   # `assets` is how the pages reach style/: "style/" beside index.html,
@@ -558,7 +579,7 @@ module BuildHelpers
     output
   end
 
-  def post_process_index(html, assets:, multiplex:, tags: [])
+  def post_process_index(html, assets:, multiplex:, tags: [], service_worker: nil)
     html = rename_title_slide_id(html)
     html = html.sub('<style>', %(<link rel="stylesheet" href="#{assets}fonts/fonts.css">\n  <style>) + style_file('night.css') + style_file('shared.css'))
     html = without_pandoc_plugins(html)
@@ -571,7 +592,8 @@ module BuildHelpers
     # {{assets}}: an image there lives under style/ like everything else, but
     # at another path for the build than for the spec fixtures.
     controls = style_file('body-controls.html').strip.gsub('{{assets}}', assets)
-    html = html.sub('<body>', "<body><script>window.MULTIPLEX=#{multiplex.to_json};</script>" + controls)
+    # SERVICE_WORKER: where sw.js is, or null (./dev), which unregisters any
+    html = html.sub('<body>', "<body><script>window.MULTIPLEX=#{multiplex.to_json};window.SERVICE_WORKER=#{service_worker.to_json};</script>" + controls)
     # slide-zoom.js first: the slides are already on screen once Reveal has
     # initialised, and nothing may hold up their first fit. socket.io's client
     # comes from style/ too, not from the relay's host: there, a slow relay

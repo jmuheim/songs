@@ -16,6 +16,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - A song's YouTube video plays right in the song book, in a dialog of its own; its other links (tab sources, …) open in a new tab, so the song book stays open and never has to load again
 - **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)
 - **Song wishes** — in a session, tap the ❤️ on a song (in the table of contents or on its title slide) to wish for it; everyone sees how many want each song, and the wishes are gone with the evening
+- **Offline** — once a device has opened the song book, it opens again without the network, and at once on a slow one: a service worker keeps it. A new version shows from the second visit after it went live
 - Print-friendly version: open `print.html?print-pdf` in Chrome and print
 
 ## Installation
@@ -29,9 +30,10 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 ## Build
 
 ```bash
-./build           # Build index.html and print.html
+./build           # Build index.html, sw.js (the service worker) and print.html
 ./build --deploy  # HTML + deploy to songs.josh.ch (manual fallback)
-./dev             # Watch, rebuild, and live-reload on every change (local only)
+./build --dev     # Without the service worker
+./dev             # Watch, rebuild, and live-reload on every change (local only; builds with --dev)
 ```
 
 The usual way to publish is **not** `--deploy`: a push to `master` deploys to songs.josh.ch from CI once the tests pass (`.github/workflows/test.yml`).

@@ -15,7 +15,7 @@ module FileServer
 
       @server = WEBrick::HTTPServer.new(
         BindAddress:  '127.0.0.1',
-        Port:         0,
+        Port:         @port || 0, # back on its port after a stop: the pages' addresses carry it
         DocumentRoot: ROOT,
         Logger:       WEBrick::Log.new(File::NULL),
         AccessLog:    []
@@ -23,7 +23,18 @@ module FileServer
       @port = @server.listeners.first.addr[1]
       Thread.new { @server.start }
       @started = true
-      at_exit { @server.shutdown }
+      @at_exit ||= at_exit { @server.shutdown }
+    end
+  end
+
+  # Gone, as if the network were: offline_spec.rb has the song book open
+  # itself from the service worker's cache. `start` brings it back.
+  def self.stop
+    @mutex.synchronize do
+      return unless @started
+
+      @server.shutdown
+      @started = false
     end
   end
 

@@ -24,8 +24,9 @@ These are not descriptions of how things happen to work — they are commitments
 ## Build command
 
 ```bash
-./build           # Build index.html and print.html
+./build           # Build index.html, sw.js and print.html
 ./build --deploy  # HTML + deploy to songs.josh.ch
+./build --dev     # Without the service worker (what ./dev builds)
 ./dev             # Watch, rebuild, and live-reload on every change (local only, no deploy)
 ```
 
@@ -33,11 +34,13 @@ Dependencies: Ruby 3.x, Pandoc (`brew install pandoc`), fswatch (`brew install f
 
 Deploys to songs.josh.ch happen from CI on every push to `master` once the suite is green (see [Deploy](#deploy)); `./build --deploy` remains the manual fallback.
 
+> **Dev gotcha:** `./dev` builds with `--dev`, without the [service worker](#offline-the-service-worker): with one, browser-sync's reloads would show what it keeps, not the build. Its page unregisters any left from an earlier `./build` served on the same address.
+
 > **Dev gotcha:** `./dev` passes `--no-ghost-mode` to browser-sync. Ghost mode (on by default) syncs clicks across all open tabs and interferes with the multiplex feature — it makes button presses appear to fire on all "clients" simultaneously during local testing.
 
 ## Deploy
 
-Deploying is a CI job (`deploy` in `.github/workflows/test.yml`), not something a local save does. It runs **only on a push to `master`**, and only **after the `rspec` job is green** (`needs: rspec`) — so an untested commit never reaches songs.josh.ch. Its own `concurrency` group serialises deploys. The job runs `./build` and `rsync`s `index.html` + `style/` + `.htaccess` to the server (not `print.html`, matching the old manual deploy).
+Deploying is a CI job (`deploy` in `.github/workflows/test.yml`), not something a local save does. It runs **only on a push to `master`**, and only **after the `rspec` job is green** (`needs: rspec`) — so an untested commit never reaches songs.josh.ch. Its own `concurrency` group serialises deploys. The job runs `./build` and `rsync`s `index.html` + `sw.js` + `style/` + `.htaccess` to the server (not `print.html`, matching the old manual deploy).
 
 The server is reached with a dedicated ed25519 **deploy key** (secret `DEPLOY_SSH_KEY`), separate from anyone's personal key and locked on the server via `authorized_keys` to `rrsync` into `…/songs.josh.ch/` only — so the rsync target is relative. The host key is pinned in the workflow (no `StrictHostKeyChecking=no`); refresh it with `ssh-keyscan greip.uberspace.de` if the server ever rotates its key.
 
@@ -45,7 +48,7 @@ The server is reached with a dedicated ed25519 **deploy key** (secret `DEPLOY_SS
 
 ### Cache headers
 
-The repo's root [`.htaccess`](.htaccess) ships with every deploy and tells Uberspace's Apache (`mod_headers`) to send `Cache-Control: no-cache, must-revalidate` for `.html`/`.css`/`.js`, and a year-long `immutable` cache for fonts. Without it, browsers fall back to heuristic caching of `index.html` and `style/*.css|js` — since those keep the same filename on every deploy, a cached copy never looks stale on its own, and phones with the song book added to the home screen (an even more aggressive webview cache) could sit on a build from weeks ago. `no-cache` still lets the browser keep a local copy; it just forces a conditional request every time, so an unchanged file comes back as a cheap 304.
+The repo's root [`.htaccess`](.htaccess) ships with every deploy and tells Uberspace's Apache (`mod_headers`) to send `Cache-Control: no-cache, must-revalidate` for `.html`/`.css`/`.js`, and a year-long `immutable` cache for fonts. Without it, browsers fall back to heuristic caching of `index.html` and `style/*.css|js` — since those keep the same filename on every deploy, a cached copy never looks stale on its own, and phones with the song book added to the home screen (an even more aggressive webview cache) could sit on a build from weeks ago. `no-cache` still lets the browser keep a local copy; it just forces a conditional request every time, so an unchanged file comes back as a cheap 304. Once the [service worker](#offline-the-service-worker) is in control, a load asks nothing at all: it serves the page from its own cache, and the browser checks only `sw.js` (a `.js`, so `no-cache` too, and a service worker's script skips the HTTP cache anyway) to find a new build.
 
 ## Song file format
 
@@ -101,7 +104,7 @@ The regex only matches `[Word]` not followed by `(` — so standard Markdown lin
 
 ## Shared pipeline
 
-`build` and `spec/support/fixture_builder.rb` run the same code, in `lib/build_helpers.rb`: `songbook_markdown` (front matter with `lang: de-CH`, the introduction, the songs with their chords marked up), `pandoc!`, `post_process_index` and `post_process_print` (both of which call `split_song_artist`, see [Song file format](#song-file-format)). What differs is a parameter — `assets:` (`style/` beside `index.html`, `/style/` for the fixtures served from `spec/fixtures/`) and the multiplex config. Change the pipeline there, not in one of its callers.
+`build` and `spec/support/fixture_builder.rb` run the same code, in `lib/build_helpers.rb`: `songbook_markdown` (front matter with `lang: de-CH`, the introduction, the songs with their chords marked up), `pandoc!`, `post_process_index` and `post_process_print` (both of which call `split_song_artist`, see [Song file format](#song-file-format)). What differs is a parameter — `assets:` (`style/` beside `index.html`, `/style/` for the fixtures served from `spec/fixtures/`), the multiplex config and `service_worker:` (`sw.js`, or `nil` for `./build --dev`). `service_worker` writes `sw.js` from the finished `index.html` for both. Change the pipeline there, not in one of its callers.
 
 ## Table of contents tag filter
 
@@ -122,6 +125,7 @@ These are **generated, not committed** (gitignored; `./build` writes them, CI re
 
 - `all-songs.md` — intermediate concatenated Markdown
 - `index.html` — interactive night-themed Reveal.js presentation
+- `sw.js` — the service worker, `lib/service-worker.js` with the build's version and files (see [Offline](#offline-the-service-worker)); not written by `./build --dev`
 - `print.html` — serif-themed version for printing. Open it as `print.html?print-pdf` in Chrome and print: reveal.js then lays out every slide as a page of its own
 
 ## Tests
@@ -291,6 +295,17 @@ MASTER_PASSWORD=mypassword ./build
 ```
 
 The password is embedded in the generated HTML (visible in source). This is intentional — the goal is only to keep the audience from accidentally becoming host, not real security.
+
+## Offline: the service worker
+
+**Once a device has opened the song book, it opens without the network.** `sw.js`, beside `index.html`, is a service worker: `./build` writes it from `lib/service-worker.js` (`service_worker` in `lib/build_helpers.rb`), and the page registers it once it has loaded (`body-controls.html`), so its downloads don't hold up a first visit on a slow connection. It keeps the page and every script and stylesheet the page loads from its own site, read off the page itself (`FILES`), so the list can't fall behind it. A reload, a tab iOS discarded in the background, the song book opened from the home screen, and a QR code's `?live=` address (any address of the page, whatever its query) all come from its cache, at once, with a slow connection or none. Only the relay's socket needs the network, and socket.io reconnects by itself. The fonts and the pictures (⚙️'s font samples, the Vollbild runway's) are kept as they are first asked for. A font is `immutable` in the browser's own cache too, so one loaded before the worker took over is still found offline.
+
+- **A new build shows on the load after the one that finds it.** `VERSION` is a hash of the page and its files, so any change to them changes `sw.js`. The browser checks `sw.js` on every visit, and the new worker fetches the new files in the background (`cache: 'no-cache'`: an unchanged one comes back as a 304), takes over (`skipWaiting`, `clients.claim`) and deletes the old cache. The page on screen stays as it was. So after a deploy, the first visit still shows the old build and the second shows the new one. This is the price of not waiting for the network on every load, the opposite trade from the `no-cache` headers ([Cache headers](#cache-headers)), which only ever saved a stale copy, never the round trip.
+- **Not in `./dev`** (`./build --dev`, `window.SERVICE_WORKER = null`): browser-sync's reloads would show what the worker keeps. The page unregisters any worker instead. Nor where there is no secure context: a phone reaching `./dev` over the LAN by IP address has no `navigator.serviceWorker`.
+- **To get rid of it,** deploy an `sw.js` that unregisters itself (`self.registration.unregister()` on `activate`). Deleting `sw.js` from the server leaves the installed workers running on the devices: the browser keeps a worker whose script it can no longer fetch.
+- **Specs:** `spec_helper.rb` turns it off on every page (`window.SERVICE_WORKER_OFF`, through Ferrum's `extensions`, like `CONTROLS_STAY`), since its cache would outlast an example and serve the next. `spec/browser/offline_spec.rb` turns it on. It stands for offline by stopping the file server (`FileServer.stop`), since emulating the network on the page needn't reach the worker, which fetches from a target of its own. It also lets the worker's target run: Ferrum attaches to every new target with `waitForDebuggerOnStart`, but resumes only pages and iframes, and a paused worker never settles its registration. `spec/unit/service_worker_spec.rb` covers the file list and the version.
+
+See [decisions/2026-11-12-the-song-book-opens-from-a-service-workers-cache.md](decisions/2026-11-12-the-song-book-opens-from-a-service-workers-cache.md).
 
 ## Legacy songs
 

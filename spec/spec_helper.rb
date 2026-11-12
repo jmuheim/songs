@@ -57,8 +57,10 @@ Capybara.register_driver(:cuprite) do |app|
     # The corner buttons fade out a few seconds after a page loads
     # (body-controls.html), and Cuprite counts a faded one as invisible. In the
     # specs they stay, on every page of every session; the spec of the fading
-    # turns it back on (`fading_controls`).
-    extensions: [{ source: 'window.CONTROLS_STAY = true;' }]
+    # turns it back on (`fading_controls`). And no service worker: its cache
+    # would outlast an example, and serve the next one; offline_spec.rb,
+    # which is about it, turns it back on.
+    extensions: [{ source: 'window.CONTROLS_STAY = true; window.SERVICE_WORKER_OFF = true;' }]
   )
 end
 

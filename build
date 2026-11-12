@@ -15,11 +15,13 @@ MASTER_PASSWORD   = ENV.fetch('MASTER_PASSWORD', 'guitar')
 # No multiplex pair in the build: each session's secret is generated in the
 # browser of whoever logs in as its host, and reaches the others by its QR code.
 
-options = { deploy: false }
+options = { deploy: false, dev: false }
 OptionParser.new do |opts|
   opts.banner = "Usage: build [options]"
   opts.on("--deploy", "Deploy to songs.josh.ch via rsync") { options[:deploy] = true }
+  opts.on("--dev", "No service worker (./dev): a reload shows the build, not the cache") { options[:dev] = true }
 end.parse!
+abort "A --dev build has no service worker, and isn't deployed" if options[:dev] && options[:deploy]
 
 def step(emoji, label)
   print "#{emoji}  #{label}... "
@@ -51,7 +53,14 @@ end
 step("✨", "Post-processing index.html") do
   multiplex = { url: MULTIPLEX_URL, password: MASTER_PASSWORD }
   tags = song_files.map { |file| song_tags(File.read(file, encoding: 'UTF-8')) }
-  File.write("index.html", post_process_index(File.read("index.html"), assets: "style/", multiplex: multiplex, tags: tags))
+  sw_path = options[:dev] ? nil : "sw.js"
+  File.write("index.html", post_process_index(File.read("index.html"), assets: "style/", multiplex: multiplex, tags: tags, service_worker: sw_path))
+end
+
+unless options[:dev]
+  step("📦", "Writing sw.js (service worker)") do
+    File.write("sw.js", service_worker(File.read("index.html"), root: __dir__))
+  end
 end
 
 step("🖨️", "Generating print.html (Pandoc)") do
@@ -65,7 +74,7 @@ end
 if options[:deploy]
   step("🚀", "Deploying to songs.josh.ch") do
     puts
-    system("rsync -avz --delete index.html style .htaccess maroni@greip.uberspace.de:/var/www/virtual/maroni/songs.josh.ch/")
+    system("rsync -avz --delete index.html sw.js style .htaccess maroni@greip.uberspace.de:/var/www/virtual/maroni/songs.josh.ch/")
   end
 end
 

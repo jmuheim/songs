@@ -11,6 +11,7 @@ module FixtureBuilder
   SONGS_DIR     = File.join(FIXTURE_DIR, 'songs')
   OUTPUT        = File.join(FIXTURE_DIR, 'index.html')
   PRINT_OUTPUT  = File.join(FIXTURE_DIR, 'print.html')
+  SERVICE_WORKER = File.join(FIXTURE_DIR, 'sw.js')
   URL_PATH      = '/spec/fixtures/index.html'
   PRINT_URL_PATH = '/spec/fixtures/print.html'
 
@@ -35,7 +36,9 @@ module FixtureBuilder
       tags = song_files.map { |file| song_tags(File.read(file, encoding: 'UTF-8')) }
 
       FileUtils.mkdir_p(FIXTURE_DIR)
-      File.write(OUTPUT, post_process_index(File.read(index_path, encoding: 'UTF-8'), assets: '/style/', multiplex: multiplex, tags: tags), encoding: 'UTF-8')
+      File.write(OUTPUT, post_process_index(File.read(index_path, encoding: 'UTF-8'), assets: '/style/', multiplex: multiplex, tags: tags, service_worker: 'sw.js'), encoding: 'UTF-8')
+      # Kept off in the specs (spec_helper.rb) but for offline_spec.rb
+      File.write(SERVICE_WORKER, service_worker(File.read(OUTPUT, encoding: 'UTF-8'), root: ROOT), encoding: 'UTF-8')
       File.write(PRINT_OUTPUT, post_process_print(File.read(print_path, encoding: 'UTF-8'), assets: '/style/'), encoding: 'UTF-8')
     end
 

@@ -198,6 +198,24 @@
     });
   })();
 
+  // The service worker (sw.js beside the page, lib/service-worker.js) keeps
+  // the song book on the device, for a slow connection or none. Registered
+  // once the page has loaded, so its downloads don't hold up the first visit.
+  // Where the build made none (./dev: browser-sync's reloads would only show
+  // what it keeps), any left from before is unregistered. The specs keep it
+  // off (SERVICE_WORKER_OFF), but for the one about it. Only in a secure
+  // context: not on a phone reaching ./dev by IP address.
+  window.addEventListener('load', function() {
+    if (!navigator.serviceWorker) return;
+    if (window.SERVICE_WORKER && !window.SERVICE_WORKER_OFF) {
+      navigator.serviceWorker.register(window.SERVICE_WORKER).catch(function() {});
+    } else {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        registrations.forEach(function(registration) { registration.unregister(); });
+      }).catch(function() {});
+    }
+  });
+
   // A YouTube link on a slide (external_links in lib/build_helpers.rb gives it
   // its player's address as data-video) plays in a dialog, not on YouTube's
   // page, which would take the song book's tab away. The player is made as the

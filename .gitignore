@@ -11,5 +11,7 @@
 /all-songs.md
 /index.html
 /print.html
+/sw.js
 /spec/fixtures/index.html
 /spec/fixtures/print.html
+/spec/fixtures/sw.js
