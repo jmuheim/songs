@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'json'
 require 'open3'
+require 'uri'
 
 module BuildHelpers
   module_function
@@ -499,6 +500,43 @@ module BuildHelpers
     doc.to_html
   end
 
+  # The links of a slide (a song's YouTube video, its tab source, …) never take
+  # the song book's tab away: coming back to it meant loading it anew, slow on
+  # a slow connection and impossible without one, and a page in a session (an
+  # open socket) is often kept out of the back/forward cache. A YouTube video
+  # plays in a dialog of its own instead (body-controls.html), from its embed
+  # address: YouTube's own pages, like most tab sites, refuse to be framed
+  # (X-Frame-Options, frame-ancestors). From youtube-nocookie.com, so a visit
+  # to the song book sets no YouTube cookie, as it asks Google for no font. Any
+  # other link opens in a new tab. Not print.html: paper has no tabs.
+  def external_links(html)
+    doc = Nokogiri::HTML(html)
+    doc.css('.slides section a[href^="http"]').each do |link|
+      if (video = youtube_embed(link['href']))
+        link['data-video'] = video
+      else
+        link['target'] = '_blank'
+        link['rel'] = 'noopener'
+      end
+    end
+    doc.to_html
+  end
+
+  # A YouTube watch address (`youtube.com/watch?v=…`, `youtu.be/…`) as the
+  # address of its embedded player, or nil for any other link.
+  def youtube_embed(href)
+    uri = URI(href)
+    id = case uri.host
+         when 'www.youtube.com', 'youtube.com', 'm.youtube.com'
+           URI.decode_www_form(uri.query || '').assoc('v')&.last if uri.path == '/watch'
+         when 'youtu.be'
+           uri.path.delete_prefix('/')
+         end
+    "https://www.youtube-nocookie.com/embed/#{id}?autoplay=1" if id&.match?(/\A[\w-]+\z/)
+  rescue URI::InvalidURIError
+    nil
+  end
+
   # Everything below is shared by `build` and spec/support/fixture_builder.rb,
   # so the specs exercise the pipeline that builds the song book, not a copy.
   # `assets` is how the pages reach style/: "style/" beside index.html,
@@ -541,7 +579,7 @@ module BuildHelpers
     # of reach left 📡 dead until a reload.
     scripts = ["#{assets}slide-zoom.js", "#{assets}socketio/socket.io.js", "#{assets}sha256.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}chords.js", "#{assets}toc-filter.js", "#{assets}wishes.js"]
     html = html.sub('</body>', scripts.map { |src| %(  <script src="#{src}"></script>\n) }.join + '</body>')
-    wrap_slide_content(chord_buttons(inject_next_line_previews(inject_song_wishes(inject_toc_filter(split_song_artist(html), tags: tags)))))
+    wrap_slide_content(chord_buttons(inject_next_line_previews(inject_song_wishes(inject_toc_filter(external_links(split_song_artist(html)), tags: tags)))))
   end
 
   def post_process_print(html, assets:)

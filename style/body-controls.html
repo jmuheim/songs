@@ -190,6 +190,38 @@
     });
   })();
 
+  // A YouTube link on a slide (external_links in lib/build_helpers.rb gives it
+  // its player's address as data-video) plays in a dialog, not on YouTube's
+  // page, which would take the song book's tab away. The player is made as the
+  // dialog opens and dropped as it closes: the video stops with it, and nothing
+  // loads while none is open. A click with a modifier key still follows the
+  // link, to a new tab, say.
+  (function() {
+    window.addEventListener('load', function() {
+      var videoModal = document.getElementById('video-modal');
+      var videoFrame = document.getElementById('video-frame');
+      document.addEventListener('click', function(e) {
+        var link = e.target.closest('a[data-video]');
+        if (!link || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        var name = link.textContent.replace(/\s+/g, ' ').trim(); // Pandoc wraps its lines, links included
+        var player = document.createElement('iframe');
+        player.src = link.dataset.video;
+        player.title = name;
+        player.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture';
+        player.allowFullscreen = true;
+        videoFrame.replaceChildren(player);
+        document.getElementById('video-title').textContent = name;
+        videoModal.showModal();
+      });
+      videoModal.addEventListener('close', function() { videoFrame.replaceChildren(); });
+      document.getElementById('video-close').addEventListener('click', function() { videoModal.close(); });
+      videoModal.addEventListener('keydown', function(e) { e.stopPropagation(); });
+      videoModal.addEventListener('keypress', function(e) { e.stopPropagation(); });
+      videoModal.addEventListener('click', function(e) { if (e.target === videoModal) videoModal.close(); });
+    });
+  })();
+
   // ↕️ „Vollbild", a toggle: the real Fullscreen API wherever there is one
   // (desktop, Android, iPad). iPhone Safari only has it for <video>, but it
   // hides its own bars once a finger scrolls the page — which never happens in
@@ -442,6 +474,14 @@
       <label class="settings-checkbox"><input type="checkbox" id="show-chords-checkbox"> Akkorde anzeigen</label>
       <button id="settings-close">Schliessen</button>
     </div>
+  </div>
+</dialog>
+
+<dialog id="video-modal" class="overlay-modal" aria-labelledby="video-title">
+  <div class="modal-box modal-box-video">
+    <h2 id="video-title" tabindex="-1" autofocus>Lied auf YouTube</h2>
+    <div id="video-frame"></div>
+    <button id="video-close">Schliessen</button>
   </div>
 </dialog>
 

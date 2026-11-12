@@ -1119,6 +1119,26 @@ dialog.overlay-modal::backdrop {
   }
 }
 
+/* As wide as the screen leaves room for, and no wider than its height lets a
+   16:9 player be: beside about 9em of title, button and padding, and the 40px
+   or so a modal dialog keeps clear of the screen's edges. A phone held
+   sideways is wide but low */
+.modal-box-video {
+  width: min(64rem, 90vw, (100svh - 9em - 40px) * 16 / 9 + 4em);
+}
+
+#video-frame {
+  aspect-ratio: 16 / 9;
+  margin-bottom: 1em;
+}
+
+#video-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 /* The fonts ⚙️ offers (body-controls.html sets the attributes), in place of
    the theme's Montserrat for the titles and Open Sans for the text. Code
    blocks and the chords keep --r-code-font. The theme's tight letter spacing

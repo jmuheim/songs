@@ -1033,6 +1033,67 @@ RSpec.describe 'index.html', :js, type: :feature do
   end
 
   # -----------------------------------------------------------------------
+  # Links on a slide (external_links in lib/build_helpers.rb)
+  # -----------------------------------------------------------------------
+  describe 'links' do
+    before { load_presentation }
+
+    it 'plays a YouTube video in a dialog and opens any other link in a new tab, never leaving the song book' do
+      page.execute_script(<<~JS)
+        var infos = document.getElementById('across-the-universe-beatles').parentNode.querySelector('section[id^="infos-über-das-lied"]');
+        var indices = Reveal.getIndices(infos);
+        Reveal.slide(indices.h, indices.v);
+      JS
+      expect(page).to have_css('section.present[id^="infos-über-das-lied"] > .slide-content[data-fitted]')
+      # A tab site refuses to be framed: it gets a tab of its own
+      expect(page).to have_css('section.present.level2 a[target="_blank"][rel="noopener"]', text: 'Tab-Quelle')
+
+      # The players' real addresses are YouTube's (the unit spec and the golden
+      # pin them), and so are the links': here both point at blank pages, so
+      # that nothing leaves the machine, not even when the dialog fails to open
+      page.execute_script(<<~JS)
+        document.querySelectorAll('section.present a[data-video]').forEach(function(a, i) {
+          a.dataset.video = 'about:blank#video-' + i;
+          a.href = 'about:blank#page-' + i;
+        });
+      JS
+      before = slide_indices
+
+      within('section.present.level2') { click_link('Lied auf YouTube') }
+      expect(page).to have_visible('#video-modal')
+      within('#video-modal') do
+        expect(page).to have_css('h2', text: 'Lied auf YouTube')
+        expect(page).to have_css('iframe[src="about:blank#video-0"][title="Lied auf YouTube"][allowfullscreen]')
+      end
+      expect(active_element_id).to eq('video-title')
+
+      # Reveal listens on the document: nothing pressed inside the dialog reaches it
+      press(:right)
+      expect(slide_indices).to eq(before)
+      press(:escape)
+      expect(page).not_to have_visible('#video-modal')
+      expect(page.evaluate_script("Reveal.isOverview()")).to be false
+      # The player goes with the dialog, and the video with it
+      expect(page).to have_no_css('#video-frame iframe', visible: :all)
+
+      # Each link plays its own video, under its own name
+      within('section.present.level2') { click_link('Gitarren-Tutorial') }
+      within('#video-modal') do
+        expect(page).to have_css('h2', text: 'Gitarren-Tutorial')
+        expect(page).to have_css('iframe[src="about:blank#video-1"]')
+      end
+      click_button('Schliessen')
+      expect(page).not_to have_visible('#video-modal')
+      expect(page).to have_no_css('#video-frame iframe', visible: :all)
+
+      within('section.present.level2') { click_link('Lied auf YouTube') }
+      expect(page).to have_visible('#video-modal')
+      backdrop_click('video-modal')
+      expect(page).not_to have_visible('#video-modal')
+    end
+  end
+
+  # -----------------------------------------------------------------------
   # Vollbild (↕️)
   # -----------------------------------------------------------------------
   describe 'Vollbild' do

@@ -13,6 +13,7 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - The four corner buttons (📖 ↕️ 📡 ⚙️) fade out a few seconds after the page opens, the first time with their labels. Tap anywhere, move the mouse or tab to one to bring them back; a swipe doesn't, nor does a tap on a chord. 📡 stays while its connection is down
 - Full screen with ↕️, top right, and back with another press. On an iPhone, where Safari has no full-screen mode for a web page, it asks for one swipe down instead: that makes Safari hide its bars, and they stay hidden while you page through the songs. Added to the home screen (Share › „Add to Home Screen"), the song book opens without any bars at all
 - Tag songs (language, genre, …) and filter the table of contents by tag
+- A song's YouTube video plays right in the song book, in a dialog of its own; its other links (tab sources, …) open in a new tab, so the song book stays open and never has to load again
 - **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)
 - **Song wishes** — in a session, tap the ❤️ on a song (in the table of contents or on its title slide) to wish for it; everyone sees how many want each song, and the wishes are gone with the evening
 - Print-friendly version: open `print.html?print-pdf` in Chrome and print
