@@ -804,9 +804,18 @@ RSpec.describe 'index.html', :js, type: :feature do
       "rgb(#{hex.scan(/\h\h/).map(&:hex).join(', ')})"
     end
 
-    # The five pickers, by name, as they show
+    # The five pickers, by name, as they show. Read in one go, not found with
+    # all() and then read one by one: Ferrum fetches the document anew each
+    # time the page reports it stopped loading, which voids every node found
+    # before, and Capybara doesn't find a node from all() again. On the Linux
+    # runner that fell between the two, right after a scheme was picked (and
+    # its fonts loaded): ObsoleteNode, twice in a row.
     def picker_colors
-      all('.settings-colors input').to_h { |picker| [picker['name'], picker.value] }
+      page.evaluate_script(<<~JS).to_h
+        Array.prototype.map.call(document.querySelectorAll('.settings-colors input'), function (picker) {
+          return [picker.name, picker.value];
+        })
+      JS
     end
 
     # The picker opens the browser's own dialog, which Capybara can't reach:
