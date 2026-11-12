@@ -49,7 +49,7 @@ npm install --prefix multiplex-server   # once
 bundle exec rspec
 ```
 
-The browser specs run their own multiplex server on `127.0.0.1:18889`, so a spec that logs in as host never broadcasts through the relay songs.josh.ch uses.
+The browser specs run their own multiplex server on `127.0.0.1`, on a port the OS picks (so two test runs at once don't collide), so a spec that logs in as host never broadcasts through the relay songs.josh.ch uses.
 
 GitHub Actions runs the whole suite on every push to `master` and on every pull request (`.github/workflows/test.yml`). A green run on `master` then deploys to songs.josh.ch.
 
