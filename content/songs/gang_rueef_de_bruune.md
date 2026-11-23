@@ -10,15 +10,15 @@
 
 ## Original
 
-Gang rüef de [C] Bruune, gang rüef de Geele,
-si sölid [G] allsamm, si sölid [C] allsamm
-Gang rüef de [C] Bruune, gang rüef de Geele,
-si sölid [G] allsamm in Stall ie [C] choo.
+Gang rüef de [C] Bruune, gang [F] rüef de [C] Geele,
+si sölid [G] allsamm, si [G7] sölid [C] allsamm
+Gang rüef de [C] Bruune, gang [F] rüef de [C] Geele,
+si sölid [G] allsamm in [G7] Stall ie [C] choo.
 
 [C] Sennele hoa hoa, [G] sennele hoa ho
-Sennele hoa hoa, [C] sennele hoa ho
+[G7] Sennele hoa hoa, [C] sennele hoa ho
 Sennele hoa hoa, [G] sennele hoa ho
-Sennele hoa hoa [C] ho!
+[G7] Sennele hoa hoa [C] ho!
 
 ## Varianten
 
