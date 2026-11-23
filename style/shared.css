@@ -69,8 +69,9 @@ body.chords-clickable .reveal section button.chord {
 }
 
 /* Pointed at, focused from the keyboard or open, a chord looks the same: a
-   ring around its pill. It takes the theme's text colour: the chord's own
-   text colour is black and would vanish on the night background.
+   ring around its pill. It takes the slide titles' colour: the chord's own
+   text colour is black and would vanish on the night background, and the
+   text's white stood out more than a chord being pointed at needs to.
    The ring is a box-shadow over a band of the background, raised above the
    line: the pill is an inline-block, painted along with the text of its
    line, so the word after it was drawn over an outline, and the word before
@@ -81,7 +82,7 @@ body.chords-clickable .reveal section button.chord:hover > code,
 .reveal section button.chord.chord-active > code {
   position: relative;
   z-index: 1;
-  box-shadow: 0 0 0 2px var(--r-background-color), 0 0 0 5px var(--r-main-color);
+  box-shadow: 0 0 0 2px var(--r-background-color), 0 0 0 5px var(--r-heading-color);
   outline: 3px solid transparent;
   outline-offset: 2px;
 }
