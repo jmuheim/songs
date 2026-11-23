@@ -24,7 +24,7 @@
 [C] Lueget do [G] aben a [C] See!
 [C] Heimezue wändet sich s'[G]Veh. [G7]
 [C] Loset, wie d'[F]Glogge, die [C] schöne,
-[C] Fründli [C] vom [F] Moos us er[C]töne.
+[C] Fründli vom [F] Moos us er[C]töne.
 
 [Am] Chüehjerglüt, [G] üseri [C] Lust,
 [C] Tuet is so [F] wohl [G] i der [C] Brust.
