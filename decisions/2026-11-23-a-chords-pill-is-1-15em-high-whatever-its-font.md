@@ -1,0 +1,12 @@
+## 2026-11-23 — A chord's pill is 1.15em high, whatever its font
+
+**Context:** On a slide of chords alone in two lines (the Guggisbergerlied's Intro, `[Am] [G] [F] [E]` over `[F] [G] [Am]`), the pills of the lower line covered the bottom of the upper one's. A chord's `<code>` was inline, and an inline element's background covers its font's whole height, ascent to descent: 1.36em in Open Sans, against 1.3em from one line to the next. Lyric lines overlapped the same way wherever two chords stood one above the other. In the book as it was, 1,687 pairs of pills overlapped, on 573 slides with chords. 11 of the 20 fonts ⚙️ offers overlapped there, OpenDyslexic and Pacifico by far the most: its pill was 1.4 times a line's height.
+
+**Decision:** A pill outside a code block (`.reveal section :not(pre) > code`, `shared.css`) is an `inline-block` with `line-height: 1.05` and `padding-bottom: .1em`: 1.15em high in every font, a 0.15em gap to a pill on the next line. Its box stays inside the line's own height, so no slide changes size.
+
+**Reasoning:**
+- **Why not more space between the lines:** a taller line makes every slide taller, and `slide-zoom.js` fits every one of them smaller for it, lyrics included. The pills were the ones too tall, not the lines too close.
+- **Why a box of its own height:** an inline-block is as high as its line-height says, not as its font's ascent and descent. The fix holds for any font a reader picks, the picture fonts included, without a value per font.
+- **Why the padding at the bottom:** with `line-height: 1.15` and no padding, the text sat centred on the font's own height, and the tail of the j in „maj7" (`Dmaj7`, 44 chords in the book with a j or a bracket) reached past the pill's edge. A smaller line-height and padding at the bottom lift the text by a little: in Open Sans the j now just fits, and the letters sit about centred.
+- **What it cost the ring:** an inline-block is painted with the text of its line, an outline included. The ring of a chord pointed at or focused went under the word after it, and the word before it showed through the gap of `outline-offset`. The ring is now a `box-shadow`, 2px of the background and 5px of the ring's colour, on a pill raised above its line (`position: relative; z-index: 1`), only while it wears the ring. A transparent outline stays for forced colours, which drop box-shadows.
+- **What it doesn't reach:** a script font with long tails (Pacifico) still lets them out of the pill. A reader who picks one for the text has chosen its look.

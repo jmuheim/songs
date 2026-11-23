@@ -43,6 +43,20 @@
 .reveal section code.f { background-color: #fb63f6; } /* Violet */
 .reveal section code.g { background-color: #c78430; } /* Brown */
 
+/* A chord's pill is a box 1.15em high, set by its own line-height and
+   padding rather than by its font: an inline <code>'s background covers the
+   font's whole height, ascent to descent (1.36em in Open Sans, more in some
+   of the fonts ⚙️ offers), more than the 1.3em from one line of lyrics to
+   the next, so the pills of stacked lines of chords (an Intro of chords
+   alone) overlapped. The padding at the bottom makes room for the tail of
+   the j in „maj7". Inside the line's own height, the box doesn't move the
+   lines apart. */
+.reveal section :not(pre) > code {
+  display: inline-block;
+  line-height: 1.05;
+  padding-bottom: .1em;
+}
+
 /* A chord is a <button> around its <code> (chord_buttons): the code is the
    coloured pill, and the button shows nothing of its own — all: unset drops
    the browser's border, background, padding, font and focus ring. */
@@ -55,12 +69,20 @@ body.chords-clickable .reveal section button.chord {
 }
 
 /* Pointed at, focused from the keyboard or open, a chord looks the same: a
-   ring around its pill. It takes the theme's text colour — the chord's own
-   text colour is black and would vanish on the night background. */
+   ring around its pill. It takes the theme's text colour: the chord's own
+   text colour is black and would vanish on the night background.
+   The ring is a box-shadow over a band of the background, raised above the
+   line: the pill is an inline-block, painted along with the text of its
+   line, so the word after it was drawn over an outline, and the word before
+   it showed through the gap of outline-offset. The transparent outline is
+   what shows in forced colours, which drop every box-shadow. */
 body.chords-clickable .reveal section button.chord:hover > code,
 .reveal section button.chord:focus-visible > code,
 .reveal section button.chord.chord-active > code {
-  outline: 3px solid var(--r-main-color);
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 0 2px var(--r-background-color), 0 0 0 5px var(--r-main-color);
+  outline: 3px solid transparent;
   outline-offset: 2px;
 }
 

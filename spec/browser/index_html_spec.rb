@@ -785,6 +785,66 @@ RSpec.describe 'index.html', :js, type: :feature do
   end
 
   # -----------------------------------------------------------------------
+  # Chord pills
+  # -----------------------------------------------------------------------
+  describe 'chord pills' do
+    # Every pill on the slide shown against every other one: the pairs whose
+    # boxes overlap, with by how many pixels they do, up and down. Injected,
+    # because where boxes sit on screen is nothing a Capybara matcher sees.
+    OVERLAPPING_PILLS = <<~JS.freeze
+      (function () {
+        var pills = Array.from(document.querySelectorAll('section.slide.present button.chord > code'));
+        var overlaps = [];
+        pills.forEach(function (a, i) {
+          var ra = a.getBoundingClientRect();
+          pills.slice(i + 1).forEach(function (b) {
+            var rb = b.getBoundingClientRect();
+            var dx = Math.min(ra.right, rb.right) - Math.max(ra.left, rb.left);
+            var dy = Math.min(ra.bottom, rb.bottom) - Math.max(ra.top, rb.top);
+            if (dx > 0 && dy > 0) overlaps.push(a.textContent + '/' + b.textContent + ' ' + dy.toFixed(1) + 'px');
+          });
+        });
+        return overlaps;
+      })()
+    JS
+
+    before { load_presentation }
+
+    # A pill's background covers its font's whole height, ascent to descent:
+    # Open Sans's is 1.36em, more than the 1.3em from one line to the next, so
+    # stacked lines of chords overlapped (an Intro of chords alone, say).
+    it 'never overlap on stacked lines of chords, whatever the font' do
+      page.execute_script(<<~JS)
+        (function () {
+          var solo = Array.from(document.querySelectorAll('section.level2')).find(function (s) {
+            return s.querySelector('h2').textContent === 'Solo';
+          });
+          var i = Reveal.getIndices(solo);
+          Reveal.slide(i.h, i.v);
+        })();
+      JS
+      expect(page).to have_css('section.slide.present h2', text: 'Solo')
+      expect(page).to have_css('section.slide.present p:not(.next-line) button.chord', count: 13)
+
+      fonts = page.evaluate_script("Array.from(document.querySelectorAll('input[name=\"text-font\"]')).map(function (r) { return r.value; })")
+      expect(fonts.length).to be > 20
+      # Set on <body> as body-controls.html would, rather than through 21
+      # radio buttons, and waited for until the font has arrived: measured
+      # before, the pills would still be in the fallback font.
+      overlaps = fonts.to_h do |font|
+        page.evaluate_async_script(<<~JS, font)
+          var done = arguments[arguments.length - 1];
+          document.body.dataset.textFont = arguments[0];
+          document.body.offsetHeight; // lays it out, so its font starts loading
+          document.fonts.ready.then(function () { done(); });
+        JS
+        [font, page.evaluate_script(OVERLAPPING_PILLS)]
+      end
+      expect(overlaps.reject { |_font, pairs| pairs.empty? }).to eq({})
+    end
+  end
+
+  # -----------------------------------------------------------------------
   # Theme and fonts
   # -----------------------------------------------------------------------
   describe 'theme and fonts' do

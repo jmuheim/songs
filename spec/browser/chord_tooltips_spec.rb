@@ -132,11 +132,14 @@ RSpec.describe 'chord tooltips (style/chords.js)', :js, type: :feature do
       30.times { break if page.evaluate_script(chord_focused); press(:tab) }
       expect(page.evaluate_script(chord_focused)).to be true
       # Its ring goes around its pill (the <code> inside the button) and is the
-      # theme's white, not the chord's black text colour; a chord under the
-      # mouse wears the same one.
-      ring = "(function (el) { var s = getComputedStyle(el); return s.outlineStyle + ' ' + s.outlineColor; })"
+      # theme's white, not the chord's black text colour, over a
+      # band of the background (#111), so the word before the chord doesn't
+      # show between ring and pill; a chord under the mouse wears the same
+      # one. It is raised above its line: the pill is an inline-block, painted
+      # with its line's text, and the word after it was drawn over its ring.
+      ring = "(function (el) { var s = getComputedStyle(el); return [s.boxShadow, s.position, s.zIndex].join(' / '); })"
       focus_ring = page.evaluate_script("#{ring}(document.activeElement.querySelector('code'))")
-      expect(focus_ring).to eq('solid rgb(255, 255, 255)')
+      expect(focus_ring).to eq('rgb(17, 17, 17) 0px 0px 0px 2px, rgb(255, 255, 255) 0px 0px 0px 5px / relative / 1')
       all("##{VERSE_ID} p:not(.next-line) button.chord").last.hover
       expect(page.evaluate_script("#{ring}(document.querySelector('##{VERSE_ID} button.chord:hover > code'))")).to eq(focus_ring)
       press(:enter)
