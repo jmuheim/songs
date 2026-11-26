@@ -51,18 +51,29 @@ RSpec.describe 'mobile layout', :js, type: :feature do
         load_presentation
         # Each dialog opened straight from script: through its own button,
         # half of them need a session, a host and a song first. All that
-        # matters here is their size once open. With a background picture,
-        # its dialog shows the veil and whether it moves too
+        # matters here is their size once open, the 🔥 dialog's both as a
+        # visitor and as a host sees it. With a background picture, its
+        # dialog shows the veil and whether it moves too
         [false, true].each do |picture|
           overflowing = page.evaluate_script(<<~JS)
             (function () {
               document.body.classList.toggle('custom-background', #{picture});
-              return Array.prototype.filter.call(document.querySelectorAll('dialog.overlay-modal'), function (dialog) {
+              function tooTall(dialog) {
                 dialog.showModal();
-                var tooTall = dialog.scrollHeight > dialog.clientHeight;
+                var overflows = dialog.scrollHeight > dialog.clientHeight;
                 dialog.close();
-                return tooTall;
-              }).map(function (dialog) { return dialog.id; });
+                return overflows;
+              }
+              var overflowing = Array.prototype.filter.call(document.querySelectorAll('dialog.overlay-modal'), tooTall)
+                .map(function (dialog) { return dialog.id; });
+              // The 🔥 dialog as the host sees it, the most it offers: 🚀
+              // with its hint, ❤️, 🔗 and 🏁, none of a visitor's
+              var shown = ['live-toggle', 'live-toggle-hint', 'playlist-open', 'show-qr', 'session-end'];
+              var gone = ['multiplex-info-join', 'session-join', 'host-login'];
+              shown.concat(gone).forEach(function (id) { document.getElementById(id).hidden = gone.indexOf(id) >= 0; });
+              if (tooTall(document.getElementById('multiplex-info-modal'))) overflowing.push('multiplex-info-modal as host');
+              shown.concat(gone).forEach(function (id) { document.getElementById(id).hidden = shown.indexOf(id) >= 0; });
+              return overflowing;
             })()
           JS
           expect(page.evaluate_script("document.querySelectorAll('dialog.overlay-modal').length")).to be >= 7 # else this proves little

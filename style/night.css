@@ -413,6 +413,22 @@ button.song-wish:focus-visible {
   outline-offset: 2px;
 }
 
+/* „Nächstes Lied" (layout in shared.css): a control's pill, as in the dialogs */
+.reveal section .playlist-next {
+  color: var(--color-text);
+  background: var(--color-control);
+  border-color: var(--color-control-border);
+}
+
+.reveal section .playlist-next:hover {
+  background: var(--color-control-hover);
+}
+
+.reveal section .playlist-next:focus-visible {
+  outline: 3px solid var(--r-heading-color);
+  outline-offset: 2px;
+}
+
 /* A title too long for its row of the TOC fades out at the row's end rather
    than ending in "…": an overlay in the list's own background
    (--r-background-color, whatever the colours), transparent at
@@ -937,10 +953,21 @@ dialog.overlay-modal::backdrop {
 #qr-info,
 #live-toggle-hint,
 #multiplex-info-join,
-#multiplex-info-legend {
+#multiplex-info-legend,
+#playlist-info,
+#wish-mode-info {
   font-size: 0.8em;
   opacity: 0.6;
   margin-top: -0.4em;
+}
+
+/* The playlist dialog's checkbox, and what it means under it */
+#playlist-modal .settings-checkbox {
+  margin: 0.5em 0 0.3em;
+}
+
+#wish-mode-info {
+  margin-top: 0;
 }
 
 .modal-box input[type="password"],
@@ -1225,6 +1252,35 @@ dialog.overlay-modal::backdrop {
 /* The scroll-choice dialog stacks its options, one per line. */
 .modal-buttons-stacked {
   flex-direction: column;
+}
+
+/* The live-scroll dialog as the host sees it (🚀 and its hint, ⭐, 🔗, 🏁)
+   ran past the bottom of a laptop's low window in its 2rem, and of a phone
+   held sideways in any size: there it is set smaller, and on the phone wider,
+   its buttons two to a row (the hint and „Schliessen" across both; dense, so
+   ⭐ fills the place beside 🚀 that the hint leaves). */
+@media (width >= 500px) and (height < 800px) {
+  #multiplex-info-modal .modal-box {
+    font-size: 1.5rem;
+  }
+}
+
+@media (width >= 500px) and (height < 500px) {
+  #multiplex-info-modal .modal-box {
+    width: min(48rem, 90vw);
+    font-size: 1.35rem;
+  }
+
+  #multiplex-info-modal .modal-buttons-stacked {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row dense;
+  }
+
+  #live-toggle-hint,
+  #multiplex-info-close {
+    grid-column: 1 / -1;
+  }
 }
 
 .modal-box button {

@@ -1,0 +1,13 @@
+## 2026-11-26 — Live scrolling runs on from song to song
+
+**Context:** Live scrolling was one song at a time (see [live-scroll sessions](2026-09-30-live-scroll-sessions-presenter-delegates-to-a-guest.md)). The scroller was walled into the song it started on, and to move on, the host ended live scrolling, picked the next song and started live scrolling again. In guest mode, the whole room was then asked again who wanted to scroll. At the user's latest evening this was a chore after every song, while the guest who had scrolled the last one was happy to go on.
+
+**Decision:** Live scrolling starts on a song and runs on until the host ends it. The scroller, the host itself or a guest, keeps 📖. It goes to the table of contents and on to a song there, or presses „Nächstes Lied" on a song's last slide (see [the host's playlist](2026-11-26-the-hosts-playlist-and-the-next-song-button.md)). The room follows it everywhere, the table of contents included. Within a song, its horizontal keys and swipes stay off, as does the overview. 🚀 „Live-Scrollen beenden" works wherever the room is; „Live-Scrollen starten" still needs a song. A scroller's position is stored with the session, so a reload brings it back where it had scrolled the room to, not onto the song the live scroll started on.
+
+**Reasoning:**
+- **The scroller moves on, not the host.** The user chose this over the host picking the next song while a guest scrolls. Two devices that can both move the room need a rule for which one wins, and the scroller already moves it.
+- **Only deliberate ways out of a song.** The wall was there so a handed-off guest couldn't wander the whole set list. Wandering is now allowed, but a slip isn't: a sideways swipe or a stray arrow key mid-song would take everyone onto the next song's title. So the keys and swipes keep the scroller to the song, and only 📖 or a link (a TOC entry, „Nächstes Lied") moves it on.
+- **Followers follow into the table of contents.** That keeps the rule simple: a follower is wherever the scroller is. The list still scrolls under a follower's own finger, and its ❤️ still takes a press, so the room can wish while the scroller picks.
+- **The position is stored, not re-derived from `live.song`.** A restored scroller used to be put back onto `live.song`. That is right only while live scrolling never leaves that song.
+
+This lifts the song wall from [live-scroll sessions](2026-09-30-live-scroll-sessions-presenter-delegates-to-a-guest.md) and widens [no overview while a song is live-scrolled](2026-10-31-no-overview-while-a-song-is-live-scrolled.md) to all of live scrolling.

@@ -14,8 +14,8 @@ A live version is at [songs.josh.ch](https://songs.josh.ch).
 - Full screen with ↕️, top right, and back with another press. On an iPhone, where Safari has no full-screen mode for a web page, it asks for one swipe down instead: that makes Safari hide its bars, and they stay hidden while you page through the songs. Added to the home screen (Share › „Add to Home Screen"), the song book opens without any bars at all
 - Tag songs (language, genre, …) and filter the table of contents by tag
 - A song's YouTube video plays right in the song book, in a dialog of its own; its other links (tab sources, …) open in a new tab, so the song book stays open and never has to load again
-- **Live sync** — open the song book on your phone and follow along as the presenter, or a volunteer, scrolls the current song (see below)
-- **Song wishes** — in a session, tap the ❤️ on a song (in the table of contents or on its title slide) to wish for it; everyone sees how many want each song, and the wishes are gone with the evening
+- **Live sync** — open the song book on your phone and follow along as the host, or a volunteer, scrolls through the evening's songs (see below)
+- **Song wishes and the playlist** — in a session, tap the ❤️ on a song (in the table of contents or on its title slide) to wish for it; everyone sees how many want each song, and the wishes are gone with the evening. The host's hearts are its playlist, made ahead and kept on its device; „Nächstes Lied" on a song's last slide goes on to the next one
 - **Offline** — once a device has opened the song book, it opens again without the network, and at once on a slow one: a service worker keeps it. A new version shows from the second visit after it went live, or at once: as soon as the device has fetched it, a dialog offers „Neu laden"
 - Print-friendly version: open `print.html?print-pdf` in Chrome and print
 
@@ -79,13 +79,13 @@ Nothing but blank lines may sit between the H1 and the first H2 — a capo note 
 
 ## Live sync (multiplex)
 
-The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multiplex/) so everyone in the room can follow along on their own device — song by song, led by the evening's host or by a volunteer.
+The song book uses the [Reveal.js multiplex plugin](https://revealjs.com/multiplex/) so everyone in the room can follow along on their own device — from song to song, led by the evening's host or by a volunteer.
 
 Each evening is a **session** („Runde" on screen) of its own. Whoever leads it taps 🔥 › 🔑 „Als Gastgeber anmelden" and enters the password: that opens a new session; once you have said whose songs the evening has, its QR code shows. The others join by scanning it (later on: 🔥 › 🔗). Whoever has just scanned it sees their own copy of the code at once, with a hint to let further guests scan it — anyone in the session can show it, so a neighbour can let a latecomer in. Each device then keeps the session in its own storage — reloading, a new tab or the song book reopened from the home screen stay in it — until the host ends it (🏁), a guest leaves it (🚪), or nothing has been heard of it for 12 hours. A device that never scanned a code is in no session, and nobody's evening ever moves its screen; two evenings at the same time never touch each other.
 
 | Button | Position | Function |
 |--------|----------|----------|
-| 📖 | Top left | Jump to the table of contents (hidden while a live-scroll session locks your navigation) |
+| 📖 | Top left | Jump to the table of contents (hidden while you follow someone else's live scrolling) |
 | ↕️ | Top right | Full screen, and back |
 | 🔥 | Bottom left | Live scrolling: a badge shows your connection/role at a glance; tap for the details, the login, 🚀 and 🔗 |
 | ⚙️ | Bottom right | Settings („Einstellungen") — colours, background picture, fonts, chord visibility |
@@ -98,20 +98,23 @@ In the 🔥 dialog:
 |--------|----------|
 | 🎟️ | Outside a session: „Mit Code beitreten" — type the code shown under the session's QR code (case and dashes don't matter) |
 | 🔑 | „Als Gastgeber anmelden" (asks for the password once per device), or, in a session, „Gastgeber übernehmen" |
-| 🚀 | Host only: start live scrolling on the current song (songs only), or end it |
+| 🚀 | Host only: start live scrolling on the current song (songs only), or end it, wherever the room is |
+| ⭐ | Host only (and, outside a session, a device the password was entered on): „Playlist" — whether the guests may wish too, and „Playlist leeren" |
 | 🔗 | In a session: show its QR code — scan to join — and below it the session's code, to type in instead |
 | 🚪 | Guests: „Runde verlassen" — this device leaves the session |
 | 🏁 | Host only: „Runde beenden" — everyone leaves the session |
 
-Navigate to a song, then tap 🔥 › 🚀 and choose **„Ich selber möchte scrollen"** to scroll it yourself, or **„Ein Gast soll scrollen"** to let someone in the audience take over. In guest mode everyone in the session is asked whether they want to scroll; the first to accept leads, and the rest follow. Whoever scrolls can only move up and down within that song, and has no overview (Esc/O) meanwhile.
+Navigate to a song, then tap 🔥 › 🚀 and choose **„Ich selber möchte scrollen"** to scroll it yourself, or **„Ein Gast soll scrollen"** to let someone in the audience take over. In guest mode everyone in the session is asked whether they want to scroll; the first to accept leads, and the rest follow. Within a song, whoever scrolls moves up and down only — the arrow keys and swipes sideways do nothing, so a slip never takes the room to the next song — and has no overview (Esc/O) meanwhile. At the end of a song, they move on themselves: 📖 to the table of contents and a song there, or „Nächstes Lied" on the song's last slide. The room follows them everywhere, and they keep scrolling until the host ends it.
 
-While a song is live-scrolled, followers are held on the scroller's slide — their own navigation is off. The host and the scroller repeat themselves every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap 🔥 › 🚀 „Live-Scrollen beenden" to end it: everyone lands on the table of contents, is told they can navigate freely again, and a guest who scrolled is thanked.
+While live scrolling, followers are held on the scroller's slide — their own navigation is off. The host and the scroller repeat themselves every two seconds, so whoever opens the song book late, or comes back from a dead spot, catches up by itself. Tap 🔥 › 🚀 „Live-Scrollen beenden" to end it: everyone lands on the table of contents, is told they can navigate freely again, and a guest who scrolled is thanked.
 
 As soon as you are logged in as host, a „Lieder von" dialog asks whose songs the evening has: every Gastgeber is ticked at first; untick whoever is not here tonight and confirm with „OK", and the QR code follows. Every list in the session then shows only the songs that can be played. Guests find the choice behind the „Lieder von" button in the table of contents (and can read it, not change it). Sprache and Genre are the host's too: a language or genre the host picks, every list in the session shows, and that dropdown is greyed out for the guests — so a host who filters just to look something up changes everyone's list. Where the host leaves „Alle", each guest filters on their own. Outside a session, all of it is a plain filter of one's own.
 
 In a session, every song carries a ❤️ — at the right end of its row in the table of contents and under its title on the song's own slide. Tap it to wish for the song, tap again to take the wish back; the number beside it is how many devices in the session wish for it right now, so the host can see what the room is in the mood for. Each device keeps its own wishes across a reload; they are counted only within this session and forgotten when it ends or you leave it — next evening starts from none. Outside a session the hearts are not shown: there is nobody to count.
 
-There is one host at a time. Another device in the session can take the role over with 🔥 › 🔑 „Gastgeber übernehmen" (and the password) — no need for the old host to hand anything on, which a phone with a flat battery couldn't. The old host stays in the session as a participant, and a song being live-scrolled carries on, its scroller included.
+The host's hearts are different: they are its **playlist**, in the order they were set, and stay on the host's device until it empties them (🔥 › ⭐ „Playlist" › „Playlist leeren"). So the playlist can be made days ahead: on a device where the password was entered once, they show outside a session too, as ⭐ numbered „1.", „2.", … In 🔥 › ⭐ „Playlist" the host chooses whether **„Gäste dürfen Lieder wünschen"**: if so, everyone's hearts count, the host's among them; if not, every device shows the host's playlist as stars with their numbers, and the guests' are only to read. A song is played once the live scroll has stayed on its last slide for five seconds, or moved on from there to another song: it keeps its mark, gets a ✓, and is not proposed again. On every song's last slide, below „Ende des Lieds", **„Nächstes Lied: «…»"** takes whoever may navigate (not a follower) to the next song: the next on the playlist, or, while the guests wish, the one wished most.
+
+There is one host at a time. Another device in the session can take the role over with 🔥 › 🔑 „Gastgeber übernehmen" (and the password) — no need for the old host to hand anything on, which a phone with a flat battery couldn't. The old host stays in the session as a participant, and live scrolling carries on, its scroller included.
 
 The badge on 🔥 shows at a glance who's driving — a filled dot for you, a ring while you follow someone else, amber while waiting for a guest, a strike through it if the connection drops — and a tap opens a dialog spelling it out in words: „Du scrollst live", „Warte auf Gast …", „Gast scrollt", „Du scrollst für alle", „Folgt", „Du bist Gastgeber", „Kein Live-Scrollen aktiv", „Keine Runde" or „Keine Verbindung".
 

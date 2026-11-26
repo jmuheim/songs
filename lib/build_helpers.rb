@@ -292,9 +292,8 @@ module BuildHelpers
   # decisions/2026-10-28-each-song-slide-previews-the-next-line.md.
   def inject_next_line_previews(html)
     doc = Nokogiri::HTML(html)
-    stacks = doc.css('.slides > section').select { |s| s.at_css('> section.level1') }
-    stacks.drop(1).each do |stack|
-      slides = stack.css('> section.level2').reject { |slide| slide.at_css('> h2')&.text&.strip == ABOUT_HEADING }
+    song_stacks(doc).each do |stack|
+      slides = sung_slides(stack)
       slides.each_with_index do |slide, i|
         preview = Nokogiri::XML::Node.new('p', doc)
         preview['class'] = 'next-line'
@@ -314,6 +313,52 @@ module BuildHelpers
         end
         slide.add_child(preview)
       end
+    end
+    doc.to_html
+  end
+
+  # The stacks of the songs: every stack with a title slide but the first,
+  # the Introduction, which is no song (skipped by order, as inject_toc_filter
+  # does)
+  def song_stacks(doc)
+    doc.css('.slides > section').select { |s| s.at_css('> section.level1') }.drop(1)
+  end
+
+  # A song's sub-slides that are sung: all but its ABOUT_HEADING slide
+  def sung_slides(stack)
+    stack.css('> section.level2').reject { |slide| slide.at_css('> h2')&.text&.strip == ABOUT_HEADING }
+  end
+
+  # The playlist's way on: a button on each song's last sub-slide, after its
+  # „Ende des Lieds", that takes whoever may navigate (the scroller, or anyone
+  # not following) to the next song on the playlist, or the one wished most
+  # (body-controls.html works it out, fills in its title and shows it; with
+  # no playlist it stays hidden). After inject_next_line_previews and before
+  # wrap_slide_content, so it lands in .slide-content below the preview, and
+  # slide-zoom.js fits it with the slide once it shows. See
+  # decisions/2026-11-26-the-hosts-playlist-and-the-next-song-button.md.
+  NEXT_SONG_LABEL = 'Nächstes Lied:'
+
+  def inject_next_song_buttons(html)
+    doc = Nokogiri::HTML(html)
+    song_stacks(doc).each do |stack|
+      last = sung_slides(stack).last
+      next unless last
+
+      button = Nokogiri::XML::Node.new('button', doc)
+      button['type'] = 'button'
+      button['class'] = 'playlist-next'
+      button['hidden'] = ''
+      icon = Nokogiri::XML::Node.new('span', doc)
+      icon['aria-hidden'] = 'true'
+      icon.content = '⏭️'
+      button.add_child(icon)
+      button.add_child(Nokogiri::XML::Text.new(" #{NEXT_SONG_LABEL} «", doc))
+      title = Nokogiri::XML::Node.new('span', doc)
+      title['class'] = 'playlist-next-title'
+      button.add_child(title)
+      button.add_child(Nokogiri::XML::Text.new('»', doc))
+      last.add_child(button)
     end
     doc.to_html
   end
@@ -493,8 +538,7 @@ module BuildHelpers
   # and leaves slide-zoom.js's widest-line measure alone.
   def inject_song_wishes(html)
     doc = Nokogiri::HTML(html)
-    stacks = doc.css('.slides > section').select { |s| s.at_css('> section.level1') }
-    stacks.drop(1).each do |stack|
+    song_stacks(doc).each do |stack|
       title = stack.at_css('> section.level1')
       title.add_child(wish_button(doc, song: title['id'])) if title['id']
     end
@@ -601,7 +645,7 @@ module BuildHelpers
     # of reach left 🔥 dead until a reload.
     scripts = ["#{assets}slide-zoom.js", "#{assets}socketio/socket.io.js", "#{assets}sha256.js", "#{assets}qrcodejs/qrcode.min.js", "#{assets}chords.js", "#{assets}toc-filter.js", "#{assets}wishes.js"]
     html = html.sub('</body>', scripts.map { |src| %(  <script src="#{src}"></script>\n) }.join + '</body>')
-    wrap_slide_content(chord_buttons(inject_next_line_previews(inject_song_wishes(inject_toc_filter(external_links(split_song_artist(html)), tags: tags)))))
+    wrap_slide_content(chord_buttons(inject_next_song_buttons(inject_next_line_previews(inject_song_wishes(inject_toc_filter(external_links(split_song_artist(html)), tags: tags))))))
   end
 
   def post_process_print(html, assets:)

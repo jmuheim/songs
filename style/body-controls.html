@@ -867,12 +867,29 @@
     <div class="modal-buttons modal-buttons-stacked">
       <button id="live-toggle" aria-haspopup="dialog" aria-pressed="false" aria-describedby="live-toggle-hint" hidden><span aria-hidden="true">🚀</span> <span id="live-toggle-label">Live-Scrollen starten</span></button>
       <p id="live-toggle-hint" hidden>Live-Scrollen lässt sich nur auf einem Lied starten.</p>
+      <button id="playlist-open" aria-haspopup="dialog" hidden><span aria-hidden="true">⭐</span> Playlist</button>
       <button id="show-qr" aria-haspopup="dialog" hidden><span aria-hidden="true">🔗</span> QR-Code zeigen</button>
       <button id="session-join" aria-haspopup="dialog"><span aria-hidden="true">🎟️</span> Mit Code beitreten</button>
       <button id="host-login" aria-haspopup="dialog"><span aria-hidden="true">🔑</span> <span id="host-login-label">Als Gastgeber anmelden</span></button>
       <button id="session-leave" hidden><span aria-hidden="true">🚪</span> Runde verlassen</button>
       <button id="session-end" hidden><span aria-hidden="true">🏁</span> Runde beenden</button>
       <button id="multiplex-info-close">Schliessen</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- A host's hearts are its playlist (kept on its device); whether the guests'
+     count too is its to say, for the session it hosts and the next one this
+     device opens -->
+<dialog id="playlist-modal" class="overlay-modal" aria-labelledby="playlist-title">
+  <div class="modal-box">
+    <h2 id="playlist-title" tabindex="-1" autofocus>Playlist</h2>
+    <p id="playlist-info">Deine Sterne sind deine Playlist, der Reihe nach, wie du sie setzt. Am Ende eines Lieds geht es mit „Nächstes Lied" weiter.</p>
+    <label class="settings-checkbox"><input type="checkbox" id="wish-mode"> Gäste dürfen Lieder wünschen</label>
+    <p id="wish-mode-info">Dann werden die Sterne zu Herzen: deines zählt wie jedes andere, und als Nächstes kommt das Lied mit den meisten.</p>
+    <div class="modal-buttons">
+      <button type="button" id="playlist-clear">Playlist leeren</button>
+      <button type="button" id="playlist-close">OK</button>
     </div>
   </div>
 </dialog>
@@ -1018,6 +1035,10 @@ window.addEventListener('load', function() {
   var joinModal   = document.getElementById('join-modal');
   var joinCode    = document.getElementById('join-code');
   var joinInfo    = document.getElementById('join-info');
+  var playlistOpenBtn  = document.getElementById('playlist-open');
+  var playlistModal    = document.getElementById('playlist-modal');
+  var wishModeBox      = document.getElementById('wish-mode');
+  var playlistClearBtn = document.getElementById('playlist-clear');
 
   // ---- Session, host and live scrolling ----
   // A session is one evening. Whoever has its secret is in it, on the relay
@@ -1029,9 +1050,11 @@ window.addEventListener('load', function() {
   //
   // Within a session the host is the single authority: it alone starts and
   // ends live scrolling and names the scroller, and it repeats itself for as
-  // long as it hosts. Live scrolling is one song at a time: the scroller — the
-  // host itself, or a guest who volunteered — moves the deck, and everyone
-  // else follows and cannot navigate. This tab scrolls when
+  // long as it hosts. Live scrolling starts on a song and runs on from song to
+  // song until the host ends it: the scroller — the host itself, or a guest
+  // who volunteered — moves the deck, down a song by its keys and swipes, on
+  // to the next one by 📖 and the table of contents, and everyone else
+  // follows and cannot navigate. This tab scrolls when
   // live.scrollerId === senderId.
   var SESSION_TTL_MS = 12 * 60 * 60 * 1000; // a session nothing was heard of for this long is a past evening
   var secret = null;          // the session this device is in, or null
@@ -1043,7 +1066,8 @@ window.addEventListener('load', function() {
   var authed = false;         // the password was entered on this device
   var hostClaim = 0;          // this tab's claim while it hosts
   var heardClaim = 0;         // the highest host claim heard in this session
-  var live = null;            // { id, song, songTitle, mode, scrollerId } while a song is live-scrolled
+  var live = null;            // { id, song, songTitle, mode, scrollerId } while live scrolling, song being the one it started on
+  var scrollerPosition = null; // where this tab scrolls the room to, kept for a reload
   // The Gastgeber whose songs this evening has, as the host ticked them: all of
   // them until the host says otherwise (and, for a guest, until it has heard)
   function allHosts() { return window.tocFilter ? tocFilter.allHosts() : []; }
@@ -1068,6 +1092,20 @@ window.addEventListener('load', function() {
   var WISH_SYNC_MS = 8000;
   var myWishes = [];
   var wishSets = {};
+  // A host's hearts are its playlist instead, in the order they were set,
+  // and kept on the device rather than with the session (localStorage
+  // 'playlist'): made days ahead, it is there for the evening, and the next.
+  // The host says whether the guests' hearts count too (wishMode 'all': the
+  // most wished comes next) or the playlist alone ('host'), and keeps which
+  // songs were played: those whose last slide the live scroll reached.
+  var playlist = [];
+  try { playlist = JSON.parse(localStorage.getItem('playlist')) || []; } catch (e) {}
+  if (!Array.isArray(playlist)) playlist = [];
+  playlist = playlist.filter(function(slug) { return typeof slug === 'string'; });
+  var wishMode = 'all';
+  var played = [];
+  var hostFrom = null;        // the host's sender id: its wishes are its playlist
+  var passed = [];            // songs this tab left by „Nächstes Lied", never proposed to it again
 
   function amScroller() { return !!live && live.scrollerId === senderId; }
 
@@ -1150,8 +1188,9 @@ window.addEventListener('load', function() {
   }
 
   // The title, the table of contents and the introduction are not songs. Live
-  // scrolling only makes sense on a song, so 🚀 is disabled off these (see
-  // updateControls), and ending it drops everyone back onto the TOC (gotoToc).
+  // scrolling starts on a song, so 🚀 is disabled off these until it runs
+  // (see updateControls), and ending it drops everyone back onto the TOC
+  // (gotoToc).
   // The title slide carries no id of its own any more (see build_helpers.rb's
   // rename_title_slide_id) — it's matched by its class below instead; TOC and
   // the introduction are still plain id lookups.
@@ -1164,10 +1203,15 @@ window.addEventListener('load', function() {
     var first = stack && stack.querySelector('section');
     return first ? first.id : '';
   }
+  // A stack's song, by its slug (the id its title slide carries, the one its
+  // ❤️ goes by), or '' for a stack that is no song
+  function songOf(stack) {
+    if (!stack || stack.classList.contains('deck-title-slide')) return '';
+    var id = slideId(stack);
+    return NON_SONG_SLIDES[id] ? '' : id;
+  }
   function onSong() {
-    var stack = horizontalSlides()[Reveal.getIndices().h];
-    if (!stack || stack.classList.contains('deck-title-slide')) return false;
-    return !NON_SONG_SLIDES[slideId(stack)];
+    return !!songOf(horizontalSlides()[Reveal.getIndices().h]);
   }
 
   function gotoToc() {
@@ -1178,16 +1222,16 @@ window.addEventListener('load', function() {
   }
 
   // ---- Navigation lock ----
-  // Horizontal keys the scroller must not use: it may only scroll within its
-  // own song (up/down). A swipe or a click that still leaves the song is undone
-  // by the snap-back in the Reveal handler below. Home and End jump to the
+  // Horizontal keys the scroller must not use: within a song it only scrolls
+  // up and down, and a key that slipped into the neighbouring song would take
+  // the whole room along, onto its title. It moves on to another song on
+  // purpose, by 📖 and the table of contents. Home and End jump to the
   // first/last *horizontal* slide — there is no vertical equivalent worth
   // keeping, so they stay fully disabled. Space/Shift+Space default to
   // reveal.js's own next()/prev(), which — at the song's last/first sub-slide —
-  // step past it into the neighbouring song, reaching the snap-back only after
-  // the jump, with the scroll position already reset to v=0. Remapped here to
-  // the same Reveal.down()/up() the vertical arrow keys already use safely:
-  // one step within the song, never past it.
+  // step past it into the neighbouring song. Remapped here to the same
+  // Reveal.down()/up() the vertical arrow keys already use safely: one step
+  // within the song, never past it.
   var SCROLLER_KEYS = {
     37: null, 39: null, 33: null, 34: null, 72: null, 76: null, 78: null, 80: null,
     32: function(e) { if (e.shiftKey) { Reveal.up(); } else { Reveal.down(); } },
@@ -1202,16 +1246,15 @@ window.addEventListener('load', function() {
     }
     if (mode === navMode) return;
     navMode = mode;
-    // Live scrolling locks navigation to the scroller's song; 📖 would
-    // otherwise still jump a locked device straight back to the table of
-    // contents (the slidechanged snap-back undoes it, but not before an
-    // unwanted flash).
-    goToTocLink.hidden = mode !== 'free';
-    // Nor is there an overview while a song is live-scrolled: the scroller's
-    // would show neighbouring songs it can't reach, and a click on one jumped
-    // there and was snapped back. One already open closes first, unheard by
-    // the snap-back below, and before overview: false, which leaves Reveal
-    // unable to close it.
+    // A follower goes where the scroller goes; 📖 would still jump it to the
+    // table of contents (the slidechanged snap-back undoes it, but not before
+    // an unwanted flash). The scroller keeps it: it is its way to the next
+    // song, the whole room following it there.
+    goToTocLink.hidden = mode === 'follower';
+    // Nor is there an overview while live scrolling: a key slips into it
+    // mid-song (Esc), and a click on a song there would take the room along.
+    // One already open closes first, unheard by the snap-back below, and
+    // before overview: false, which leaves Reveal unable to close it.
     if (mode !== 'free' && Reveal.isOverview()) {
       applyingRemote = true;
       try { Reveal.toggleOverview(false); } finally { applyingRemote = false; }
@@ -1219,11 +1262,17 @@ window.addEventListener('load', function() {
     if (mode === 'free') {
       Reveal.configure({ keyboard: true, touch: true, controls: true, overview: true });
     } else if (mode === 'scroller') {
-      // Lock to the song: vertical keys keep working, horizontal ones don't.
-      if (Reveal.getIndices().h !== live.song) {
-        applyingRemote = true;
-        try { Reveal.slide(live.song, 0); } finally { applyingRemote = false; }
-      }
+      // Back where this tab scrolled the room to (a reload: by now it may be
+      // songs past the one the live scroll started on), or, just named, onto
+      // that song. Vertical keys keep working, horizontal ones don't.
+      applyingRemote = true;
+      try {
+        if (scrollerPosition) {
+          if (!sameState(scrollerPosition, Reveal.getState())) Reveal.setState(scrollerPosition);
+        } else if (Reveal.getIndices().h !== live.song) {
+          Reveal.slide(live.song, 0);
+        }
+      } finally { applyingRemote = false; }
       Reveal.configure({ keyboard: SCROLLER_KEYS, touch: true, controls: false, overview: false });
       broadcastState();
     } else { // follower: no navigation at all, snapped to the scroller
@@ -1235,18 +1284,18 @@ window.addEventListener('load', function() {
       Reveal.configure({ keyboard: false, touch: false, controls: false, overview: false });
       follow(scrollerState());
     }
+    updateNextButtons(); // none for a follower
     updateStatus();
   }
 
-  // Horizontal swipes must not move the scroller off its song. The keyboard is
-  // locked by SCROLLER_KEYS, but touch is left on so the scroller can still
-  // scroll the song vertically — and Reveal has no "vertical-only" touch option
-  // (its data-prevent-swipe kills both axes). So we watch the gesture in the
-  // capture phase, before Reveal's own handler on the reveal element, and once a
-  // scroller's swipe turns out to be mostly horizontal we swallow it; vertical
-  // swipes fall through untouched. Without this a left/right swipe navigated to
-  // the neighbouring song and the slidechanged snap-back returned to the song at
-  // v = 0 — the title slide — instead of leaving the scroller where it was.
+  // Horizontal swipes must not move the scroller off its song: a finger that
+  // strayed sideways mid-song would take the whole room to the neighbouring
+  // one. The keyboard is locked by SCROLLER_KEYS, but touch is left on so the
+  // scroller can still scroll the song vertically — and Reveal has no
+  // "vertical-only" touch option (its data-prevent-swipe kills both axes). So
+  // we watch the gesture in the capture phase, before Reveal's own handler on
+  // the reveal element, and once a scroller's swipe turns out to be mostly
+  // horizontal we swallow it; vertical swipes fall through untouched.
   // Only the moves are swallowed, never the finger coming up: Reveal keeps
   // every finger down in a map until it hears it lift, and counts them. One it
   // never heard lift stayed in that map for good, every later swipe counted
@@ -1296,8 +1345,9 @@ window.addEventListener('load', function() {
     if (secret) send(message(payload));
   }
 
-  // Who hosts (by claim), who is present, the Sprache and Genre the lists show
-  // and what is live-scrolled, if anything, on every beat for as long as this tab hosts. A host that was offline while it was
+  // Who hosts (by claim), who is present, the Sprache and Genre the lists show,
+  // whose hearts make the playlist and what was played, and what is
+  // live-scrolled, if anything, on every beat for as long as this tab hosts. A host that was offline while it was
   // taken over learns of it within one beat, and the end of a live scroll is
   // repeated with the rest, so one lost packet strands nobody. `fresh` marks a
   // live scroll's opening broadcast (set only by startLive): a client tells
@@ -1305,14 +1355,17 @@ window.addEventListener('load', function() {
   // only ever hears heartbeats, follows without the self-scroll announcement.
   function broadcastHost(fresh) {
     if (!isHost) return;
-    emit({ type: 'host', claim: hostClaim, fresh: !!fresh, present: present, filter: filter, live: live && {
+    emit({ type: 'host', claim: hostClaim, fresh: !!fresh, present: present, filter: filter,
+           wishMode: wishMode, played: played, live: live && {
       id: live.id, song: live.song, songTitle: live.songTitle, mode: live.mode, scrollerId: live.scrollerId
     }});
   }
 
   function broadcastState() {
     if (!amScroller()) return;
-    emit({ type: 'state', liveId: live.id, state: stateToSend() });
+    scrollerPosition = stateToSend();
+    persistSession();
+    emit({ type: 'state', liveId: live.id, state: scrollerPosition });
   }
 
   function restartHeartbeat() {
@@ -1351,6 +1404,14 @@ window.addEventListener('load', function() {
     }
     if (data.claim < heardClaim) return; // an old host that hasn't heard yet that it was taken over
     heardClaim = data.claim;
+    var heardMode = data.wishMode === 'host' ? 'host' : 'all';
+    var heardPlayed = Array.isArray(data.played) ? data.played : [];
+    if (data.from !== hostFrom || heardMode !== wishMode || heardPlayed.join(',') !== played.join(',')) {
+      hostFrom = data.from;
+      wishMode = heardMode;
+      played = heardPlayed;
+      renderWishes();
+    }
     var heardPresent = data.present || allHosts();
     var heardFilter = filterOf(data.filter);
     if (heardPresent.join(',') !== present.join(',') ||
@@ -1374,6 +1435,7 @@ window.addEventListener('load', function() {
     var hadScrollerAlready = !!(live && live.id === s.id && live.scrollerId);
     var wasInvited = invitedFor === s.id;
     var hadVolunteered = volunteeredFor === s.id;
+    if (!live || live.id !== s.id) scrollerPosition = null; // another live scroll: none of this tab's yet
     live = { id: s.id, song: s.song, songTitle: s.songTitle, mode: s.mode, scrollerId: s.scrollerId };
     if (s.mode === 'guest' && !s.scrollerId) {
       // Awaiting a volunteer: offer it once per live scroll.
@@ -1416,6 +1478,7 @@ window.addEventListener('load', function() {
   function forgetLive() {
     if (inviteModal.open) inviteModal.close();
     live = null;
+    scrollerPosition = null;
     invitedFor = null;
     volunteeredFor = null;
     announcedFor = null;
@@ -1481,16 +1544,12 @@ window.addEventListener('load', function() {
     leaveSession(['Die Runde ist beendet'], true);
   }
 
-  // The scroller leads and snaps back if it ever leaves its song; a follower
-  // cannot wander off — not even by clicking a link.
+  // The scroller leads, wherever it goes; a follower cannot wander off — not
+  // even by clicking a link.
   ['slidechanged', 'fragmentshown', 'fragmenthidden'].forEach(function(ev) {
     Reveal.on(ev, function() {
       if (applyingRemote) return;
       if (amScroller()) {
-        if (Reveal.getIndices().h !== live.song) {
-          applyingRemote = true;
-          try { Reveal.slide(live.song, Reveal.getIndices().v); } finally { applyingRemote = false; }
-        }
         broadcastState();
       } else if (navMode === 'follower') {
         follow(scrollerState());
@@ -1580,7 +1639,8 @@ window.addEventListener('load', function() {
   // tab and the song book reopened from the home screen. Only the sender id
   // stays per tab (see senderId): two tabs on one device are two senders,
   // or each would take the other's messages for its own. `scrolling` says
-  // this tab was the one scrolling, for a host coming back under a new id.
+  // this tab was the one scrolling, for a host coming back under a new id,
+  // and `position` where it had scrolled the room to.
   // The heard claim goes with it, so an old host is still recognised as one.
   function persistSession() {
     try {
@@ -1588,7 +1648,7 @@ window.addEventListener('load', function() {
         localStorage.setItem('multiplex-session', JSON.stringify({
           secret: secret, seenAt: seenAt, heardClaim: heardClaim,
           hostClaim: isHost ? hostClaim : 0, present: present, filter: filter, live: live, scrolling: amScroller(),
-          wishes: myWishes
+          position: amScroller() ? scrollerPosition : null, wishes: myWishes, wishMode: wishMode, played: played
         }));
       } else {
         localStorage.removeItem('multiplex-session');
@@ -1624,13 +1684,38 @@ window.addEventListener('load', function() {
   // reload loses nothing, and a latecomer is counted, and counts everyone,
   // within one round. A device unheard for three rounds has left, and its
   // wishes with it. Only a session has a room to count: the hearts show in
-  // one, and the wishes go with the session when it is left (leaveSession)
-  // — the next evening starts from none. See
+  // one, and a guest's wishes go with the session when it is left
+  // (leaveSession) — the next evening starts from none. See
   // decisions/2026-11-11-guests-wish-for-songs-with-a-heart-counted-per-session.md.
+  //
+  // The host's hearts are its playlist (above), sent and counted like any
+  // device's wishes. Outside a session they show only where the password
+  // was entered, for the playlist to be made ahead, as ⭐ with each song's
+  // place on it rather than a count; so do everyone's while the host alone
+  // makes it (wishMode 'host'), the guests' then only to read. See
+  // decisions/2026-11-26-the-hosts-playlist-and-the-next-song-button.md.
   function wishSyncMs() { return cfg.wishSync || WISH_SYNC_MS; }
 
+  function ownsPlaylist() { return isHost || (!secret && authed); }
+  function ownSet() { return ownsPlaylist() ? playlist : myWishes; }
+  function heartsShown() { return !!secret || authed; }
+  function byPlaylist() { return !secret || wishMode === 'host'; }
+  // The host's playlist, as this device knows it: its own, or as last heard
+  function hostsPlaylist() {
+    if (ownsPlaylist()) return playlist;
+    var heard = hostFrom && wishSets[hostFrom];
+    return heard ? heard.wishes : [];
+  }
+  function savePlaylist() {
+    try { localStorage.setItem('playlist', JSON.stringify(playlist)); } catch (e) {}
+  }
+  // Whether the guests' hearts count, as this device's host chose last
+  function storedWishMode() {
+    try { return localStorage.getItem('wish-mode') === 'host' ? 'host' : 'all'; } catch (e) { return 'all'; }
+  }
+
   function broadcastWishes() {
-    emit({ type: 'wish', wishes: myWishes });
+    emit({ type: 'wish', wishes: ownSet() });
   }
 
   function onWishMessage(data) {
@@ -1638,28 +1723,41 @@ window.addEventListener('load', function() {
     renderWishes();
   }
 
+  var counts = {}; // slug → devices wishing it, as last tallied
   function renderWishes() {
     if (!window.songWishes) return;
-    var counts = {}, now = Date.now();
+    var now = Date.now();
+    counts = {};
     function count(slug) { counts[slug] = (counts[slug] || 0) + 1; }
     Object.keys(wishSets).forEach(function(from) {
       if (now - wishSets[from].at > 3 * wishSyncMs()) { delete wishSets[from]; return; }
       wishSets[from].wishes.forEach(count);
     });
-    myWishes.forEach(count);
-    songWishes.setMine(myWishes);
-    songWishes.setCounts(counts);
-    songWishes.setActive(!!secret);
+    ownSet().forEach(count);
+    var list = hostsPlaylist(), ranks = null;
+    if (byPlaylist()) {
+      // A song's place among those still to play (and still in the book)
+      ranks = {};
+      list.filter(function(slug) { return played.indexOf(slug) < 0 && slug in songIndex; })
+          .forEach(function(slug, i) { ranks[slug] = i + 1; });
+    }
+    songWishes.show({
+      mine: byPlaylist() ? list : ownSet(), counts: counts, ranks: ranks, played: played,
+      enabled: !secret || wishMode === 'all' || isHost
+    });
+    songWishes.setActive(heartsShown());
+    updateNextButtons();
   }
 
   if (window.songWishes) {
     songWishes.onToggle(function(slug) {
-      if (!secret) return;
-      var i = myWishes.indexOf(slug);
-      if (i === -1) myWishes.push(slug); else myWishes.splice(i, 1);
-      persistSession();
-      broadcastWishes();
+      if (!heartsShown() || (secret && wishMode === 'host' && !isHost)) return;
+      var set = ownSet(), i = set.indexOf(slug);
+      if (i === -1) set.push(slug); else set.splice(i, 1);
+      if (ownsPlaylist()) savePlaylist(); else persistSession();
+      broadcastWishes(); // a no-op outside a session
       renderWishes();
+      updateControls(); // „Playlist leeren" once there is one
     });
   }
 
@@ -1669,17 +1767,100 @@ window.addEventListener('load', function() {
   function scheduleWishRound() {
     clearTimeout(wishRound);
     wishRound = setTimeout(function() {
-      if (myWishes.length) broadcastWishes();
+      if (ownSet().length) broadcastWishes();
       renderWishes();
       scheduleWishRound();
     }, wishSyncMs());
   }
 
+  // A guest's wishes are this evening's; a playlist stays (above)
   function forgetWishes() {
     clearTimeout(wishRound);
     myWishes = [];
     wishSets = {};
   }
+
+  // ---- Playlist: „Nächstes Lied" ----
+  // Each song's last slide ends on a button to the next song
+  // (inject_next_song_buttons in lib/build_helpers.rb), for whoever may
+  // navigate: the scroller takes the room along, a follower has none. Next
+  // is the first song, by the host's playlist, or, while the guests wish too,
+  // by the most wishes (the playlist's order, then the book's, breaking a
+  // tie), that is not the song itself, has not been played, nor been left by
+  // this button on this tab (which keeps it from going back and forth
+  // between two songs where nothing is played: outside a session, or
+  // browsing in one).
+  var nextButtons = document.querySelectorAll('.playlist-next');
+  var songIndex = {}; // slug → the index of its stack
+  Array.prototype.forEach.call(horizontalSlides(), function(stack, h) {
+    var song = songOf(stack);
+    if (song) songIndex[song] = h;
+  });
+
+  function ranking() {
+    var list = hostsPlaylist();
+    if (byPlaylist()) return list.slice();
+    function place(slug) { var i = list.indexOf(slug); return i < 0 ? Infinity : i; }
+    return Object.keys(counts).sort(function(a, b) {
+      return counts[b] - counts[a] || place(a) - place(b) || songIndex[a] - songIndex[b];
+    });
+  }
+
+  function updateNextButtons() {
+    var order = heartsShown() && navMode !== 'follower' ? ranking() : [];
+    Array.prototype.forEach.call(nextButtons, function(button) {
+      var from = songOf(button.closest('.slides > section'));
+      var next = order.filter(function(slug) {
+        return slug !== from && slug in songIndex && played.indexOf(slug) < 0 && passed.indexOf(slug) < 0;
+      })[0];
+      button.hidden = !next;
+      button.dataset.next = next || '';
+      if (next) {
+        var title = button.querySelector('.playlist-next-title'), text = songTitleAt(songIndex[next]);
+        if (title.textContent !== text) title.textContent = text;
+      }
+    });
+  }
+
+  document.addEventListener('click', function(e) {
+    var button = e.target.closest('.playlist-next');
+    if (!button || !button.dataset.next || navMode === 'follower') return;
+    var from = songOf(button.closest('.slides > section'));
+    if (from && passed.indexOf(from) < 0) passed.push(from);
+    Reveal.slide(songIndex[button.dataset.next], 0); // the scroller's room follows (slidechanged)
+    updateNextButtons();
+  });
+
+  // Played: a song the live scroll stayed on the last slide of for a few
+  // seconds (PLAYED_AFTER_MS; cfg.playedAfter lets the specs shorten it), or
+  // moved on from there to another one, as the host's deck saw it (scrolling,
+  // or following the guest who scrolls). Not one it only passed the end of
+  // and went back up from, nor while the host browses on its own: it may
+  // look a song up without playing it.
+  var PLAYED_AFTER_MS = 5000;
+  var ending = null; // { song, h, timer } while the live scroll is on a song's last slide
+  function markPlayed(song) {
+    if (!isHost || played.indexOf(song) >= 0) return;
+    played.push(song);
+    persistSession();
+    broadcastHost();
+    renderWishes();
+  }
+  Reveal.on('slidechanged', function() {
+    var at = Reveal.getIndices(), stack = horizontalSlides()[at.h], song = songOf(stack);
+    if (ending) {
+      clearTimeout(ending.timer);
+      if (at.h !== ending.h) markPlayed(ending.song); // on to another song
+      ending = null;
+    }
+    if (!isHost || navMode === 'free') return; // free: no live scroll, or still waiting for a guest
+    if (!song || played.indexOf(song) >= 0) return;
+    if ((at.v || 0) < stack.querySelectorAll(':scope > section').length - 1) return;
+    ending = { song: song, h: at.h, timer: setTimeout(function() {
+      ending = null;
+      markPlayed(song);
+    }, cfg.playedAfter || PLAYED_AFTER_MS) };
+  });
 
   // Anything heard from the session, or said in it, keeps it from expiring
   function touch() {
@@ -1698,13 +1879,20 @@ window.addEventListener('load', function() {
   // live-scrolled carries on as it is, the scroller included.
   function becomeHost() {
     var opened = !secret;
-    if (opened) join(newSecret());
+    if (opened) {
+      join(newSecret());
+      // Whose hearts make the playlist, as this device's host chose last
+      // time; nothing played yet
+      wishMode = storedWishMode();
+      played = [];
+    }
     hostClaim = Math.max(Date.now(), heardClaim + 1, hostClaim + 1);
     heardClaim = hostClaim;
     isHost = true;
     scrollerSilent = false;
     touch();
     broadcastHost();
+    broadcastWishes(); // its hearts are its playlist now, not its wishes as a guest
     applyTocFilter(); // who is present, Sprache and Genre: the host's to set now (taken over: as they were)
     renderWishes(); // a new session: the hearts show from now on
     updateControls();
@@ -1732,6 +1920,8 @@ window.addEventListener('load', function() {
     isHost = false;
     persistSession();
     applyTocFilter();
+    broadcastWishes(); // a guest's wishes again, not its playlist
+    renderWishes();
     updateControls();
     restartHeartbeat();
     showToast(['Jemand anderes ist jetzt Gastgeber']);
@@ -1762,7 +1952,7 @@ window.addEventListener('load', function() {
     persistSession();
     broadcastHost();
     applyNavMode();
-    gotoToc(); // the song is over: drop everyone back onto the table of contents
+    gotoToc(); // live scrolling is over: drop everyone back onto the table of contents
     updateControls();
     updateStatus();
     restartHeartbeat();
@@ -1784,6 +1974,9 @@ window.addEventListener('load', function() {
     seenAt = 0;
     present = allHosts();
     filter = filterOf(null);
+    wishMode = 'all';
+    played = [];
+    hostFrom = null;
     forgetWishes(); // they were this evening's
     persistSession();
     applyTocFilter();
@@ -1817,7 +2010,9 @@ window.addEventListener('load', function() {
 
   // What the 🔥 dialog offers depends on the role: 🚀 and „Runde beenden"
   // to the host, 🔗 to anyone in a session, „Runde verlassen" to anyone in
-  // it but the host, the login to anyone but the host.
+  // it but the host, the login to anyone but the host, ⭐ „Playlist" to
+  // whoever has one: the host, or outside a session a device the password
+  // was entered on.
   function updateControls() {
     var inSession = !!secret;
     var active = isHost && !!live;
@@ -1825,12 +2020,11 @@ window.addEventListener('load', function() {
     liveBtn.classList.toggle('live-active', active);
     liveBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
     liveLabel.textContent = active ? 'Live-Scrollen beenden' : 'Live-Scrollen starten';
-    // 🚀 only makes sense on a song: disabled elsewhere, with the hint saying
-    // why. While live scrolling, onSong() is always true anyway — the scroller
-    // can't leave the song and every follower is snapped to it — so this one
-    // check covers both starting and ending.
-    liveBtn.disabled = !onSong();
-    liveHint.hidden = !isHost || onSong();
+    // 🚀 starts live scrolling on a song only: disabled elsewhere, with the
+    // hint saying why. Once it runs, it ends wherever the room is, the table
+    // of contents included, on the way to the next song.
+    liveBtn.disabled = !active && !onSong();
+    liveHint.hidden = !isHost || active || onSong();
     showQrBtn.hidden = !inSession;
     hostLoginBtn.hidden = isHost;
     hostLoginLabel.textContent = inSession ? 'Gastgeber übernehmen' : 'Als Gastgeber anmelden';
@@ -1838,6 +2032,9 @@ window.addEventListener('load', function() {
     sessionEndBtn.hidden = !isHost;
     multiplexInfoJoin.hidden = inSession;
     sessionJoinBtn.hidden = inSession;
+    playlistOpenBtn.hidden = !ownsPlaylist();
+    wishModeBox.checked = (isHost ? wishMode : storedWishMode()) === 'all';
+    playlistClearBtn.disabled = !playlist.length;
   }
 
   // ---- Buttons and dialogs ----
@@ -1956,6 +2153,35 @@ window.addEventListener('load', function() {
     endSession();
   });
 
+  playlistOpenBtn.addEventListener('click', function() {
+    multiplexModal.close();
+    updateControls();
+    playlistModal.showModal();
+  });
+  document.getElementById('playlist-close').addEventListener('click', function() { playlistModal.close(); });
+
+  // The guests' hearts count, or the host's playlist alone: for the session
+  // this device hosts, and the next one it opens
+  wishModeBox.addEventListener('change', function() {
+    var mode = wishModeBox.checked ? 'all' : 'host';
+    try { localStorage.setItem('wish-mode', mode); } catch (e) {}
+    if (!isHost) return;
+    wishMode = mode;
+    persistSession();
+    broadcastHost();
+    renderWishes();
+  });
+
+  playlistClearBtn.addEventListener('click', function() {
+    playlistModal.close();
+    playlist = [];
+    savePlaylist();
+    broadcastWishes();
+    renderWishes();
+    updateControls();
+    showToast(['Die Playlist ist leer']);
+  });
+
   sessionLeaveBtn.addEventListener('click', function() {
     multiplexModal.close();
     leaveSession(['Du hast die Runde verlassen'], false);
@@ -1979,7 +2205,7 @@ window.addEventListener('load', function() {
     everConnected = true;
     broadcastHost();  // no-op unless host
     broadcastState(); // no-op unless scroller
-    if (myWishes.length) broadcastWishes(); // back from a dead spot: the room may have let them lapse
+    if (ownSet().length) broadcastWishes(); // back from a dead spot: the room may have let them lapse
     if (connectionLostShown) {
       connectionLostShown = false;
       if (live) showToast(['Wieder verbunden']);
@@ -2018,6 +2244,8 @@ window.addEventListener('load', function() {
     filter = filterOf(stored.filter);
     live = stored.live || null;
     myWishes = stored.wishes || [];
+    wishMode = stored.wishMode === 'host' ? 'host' : 'all';
+    played = stored.played || [];
     if (stored.hostClaim) {
       isHost = true;
       hostClaim = stored.hostClaim;
@@ -2028,6 +2256,7 @@ window.addEventListener('load', function() {
       // host names the scroller — and the host is told it went quiet.)
       if (live && stored.scrolling) live.scrollerId = senderId;
     }
+    if (amScroller()) scrollerPosition = stored.position || null;
     touch();
   } else {
     persistSession(); // nothing, or a past evening: forget it
@@ -2100,7 +2329,7 @@ window.addEventListener('load', function() {
   // showModal() makes the page behind inert and Esc closes natively. What is
   // left: Reveal listens for keys on the document, where they still arrive from
   // inside the dialog, and a click on the backdrop lands on the dialog itself.
-  [hostModal, joinModal, qrModal, choiceModal, inviteModal, multiplexModal].forEach(function(dialog) {
+  [hostModal, joinModal, qrModal, choiceModal, inviteModal, multiplexModal, playlistModal].forEach(function(dialog) {
     dialog.addEventListener('keydown', function(e) { e.stopPropagation(); });
     dialog.addEventListener('keypress', function(e) { e.stopPropagation(); });
     dialog.addEventListener('click', function(e) { if (e.target === dialog) dialog.close(); });

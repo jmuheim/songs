@@ -29,22 +29,8 @@ RSpec.describe 'index.html', :js, type: :feature do
     page.execute_script("document.getElementById('#{id}').click()") # e.target must be the overlay, not a child
   end
 
-  # open_live_scroll_dialog, session_secret, join_session and log_in_as_host:
-  # spec/support/session_helpers.rb
-
-  # 🚀 starts or ends live scrolling; label is what it reads right now
-  def press_live(label)
-    open_live_scroll_dialog
-    within('#multiplex-info-modal') { click_button("🚀 #{label}") }
-  end
-
-  # Picks who scrolls the current song. Host tabs.
-  def start_live(mode:)
-    press_live('Live-Scrollen starten')
-    within('#scroll-choice-modal') do
-      click_button(mode == :self ? 'Ich selber möchte scrollen' : 'Ein Gast soll scrollen')
-    end
-  end
+  # open_live_scroll_dialog, session_secret, join_session, log_in_as_host,
+  # press_live and start_live: spec/support/session_helpers.rb
 
   # A second socket (forceNew, so the relay sees it as another client) in this
   # tab's session that learns the live scroll's id from the host's own
@@ -1882,7 +1868,7 @@ RSpec.describe 'index.html', :js, type: :feature do
     describe 'live sync' do
       after { Capybara.reset_sessions! }
 
-      it 'self-scroll: the room is snapped and locked, vertical moves propagate, the song is a wall, ending frees everyone, and the next song takes them straight there' do
+      it 'self-scroll: the room is snapped and locked, vertical moves propagate, keys and swipes keep to the song, ending frees everyone, and the next live scroll takes them straight there' do
         secret = nil
         using_session(:presenter) do
           load_presentation
@@ -1904,8 +1890,8 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
           expect(page).to have_css('#multiplex-status-button.multiplex-driving')
           expect(page).not_to have_css('#multiplex-toast.visible', text: 'Es geht gleich los!') # the host announces to the room, not to itself
-          # Locked to the song: 📖 would otherwise jump straight back to the TOC
-          expect(page).to have_css('#go-to-toc', visible: false)
+          # 📖 stays: it is the scroller's way on to the next song
+          expect(page).to have_link('Inhaltsverzeichnis')
         end
 
         # The client is snapped on, told which song is coming via a toast, then locked
@@ -1936,7 +1922,8 @@ RSpec.describe 'index.html', :js, type: :feature do
           expect(slide_indices).to eq([3, 1])
         end
 
-        # The song is a wall — right does not leave it, even for the presenter
+        # Keys and swipes keep to the song — right does not leave it, even for
+        # the presenter: it would take the room onto the next song's title
         using_session(:presenter) do
           find('body').send_keys(:right)
           sleep 0.3
@@ -1997,17 +1984,17 @@ RSpec.describe 'index.html', :js, type: :feature do
         # re-establish it. The presenter comes back as a new tab would — the
         # home screen's app restarted, say: a plain address, and a new sender
         # id (sessionStorage is per tab), under which it names itself scroller
-        # again. The song (h) is guaranteed by the restore itself; the exact
-        # sub-slide (v) depends on reveal.js's own hash write, which is
-        # debounced up to a second behind rapid moves — not asserted here.
+        # again, on the very sub-slide it had scrolled the room to: that is
+        # stored too, since by now it may be songs past the one the live
+        # scroll started on.
         using_session(:presenter) do
           page.execute_script("sessionStorage.clear()")
           visit FixtureBuilder::URL_PATH
           wait_for_reveal
           expect(page).to have_css('#live-toggle.live-active', text: /🚀\s+Live-Scrollen beenden/, visible: :all)
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
-          wait_for_js("Reveal.getIndices().h === 3")
-          expect(page.evaluate_script("Reveal.getIndices().h")).to eq(3)
+          wait_for_js("Reveal.getIndices().h === 3 && Reveal.getIndices().v === 1")
+          expect(slide_indices).to eq([3, 1])
           page.execute_script("window.MULTIPLEX.heartbeat = 200") # a new page: the spec's short heartbeat again
         end
         using_session(:client) do
@@ -2023,12 +2010,12 @@ RSpec.describe 'index.html', :js, type: :feature do
         # And the room still follows the presenter under its new id
         using_session(:presenter) do
           find('body').send_keys(:down)
-          wait_for_js("Reveal.getIndices().v === 1")
-          expect(slide_indices).to eq([3, 1])
+          wait_for_js("Reveal.getIndices().v === 2")
+          expect(slide_indices).to eq([3, 2])
         end
         using_session(:client) do
-          wait_for_js("Reveal.getIndices().v === 1")
-          expect(slide_indices).to eq([3, 1])
+          wait_for_js("Reveal.getIndices().v === 2")
+          expect(slide_indices).to eq([3, 2])
         end
 
         # Ending drops everyone back on the TOC, frees them, and shows the notice
@@ -2080,7 +2067,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         end
       end
 
-      it 'guest-scroll: the first volunteer leads the room, is walled into the song, and is thanked when it starts and when it ends' do
+      it 'guest-scroll: the first volunteer leads the room, keeps to the song by keys, moves it on to the next song by 📖, and is thanked when it starts and when it ends' do
         secret = nil
         using_session(:presenter) do
           load_presentation
@@ -2138,7 +2125,7 @@ RSpec.describe 'index.html', :js, type: :feature do
         using_session(:guest_b) { wait_for_js("Reveal.getIndices().v === 1"); expect(slide_indices).to eq([4, 1]) }
         using_session(:presenter) { wait_for_js("Reveal.getIndices().v === 1"); expect(slide_indices).to eq([4, 1]) }
 
-        # The guest is walled into the song too
+        # Keys keep the guest to the song too
         using_session(:guest_a) do
           find('body').send_keys(:right)
           sleep 0.3
@@ -2154,9 +2141,53 @@ RSpec.describe 'index.html', :js, type: :feature do
           wait_for_reveal
           expect(page).to have_css('#multiplex-status', text: 'Du scrollst für alle')
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
-          find('body').send_keys(:right) # still walled in right away
+          find('body').send_keys(:right) # still kept to the song right away
           sleep 0.3
           expect(page.evaluate_script("Reveal.getIndices().h")).to eq(4)
+        end
+
+        # The song is over, the guest scrolls on: 📖 takes it to the table of
+        # contents, and the room with it, the host included
+        using_session(:guest_a) do
+          click_link 'Inhaltsverzeichnis'
+          wait_for_js("Reveal.getIndices().h === 1")
+          expect(slide_indices).to eq([1, 0])
+          expect(page).to have_css('#multiplex-status', text: 'Du scrollst für alle')
+        end
+        [:guest_b, :presenter].each do |s|
+          using_session(s) do
+            wait_for_js("Reveal.getIndices().h === 1")
+            expect(slide_indices).to eq([1, 0])
+            expect(page).to have_css('#go-to-toc', visible: false) # following, so no 📖 of their own
+          end
+        end
+        # Off a song, 🚀 still ends live scrolling: on the TOC, on the way to the next song
+        using_session(:presenter) do
+          expect(page).to have_css('#live-toggle:not([disabled])', visible: :all)
+          expect(page).to have_css('#live-toggle-hint[hidden]', visible: :all)
+        end
+        # A song there takes everyone on to it
+        using_session(:guest_a) do
+          click_link 'Imagine (John Lennon)'
+          wait_for_js("Reveal.getIndices().h === 6")
+          expect(slide_indices).to eq([6, 0])
+          find('body').send_keys(:down)
+          wait_for_js("Reveal.getIndices().v === 1")
+        end
+        using_session(:guest_b) { wait_for_js("Reveal.getIndices().h === 6 && Reveal.getIndices().v === 1"); expect(slide_indices).to eq([6, 1]) }
+        using_session(:presenter) do
+          wait_for_js("Reveal.getIndices().h === 6 && Reveal.getIndices().v === 1")
+          expect(slide_indices).to eq([6, 1])
+          expect(page).to have_css('#multiplex-status', text: 'Gast scrollt')
+        end
+        # Reloaded, the guest is back on the new song, not on the one the live
+        # scroll started on
+        using_session(:guest_a) do
+          page.refresh
+          wait_for_reveal
+          expect(page).to have_css('#multiplex-status', text: 'Du scrollst für alle')
+          wait_for_js("Reveal.getIndices().h === 6 && Reveal.getIndices().v === 1")
+          expect(slide_indices).to eq([6, 1])
         end
 
         # Ending thanks the guest, frees the room, and sends everyone to the TOC

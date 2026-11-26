@@ -1,7 +1,8 @@
-# Opening, joining and leaving a multiplex session, as the browser specs do
-# it: shared by every spec that puts a tab into a session (index_html_spec.rb
-# for live scrolling, song_wishes_spec.rb for the ❤️), so there is one way to
-# log in as host and one to join. Included for type: :feature in spec_helper.rb.
+# Opening, joining and leaving a multiplex session, and live scrolling in it,
+# as the browser specs do it: shared by every spec that puts a tab into a
+# session (index_html_spec.rb for live scrolling, song_wishes_spec.rb for the
+# ❤️ and the playlist), so there is one way to log in as host, one to join and
+# one to start live scrolling. Included for type: :feature in spec_helper.rb.
 module SessionHelpers
   # 🚀, 🔗 and the host login sit in the live-scroll dialog behind 🔥 (bottom left)
   def open_live_scroll_dialog
@@ -11,6 +12,20 @@ module SessionHelpers
     wait_for_js("document.getElementById('bottom-left-controls').getAnimations().length === 0")
     find('#multiplex-status-button').click
     expect(page).to have_visible('#multiplex-info-modal')
+  end
+
+  # 🚀 starts or ends live scrolling; label is what it reads right now
+  def press_live(label)
+    open_live_scroll_dialog
+    within('#multiplex-info-modal') { click_button("🚀 #{label}") }
+  end
+
+  # Picks who scrolls, on the current song. Host tabs.
+  def start_live(mode:)
+    press_live('Live-Scrollen starten')
+    within('#scroll-choice-modal') do
+      click_button(mode == :self ? 'Ich selber möchte scrollen' : 'Ein Gast soll scrollen')
+    end
   end
 
   # The session this device is in: its secret, in its storage

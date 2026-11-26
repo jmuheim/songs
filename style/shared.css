@@ -208,6 +208,20 @@ body.chords-clickable .reveal section button.chord:hover > code,
   font-style: italic;
 }
 
+/* „Nächstes Lied" on a song's last slide (body-controls.html shows it where
+   there is a next one): below „Ende des Lieds", as small, but not dimmed,
+   since it is there to be pressed. Never `display` here: that would beat
+   its [hidden]. */
+.reveal section .playlist-next {
+  font: inherit;
+  font-size: 0.6em;
+  margin-top: 0.8em;
+  padding: 0.3em 0.9em;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
 section.stack {
   flex-direction: column;
   justify-content: center;
@@ -399,6 +413,25 @@ button.song-wish[aria-pressed="false"]:hover .song-wish-heart {
 
 .song-wish-count:empty {
   display: none;
+}
+
+/* A song played this evening (the live scroll reached its last slide) keeps
+   its heart, and wears a ✓ beside it: after the count on the title slide,
+   before it in the TOC's reversed row. Not read out: the label says
+   „gespielt" (wishes.js). */
+button.song-wish.song-played::after {
+  content: '✓' / '';
+  font-size: .8em;
+  font-weight: bold;
+}
+
+/* A guest's hearts while the host alone makes the playlist: only to read */
+button.song-wish:disabled {
+  cursor: default;
+}
+
+button.song-wish[aria-pressed="false"]:disabled:hover .song-wish-heart {
+  opacity: .45;
 }
 
 /* In the TOC the heart sits at the row's right edge and its count to its

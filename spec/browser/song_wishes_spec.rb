@@ -4,8 +4,12 @@ require 'capybara/rspec'
 # style/wishes.js, carried over multiplex by style/body-controls.html): in a
 # session, a device's wish to sing the song, counted across the room. One
 # button in the song's TOC row and one on its title slide, under the same slug.
-# Outside a session there is no room to count, so the hearts are hidden. See
-# decisions/2026-11-11-guests-wish-for-songs-with-a-heart-counted-per-session.md.
+# Outside a session there is no room to count, so the hearts are hidden, but
+# on a host's device: there they are its playlist, kept on the device, made
+# ahead and numbered. „Nächstes Lied" on a song's last slide goes on by it, or
+# by the most wishes. See
+# decisions/2026-11-11-guests-wish-for-songs-with-a-heart-counted-per-session.md
+# and decisions/2026-11-26-the-hosts-playlist-and-the-next-song-button.md.
 RSpec.describe 'Song wishes (❤️)', :js, type: :feature do
   before(:all) do
     FixtureBuilder.build!
@@ -19,12 +23,14 @@ RSpec.describe 'Song wishes (❤️)', :js, type: :feature do
   IMAGINE  = 'imagine-john-lennon'.freeze
   CONNELLS = 'the-connells'.freeze
   RIPTIDE  = 'riptide---vance-joy'.freeze
+  DREAM    = 'i-have-a-dream-abba'.freeze
 
   def toc_heart(slug)   = %(#TOC ol li button.song-wish[data-song="#{slug}"])
   def title_heart(slug) = %(section##{slug} button.song-wish[data-song="#{slug}"])
 
   # A heart in the given state: pressed (this device wishes the song) or not,
-  # with `count` devices wishing it (nil: the count is empty, i.e. none)
+  # with `count` devices wishing it (nil: the count is empty, i.e. none; a
+  # playlist's place reads "1.", "2.", …)
   def expect_heart(selector, pressed:, count:, visible: true)
     expect(page).to have_css("#{selector}[aria-pressed=\"#{pressed}\"]", visible: visible)
     if count
@@ -42,8 +48,44 @@ RSpec.describe 'Song wishes (❤️)', :js, type: :feature do
   def end_session
     open_live_scroll_dialog
     within('#multiplex-info-modal') { click_button('🏁 Runde beenden') }
-    expect(page).to have_no_css('body.wishes-active')
+    expect(page).to have_css('#multiplex-status', text: 'Keine Runde')
   end
+
+  # 🔥 › ⭐ „Playlist", the host's (and, outside a session, a past host's)
+  def open_playlist_dialog
+    open_live_scroll_dialog
+    within('#multiplex-info-modal') { click_button('⭐ Playlist') }
+    expect(page).to have_visible('#playlist-modal')
+  end
+
+  # Its „Gäste dürfen Lieder wünschen"
+  def let_guests_wish(on)
+    open_playlist_dialog
+    within('#playlist-modal') do
+      on ? check('Gäste dürfen Lieder wünschen') : uncheck('Gäste dürfen Lieder wünschen')
+      click_button('OK')
+    end
+  end
+
+  # A device the password was entered on before, but in no session
+  def visit_as_past_host
+    visit FixtureBuilder::URL_PATH
+    wait_for_reveal
+    page.execute_script("localStorage.setItem('multiplex-authed', 'yes')")
+    page.refresh
+    wait_for_reveal
+  end
+
+  def slide_indices
+    page.evaluate_script("[Reveal.getIndices().h, Reveal.getIndices().v]")
+  end
+
+  # A song's last sub-slide, where its „Nächstes Lied" is
+  def last_slide_of(h)
+    page.evaluate_script("Reveal.getHorizontalSlides()[#{h}].querySelectorAll(':scope > section').length - 1")
+  end
+
+  NEXT_BUTTON = 'section.present .playlist-next'.freeze
 
   it 'shows the hearts in a session only; a wish is made from the TOC row or the title slide alike, outlasts a reload, and goes with the session' do
     visit FixtureBuilder::URL_PATH
@@ -109,16 +151,20 @@ RSpec.describe 'Song wishes (❤️)', :js, type: :feature do
     expect_heart(title_heart(IMAGINE), pressed: false, count: nil)
     expect_heart(toc_heart(IMAGINE), pressed: false, count: nil, visible: :all) # the TOC is not the present slide
 
-    # Wished again, then the session ends: the hearts go, and the wish with them
+    # Wished again, then the session ends. The host's hearts are its
+    # playlist, kept on the device rather than with the session: they stay,
+    # numbered now, with nobody to count
     find(title_heart(IMAGINE)).click
     expect_heart(title_heart(IMAGINE), pressed: true, count: 1)
     end_session
-    expect(page).to have_css(title_heart(IMAGINE), visible: :hidden)
     expect(page.evaluate_script("localStorage.getItem('multiplex-session')")).to be_nil
+    expect(page).to have_css('body.wishes-active')
+    expect_heart(title_heart(IMAGINE), pressed: true, count: '1.')
+    expect(page).to have_css("#{title_heart(IMAGINE)} .visually-hidden", text: 'Auf die Playlist, Platz 1', visible: :all)
 
-    # The next evening starts from none
+    # …and the next evening starts with them
     log_in_as_host
-    expect_heart(title_heart(IMAGINE), pressed: false, count: nil)
+    expect_heart(title_heart(IMAGINE), pressed: true, count: 1)
   end
 
   it 'counts the room: every device sees how many wish a song as wishes come and go, a reload included, and a device that fell silent drops out' do
@@ -193,6 +239,164 @@ RSpec.describe 'Song wishes (❤️)', :js, type: :feature do
       expect(page).to have_no_css('body.wishes-active')
       expect(page).to have_css(toc_heart(CONNELLS), visible: :hidden)
       expect(page.evaluate_script("localStorage.getItem('multiplex-session')")).to be_nil
+    end
+  end
+
+  it "makes the host's playlist: ahead of the evening, starred and numbered, only to read for the guests while the host alone makes it, played after a while at a song's end or on moving on, and „Nächstes Lied“ along it" do
+    secret = nil
+    using_session(:host) do
+      # Days before, at home: no session, but the device knows the password,
+      # so its marks show, as its playlist: a ⭐ rather than a ❤️ (another
+      # shape, not only another colour), numbered in the order they are set
+      visit_as_past_host
+      go_to_toc
+      expect(page).to have_css('body.wishes-active')
+      find(toc_heart(IMAGINE)).click
+      find(toc_heart(CONNELLS)).click
+      find(toc_heart(RIPTIDE)).click
+      expect_heart(toc_heart(IMAGINE), pressed: true, count: '1.')
+      expect_heart(toc_heart(CONNELLS), pressed: true, count: '2.')
+      expect_heart(toc_heart(RIPTIDE), pressed: true, count: '3.')
+      expect_heart(toc_heart(DREAM), pressed: false, count: nil)
+      expect(page).to have_css("#{toc_heart(CONNELLS)} .song-wish-heart", text: '⭐', exact_text: true)
+      expect(page).to have_css("#{toc_heart(CONNELLS)} .visually-hidden", text: 'Auf die Playlist, Platz 2', visible: :all)
+
+      # The evening: the playlist is there. While the guests may wish, its
+      # marks are hearts again, one vote each…
+      log_in_as_host
+      expect_heart(toc_heart(CONNELLS), pressed: true, count: 1)
+      expect(page).to have_css("#{toc_heart(CONNELLS)} .song-wish-heart", text: '❤️', exact_text: true)
+      # …and once the host alone makes it, stars with their places
+      let_guests_wish(false)
+      expect_heart(toc_heart(CONNELLS), pressed: true, count: '2.')
+      secret = session_secret
+    end
+
+    using_session(:guest) do
+      join_session(secret)
+      page.execute_script('window.MULTIPLEX.wishSync = 300')
+      go_to_toc
+      # The host's playlist, as the host numbers it, and not the guest's to change
+      expect_heart(toc_heart(IMAGINE), pressed: true, count: '1.')
+      expect_heart(toc_heart(CONNELLS), pressed: true, count: '2.')
+      expect_heart(toc_heart(DREAM), pressed: false, count: nil)
+      expect(page).to have_css("#{toc_heart(IMAGINE)} .song-wish-heart", text: '⭐', exact_text: true)
+      expect(page).to have_css("#{toc_heart(DREAM)}[disabled]")
+    end
+
+    using_session(:host) do
+      # Live scrolling the first song to its last slide: the next one on the
+      # playlist waits there. Played only after a while there, here longer
+      # than this example takes
+      page.execute_script('Reveal.slide(6, 0)') # Imagine
+      wait_for_js('Reveal.getIndices().h === 6')
+      start_live(mode: :self)
+      expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
+      page.execute_script('window.MULTIPLEX.playedAfter = 600000')
+      last = last_slide_of(6)
+      page.execute_script("Reveal.slide(6, #{last})")
+      wait_for_js("Reveal.getIndices().v === #{last}")
+      expect(page).to have_css(NEXT_BUTTON, text: 'Nächstes Lied: «74-75 (The Connells)»')
+    end
+
+    using_session(:guest) do
+      wait_for_js('Reveal.getIndices().h === 6 && Reveal.getIndices().v > 0')
+      expect(page).to have_no_css("#{toc_heart(IMAGINE)}.song-played", visible: :all) # reached, not yet played
+      # A follower has no way on of its own
+      expect(page).to have_no_css(NEXT_BUTTON)
+    end
+
+    using_session(:host) do
+      # „Nächstes Lied" takes the room on, live scrolling going on with it…
+      find(NEXT_BUTTON).click
+      wait_for_js('Reveal.getIndices().h === 3')
+      expect(slide_indices).to eq([3, 0])
+      expect(page).to have_css('#multiplex-status', text: 'Du scrollst live')
+    end
+    using_session(:guest) do
+      wait_for_js('Reveal.getIndices().h === 3')
+      expect(slide_indices).to eq([3, 0])
+      # …and the song it left is played: a ✓, and the rest move up one
+      expect(page).to have_css("#{toc_heart(IMAGINE)}.song-played", visible: :all)
+      expect(page).to have_css("#{toc_heart(IMAGINE)} .visually-hidden", text: 'Auf die Playlist, gespielt', visible: :all)
+      expect_heart(toc_heart(CONNELLS), pressed: true, count: '1.', visible: :all)
+      expect_heart(toc_heart(RIPTIDE), pressed: true, count: '2.', visible: :all)
+    end
+
+    using_session(:host) do
+      # The end only passed, and gone back up from: not played. Stayed at, a
+      # while: played, without moving on
+      page.execute_script('window.MULTIPLEX.playedAfter = 300')
+      last = last_slide_of(3)
+      page.execute_script("Reveal.slide(3, #{last}); Reveal.slide(3, #{last - 1})")
+      wait_for_js("Reveal.getIndices().v === #{last - 1}")
+      sleep 0.6
+      expect(page).to have_no_css("#{toc_heart(CONNELLS)}.song-played", visible: :all)
+      page.execute_script("Reveal.slide(3, #{last})")
+      expect(page).to have_css("#{toc_heart(CONNELLS)}.song-played", visible: :all)
+      expect(page).to have_css(NEXT_BUTTON, text: 'Nächstes Lied: «Riptide»')
+    end
+    using_session(:guest) do
+      expect(page).to have_css("#{toc_heart(CONNELLS)}.song-played", visible: :all)
+      expect_heart(toc_heart(RIPTIDE), pressed: true, count: '1.', visible: :all)
+    end
+
+    using_session(:host) do
+      # Emptied, the playlist is gone everywhere
+      open_playlist_dialog
+      within('#playlist-modal') { click_button('Playlist leeren') }
+      expect(page).to have_css('#multiplex-toast.visible', text: 'Die Playlist ist leer')
+      expect_heart(toc_heart(RIPTIDE), pressed: false, count: nil, visible: :all)
+      open_playlist_dialog
+      expect(page).to have_button('Playlist leeren', disabled: true) # nothing left to empty
+      within('#playlist-modal') { click_button('OK') }
+    end
+    using_session(:guest) do
+      expect_heart(toc_heart(RIPTIDE), pressed: false, count: nil, visible: :all)
+    end
+  end
+
+  it 'lets the room decide while the guests wish: „Nächstes Lied“ goes to the most wished, the host’s order breaking a tie' do
+    secret = nil
+    using_session(:host) do
+      visit FixtureBuilder::URL_PATH
+      wait_for_reveal
+      go_to_toc
+      log_in_as_host
+      secret = session_secret
+      find(toc_heart(IMAGINE)).click
+      find(toc_heart(CONNELLS)).click
+    end
+
+    using_session(:guest) do
+      join_session(secret)
+      page.execute_script('window.MULTIPLEX.wishSync = 300')
+      go_to_toc
+      find(toc_heart(RIPTIDE)).click
+      find(toc_heart(CONNELLS)).click
+      expect_heart(toc_heart(CONNELLS), pressed: true, count: 2)
+    end
+
+    using_session(:host) do
+      expect_heart(toc_heart(CONNELLS), pressed: true, count: 2)
+      expect_heart(toc_heart(RIPTIDE), pressed: false, count: 1)
+      # Browsing, no live scroll: from the end of a song on nobody's list…
+      last = last_slide_of(5) # I Have a Dream
+      page.execute_script("Reveal.slide(5, #{last})")
+      wait_for_js("Reveal.getIndices().h === 5 && Reveal.getIndices().v === #{last}")
+      # …to the most wished
+      expect(page).to have_css(NEXT_BUTTON, text: 'Nächstes Lied: «74-75 (The Connells)»')
+      find(NEXT_BUTTON).click
+      wait_for_js('Reveal.getIndices().h === 3')
+      expect(slide_indices).to eq([3, 0])
+      # From its end, Imagine and Riptide are wished once each: the host's
+      # playlist has Imagine
+      last = last_slide_of(3)
+      page.execute_script("Reveal.slide(3, #{last})")
+      wait_for_js("Reveal.getIndices().v === #{last}")
+      expect(page).to have_css(NEXT_BUTTON, text: 'Nächstes Lied: «Imagine (John Lennon)»')
+      # Played nothing: no live scroll reached an end
+      expect(page).to have_no_css("#{toc_heart(CONNELLS)}.song-played", visible: :all)
     end
   end
 end
