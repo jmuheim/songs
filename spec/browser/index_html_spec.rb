@@ -369,7 +369,7 @@ RSpec.describe 'index.html', :js, type: :feature do
       expect(page).to have_no_css('#open-settings')
     end
 
-    it 'shows them with their labels at first, fades them out, and brings them back on a tap anywhere, a moving mouse or the focus, but not on a swipe or a tap on a chord' do
+    it 'shows them with their labels at first, fades them out, and brings them back on a tap anywhere, a moving mouse, the focus or a scroll of the TOC, but not on a swipe or a tap on a chord' do
       # At first with their labels, to say what they are
       expect(page).to have_visible('#open-settings')
       expect(tooltip_shown?('go-to-toc')).to be true
@@ -431,6 +431,18 @@ RSpec.describe 'index.html', :js, type: :feature do
       finger_tap(640, 700) # below the fingering, which is large
       expect(page).to have_no_css('#chord-tooltip.visible')
       expect(idle?).to be true
+
+      # A scroll of the table of contents does: that's where a song is
+      # picked, not a page turned. Padded, so the fixture's few songs reach
+      # past the screen; the finger comes down on a link, which on its own
+      # brings nothing back (ACTS).
+      page.execute_script("Reveal.slide(1); document.querySelector('#TOC nav ol').style.paddingBottom = '2000px'")
+      expect(page).to have_css('#TOC.present')
+      wait_until_idle
+      finger_swipe('#TOC nav li a', -200)
+      wait_for_js("document.getElementById('TOC').scrollTop > 0")
+      expect(page.evaluate_script("document.getElementById('TOC').scrollTop")).to be > 0
+      expect(page).to have_visible('#open-settings')
     end
   end
 

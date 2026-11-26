@@ -578,12 +578,13 @@
 
   // The corner buttons, and a desktop's chevrons, fade out a few seconds after
   // the page loads, the first time with their labels shown. A tap anywhere, a
-  // mouse that moves or the keyboard's focus on one brings them back, to fade
-  // again (night.css). A swipe or a key that pages doesn't: they would be up
-  // on every slide. Nor does a tap that does something of its own, on a
-  // chord, a link or the TOC's filter, or one that closes a chord's fingering
-  // (chords.js closes it on any click). Faded, they let a tap through to the
-  // slide, so one on an invisible ⚙️ only brings them back.
+  // mouse that moves, the keyboard's focus on one or a scroll of the table of
+  // contents brings them back, to fade again (night.css). A swipe or a key
+  // that pages doesn't: they would be up on every slide. Nor does a tap that
+  // does something of its own, on a chord, a link or the TOC's filter, or one
+  // that closes a chord's fingering (chords.js closes it on any click).
+  // Faded, they let a tap through to the slide, so one on an invisible ⚙️
+  // only brings them back.
   (function() {
     if (window.CONTROLS_STAY) return; // the specs, but the one about this
     var ms = window.CONTROLS_MS || { first: 5000, again: 3000 }; // which shortens these
@@ -624,6 +625,10 @@
       mouse = { x: e.screenX, y: e.screenY };
     }, true);
     document.addEventListener('focusin', function(e) { if (e.target.closest('.controls-group')) wake(); });
+    // The table of contents is where a song is picked, not a page turned:
+    // whoever scrolls it is looking for something, 🔥 or ⚙️ perhaps. Capture
+    // phase: a scroll doesn't bubble.
+    document.addEventListener('scroll', function(e) { if (e.target.id === 'TOC') wake(); }, true);
   })();
 </script>
 
